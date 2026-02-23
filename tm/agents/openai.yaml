@@ -1,0 +1,4 @@
+interface:
+  display_name: "Remote GPU Server (tm)"
+  short_description: "Manage remote GPU servers with tm CLI"
+  default_prompt: "Help me run an experiment on my remote GPU server"
