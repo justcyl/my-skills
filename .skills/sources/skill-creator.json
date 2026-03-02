@@ -1,0 +1,17 @@
+{
+  "skill_id": "skill-creator",
+  "display_name": "skill-creator",
+  "skill_path": "skill-creator",
+  "source_type": "local-bootstrap",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/skill-creator",
+  "last_imported_at": "2026-03-02T17:21:10Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:29a4c395c7b512da4555adbfb2f125144fe4d398ed7dd5a95fc2de00fb72ec83",
+  "managed_dirty": false
+}

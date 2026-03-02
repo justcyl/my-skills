@@ -1,0 +1,17 @@
+{
+  "skill_id": "brainstorming",
+  "display_name": "brainstorming",
+  "skill_path": "brainstorming",
+  "source_type": "local-bootstrap",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/brainstorming",
+  "last_imported_at": "2026-03-02T17:21:10Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:942d8436952da806daea8ff2e6fc55d18b0f6be9ff1675ffa090de7d6a7c519e",
+  "managed_dirty": false
+}

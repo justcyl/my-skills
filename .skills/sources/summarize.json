@@ -1,0 +1,17 @@
+{
+  "skill_id": "summarize",
+  "display_name": "summarize",
+  "skill_path": "summarize",
+  "source_type": "local-bootstrap",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/summarize",
+  "last_imported_at": "2026-03-02T17:21:10Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:16288ca7e8a545c762eea3a69c8f71c9602372bb24ab3d4d8255a7ca476802e0",
+  "managed_dirty": false
+}

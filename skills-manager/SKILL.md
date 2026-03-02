@@ -1,48 +1,115 @@
 ---
 name: skills-manager
-description: 在当前 `my-skills` 仓库中统一发现、导入、创建、更新、审计、优化、分发和发布 Skills 的总控 skill。Use when the user wants to: (1) 查找可用 skill, (2) 从 GitHub/URL/本地路径导入 skill, (3) 创建或 bootstrap 新 skill, (4) 更新已托管 skill, (5) 生成中文优化版 managed skill, (6) 分发到 Codex 或 Claude Code, (7) 提交并推送技能仓库变更。
+description: 在当前 `my-skills` 仓库中统一发现、下载、创建、整理、审核、分发和发布 Skills 的总控 skill。Use when the user wants to: (1) 查找并下载 skill, (2) 创建新 skill, (3) 手动编辑 skill 后同步状态, (4) 管理向 Codex 或 Claude Code 的分发与发布。
 ---
 
 # Skills Manager
 
-使用这个 skill 作为当前仓库 `my-skills` 的统一技能控制面。
+使用这个 skill 作为当前仓库 `my-skills` 的唯一技能控制面。
 
-## Core Rules
+## True Source
 
-1. 以当前仓库为唯一真源，所有托管 skill 都进入 `catalog/`。
-2. 每个导入 skill 使用双轨结构：
-   - `catalog/skills/<skill-id>/upstream/`
-   - `catalog/skills/<skill-id>/managed/`
-3. 只从 `managed/` 分发到 agent 目录。
-4. `upstream/` 保持原始导入版本，正常流程下不要手工编辑。
-5. 默认半自动模式：
-   - 自动执行：发现、下载到临时目录、风险筛查、生成 managed、更新 registry、生成报告
-   - 需要确认：覆盖已有 skill、分发到 agent、`git commit`、`git push`
+1. 仓库根目录下的每个 skill 目录就是唯一真源，例如 `find-skills/`、`skill-creator/`、`skills-manager/`。
+2. 不再维护第二份 `managed/` 副本。模型和用户都直接编辑根目录 skill。
+3. 所有程序状态写入 `.skills/`：
+   - `.skills/registry.json`
+   - `.skills/sources/<skill-id>.json`
+   - `.skills/reports/<skill-id>.md`
+   - `.skills/agents/<agent>.json`
+   - `.skills/upstream/<skill-id>/`
+4. `skill_id`、哈希、状态字段、分发记录只能由脚本生成，不能由大模型臆造。
+5. `SKILL.md`、`references/`、`scripts/` 这些技能内容可以由大模型生成或修改。
 
-## Task Routing
+## Default Behavior
 
-根据任务类型按需读取 reference：
+1. 任何导致 `my-skills` 仓库变化的操作，都要在结束前完成：
+   - 状态同步
+   - 规则审计
+   - 必要的大模型审阅
+   - 分发到 agent
+   - 提交并推送仓库
+2. 对外部 skill：
+   - 可以使用 `npx skills find` 搜索
+   - 不能使用 `npx skills add/check/update` 来管理本仓库
+3. 对外部 skill 的审核分两层：
+   - 脚本做规则审计与一致性检查
+   - 大模型做语义审计，判断是否存在恶意 prompt、越权指令、模糊授权或危险工作流
+4. 对外部 skill 的优化：
+   - 先保存上游原始快照到 `.skills/upstream/<skill-id>/`
+   - 再直接修改根目录 skill，使其成为中文优化版
 
-- 查找或导入外部 skill：读 `references/find-and-import.md`
-- 创建新 skill 或将本地目录纳管：读 `references/create-and-bootstrap.md`
-- 更新已托管 skill：读 `references/update-and-refresh.md`
-- 判断风险或审计结果：读 `references/audit-and-risk.md`
-- 生成中文优化 managed：读 `references/refine-and-manage.md`
-- 同步到 Codex / Claude Code：读 `references/distribute-to-agents.md`
-- 提交或推送仓库：读 `references/git-publish.md`
-- 查询目录和 JSON 结构：读 `references/catalog-schema.md`
+## Routing
 
-先读 `references/overview.md` 了解全局约束，再进入具体模块。
+先判断用户属于哪一类场景，然后只读取对应 reference：
 
-## Scripts
+1. 用户要找 skill、下载 skill、更新外部 skill、查看上游信息：
+   读 `references/scene-find-and-import.md`
+2. 用户要创建新 skill 或重建 skill 骨架：
+   读 `references/scene-create-skill.md`
+3. 用户已经手动编辑了 skill，希望你补齐状态、审计、说明、同步、发布：
+   读 `references/scene-manual-edit-followup.md`
+4. 用户要管理某个 agent、某个 skill 的分发、同步模式或状态：
+   读 `references/scene-distribute-and-manage.md`
+5. 当你需要确认 `.skills/` 内哪些字段由脚本生成、哪些内容由模型生成时：
+   读 `references/schema-and-state.md`
 
-优先使用内置脚本，避免重复编写仓库管理命令：
+不要先读所有 reference。只加载当前场景真正需要的那一个。
 
-- `bash scripts/bootstrap_catalog.sh`
-- `bash scripts/import_skill.sh`
-- `bash scripts/update_skill.sh`
-- `bash scripts/refresh_managed_state.sh`
-- `bash scripts/sync_agents.sh`
-- `bash scripts/publish_repo.sh`
+## Primary Scripts
 
-这些脚本使用相对路径并在运行时解析仓库根目录。
+优先使用下面 4 个场景脚本：
+
+- `bash scripts/find_or_import_skill.sh ...`
+- `bash scripts/create_skill.sh ...`
+- `bash scripts/finalize_manual_edits.sh ...`
+- `bash scripts/distribute_skills.sh ...`
+
+仓库发布由辅助脚本处理：
+
+- `bash scripts/publish_repo.sh ...`
+
+## Workflow
+
+### 1. Find And Download Skills
+
+当用户要找现成 skill 或导入外部 skill：
+
+1. 先理解需求与目标场景。
+2. 如果来源不明确，可先用 `npx skills find` 搜索。
+3. 选定来源后，用 `bash scripts/find_or_import_skill.sh import ...` 导入到仓库根目录。
+4. 脚本完成后，人工查看规则审计结果；必要时做语义审计。
+5. 直接在根目录 skill 上完成中文优化与说明书整理。
+6. 运行 `bash scripts/finalize_manual_edits.sh --skill-id <id> --publish --push`。
+
+### 2. Create Skills
+
+当用户要新建 skill：
+
+1. 先明确 skill 触发条件、边界和资源结构。
+2. 用 `bash scripts/create_skill.sh ...` 创建骨架。
+3. 在根目录 skill 中填充 `SKILL.md`、`references/`、`scripts/`。
+4. 运行 `bash scripts/finalize_manual_edits.sh --skill-id <id> --publish --push`。
+
+### 3. Manual Edit Follow-up
+
+当用户已经改了某个 skill：
+
+1. 不要再创建副本或复制到别处。
+2. 直接对修改后的根目录 skill 做状态刷新与审计。
+3. 运行 `bash scripts/finalize_manual_edits.sh --skill-id <id> --publish --push`。
+
+### 4. Distribution And Management
+
+1. 默认分发源是仓库根目录 skill。
+2. 一般情况下，状态同步完成后应自动分发。
+3. 当用户需要指定 agent、指定 skill、指定 `symlink/copy` 时，使用 `bash scripts/distribute_skills.sh ...`。
+
+## Output Rules
+
+每次完成场景处理后，给用户一个简短结果：
+
+- 做了什么
+- 哪个 skill 受影响
+- 审计状态
+- 是否已分发
+- 是否已提交 / 推送

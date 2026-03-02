@@ -1,0 +1,17 @@
+{
+  "skill_id": "qwen-asr",
+  "display_name": "siliconflow-qwen-asr",
+  "skill_path": "qwen-asr",
+  "source_type": "local-bootstrap",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/qwen-asr",
+  "last_imported_at": "2026-03-02T17:21:10Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:df431d01d0774df88afa70a923235ed83edc8f3fafe7fc36494fe8381609893c",
+  "managed_dirty": false
+}

@@ -1,0 +1,17 @@
+{
+  "skill_id": "skills-manager",
+  "display_name": "skills-manager",
+  "skill_path": "skills-manager",
+  "source_type": "local-bootstrap",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/skills-manager",
+  "last_imported_at": "2026-03-02T17:21:10Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:abc025f26ecd446a0b7daeba1e1ab0833b330d881176de830d856dd5a282d570",
+  "managed_dirty": false
+}

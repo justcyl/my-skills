@@ -5,14 +5,14 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SKILL_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 REPO_ROOT="$(cd "${SKILL_DIR}/.." && pwd)"
 
-COMMIT_MESSAGE=""
-PUSH_AFTER_COMMIT=0
-DRY_RUN=0
+commit_message=""
+push_after_commit=0
+dry_run=0
 
 usage() {
-  cat >&2 <<'EOF'
-usage: bash skills-manager/scripts/publish_repo.sh [--message <msg>] [--push] [--dry-run]
-EOF
+  cat >&2 <<'TEXT'
+usage: bash scripts/publish_repo.sh [--message <msg>] [--push] [--dry-run]
+TEXT
 }
 
 generate_default_message() {
@@ -24,12 +24,16 @@ generate_default_message() {
       sub(/^"/, "", path)
       sub(/"$/, "", path)
       split(path, parts, "/")
-      print parts[1]
+      top = parts[1]
+      if (top == ".skills" || top == "catalog") {
+        top = "skill-state"
+      }
+      print top
     }
   ' | LC_ALL=C sort -u | tr '\n' ' ')"
 
   if [[ -z "${summary// }" ]]; then
-    printf 'Update skills repository\n'
+    printf 'Update my-skills repository\n'
     return
   fi
 
@@ -39,15 +43,15 @@ generate_default_message() {
 while [[ "$#" -gt 0 ]]; do
   case "$1" in
     --message)
-      COMMIT_MESSAGE="${2:-}"
+      commit_message="${2:-}"
       shift 2
       ;;
     --push)
-      PUSH_AFTER_COMMIT=1
+      push_after_commit=1
       shift
       ;;
     --dry-run)
-      DRY_RUN=1
+      dry_run=1
       shift
       ;;
     -h|--help)
@@ -62,50 +66,47 @@ while [[ "$#" -gt 0 ]]; do
 done
 
 cd "${REPO_ROOT}"
+branch_name="$(git rev-parse --abbrev-ref HEAD)"
+status_output="$(git status --short)"
 
-BRANCH_NAME="$(git rev-parse --abbrev-ref HEAD)"
-STATUS_OUTPUT="$(git status --short)"
-
-if [[ -z "${COMMIT_MESSAGE}" ]]; then
-  COMMIT_MESSAGE="$(generate_default_message)"
+if [[ -z "${commit_message}" ]]; then
+  commit_message="$(generate_default_message)"
 fi
 
-if [[ -z "${STATUS_OUTPUT}" ]]; then
+if [[ -z "${status_output}" ]]; then
   echo "publish_repo.sh"
   echo "repo_root=${REPO_ROOT}"
-  echo "branch=${BRANCH_NAME}"
+  echo "branch=${branch_name}"
   echo "status=clean"
   exit 0
 fi
 
-if [[ "${DRY_RUN}" -eq 1 ]]; then
+if [[ "${dry_run}" -eq 1 ]]; then
   echo "publish_repo.sh"
   echo "repo_root=${REPO_ROOT}"
-  echo "branch=${BRANCH_NAME}"
-  echo "commit_message=${COMMIT_MESSAGE}"
-  echo "push_after_commit=${PUSH_AFTER_COMMIT}"
-  printf '%s\n' "${STATUS_OUTPUT}"
+  echo "branch=${branch_name}"
+  echo "commit_message=${commit_message}"
+  echo "push_after_commit=${push_after_commit}"
+  printf '%s\n' "${status_output}"
   exit 0
 fi
 
 git add -A
-
 if git diff --cached --quiet; then
   echo "publish_repo.sh"
   echo "repo_root=${REPO_ROOT}"
-  echo "branch=${BRANCH_NAME}"
+  echo "branch=${branch_name}"
   echo "status=no-staged-changes"
   exit 0
 fi
 
-git commit -m "${COMMIT_MESSAGE}"
-
-if [[ "${PUSH_AFTER_COMMIT}" -eq 1 ]]; then
-  git push origin "${BRANCH_NAME}"
+git commit -m "${commit_message}"
+if [[ "${push_after_commit}" -eq 1 ]]; then
+  git push origin "${branch_name}"
 fi
 
 echo "publish_repo.sh"
 echo "repo_root=${REPO_ROOT}"
-echo "branch=${BRANCH_NAME}"
-echo "commit_message=${COMMIT_MESSAGE}"
-echo "push_after_commit=${PUSH_AFTER_COMMIT}"
+echo "branch=${branch_name}"
+echo "commit_message=${commit_message}"
+echo "push_after_commit=${push_after_commit}"

@@ -1,0 +1,17 @@
+{
+  "skill_id": "tmux",
+  "display_name": "tmux",
+  "skill_path": "tmux",
+  "source_type": "local-bootstrap",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/tmux",
+  "last_imported_at": "2026-03-02T17:21:10Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:068e613f05828707021f5cad449eedead0fa865cb0ef4ccfe258b84d702b1cef",
+  "managed_dirty": false
+}

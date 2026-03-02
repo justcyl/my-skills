@@ -1,0 +1,17 @@
+{
+  "skill_id": "github",
+  "display_name": "github",
+  "skill_path": "github",
+  "source_type": "local-bootstrap",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/github",
+  "last_imported_at": "2026-03-02T17:21:10Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:eed7b24d189168b4273734f1649a90aff069c4ad0b7414066d845543b22bebbf",
+  "managed_dirty": false
+}

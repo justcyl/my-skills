@@ -1,4 +1,0 @@
-interface:
-  display_name: "Skills Manager"
-  short_description: "统一管理 my-skills 仓库中的技能"
-  default_prompt: "帮我在 my-skills 仓库里导入、管理或分发一个 skill"

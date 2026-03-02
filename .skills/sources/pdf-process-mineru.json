@@ -1,0 +1,17 @@
+{
+  "skill_id": "pdf-process-mineru",
+  "display_name": "pdf-process-mineru",
+  "skill_path": "pdf-process-mineru",
+  "source_type": "local-bootstrap",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/pdf-process-mineru",
+  "last_imported_at": "2026-03-02T17:21:10Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:97af2f567e5937bb368f8f166aff647ea17c5da24c62beed33375569b6595a71",
+  "managed_dirty": false
+}

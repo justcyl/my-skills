@@ -1,0 +1,17 @@
+{
+  "skill_id": "weather",
+  "display_name": "weather",
+  "skill_path": "weather",
+  "source_type": "local-bootstrap",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/weather",
+  "last_imported_at": "2026-03-02T17:21:10Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:52b1e2ca06205e267caa8caa0238c19a96a60d779e047d171f4786f1bd0a0071",
+  "managed_dirty": false
+}

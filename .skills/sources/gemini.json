@@ -1,0 +1,17 @@
+{
+  "skill_id": "gemini",
+  "display_name": "gemini",
+  "skill_path": "gemini",
+  "source_type": "local-bootstrap",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/gemini",
+  "last_imported_at": "2026-03-02T17:21:10Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:a650e1e6bb5c4175c0487274944833372e3172c0dd3ef350fb31d970fb94a4db",
+  "managed_dirty": false
+}
