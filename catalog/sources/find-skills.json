@@ -1,0 +1,15 @@
+{
+  "skill_id": "find-skills",
+  "display_name": "find-skills",
+  "source_type": "local-bootstrap",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "last_imported_at": "2026-03-02T16:14:40Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:0efd2f0903eea28dbb777eb82c4e89db2d3d2dddb910a5bc67c73a3b43db5a83",
+  "managed_dirty": false
+}

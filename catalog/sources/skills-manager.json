@@ -1,0 +1,15 @@
+{
+  "skill_id": "skills-manager",
+  "display_name": "skills-manager",
+  "source_type": "local-bootstrap",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "last_imported_at": "2026-03-02T16:14:40Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:a5fbd57e801aed73250b92ec5b5bbb4205cf5de6265600e5ea86781778b2fc64",
+  "managed_dirty": false
+}

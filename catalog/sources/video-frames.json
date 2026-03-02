@@ -1,0 +1,15 @@
+{
+  "skill_id": "video-frames",
+  "display_name": "video-frames",
+  "source_type": "local-bootstrap",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "last_imported_at": "2026-03-02T16:14:40Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:fa6d39b971c3d350563a3c242ede6d84e0fd9fd6aca68090bf980f68fca41185",
+  "managed_dirty": false
+}

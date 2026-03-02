@@ -1,0 +1,15 @@
+{
+  "skill_id": "tm",
+  "display_name": "tm",
+  "source_type": "local-bootstrap",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "last_imported_at": "2026-03-02T16:14:40Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:7dd7091a427909b126288c8806e022f6d7d35ae02b74abfa68dfc7e20e1e4928",
+  "managed_dirty": false
+}
