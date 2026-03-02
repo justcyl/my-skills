@@ -15,6 +15,7 @@ TIMESTAMP="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 SOURCE=""
 SKILL_ID_OVERRIDE=""
 SUBPATH_OVERRIDE=""
+REF_OVERRIDE=""
 FORCE=0
 DRY_RUN=0
 SOURCE_TYPE=""
@@ -25,7 +26,7 @@ RISK_FINDINGS=()
 
 usage() {
   cat >&2 <<'EOF'
-usage: bash skills-manager/scripts/import_skill.sh <source> [--skill-id <id>] [--subpath <path>] [--force] [--dry-run]
+usage: bash skills-manager/scripts/import_skill.sh <source> [--skill-id <id>] [--subpath <path>] [--ref <branch>] [--force] [--dry-run]
 EOF
 }
 
@@ -364,6 +365,10 @@ while [[ "$#" -gt 0 ]]; do
       SUBPATH_OVERRIDE="${2:-}"
       shift 2
       ;;
+    --ref)
+      REF_OVERRIDE="${2:-}"
+      shift 2
+      ;;
     --force)
       FORCE=1
       shift
@@ -405,6 +410,10 @@ EOF
 fi
 
 detect_source "${SOURCE}"
+
+if [[ -n "${REF_OVERRIDE}" ]]; then
+  SOURCE_REF="${REF_OVERRIDE}"
+fi
 
 TEMP_DIR="$(mktemp -d)"
 cleanup() {

@@ -13,6 +13,14 @@ REPORTS_DIR="${CATALOG_DIR}/reports"
 LOCKS_DIR="${CATALOG_DIR}/locks"
 REGISTRY_PATH="${LOCKS_DIR}/registry.json"
 TIMESTAMP="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
+TARGET_SKILL_ID=""
+DRY_RUN=0
+
+usage() {
+  cat >&2 <<'EOF'
+usage: bash skills-manager/scripts/bootstrap_catalog.sh [--skill-id <id>] [--dry-run]
+EOF
+}
 
 if ! command -v jq >/dev/null 2>&1; then
   echo "error: jq is required" >&2
@@ -145,6 +153,27 @@ update_registry_entry() {
   mv "${temp_file}" "${REGISTRY_PATH}"
 }
 
+while [[ "$#" -gt 0 ]]; do
+  case "$1" in
+    --skill-id)
+      TARGET_SKILL_ID="${2:-}"
+      shift 2
+      ;;
+    --dry-run)
+      DRY_RUN=1
+      shift
+      ;;
+    -h|--help)
+      usage
+      exit 0
+      ;;
+    *)
+      usage
+      exit 1
+      ;;
+  esac
+done
+
 mkdir -p "${SKILLS_DIR}" "${SOURCES_DIR}" "${REPORTS_DIR}" "${LOCKS_DIR}"
 
 if [[ ! -f "${REGISTRY_PATH}" ]]; then
@@ -175,6 +204,10 @@ for candidate_dir in "${REPO_ROOT}"/*; do
   skill_id="$(sanitize_skill_id "${candidate_name}")"
   [[ -n "${skill_id}" ]] || continue
 
+  if [[ -n "${TARGET_SKILL_ID}" && "${skill_id}" != "${TARGET_SKILL_ID}" ]]; then
+    continue
+  fi
+
   display_name="$(extract_frontmatter_value "${skill_md_path}" "name")"
   description="$(extract_frontmatter_value "${skill_md_path}" "description")"
 
@@ -185,6 +218,11 @@ for candidate_dir in "${REPO_ROOT}"/*; do
   destination_root="${SKILLS_DIR}/${skill_id}"
   managed_dir="${destination_root}/managed"
   upstream_dir="${destination_root}/upstream"
+
+  if [[ "${DRY_RUN}" -eq 1 ]]; then
+    echo "bootstrap candidate ${skill_id}"
+    continue
+  fi
 
   rm -rf "${destination_root}"
   mkdir -p "${managed_dir}" "${upstream_dir}"
@@ -201,5 +239,7 @@ for candidate_dir in "${REPO_ROOT}"/*; do
 done
 
 echo "repo_root=${REPO_ROOT}"
+echo "skill_filter=${TARGET_SKILL_ID:-all}"
+echo "dry_run=${DRY_RUN}"
 echo "bootstrapped_count=${bootstrapped_count}"
 echo "registry=${REGISTRY_PATH}"

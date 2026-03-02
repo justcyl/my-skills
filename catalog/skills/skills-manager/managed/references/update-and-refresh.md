@@ -22,6 +22,18 @@
 6. 如果 `managed_dirty = true`，在覆盖前必须询问用户
 7. 在确认后才执行分发与 git 发布
 
+## Script Workflow
+
+优先使用：
+
+- `bash scripts/update_skill.sh --skill-id <id>`
+
+如果用户手工编辑了 `managed/`，在重新分发或发布前刷新状态：
+
+- `bash scripts/refresh_managed_state.sh --skill-id <id>`
+- 需要清除 dirty 标记时：
+  `bash scripts/refresh_managed_state.sh --skill-id <id> --clear-dirty`
+
 ## Local-Only Skills
 
 对于 `source_type = local-bootstrap` 且 `upstream_enabled = false` 的 skill：

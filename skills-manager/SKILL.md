@@ -40,6 +40,8 @@ description: 在当前 `my-skills` 仓库中统一发现、导入、创建、更
 
 - `bash scripts/bootstrap_catalog.sh`
 - `bash scripts/import_skill.sh`
+- `bash scripts/update_skill.sh`
+- `bash scripts/refresh_managed_state.sh`
 - `bash scripts/sync_agents.sh`
 - `bash scripts/publish_repo.sh`
 

@@ -8,8 +8,8 @@
   "subpath": "",
   "bootstrap": true,
   "upstream_enabled": false,
-  "last_imported_at": "2026-03-02T16:14:40Z",
+  "last_imported_at": "2026-03-02T16:41:16Z",
   "upstream_revision": "",
-  "managed_revision": "sha256:a5fbd57e801aed73250b92ec5b5bbb4205cf5de6265600e5ea86781778b2fc64",
+  "managed_revision": "sha256:b7e8a75cfdc214e566b2772078c804e0fcb697804715b2b13411270f5a68bc27",
   "managed_dirty": false
 }

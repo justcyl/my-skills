@@ -12,6 +12,26 @@
 4. 在确认后执行 `git commit`
 5. 在确认后执行 `git push`
 
+## Script Workflow
+
+优先使用：
+
+```bash
+bash scripts/publish_repo.sh --dry-run
+```
+
+确认提交时：
+
+```bash
+bash scripts/publish_repo.sh --message "Update skills repository"
+```
+
+确认推送时：
+
+```bash
+bash scripts/publish_repo.sh --message "Update skills repository" --push
+```
+
 ## Failure Policy
 
 - commit 失败：停止并报告错误

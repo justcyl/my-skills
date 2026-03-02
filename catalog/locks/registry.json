@@ -193,8 +193,8 @@
       "source_path": "catalog/sources/skills-manager.json",
       "managed_path": "catalog/skills/skills-manager/managed",
       "upstream_path": "catalog/skills/skills-manager/upstream",
-      "managed_revision": "sha256:a5fbd57e801aed73250b92ec5b5bbb4205cf5de6265600e5ea86781778b2fc64",
-      "last_updated_at": "2026-03-02T16:14:40Z"
+      "managed_revision": "sha256:b7e8a75cfdc214e566b2772078c804e0fcb697804715b2b13411270f5a68bc27",
+      "last_updated_at": "2026-03-02T16:41:16Z"
     },
     "summarize": {
       "display_name": "summarize",
