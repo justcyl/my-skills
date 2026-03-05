@@ -476,6 +476,28 @@
       "upstream_path": ".skills/upstream/weather",
       "managed_revision": "sha256:52b1e2ca06205e267caa8caa0238c19a96a60d779e047d171f4786f1bd0a0071",
       "last_updated_at": "2026-03-02T17:21:10Z"
+    },
+    "skill-creator": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/skill-creator",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-03-05T08:26:51Z"
+        }
+      },
+      "display_name": "skill-creator",
+      "description": "Create new skills, modify and improve existing skills, and measure skill performance. Use when users want to create a skill from scratch, update or optimize an existing skill, run evals to test a skill, benchmark skill performance with variance analysis, or optimize a skill's description for better triggering accuracy.",
+      "status": "managed",
+      "audit_status": "warned",
+      "managed_dirty": false,
+      "has_upstream": true,
+      "report_path": ".skills/reports/skill-creator.md",
+      "source_path": ".skills/sources/skill-creator.json",
+      "skill_path": "skill-creator",
+      "upstream_path": ".skills/upstream/skill-creator",
+      "managed_revision": "sha256:e7ec972fc0c8a9a38b111b5b6c30e2949792b740d61dc20990b7373b0c63504c",
+      "last_updated_at": "2026-03-05T08:26:20Z"
     }
   }
 }

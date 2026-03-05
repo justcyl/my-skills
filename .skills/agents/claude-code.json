@@ -119,6 +119,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-03-04T17:34:00Z"
+    },
+    "skill-creator": {
+      "source_path": "skill-creator",
+      "target_path": "/Users/chenyl/.claude/skills/skill-creator",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-05T08:26:51Z"
     }
   }
 }
