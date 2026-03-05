@@ -10,8 +10,8 @@
   "bootstrap": true,
   "upstream_enabled": false,
   "upstream_path": ".skills/upstream/skills-manager",
-  "last_imported_at": "2026-03-05T08:48:12Z",
+  "last_imported_at": "2026-03-05T09:07:18Z",
   "upstream_revision": "",
-  "managed_revision": "sha256:c08e6aadc24e48a6c48acf9ca1c932c72a2c32153e2f6a8b0a0894316339867c",
+  "managed_revision": "sha256:134fc4a6299ba80ea4f2b97372e9e09c65c0fdf1fafd0e26d1fea55520848f5b",
   "managed_dirty": false
 }

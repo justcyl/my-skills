@@ -27,7 +27,9 @@
       "skill_path": "brainstorming",
       "upstream_path": ".skills/upstream/brainstorming",
       "managed_revision": "sha256:942d8436952da806daea8ff2e6fc55d18b0f6be9ff1675ffa090de7d6a7c519e",
-      "last_updated_at": "2026-03-02T17:21:10Z"
+      "last_updated_at": "2026-03-02T17:21:10Z",
+      "risk_status": "passed",
+      "upstream_enabled": false
     },
     "coding-agent": {
       "distribution": {
@@ -55,7 +57,9 @@
       "skill_path": "coding-agent",
       "upstream_path": ".skills/upstream/coding-agent",
       "managed_revision": "sha256:b1310a7e804c65226a71db17d86b3c9afa4542c1b9e8b834f6706a90c858d58d",
-      "last_updated_at": "2026-03-02T17:21:10Z"
+      "last_updated_at": "2026-03-02T17:21:10Z",
+      "risk_status": "warned",
+      "upstream_enabled": false
     },
     "deepwiki": {
       "distribution": {
@@ -83,7 +87,9 @@
       "skill_path": "deepwiki",
       "upstream_path": ".skills/upstream/deepwiki",
       "managed_revision": "sha256:23aaeefc9189b999c73efb17d8fc6bcb4299fad04e7b7cfbd02e80fe5d3b7597",
-      "last_updated_at": "2026-03-02T17:21:10Z"
+      "last_updated_at": "2026-03-02T17:21:10Z",
+      "risk_status": "passed",
+      "upstream_enabled": false
     },
     "find-skills": {
       "distribution": {
@@ -111,7 +117,9 @@
       "skill_path": "find-skills",
       "upstream_path": ".skills/upstream/find-skills",
       "managed_revision": "sha256:0efd2f0903eea28dbb777eb82c4e89db2d3d2dddb910a5bc67c73a3b43db5a83",
-      "last_updated_at": "2026-03-02T17:21:10Z"
+      "last_updated_at": "2026-03-02T17:21:10Z",
+      "risk_status": "passed",
+      "upstream_enabled": false
     },
     "gemini": {
       "distribution": {
@@ -139,7 +147,9 @@
       "skill_path": "gemini",
       "upstream_path": ".skills/upstream/gemini",
       "managed_revision": "sha256:a650e1e6bb5c4175c0487274944833372e3172c0dd3ef350fb31d970fb94a4db",
-      "last_updated_at": "2026-03-02T17:21:10Z"
+      "last_updated_at": "2026-03-02T17:21:10Z",
+      "risk_status": "passed",
+      "upstream_enabled": false
     },
     "github": {
       "distribution": {
@@ -167,7 +177,9 @@
       "skill_path": "github",
       "upstream_path": ".skills/upstream/github",
       "managed_revision": "sha256:eed7b24d189168b4273734f1649a90aff069c4ad0b7414066d845543b22bebbf",
-      "last_updated_at": "2026-03-02T17:21:10Z"
+      "last_updated_at": "2026-03-02T17:21:10Z",
+      "risk_status": "passed",
+      "upstream_enabled": false
     },
     "github-cli": {
       "distribution": {
@@ -195,7 +207,9 @@
       "skill_path": "github-cli",
       "upstream_path": ".skills/upstream/github-cli",
       "managed_revision": "sha256:cb22564fca208505e75b1f1e702bdd13e096ee1233dfcf0e96cad4ec85cd7ec3",
-      "last_updated_at": "2026-03-02T17:21:10Z"
+      "last_updated_at": "2026-03-02T17:21:10Z",
+      "risk_status": "warned",
+      "upstream_enabled": false
     },
     "pdf-process-mineru": {
       "distribution": {
@@ -223,7 +237,9 @@
       "skill_path": "pdf-process-mineru",
       "upstream_path": ".skills/upstream/pdf-process-mineru",
       "managed_revision": "sha256:97af2f567e5937bb368f8f166aff647ea17c5da24c62beed33375569b6595a71",
-      "last_updated_at": "2026-03-02T17:21:10Z"
+      "last_updated_at": "2026-03-02T17:21:10Z",
+      "risk_status": "passed",
+      "upstream_enabled": false
     },
     "qwen-asr": {
       "distribution": {
@@ -251,7 +267,9 @@
       "skill_path": "qwen-asr",
       "upstream_path": ".skills/upstream/qwen-asr",
       "managed_revision": "sha256:df431d01d0774df88afa70a923235ed83edc8f3fafe7fc36494fe8381609893c",
-      "last_updated_at": "2026-03-02T17:21:10Z"
+      "last_updated_at": "2026-03-02T17:21:10Z",
+      "risk_status": "warned",
+      "upstream_enabled": false
     },
     "research": {
       "distribution": {
@@ -279,7 +297,9 @@
       "skill_path": "research",
       "upstream_path": ".skills/upstream/research",
       "managed_revision": "sha256:2f745249547749ffc5b8902595c7790d133df9446f4367de46106233eb4379d2",
-      "last_updated_at": "2026-03-02T17:21:10Z"
+      "last_updated_at": "2026-03-02T17:21:10Z",
+      "risk_status": "warned",
+      "upstream_enabled": false
     },
     "session-logs": {
       "distribution": {
@@ -307,7 +327,9 @@
       "skill_path": "session-logs",
       "upstream_path": ".skills/upstream/session-logs",
       "managed_revision": "sha256:26168359360ef638613a209299f7582b80c8b7ed53afe52c455ac213096d8b08",
-      "last_updated_at": "2026-03-02T17:21:10Z"
+      "last_updated_at": "2026-03-02T17:21:10Z",
+      "risk_status": "warned",
+      "upstream_enabled": false
     },
     "skills-manager": {
       "distribution": {
@@ -315,13 +337,13 @@
           "target_path": "/Users/chenyl/.codex/skills/skills-manager",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
+          "last_synced_at": "2026-03-05T09:07:18Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/skills-manager",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
+          "last_synced_at": "2026-03-05T09:07:18Z"
         }
       },
       "display_name": "skills-manager",
@@ -334,8 +356,10 @@
       "source_path": ".skills/sources/skills-manager.json",
       "skill_path": "skills-manager",
       "upstream_path": ".skills/upstream/skills-manager",
-      "managed_revision": "sha256:c08e6aadc24e48a6c48acf9ca1c932c72a2c32153e2f6a8b0a0894316339867c",
-      "last_updated_at": "2026-03-05T08:48:12Z"
+      "managed_revision": "sha256:134fc4a6299ba80ea4f2b97372e9e09c65c0fdf1fafd0e26d1fea55520848f5b",
+      "last_updated_at": "2026-03-05T09:07:18Z",
+      "risk_status": "passed",
+      "upstream_enabled": false
     },
     "summarize": {
       "distribution": {
@@ -363,7 +387,9 @@
       "skill_path": "summarize",
       "upstream_path": ".skills/upstream/summarize",
       "managed_revision": "sha256:16288ca7e8a545c762eea3a69c8f71c9602372bb24ab3d4d8255a7ca476802e0",
-      "last_updated_at": "2026-03-02T17:21:10Z"
+      "last_updated_at": "2026-03-02T17:21:10Z",
+      "risk_status": "warned",
+      "upstream_enabled": false
     },
     "tm": {
       "distribution": {
@@ -391,7 +417,9 @@
       "skill_path": "tm",
       "upstream_path": ".skills/upstream/tm",
       "managed_revision": "sha256:7dd7091a427909b126288c8806e022f6d7d35ae02b74abfa68dfc7e20e1e4928",
-      "last_updated_at": "2026-03-02T17:21:10Z"
+      "last_updated_at": "2026-03-02T17:21:10Z",
+      "risk_status": "warned",
+      "upstream_enabled": false
     },
     "tmux": {
       "distribution": {
@@ -419,7 +447,9 @@
       "skill_path": "tmux",
       "upstream_path": ".skills/upstream/tmux",
       "managed_revision": "sha256:068e613f05828707021f5cad449eedead0fa865cb0ef4ccfe258b84d702b1cef",
-      "last_updated_at": "2026-03-02T17:21:10Z"
+      "last_updated_at": "2026-03-02T17:21:10Z",
+      "risk_status": "passed",
+      "upstream_enabled": false
     },
     "video-frames": {
       "distribution": {
@@ -447,7 +477,9 @@
       "skill_path": "video-frames",
       "upstream_path": ".skills/upstream/video-frames",
       "managed_revision": "sha256:fa6d39b971c3d350563a3c242ede6d84e0fd9fd6aca68090bf980f68fca41185",
-      "last_updated_at": "2026-03-02T17:21:10Z"
+      "last_updated_at": "2026-03-02T17:21:10Z",
+      "risk_status": "passed",
+      "upstream_enabled": false
     },
     "weather": {
       "distribution": {
@@ -475,7 +507,9 @@
       "skill_path": "weather",
       "upstream_path": ".skills/upstream/weather",
       "managed_revision": "sha256:52b1e2ca06205e267caa8caa0238c19a96a60d779e047d171f4786f1bd0a0071",
-      "last_updated_at": "2026-03-02T17:21:10Z"
+      "last_updated_at": "2026-03-02T17:21:10Z",
+      "risk_status": "passed",
+      "upstream_enabled": false
     },
     "skill-creator": {
       "distribution": {
@@ -503,7 +537,9 @@
       "skill_path": "skill-creator",
       "upstream_path": ".skills/upstream/skill-creator",
       "managed_revision": "sha256:e7ec972fc0c8a9a38b111b5b6c30e2949792b740d61dc20990b7373b0c63504c",
-      "last_updated_at": "2026-03-05T08:26:20Z"
+      "last_updated_at": "2026-03-05T08:26:20Z",
+      "risk_status": "warned",
+      "upstream_enabled": true
     }
   }
 }

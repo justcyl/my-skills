@@ -9,18 +9,18 @@ print(os.path.realpath(sys.argv[1]))
 PY
 }
 
-SCRIPT_FILE="$(realpath_compat "${BASH_SOURCE[0]}")"
-SCRIPT_DIR="$(cd "$(dirname "${SCRIPT_FILE}")" && pwd)"
-SCRIPTS_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
-SKILL_DIR="$(cd "${SCRIPTS_DIR}/.." && pwd)"
-SCRIPT_BASE_REPO_ROOT="$(cd "${SKILL_DIR}/.." && pwd)"
+COMMON_SCRIPT_FILE="$(realpath_compat "${BASH_SOURCE[0]}")"
+COMMON_SCRIPT_DIR="$(cd "$(dirname "${COMMON_SCRIPT_FILE}")" && pwd)"
+COMMON_SCRIPTS_DIR="$(cd "${COMMON_SCRIPT_DIR}/.." && pwd)"
+COMMON_SKILL_DIR="$(cd "${COMMON_SCRIPTS_DIR}/.." && pwd)"
+COMMON_SCRIPT_BASE_REPO_ROOT="$(cd "${COMMON_SKILL_DIR}/.." && pwd)"
 
 # 默认把 my-skills 作为统一技能仓库；可通过环境变量覆盖。
 PREFERRED_REPO_ROOT="${MY_SKILLS_REPO_ROOT:-/Users/chenyl/project/my-skills}"
 if [[ -f "${PREFERRED_REPO_ROOT}/skills-manager/SKILL.md" ]]; then
   REPO_ROOT="${PREFERRED_REPO_ROOT}"
 else
-  REPO_ROOT="${SCRIPT_BASE_REPO_ROOT}"
+  REPO_ROOT="${COMMON_SCRIPT_BASE_REPO_ROOT}"
 fi
 
 STATE_DIR="${REPO_ROOT}/.skills"
@@ -65,6 +65,24 @@ JSON
       mv "${temp_file}" "${AGENTS_DIR}/${agent}.json"
     fi
   done
+
+  # 兼容历史字段：统一主字段为 risk_status / upstream_enabled，
+  # 同时保留 audit_status / has_upstream 以兼容旧调用方。
+  temp_file="$(mktemp)"
+  jq '
+    .skills |= (
+      (. // {})
+      | with_entries(
+          .value |= (
+            .risk_status = (.risk_status // .audit_status // "pending")
+            | .upstream_enabled = (.upstream_enabled // .has_upstream // false)
+            | .audit_status = (.audit_status // .risk_status)
+            | .has_upstream = (.has_upstream // .upstream_enabled)
+          )
+        )
+    )
+  ' "${REGISTRY_PATH}" > "${temp_file}"
+  mv "${temp_file}" "${REGISTRY_PATH}"
 }
 
 sanitize_skill_id() {
@@ -188,6 +206,7 @@ run_risk_scan() {
 
 detect_source() {
   local source="$1"
+  local blob_dir=""
   DETECTED_SOURCE_TYPE=""
   DETECTED_SOURCE_URL=""
   DETECTED_SOURCE_REF=""
@@ -210,6 +229,19 @@ detect_source() {
     DETECTED_SOURCE_URL="https://github.com/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}.git"
     DETECTED_SOURCE_REF="${BASH_REMATCH[3]}"
     DETECTED_SUBPATH="${BASH_REMATCH[4]}"
+    return
+  fi
+
+  if [[ "${source}" =~ ^https://github\.com/([^/]+)/([^/]+)/blob/([^/]+)/([^?#]+)(\?[^#]*)?(#.*)?$ ]]; then
+    DETECTED_SOURCE_TYPE="github"
+    DETECTED_SOURCE_URL="https://github.com/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}.git"
+    DETECTED_SOURCE_REF="${BASH_REMATCH[3]}"
+    blob_dir="$(dirname "${BASH_REMATCH[4]}")"
+    if [[ "${blob_dir}" == "." ]]; then
+      DETECTED_SUBPATH=""
+    else
+      DETECTED_SUBPATH="${blob_dir}"
+    fi
     return
   fi
 
@@ -414,7 +446,7 @@ upsert_registry_entry() {
   local status="$4"
   local managed_revision="$5"
   local risk_status="$6"
-  local has_upstream="$7"
+  local upstream_enabled="$7"
   local skill_path="$8"
   local temp_file
 
@@ -429,14 +461,16 @@ upsert_registry_entry() {
     --arg risk_status "${risk_status}" \
     --arg skill_path "${skill_path}" \
     --arg timestamp "${TIMESTAMP}" \
-    --argjson has_upstream "${has_upstream}" \
+    --argjson upstream_enabled "${upstream_enabled}" \
     '.skills[$skill_id] = ((.skills[$skill_id] // {distribution: {}}) + {
       display_name: $display_name,
       description: $description,
       status: $status,
+      risk_status: $risk_status,
       audit_status: $risk_status,
       managed_dirty: false,
-      has_upstream: $has_upstream,
+      upstream_enabled: $upstream_enabled,
+      has_upstream: $upstream_enabled,
       report_path: (".skills/reports/" + $skill_id + ".md"),
       source_path: (".skills/sources/" + $skill_id + ".json"),
       skill_path: $skill_path,
