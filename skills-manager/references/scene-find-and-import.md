@@ -1,82 +1,100 @@
 # Scene: Find And Import Skills
 
-当用户要“找现成 skill”、“从仓库或地址导入 skill”、“更新外部 skill”、“查看某个 skill 的上游来源”时读取本文件。
+当用户出现以下意图时读取本文件：
+
+1. “找一个能做 X 的 skill / 有没有现成 skill”
+2. “从 GitHub 仓库、URL、路径导入 skill”
+3. “更新某个外部 skill 的上游版本”
+4. “解释某个 skill 的来源、风险和用法”
 
 ## Goals
 
-1. 帮用户找到合适的 skill
-2. 将外部 skill 下载到统一仓库 `my-skills` 的根目录
-3. 保存上游快照到 `.skills/upstream/<skill-id>/`
-4. 生成脚本状态、规则审计结果和初始报告
-5. 在需要时继续完成中文优化、说明书整理、分发和发布
+1. 找到最匹配的候选 skill 并给出可执行导入方案
+2. 将外部 skill 纳管到 `my-skills` 根目录，保留上游快照
+3. 完成规则审计 + 语义审计 + 中文优化 + 用法说明
+4. 保证变更后自动收尾、分发、提交、推送
 
-## Search
+## Mode Selection
 
-可以使用：
+先判断用户当前模式，再执行对应流程：
+
+1. `仅搜索`：只给候选，不落地导入
+2. `搜索并导入`：先搜再导入
+3. `直接导入`：用户已给仓库名或 URL
+4. `更新上游`：已纳管 skill 拉取新版本
+
+## Search Workflow
+
+统一入口：
 
 ```bash
-npx skills find <query>
+bash scripts/find_or_import_skill.sh search <query>
 ```
 
-限制：
+说明：
 
-- 只把它当搜索器
-- 不能用 `npx skills add/check/update` 管理 `my-skills` 仓库
-- 安装、更新、状态维护必须通过 `my-skills` 仓库脚本完成
+1. 内部调用 `npx skills find`，只用于检索。
+2. 禁止使用 `npx skills add/check/update` 管理本仓库状态。
+3. 搜索输出后，给用户简报：
+   - skill 名称
+   - 一句话用途
+   - 来源
+   - 推荐导入命令
 
 ## Import Workflow
 
-导入时优先运行：
+导入入口：
 
 ```bash
-bash scripts/find_or_import_skill.sh import <source>
+bash scripts/find_or_import_skill.sh import <source> [--skill-id <id>] [--subpath <path>] [--ref <branch>] [--force]
 ```
 
-常见参数：
+脚本职责：
 
-- `--skill-id <id>`
-- `--subpath <path>`
-- `--ref <branch>`
-- `--force`
-- `--dry-run`
+1. 识别来源（repo 简写 / GitHub URL / 本地路径）
+2. 拉取并定位 `SKILL.md`
+3. 执行规则审计（路径、secret、远程执行、绕过策略）
+4. 写入根目录 `<skill-id>/`（真实工作副本）
+5. 备份上游到 `.skills/upstream/<skill-id>/`
+6. 更新 `.skills/registry.json` 与 `.skills/sources/<skill-id>.json`
+7. 生成 `.skills/reports/<skill-id>.md`
 
-脚本负责：
+## Audit And Refinement
 
-1. 解析来源
-2. 下载到临时目录
-3. 发现 `SKILL.md`
-4. 做规则审计
-5. 将原始版本写入 `.skills/upstream/<skill-id>/`
-6. 将导入版本写入仓库根目录 `<skill-id>/`
-7. 更新 `.skills/sources/*.json` 与 `.skills/registry.json`
-8. 生成 `.skills/reports/*.md`
+脚本完成后必须追加 LLM 审阅：
 
-## LLM Review
+1. 恶意 prompt / 越权 / 模糊授权检查
+2. 敏感路径与凭据泄露风险判断
+3. 中文翻译与结构优化（直接改根目录 skill）
+4. 生成简短说明：原理、触发条件、典型用法、限制
 
-脚本结束后，还要补一轮大模型审阅：
+## Upstream Update
 
-1. 判断是否存在恶意 prompt、越权要求、模糊授权
-2. 判断工作流是否要求访问敏感路径或泄露凭据
-3. 判断 skill 是否需要重写结构、翻译为中文、补说明
-
-## Upstream Management
-
-更新已导入的外部 skill 时，使用：
+常规更新：
 
 ```bash
 bash scripts/find_or_import_skill.sh update --skill-id <id>
 ```
 
-如果根目录 skill 已被手工修改，脚本会阻止覆盖；只有明确允许覆盖时，才使用：
+本地有未收尾改动时，默认阻断覆盖；只有用户明确同意时才执行：
 
 ```bash
 bash scripts/find_or_import_skill.sh update --skill-id <id> --allow-dirty
 ```
 
+## Agent-First Rule For Multi-Case Tasks
+
+如果任务“流程短，但分支和 case 很多”，不强行写死脚本分支；优先让 agent 按当前上下文执行命令并收敛结果。脚本只负责稳定的公共路径：导入、状态落盘、分发、发布。
+
 ## Finish
 
-当你完成中文优化或说明书整理后，必须运行：
+完成导入后的任何手工优化后，统一收尾：
 
 ```bash
 bash scripts/finalize_manual_edits.sh --skill-id <id> --publish --push
 ```
+
+失败处理：
+
+1. `risk_status=blocked`：停止分发，先修复再 finalize。
+2. 搜索无结果：提示改关键词或转 `scene-create-skill` 新建技能。

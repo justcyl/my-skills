@@ -1,17 +1,25 @@
 # Scene: Create Skill
 
-当用户要创建新 skill、重建 skill 骨架，或把一个想法转成正式 skill 时读取本文件。
+当用户要“从零创建 skill / 重建 skill / 把现有做法沉淀为 skill / 迭代优化 skill”时读取本文件。
 
 ## Goals
 
-1. 创建根目录 skill 作为真源
-2. 用最小骨架启动 skill
-3. 明确哪些部分由脚本生成，哪些部分由大模型写内容
-4. 创建后立即纳入 `.skills/` 状态管理
+1. 用统一骨架快速创建可纳管 skill
+2. 吸收 `skill-creator` 的访谈、写作和验证流程
+3. 保持脚本生成状态字段，LLM 负责内容质量
+4. 创建后立即进入审计、分发、发布闭环
 
-## Creation Workflow
+## Intake (先问清楚再创建)
 
-先运行骨架脚本：
+至少确认这 5 项：
+
+1. 这个 skill 要让 agent 完成什么能力
+2. 触发条件和典型用户话术是什么
+3. 输出格式或交付物是什么
+4. 成功标准和失败边界是什么
+5. 是否需要测试集与迭代评估
+
+## Creation Command
 
 ```bash
 bash scripts/create_skill.sh --skill-id <id> --name <name> --description <description>
@@ -19,32 +27,62 @@ bash scripts/create_skill.sh --skill-id <id> --name <name> --description <descri
 
 脚本负责：
 
-- 创建根目录 skill
-- 写入最小 `SKILL.md`
-- 初始化 `references/`、`scripts/`
-- 创建 `.skills/sources/<id>.json`
-- 创建 `.skills/reports/<id>.md`
-- 更新 `.skills/registry.json`
+1. 创建根目录 `<skill-id>/`
+2. 初始化 `SKILL.md`、`references/`、`scripts/`
+3. 初始化 `.skills/sources/<id>.json`
+4. 初始化 `.skills/reports/<id>.md`
+5. 更新 `.skills/registry.json`
 
-## Content Responsibilities
+## Writing Rules (吸收 skill-creator 核心要求)
 
-脚本生成：
+1. `description` 必须写触发条件，不只写功能名。
+2. `SKILL.md` 主体聚焦工作流与边界，避免堆砌样例。
+3. 大体量知识放 `references/`，可执行步骤放 `scripts/`。
+4. 优先解释“为什么这样做”，减少僵硬指令。
 
-- `skill_id`
-- `.skills/*.json`
-- 审计状态初值
-- 哈希与时间戳
+## Two Tracks
 
-大模型生成：
+### Track A: Fast Path (默认)
 
-- `SKILL.md` 正文
-- `references/*.md`
-- 需要时的 `scripts/*`
-- 报告中的原理与用法说明
+适用于大多数创建任务：
+
+1. 创建骨架
+2. 填充 `SKILL.md` 与必要 `references/`
+3. 补最少可执行示例
+4. finalize 收尾并发布
+
+### Track B: Eval Path (按需)
+
+当用户要求稳定性验证或准备长期复用时启用：
+
+1. 设计 2-3 个真实测试 prompt
+2. 跑一轮结果并收集反馈
+3. 修订 `SKILL.md` 与辅助脚本
+4. 重复直到可用
+
+## Agent-First Rule For Multi-Case Tasks
+
+对于“流程短但 case 非常多”的任务，不把所有 case 写死在脚本里；优先由 agent 依据上下文执行命令并处理分支。脚本保持最小职责：建骨架、状态同步、分发、发布。
+
+## Source Of Truth
+
+脚本生成（禁止 LLM 臆造）：
+
+1. `skill_id`
+2. `.skills/*.json` 状态字段
+3. 哈希、时间戳、分发状态
+4. 风险状态初值与更新
+
+LLM 生成或修改：
+
+1. `<skill-id>/SKILL.md` 正文
+2. `<skill-id>/references/*.md`
+3. `<skill-id>/scripts/*`
+4. `.skills/reports/<skill-id>.md` 的可读说明段落
 
 ## Finish
 
-内容补齐后，必须运行：
+任何创建或迭代后都执行：
 
 ```bash
 bash scripts/finalize_manual_edits.sh --skill-id <id> --publish --push
