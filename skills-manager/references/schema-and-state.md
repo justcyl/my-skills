@@ -9,6 +9,7 @@
 - `.skills/reports/<skill-id>.md`
 - `.skills/agents/<agent>.json`
 - `.skills/upstream/<skill-id>/`
+- `archived-skills/<skill-id>/`
 
 ## Script-Generated Fields
 
@@ -25,6 +26,8 @@
 - `upstream_revision`
 - `managed_revision`
 - `managed_dirty`
+- `archived`
+- `archived_at`
 - `last_imported_at`
 - `last_updated_at`
 - `distribution`

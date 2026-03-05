@@ -24,6 +24,7 @@ else
 fi
 
 STATE_DIR="${REPO_ROOT}/.skills"
+ARCHIVED_SKILLS_DIR="${REPO_ROOT}/archived-skills"
 SOURCES_DIR="${STATE_DIR}/sources"
 REPORTS_DIR="${STATE_DIR}/reports"
 AGENTS_DIR="${STATE_DIR}/agents"
@@ -42,7 +43,7 @@ require_jq() {
 }
 
 ensure_state_dirs() {
-  mkdir -p "${STATE_DIR}" "${SOURCES_DIR}" "${REPORTS_DIR}" "${AGENTS_DIR}" "${UPSTREAM_DIR}"
+  mkdir -p "${STATE_DIR}" "${ARCHIVED_SKILLS_DIR}" "${SOURCES_DIR}" "${REPORTS_DIR}" "${AGENTS_DIR}" "${UPSTREAM_DIR}"
   if [[ ! -f "${REGISTRY_PATH}" ]]; then
     cat > "${REGISTRY_PATH}" <<'JSON'
 {
@@ -115,6 +116,11 @@ list_skill_ids() {
 skill_root_path() {
   local skill_id="$1"
   printf '%s\n' "${REPO_ROOT}/${skill_id}"
+}
+
+archived_skill_path() {
+  local skill_id="$1"
+  printf '%s\n' "${ARCHIVED_SKILLS_DIR}/${skill_id}"
 }
 
 source_json_path() {

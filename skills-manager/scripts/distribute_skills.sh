@@ -10,6 +10,7 @@ usage() {
 usage:
   bash scripts/distribute_skills.sh sync [--agent <codex|claude-code|all>] [--skill-id <id>] [--mode <auto|symlink|copy>] [--dry-run]
   bash scripts/distribute_skills.sh status [--agent <codex|claude-code|all>] [--skill-id <id>]
+  bash scripts/distribute_skills.sh archive --skill-id <id> [--dry-run]
 TEXT
 }
 
@@ -72,6 +73,37 @@ upsert_registry_distribution() {
       sync_status: $sync_status,
       last_synced_at: $timestamp
     }' "${REGISTRY_PATH}" > "${temp_file}"
+  mv "${temp_file}" "${REGISTRY_PATH}"
+}
+
+remove_agent_state() {
+  local agent="$1"
+  local skill_id="$2"
+  local state_path="${AGENTS_DIR}/${agent}.json"
+  local temp_file
+
+  temp_file="$(mktemp)"
+  jq --arg skill_id "${skill_id}" '.skills |= del(.[$skill_id])' "${state_path}" > "${temp_file}"
+  mv "${temp_file}" "${state_path}"
+}
+
+archive_registry_entry() {
+  local skill_id="$1"
+  local archive_path="$2"
+  local temp_file
+
+  temp_file="$(mktemp)"
+  jq \
+    --arg skill_id "${skill_id}" \
+    --arg archive_path "${archive_path}" \
+    --arg timestamp "${TIMESTAMP}" \
+    '.skills[$skill_id] = ((.skills[$skill_id] // {}) + {
+      status: "archived",
+      skill_path: $archive_path,
+      managed_dirty: false,
+      distribution: {},
+      last_updated_at: $timestamp
+    })' "${REGISTRY_PATH}" > "${temp_file}"
   mv "${temp_file}" "${REGISTRY_PATH}"
 }
 
@@ -233,6 +265,89 @@ command_status() {
   done
 }
 
+command_archive() {
+  local skill_id=""
+  local dry_run=0
+  local source_path archived_path source_json_path_value target_base temp_file
+
+  while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+      --skill-id)
+        skill_id="${2:-}"
+        shift 2
+        ;;
+      --dry-run)
+        dry_run=1
+        shift
+        ;;
+      -h|--help)
+        usage
+        exit 0
+        ;;
+      *)
+        usage
+        exit 1
+        ;;
+    esac
+  done
+
+  if [[ -z "${skill_id}" ]]; then
+    echo "error: --skill-id is required for archive" >&2
+    exit 1
+  fi
+
+  if [[ "${skill_id}" == "skills-manager" ]]; then
+    echo "error: archiving skills-manager is not allowed" >&2
+    exit 1
+  fi
+
+  require_jq
+  ensure_state_dirs
+
+  source_path="$(skill_root_path "${skill_id}")"
+  archived_path="$(archived_skill_path "${skill_id}")"
+
+  if [[ ! -d "${source_path}" ]]; then
+    echo "error: skill '${skill_id}' does not exist at ${source_path}" >&2
+    exit 1
+  fi
+
+  if [[ -e "${archived_path}" ]]; then
+    echo "error: archived target already exists at ${archived_path}" >&2
+    exit 1
+  fi
+
+  if [[ "${dry_run}" -eq 1 ]]; then
+    echo "archive skill=${skill_id} from=${source_path} to=${archived_path}"
+    return
+  fi
+
+  mkdir -p "${ARCHIVED_SKILLS_DIR}"
+  mv "${source_path}" "${archived_path}"
+
+  for agent in codex claude-code; do
+    target_base="$(resolve_agent_target_dir "${agent}")"
+    rm -rf "${target_base}/${skill_id}"
+    remove_agent_state "${agent}" "${skill_id}"
+  done
+
+  source_json_path_value="$(source_json_path "${skill_id}")"
+  if [[ -f "${source_json_path_value}" ]]; then
+    temp_file="$(mktemp)"
+    jq \
+      --arg timestamp "${TIMESTAMP}" \
+      --arg archive_path "archived-skills/${skill_id}" \
+      '.archived = true
+       | .archived_at = $timestamp
+       | .skill_path = $archive_path
+       | .managed_dirty = false' "${source_json_path_value}" > "${temp_file}"
+    mv "${temp_file}" "${source_json_path_value}"
+  fi
+
+  archive_registry_entry "${skill_id}" "archived-skills/${skill_id}"
+  echo "archived ${skill_id}"
+}
+
 subcommand="${1:-sync}"
 if [[ $# -gt 0 ]]; then
   shift
@@ -244,6 +359,9 @@ case "${subcommand}" in
     ;;
   status)
     command_status "$@"
+    ;;
+  archive)
+    command_archive "$@"
     ;;
   *)
     usage
