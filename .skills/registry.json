@@ -484,6 +484,12 @@
           "mode": "symlink",
           "sync_status": "synced",
           "last_synced_at": "2026-03-05T08:26:51Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/skill-creator",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-03-05T08:26:51Z"
         }
       },
       "display_name": "skill-creator",
