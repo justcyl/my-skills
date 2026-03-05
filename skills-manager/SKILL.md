@@ -1,15 +1,21 @@
 ---
 name: skills-manager
-description: 在当前 `my-skills` 仓库中统一发现、下载、创建、整理、审核、分发和发布 Skills 的总控 skill。Use when the user wants to: (1) 查找并下载 skill, (2) 创建新 skill, (3) 手动编辑 skill 后同步状态, (4) 管理向 Codex 或 Claude Code 的分发与发布。
+description: 统一处理所有 skills 操作的总控 skill，包括搜索、导入、创建、手动编辑后同步、规则与语义审核、中文优化、上游跟踪、分发与发布。默认将所有下载/托管技能集中到 `my-skills` 仓库管理；即使在其他路径触发，也应回到该仓库执行管理流程。
 ---
 
 # Skills Manager
 
-使用这个 skill 作为当前仓库 `my-skills` 的唯一技能控制面。
+使用这个 skill 作为统一技能仓库（`my-skills`）的唯一技能控制面。
+
+## Repository Resolution
+
+1. 默认目标仓库是 `/Users/chenyl/project/my-skills`。
+2. 即使该 skill 在其他路径触发，也要把“下载、创建、更新、状态同步、分发、发布”统一落在这个仓库里。
+3. 如需迁移仓库位置，可设置环境变量 `MY_SKILLS_REPO_ROOT` 覆盖默认路径。
 
 ## True Source
 
-1. 仓库根目录下的每个 skill 目录就是唯一真源，例如 `find-skills/`、`skill-creator/`、`skills-manager/`。
+1. 仓库根目录下的每个 skill 目录就是唯一真源，例如 `find-skills/`、`skills-manager/`、`tm/`。
 2. 不再维护第二份 `managed/` 副本。模型和用户都直接编辑根目录 skill。
 3. 所有程序状态写入 `.skills/`：
    - `.skills/registry.json`

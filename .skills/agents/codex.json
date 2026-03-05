@@ -1,4 +1,124 @@
 {
   "agent": "codex",
-  "skills": {}
+  "skills": {
+    "brainstorming": {
+      "source_path": "brainstorming",
+      "target_path": "/Users/chenyl/.codex/skills/brainstorming",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-04T17:34:00Z"
+    },
+    "coding-agent": {
+      "source_path": "coding-agent",
+      "target_path": "/Users/chenyl/.codex/skills/coding-agent",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-04T17:34:00Z"
+    },
+    "deepwiki": {
+      "source_path": "deepwiki",
+      "target_path": "/Users/chenyl/.codex/skills/deepwiki",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-04T17:34:00Z"
+    },
+    "find-skills": {
+      "source_path": "find-skills",
+      "target_path": "/Users/chenyl/.codex/skills/find-skills",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-04T17:34:00Z"
+    },
+    "gemini": {
+      "source_path": "gemini",
+      "target_path": "/Users/chenyl/.codex/skills/gemini",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-04T17:34:00Z"
+    },
+    "github": {
+      "source_path": "github",
+      "target_path": "/Users/chenyl/.codex/skills/github",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-04T17:34:00Z"
+    },
+    "github-cli": {
+      "source_path": "github-cli",
+      "target_path": "/Users/chenyl/.codex/skills/github-cli",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-04T17:34:00Z"
+    },
+    "pdf-process-mineru": {
+      "source_path": "pdf-process-mineru",
+      "target_path": "/Users/chenyl/.codex/skills/pdf-process-mineru",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-04T17:34:00Z"
+    },
+    "qwen-asr": {
+      "source_path": "qwen-asr",
+      "target_path": "/Users/chenyl/.codex/skills/qwen-asr",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-04T17:34:00Z"
+    },
+    "research": {
+      "source_path": "research",
+      "target_path": "/Users/chenyl/.codex/skills/research",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-04T17:34:00Z"
+    },
+    "session-logs": {
+      "source_path": "session-logs",
+      "target_path": "/Users/chenyl/.codex/skills/session-logs",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-04T17:34:00Z"
+    },
+    "skills-manager": {
+      "source_path": "skills-manager",
+      "target_path": "/Users/chenyl/.codex/skills/skills-manager",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-04T17:34:00Z"
+    },
+    "summarize": {
+      "source_path": "summarize",
+      "target_path": "/Users/chenyl/.codex/skills/summarize",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-04T17:34:00Z"
+    },
+    "tm": {
+      "source_path": "tm",
+      "target_path": "/Users/chenyl/.codex/skills/tm",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-04T17:34:00Z"
+    },
+    "tmux": {
+      "source_path": "tmux",
+      "target_path": "/Users/chenyl/.codex/skills/tmux",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-04T17:34:00Z"
+    },
+    "video-frames": {
+      "source_path": "video-frames",
+      "target_path": "/Users/chenyl/.codex/skills/video-frames",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-04T17:34:00Z"
+    },
+    "weather": {
+      "source_path": "weather",
+      "target_path": "/Users/chenyl/.codex/skills/weather",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-04T17:34:00Z"
+    }
+  }
 }

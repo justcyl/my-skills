@@ -2,8 +2,8 @@
 set -euo pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SKILL_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
-REPO_ROOT="$(cd "${SKILL_DIR}/.." && pwd)"
+# shellcheck source=lib/common.sh
+source "${SCRIPT_DIR}/lib/common.sh"
 
 commit_message=""
 push_after_commit=0
@@ -33,7 +33,7 @@ generate_default_message() {
   ' | LC_ALL=C sort -u | tr '\n' ' ')"
 
   if [[ -z "${summary// }" ]]; then
-    printf 'Update my-skills repository\n'
+    printf 'Update skills repository\n'
     return
   fi
 

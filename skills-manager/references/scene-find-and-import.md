@@ -5,7 +5,7 @@
 ## Goals
 
 1. 帮用户找到合适的 skill
-2. 将外部 skill 下载到当前仓库根目录
+2. 将外部 skill 下载到统一仓库 `my-skills` 的根目录
 3. 保存上游快照到 `.skills/upstream/<skill-id>/`
 4. 生成脚本状态、规则审计结果和初始报告
 5. 在需要时继续完成中文优化、说明书整理、分发和发布
@@ -21,8 +21,8 @@ npx skills find <query>
 限制：
 
 - 只把它当搜索器
-- 不能用 `npx skills add/check/update` 管理当前仓库
-- 安装、更新、状态维护必须通过本仓库脚本完成
+- 不能用 `npx skills add/check/update` 管理 `my-skills` 仓库
+- 安装、更新、状态维护必须通过 `my-skills` 仓库脚本完成
 
 ## Import Workflow
 

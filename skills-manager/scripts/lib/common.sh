@@ -1,10 +1,28 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+realpath_compat() {
+  python3 - "$1" <<'PY'
+import os
+import sys
+print(os.path.realpath(sys.argv[1]))
+PY
+}
+
+SCRIPT_FILE="$(realpath_compat "${BASH_SOURCE[0]}")"
+SCRIPT_DIR="$(cd "$(dirname "${SCRIPT_FILE}")" && pwd)"
 SCRIPTS_DIR="$(cd "${SCRIPT_DIR}/.." && pwd)"
 SKILL_DIR="$(cd "${SCRIPTS_DIR}/.." && pwd)"
-REPO_ROOT="$(cd "${SKILL_DIR}/.." && pwd)"
+SCRIPT_BASE_REPO_ROOT="$(cd "${SKILL_DIR}/.." && pwd)"
+
+# 默认把 my-skills 作为统一技能仓库；可通过环境变量覆盖。
+PREFERRED_REPO_ROOT="${MY_SKILLS_REPO_ROOT:-/Users/chenyl/project/my-skills}"
+if [[ -f "${PREFERRED_REPO_ROOT}/skills-manager/SKILL.md" ]]; then
+  REPO_ROOT="${PREFERRED_REPO_ROOT}"
+else
+  REPO_ROOT="${SCRIPT_BASE_REPO_ROOT}"
+fi
+
 STATE_DIR="${REPO_ROOT}/.skills"
 SOURCES_DIR="${STATE_DIR}/sources"
 REPORTS_DIR="${STATE_DIR}/reports"

@@ -10,7 +10,7 @@
 
 ## Summary
 
-在当前 `my-skills` 仓库中统一发现、下载、创建、整理、审核、分发和发布 Skills 的总控 skill。Use when the user wants to: (1) 查找并下载 skill, (2) 创建新 skill, (3) 手动编辑 skill 后同步状态, (4) 管理向 Codex 或 Claude Code 的分发与发布。
+统一处理所有 skills 操作的总控 skill，包括搜索、导入、创建、手动编辑后同步、规则与语义审核、中文优化、上游跟踪、分发与发布。默认将所有下载/托管技能集中到 `my-skills` 仓库管理；即使在其他路径触发，也应回到该仓库执行管理流程。
 
 ## Risk Findings
 
