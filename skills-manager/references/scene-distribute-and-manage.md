@@ -51,7 +51,7 @@ bash scripts/distribute_skills.sh archive --skill-id <id> --dry-run
 
 归档后：
 
-1. skill 目录会移动到 `archived-skills/<id>/`
+1. skill 目录会移动到 `.skills/archived-skills/<id>/`
 2. Codex / Claude Code 下对应 skill 会被移除
 3. `.skills/registry.json` 与 `.skills/agents/*.json` 会同步更新
 

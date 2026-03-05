@@ -336,7 +336,7 @@ command_archive() {
     temp_file="$(mktemp)"
     jq \
       --arg timestamp "${TIMESTAMP}" \
-      --arg archive_path "archived-skills/${skill_id}" \
+      --arg archive_path ".skills/archived-skills/${skill_id}" \
       '.archived = true
        | .archived_at = $timestamp
        | .skill_path = $archive_path
@@ -344,7 +344,7 @@ command_archive() {
     mv "${temp_file}" "${source_json_path_value}"
   fi
 
-  archive_registry_entry "${skill_id}" "archived-skills/${skill_id}"
+  archive_registry_entry "${skill_id}" ".skills/archived-skills/${skill_id}"
   echo "archived ${skill_id}"
 }
 

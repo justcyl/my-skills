@@ -24,7 +24,7 @@ else
 fi
 
 STATE_DIR="${REPO_ROOT}/.skills"
-ARCHIVED_SKILLS_DIR="${REPO_ROOT}/archived-skills"
+ARCHIVED_SKILLS_DIR="${STATE_DIR}/archived-skills"
 SOURCES_DIR="${STATE_DIR}/sources"
 REPORTS_DIR="${STATE_DIR}/reports"
 AGENTS_DIR="${STATE_DIR}/agents"
