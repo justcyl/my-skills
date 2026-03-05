@@ -66,8 +66,7 @@ JSON
     fi
   done
 
-  # 兼容历史字段：统一主字段为 risk_status / upstream_enabled，
-  # 同时保留 audit_status / has_upstream 以兼容旧调用方。
+  # 历史迁移：统一主字段为 risk_status / upstream_enabled，并删除旧字段。
   temp_file="$(mktemp)"
   jq '
     .skills |= (
@@ -76,8 +75,7 @@ JSON
           .value |= (
             .risk_status = (.risk_status // .audit_status // "pending")
             | .upstream_enabled = (.upstream_enabled // .has_upstream // false)
-            | .audit_status = (.audit_status // .risk_status)
-            | .has_upstream = (.has_upstream // .upstream_enabled)
+            | del(.audit_status, .has_upstream)
           )
         )
     )
@@ -467,10 +465,8 @@ upsert_registry_entry() {
       description: $description,
       status: $status,
       risk_status: $risk_status,
-      audit_status: $risk_status,
       managed_dirty: false,
       upstream_enabled: $upstream_enabled,
-      has_upstream: $upstream_enabled,
       report_path: (".skills/reports/" + $skill_id + ".md"),
       source_path: (".skills/sources/" + $skill_id + ".json"),
       skill_path: $skill_path,
