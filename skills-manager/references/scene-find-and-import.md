@@ -33,8 +33,8 @@ bash scripts/find_or_import_skill.sh search <query>
 
 说明：
 
-1. 对外只使用上述脚本命令，不直接手敲 `npx skills find`。
-2. 禁止使用 `npx skills add/check/update` 管理本仓库状态。
+1. 对外只使用上述脚本命令，不直接调用底层外部 CLI。
+2. 禁止使用外部 Skills CLI 的安装/检查/更新命令管理本仓库状态。
 3. 搜索输出后，给用户简报：
    - skill 名称
    - 一句话用途
