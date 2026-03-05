@@ -33,7 +33,7 @@ bash scripts/find_or_import_skill.sh search <query>
 
 说明：
 
-1. 内部调用 `npx skills find`，只用于检索。
+1. 对外只使用上述脚本命令，不直接手敲 `npx skills find`。
 2. 禁止使用 `npx skills add/check/update` 管理本仓库状态。
 3. 搜索输出后，给用户简报：
    - skill 名称
@@ -81,10 +81,6 @@ bash scripts/find_or_import_skill.sh update --skill-id <id>
 ```bash
 bash scripts/find_or_import_skill.sh update --skill-id <id> --allow-dirty
 ```
-
-## Agent-First Rule For Multi-Case Tasks
-
-如果任务“流程短，但分支和 case 很多”，不强行写死脚本分支；优先让 agent 按当前上下文执行命令并收敛结果。脚本只负责稳定的公共路径：导入、状态落盘、分发、发布。
 
 ## Finish
 

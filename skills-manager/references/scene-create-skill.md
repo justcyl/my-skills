@@ -60,9 +60,24 @@ bash scripts/create_skill.sh --skill-id <id> --name <name> --description <descri
 3. 修订 `SKILL.md` 与辅助脚本
 4. 重复直到可用
 
-## Agent-First Rule For Multi-Case Tasks
+## Eval Toolkit (merged from skill-creator)
 
-对于“流程短但 case 非常多”的任务，不把所有 case 写死在脚本里；优先由 agent 依据上下文执行命令并处理分支。脚本保持最小职责：建骨架、状态同步、分发、发布。
+当进入 Track B 时，直接复用以下资源：
+
+1. `toolkits/skill-creator/agents/grader.md`
+2. `toolkits/skill-creator/agents/analyzer.md`
+3. `toolkits/skill-creator/agents/comparator.md`
+4. `toolkits/skill-creator/references/schemas.md`
+5. `toolkits/skill-creator/eval-viewer/generate_review.py`
+6. `toolkits/skill-creator/scripts/*.py`
+
+典型命令（在 `skills-manager/toolkits/skill-creator/` 下执行）：
+
+```bash
+python -m scripts.aggregate_benchmark <workspace>/iteration-N --skill-name <name>
+python -m scripts.run_loop --eval-set <path> --skill-path <path> --model <model> --max-iterations 5 --verbose
+python -m scripts.package_skill <path/to/skill-folder>
+```
 
 ## Source Of Truth
 
