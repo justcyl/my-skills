@@ -332,8 +332,8 @@
       "source_path": ".skills/sources/skills-manager.json",
       "skill_path": "skills-manager",
       "upstream_path": ".skills/upstream/skills-manager",
-      "managed_revision": "sha256:3fcd722cea5dbbcd2bfa777c6ff686a2b355adc88c6555db6497a29d780022c8",
-      "last_updated_at": "2026-03-05T09:13:52Z",
+      "managed_revision": "sha256:68cccf7028d470aa2a2697975611b811d5edbb67e1b651ff915b3cce88a82353",
+      "last_updated_at": "2026-03-05T09:16:14Z",
       "risk_status": "passed",
       "upstream_enabled": false
     },
