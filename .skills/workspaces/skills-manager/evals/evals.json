@@ -1,0 +1,83 @@
+{
+  "skill_name": "skills-manager",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "帮我评估改进一下 pdf 这个 skill，上次测试及格率太低了",
+      "expected_output": "正确路由到 creator 的 eval-flow，而不是 create-flow 或 manage 场景",
+      "files": [],
+      "expectations": [
+        "识别为「评估改进」场景，匹配 Routing 第 2 条",
+        "读取 references/scene-create-skill.md",
+        "判断 pdf skill 已存在，不运行 create_skill.sh",
+        "进入 creator/SKILL.md",
+        "creator 内部路由到 references/eval-flow.md 而非 create-flow.md",
+        "不会误路由到 scene-manage-skills.md"
+      ]
+    },
+    {
+      "id": 2,
+      "prompt": "我手动改了 translator skill 的 SKILL.md，帮我同步一下状态然后发布",
+      "expected_output": "正确路由到 scene-manage-skills.md，不进入 creator",
+      "files": [],
+      "expectations": [
+        "识别为「手动编辑后同步」场景，匹配 Routing 第 3 条",
+        "读取 references/scene-manage-skills.md",
+        "不读取 references/scene-create-skill.md",
+        "不进入 creator/SKILL.md",
+        "最终调用 finalize_manual_edits.sh"
+      ]
+    },
+    {
+      "id": 3,
+      "prompt": "我想把之前写代码时常用的一些模式沉淀成一个 skill",
+      "expected_output": "正确路由到 creator 的 create-flow，进行需求访谈",
+      "files": [],
+      "expectations": [
+        "识别为「创建新 skill」场景，匹配 Routing 第 2 条",
+        "读取 references/scene-create-skill.md",
+        "判断目标 skill 不存在，需要先运行 create_skill.sh",
+        "进入 creator/SKILL.md",
+        "creator 内部路由到 references/create-flow.md",
+        "开始需求访谈（Capture Intent），而非直接跑评测"
+      ]
+    },
+    {
+      "id": 4,
+      "prompt": "有没有处理 PDF 表单填写的 skill？帮我找一个",
+      "expected_output": "正确路由到 scene-find-and-import.md，进入搜索流程",
+      "files": [],
+      "expectations": [
+        "识别为「找 skill」场景，匹配 Routing 第 1 条",
+        "读取 references/scene-find-and-import.md",
+        "不读取 references/scene-create-skill.md",
+        "不进入 creator/SKILL.md",
+        "使用 find_or_import_skill.sh search 进行搜索"
+      ]
+    },
+    {
+      "id": 5,
+      "prompt": "把 github.com/anthropics/courses 这个仓库里的 prompt-engineering skill 导入进来",
+      "expected_output": "正确路由到 scene-find-and-import.md，进入直接导入流程",
+      "files": [],
+      "expectations": [
+        "识别为「导入外部 skill」场景，匹配 Routing 第 1 条",
+        "读取 references/scene-find-and-import.md",
+        "不误判为「创建新 skill」（不读 scene-create-skill.md）",
+        "使用 find_or_import_skill.sh import 进行导入",
+        "导入后执行审计与中文优化流程"
+      ]
+    },
+    {
+      "id": 6,
+      "prompt": "pdf skill 感觉不太好用，帮我找个更好的替代，或者帮我改改",
+      "expected_output": "正确识别歧义：搜索替代 → 第 1 条；改进现有 → 第 2 条。应先向用户确认意图",
+      "files": [],
+      "expectations": [
+        "识别出用户意图存在歧义：「找替代」属于第 1 条、「改改」属于第 2 条",
+        "不会未经确认就只走一条路由",
+        "向用户澄清意图后再决定路由"
+      ]
+    }
+  ]
+}

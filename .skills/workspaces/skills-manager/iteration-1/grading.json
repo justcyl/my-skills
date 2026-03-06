@@ -1,0 +1,104 @@
+{
+  "expectations": [
+    {
+      "text": "[Case1] 识别为「评估改进」场景，匹配 Routing 第 2 条",
+      "passed": true,
+      "evidence": "第 98 行 '评估改进 skill' 直接命中"
+    },
+    {
+      "text": "[Case1] 读取 references/scene-create-skill.md",
+      "passed": true,
+      "evidence": "Routing 第 2 条指令明确"
+    },
+    {
+      "text": "[Case1] 判断 pdf skill 已存在，不运行 create_skill.sh",
+      "passed": true,
+      "evidence": "scene-create-skill.md 第 25-26 行覆盖"
+    },
+    {
+      "text": "[Case1] 进入 creator/SKILL.md",
+      "passed": true,
+      "evidence": "scene-create-skill.md 第 26 行"
+    },
+    {
+      "text": "[Case1] creator 内部路由到 eval-flow.md 而非 create-flow.md",
+      "passed": true,
+      "evidence": "根 SKILL.md 第 103 行暴露子路由；creator Routing 第 2 条确认"
+    },
+    {
+      "text": "[Case1] 不会误路由到 scene-manage-skills.md",
+      "passed": true,
+      "evidence": "第 3 条触发词与用户意图无交集"
+    },
+    {
+      "text": "[Case2] 识别为「手动编辑后同步」场景，匹配 Routing 第 3 条",
+      "passed": true,
+      "evidence": "第 105 行 '同步状态、处理手动编辑' 直接命中"
+    },
+    {
+      "text": "[Case2] 读取 references/scene-manage-skills.md",
+      "passed": true,
+      "evidence": "Routing 第 3 条指令明确"
+    },
+    {
+      "text": "[Case2] 不读取 references/scene-create-skill.md",
+      "passed": true,
+      "evidence": "用户意图不匹配第 2 条"
+    },
+    {
+      "text": "[Case2] 不进入 creator/SKILL.md",
+      "passed": true,
+      "evidence": "第 3 条处理链不涉及 creator"
+    },
+    {
+      "text": "[Case2] 最终调用 finalize_manual_edits.sh",
+      "passed": true,
+      "evidence": "Workflow 3.2 明确指出"
+    },
+    {
+      "text": "[Case3] 识别为「创建新 skill」场景，匹配 Routing 第 2 条",
+      "passed": true,
+      "evidence": "第 98 行 '创建新 skill' 覆盖'沉淀成 skill'的语义"
+    },
+    {
+      "text": "[Case3] 读取 references/scene-create-skill.md",
+      "passed": true,
+      "evidence": "Routing 第 2 条指令明确"
+    },
+    {
+      "text": "[Case3] 判断目标 skill 不存在，需要先运行 create_skill.sh",
+      "passed": false,
+      "evidence": "路由方向正确，但根 SKILL.md 未说明如何判断 skill 是否存在（检查目录？查 registry？）。LLM 需穿透到 scene-create-skill.md 才有具体指引"
+    },
+    {
+      "text": "[Case3] 进入 creator/SKILL.md",
+      "passed": true,
+      "evidence": "scene-create-skill.md 和根 SKILL.md 都指向 creator"
+    },
+    {
+      "text": "[Case3] creator 内部路由到 create-flow.md",
+      "passed": true,
+      "evidence": "根 SKILL.md 第 102 行暴露子路由"
+    },
+    {
+      "text": "[Case3] 开始需求访谈而非直接跑评测",
+      "passed": true,
+      "evidence": "create-flow 默认流程以 capture intent 开始"
+    }
+  ],
+  "summary": {
+    "passed": 16,
+    "failed": 1,
+    "total": 17,
+    "pass_rate": 0.94
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "[Case3] 判断目标 skill 不存在，需要先运行 create_skill.sh",
+        "reason": "根 SKILL.md Workflow 2.2 说'如果目标 skill 尚不存在'但未说明判断方法，属于执行层缺口"
+      }
+    ],
+    "overall": "路由方向全部正确。唯一缺口是 skill 存在性判断方法未在根 SKILL.md 中说明。"
+  }
+}

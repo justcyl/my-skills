@@ -1,0 +1,88 @@
+{
+  "expectations": [
+    {
+      "text": "[Case4] 识别为「找 skill」场景，匹配 Routing 第 1 条",
+      "passed": true,
+      "evidence": "第 95 行 '找 skill' 直接命中"
+    },
+    {
+      "text": "[Case4] 读取 references/scene-find-and-import.md",
+      "passed": true,
+      "evidence": "第 96 行指令明确"
+    },
+    {
+      "text": "[Case4] 不读取 references/scene-create-skill.md",
+      "passed": true,
+      "evidence": "无创建/评测意图"
+    },
+    {
+      "text": "[Case4] 不进入 creator/SKILL.md",
+      "passed": true,
+      "evidence": "第 1 条流程不涉及 creator"
+    },
+    {
+      "text": "[Case4] 使用 find_or_import_skill.sh search",
+      "passed": true,
+      "evidence": "Workflow 1.2 明确"
+    },
+    {
+      "text": "[Case5] 识别为「导入外部 skill」场景，匹配 Routing 第 1 条",
+      "passed": false,
+      "evidence": "第 1 条缺少'导入'触发词。'下载'可部分覆盖但非直接匹配，且'导入'与第 2 条'创建新 skill'可能产生歧义"
+    },
+    {
+      "text": "[Case5] 读取 references/scene-find-and-import.md",
+      "passed": true,
+      "evidence": "第 96-97 行，补充说明中提到'导入决策流程'"
+    },
+    {
+      "text": "[Case5] 不误判为「创建新 skill」",
+      "passed": false,
+      "evidence": "'导入外部 skill 到本地'在语义上可能被理解为在本地'创建'新 skill 条目，存在误路由风险"
+    },
+    {
+      "text": "[Case5] 使用 find_or_import_skill.sh import",
+      "passed": true,
+      "evidence": "Workflow 1.3 和 scene-find-and-import.md Import Workflow 确认"
+    },
+    {
+      "text": "[Case5] 导入后执行审计与中文优化",
+      "passed": true,
+      "evidence": "Workflow 1.4-1.5 确认"
+    },
+    {
+      "text": "[Case6] 识别出意图歧义",
+      "passed": false,
+      "evidence": "根 SKILL.md 无歧义检测指引，第 93 行暗示只匹配一类场景"
+    },
+    {
+      "text": "[Case6] 不会未经确认就只走一条路由",
+      "passed": false,
+      "evidence": "'判断用户属于哪一类场景'的措辞引导 LLM 直接选一条"
+    },
+    {
+      "text": "[Case6] 向用户澄清意图后再决定路由",
+      "passed": false,
+      "evidence": "无任何歧义处理或用户确认的指引"
+    }
+  ],
+  "summary": {
+    "passed": 8,
+    "failed": 5,
+    "total": 13,
+    "pass_rate": 0.62
+  },
+  "eval_feedback": {
+    "suggestions": [
+      {
+        "assertion": "[Case5] 不误判为「创建新 skill」",
+        "reason": "'导入'与'创建'的语义边界在 Routing 中没有明确切分，是实际路由风险"
+      },
+      {
+        "assertion": "[Case6] 向用户澄清意图后再决定路由",
+        "reason": "对于路由型 skill，歧义处理规则是必需的基础能力"
+      }
+    ],
+    "overall": "find-and-import 的'搜索'场景路由健壮，但'导入'缺少触发词，歧义场景完全没有处理指引。"
+  }
+}
