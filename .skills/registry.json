@@ -283,6 +283,34 @@
       "last_updated_at": "2026-03-06T07:27:57Z",
       "risk_status": "warned",
       "upstream_enabled": true
+    },
+    "agent-reach": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/agent-reach",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-03-06T08:45:44Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/agent-reach",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-03-06T08:45:44Z"
+        }
+      },
+      "display_name": "agent-reach",
+      "description": ">",
+      "status": "managed",
+      "risk_status": "warned",
+      "managed_dirty": false,
+      "upstream_enabled": true,
+      "report_path": ".skills/reports/agent-reach.md",
+      "source_path": ".skills/sources/agent-reach.json",
+      "skill_path": "agent-reach",
+      "upstream_path": ".skills/upstream/agent-reach",
+      "managed_revision": "sha256:1a23f9ef7c5e8c186b035887267669a2a17640b3c04417a1520c38350887057c",
+      "last_updated_at": "2026-03-06T08:45:44Z"
     }
   }
 }

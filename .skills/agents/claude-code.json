@@ -7,6 +7,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-03-05T09:07:18Z"
+    },
+    "agent-reach": {
+      "source_path": "agent-reach",
+      "target_path": "/Users/chenyl/.claude/skills/agent-reach",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-06T08:45:44Z"
     }
   }
 }
