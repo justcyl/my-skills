@@ -1,7 +1,7 @@
 {
   "skill_id": "coding-agent",
   "display_name": "coding-agent",
-  "skill_path": "coding-agent",
+  "skill_path": ".skills/archived-skills/coding-agent",
   "source_type": "local-bootstrap",
   "source": "",
   "source_url": "",
@@ -13,5 +13,7 @@
   "last_imported_at": "2026-03-02T17:21:10Z",
   "upstream_revision": "",
   "managed_revision": "sha256:b1310a7e804c65226a71db17d86b3c9afa4542c1b9e8b834f6706a90c858d58d",
-  "managed_dirty": false
+  "managed_dirty": false,
+  "archived": true,
+  "archived_at": "2026-03-06T07:27:54Z"
 }

@@ -1,7 +1,7 @@
 {
   "skill_id": "deepwiki",
   "display_name": "deepwiki",
-  "skill_path": "deepwiki",
+  "skill_path": ".skills/archived-skills/deepwiki",
   "source_type": "local-bootstrap",
   "source": "",
   "source_url": "",
@@ -13,5 +13,7 @@
   "last_imported_at": "2026-03-02T17:21:10Z",
   "upstream_revision": "",
   "managed_revision": "sha256:23aaeefc9189b999c73efb17d8fc6bcb4299fad04e7b7cfbd02e80fe5d3b7597",
-  "managed_dirty": false
+  "managed_dirty": false,
+  "archived": true,
+  "archived_at": "2026-03-06T07:27:54Z"
 }

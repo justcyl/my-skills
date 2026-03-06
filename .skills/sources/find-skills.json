@@ -1,7 +1,7 @@
 {
   "skill_id": "find-skills",
   "display_name": "find-skills",
-  "skill_path": "find-skills",
+  "skill_path": ".skills/archived-skills/find-skills",
   "source_type": "local-bootstrap",
   "source": "",
   "source_url": "",
@@ -13,5 +13,7 @@
   "last_imported_at": "2026-03-02T17:21:10Z",
   "upstream_revision": "",
   "managed_revision": "sha256:0efd2f0903eea28dbb777eb82c4e89db2d3d2dddb910a5bc67c73a3b43db5a83",
-  "managed_dirty": false
+  "managed_dirty": false,
+  "archived": true,
+  "archived_at": "2026-03-06T07:27:54Z"
 }

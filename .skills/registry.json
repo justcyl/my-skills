@@ -2,310 +2,167 @@
   "version": 2,
   "skills": {
     "brainstorming": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/brainstorming",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/brainstorming",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        }
-      },
+      "distribution": {},
       "display_name": "brainstorming",
       "description": "You MUST use this before any creative work - creating features, building components, adding functionality, or modifying behavior. Explores user intent, requirements and design before implementation.",
-      "status": "managed",
+      "status": "archived",
       "managed_dirty": false,
       "report_path": ".skills/reports/brainstorming.md",
       "source_path": ".skills/sources/brainstorming.json",
-      "skill_path": "brainstorming",
+      "skill_path": ".skills/archived-skills/brainstorming",
       "upstream_path": ".skills/upstream/brainstorming",
       "managed_revision": "sha256:942d8436952da806daea8ff2e6fc55d18b0f6be9ff1675ffa090de7d6a7c519e",
-      "last_updated_at": "2026-03-02T17:21:10Z",
+      "last_updated_at": "2026-03-06T07:27:53Z",
       "risk_status": "passed",
       "upstream_enabled": false
     },
     "coding-agent": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/coding-agent",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/coding-agent",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        }
-      },
+      "distribution": {},
       "display_name": "coding-agent",
       "description": "Run Codex CLI, Claude Code, OpenCode, or Pi Coding Agent via background process for programmatic control.",
-      "status": "managed",
+      "status": "archived",
       "managed_dirty": false,
       "report_path": ".skills/reports/coding-agent.md",
       "source_path": ".skills/sources/coding-agent.json",
-      "skill_path": "coding-agent",
+      "skill_path": ".skills/archived-skills/coding-agent",
       "upstream_path": ".skills/upstream/coding-agent",
       "managed_revision": "sha256:b1310a7e804c65226a71db17d86b3c9afa4542c1b9e8b834f6706a90c858d58d",
-      "last_updated_at": "2026-03-02T17:21:10Z",
+      "last_updated_at": "2026-03-06T07:27:54Z",
       "risk_status": "warned",
       "upstream_enabled": false
     },
     "deepwiki": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/deepwiki",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/deepwiki",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        }
-      },
+      "distribution": {},
       "display_name": "deepwiki",
       "description": "Query DeepWiki for repository documentation and structure. Use to understand open source projects, find API docs, and explore codebases.",
-      "status": "managed",
+      "status": "archived",
       "managed_dirty": false,
       "report_path": ".skills/reports/deepwiki.md",
       "source_path": ".skills/sources/deepwiki.json",
-      "skill_path": "deepwiki",
+      "skill_path": ".skills/archived-skills/deepwiki",
       "upstream_path": ".skills/upstream/deepwiki",
       "managed_revision": "sha256:23aaeefc9189b999c73efb17d8fc6bcb4299fad04e7b7cfbd02e80fe5d3b7597",
-      "last_updated_at": "2026-03-02T17:21:10Z",
+      "last_updated_at": "2026-03-06T07:27:54Z",
       "risk_status": "passed",
       "upstream_enabled": false
     },
     "find-skills": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/find-skills",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/find-skills",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        }
-      },
+      "distribution": {},
       "display_name": "find-skills",
       "description": "Helps users discover and install agent skills when they ask questions like \"how do I do X\", \"find a skill for X\", \"is there a skill that can...\", or express interest in extending capabilities. This skill should be used when the user is looking for functionality that might exist as an installable skill.",
-      "status": "managed",
+      "status": "archived",
       "managed_dirty": false,
       "report_path": ".skills/reports/find-skills.md",
       "source_path": ".skills/sources/find-skills.json",
-      "skill_path": "find-skills",
+      "skill_path": ".skills/archived-skills/find-skills",
       "upstream_path": ".skills/upstream/find-skills",
       "managed_revision": "sha256:0efd2f0903eea28dbb777eb82c4e89db2d3d2dddb910a5bc67c73a3b43db5a83",
-      "last_updated_at": "2026-03-02T17:21:10Z",
+      "last_updated_at": "2026-03-06T07:27:54Z",
       "risk_status": "passed",
       "upstream_enabled": false
     },
     "gemini": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/gemini",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/gemini",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        }
-      },
+      "distribution": {},
       "display_name": "gemini",
       "description": "Gemini CLI for one-shot Q&A, summaries, and generation.",
-      "status": "managed",
+      "status": "archived",
       "managed_dirty": false,
       "report_path": ".skills/reports/gemini.md",
       "source_path": ".skills/sources/gemini.json",
-      "skill_path": "gemini",
+      "skill_path": ".skills/archived-skills/gemini",
       "upstream_path": ".skills/upstream/gemini",
       "managed_revision": "sha256:a650e1e6bb5c4175c0487274944833372e3172c0dd3ef350fb31d970fb94a4db",
-      "last_updated_at": "2026-03-02T17:21:10Z",
+      "last_updated_at": "2026-03-06T07:27:55Z",
       "risk_status": "passed",
       "upstream_enabled": false
     },
     "github": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/github",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/github",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        }
-      },
+      "distribution": {},
       "display_name": "github",
       "description": "Interact with GitHub using the `gh` CLI. Use `gh issue`, `gh pr`, `gh run`, and `gh api` for issues, PRs, CI runs, and advanced queries.",
-      "status": "managed",
+      "status": "archived",
       "managed_dirty": false,
       "report_path": ".skills/reports/github.md",
       "source_path": ".skills/sources/github.json",
-      "skill_path": "github",
+      "skill_path": ".skills/archived-skills/github",
       "upstream_path": ".skills/upstream/github",
       "managed_revision": "sha256:eed7b24d189168b4273734f1649a90aff069c4ad0b7414066d845543b22bebbf",
-      "last_updated_at": "2026-03-02T17:21:10Z",
+      "last_updated_at": "2026-03-06T07:27:55Z",
       "risk_status": "passed",
       "upstream_enabled": false
     },
     "github-cli": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/github-cli",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/github-cli",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        }
-      },
+      "distribution": {},
       "display_name": "github-cli",
       "description": "GitHub CLI (gh) reference for repositories, issues, pull requests, Actions, projects, releases, gists, codespaces, and GitHub operations from the command line.",
-      "status": "managed",
+      "status": "archived",
       "managed_dirty": false,
       "report_path": ".skills/reports/github-cli.md",
       "source_path": ".skills/sources/github-cli.json",
-      "skill_path": "github-cli",
+      "skill_path": ".skills/archived-skills/github-cli",
       "upstream_path": ".skills/upstream/github-cli",
       "managed_revision": "sha256:cb22564fca208505e75b1f1e702bdd13e096ee1233dfcf0e96cad4ec85cd7ec3",
-      "last_updated_at": "2026-03-02T17:21:10Z",
+      "last_updated_at": "2026-03-06T07:27:55Z",
       "risk_status": "warned",
       "upstream_enabled": false
     },
     "pdf-process-mineru": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/pdf-process-mineru",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/pdf-process-mineru",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        }
-      },
+      "distribution": {},
       "display_name": "pdf-process-mineru",
       "description": "PDF document parsing tool based on local MinerU, supports converting PDF to Markdown, JSON, and other machine-readable formats.",
-      "status": "managed",
+      "status": "archived",
       "managed_dirty": false,
       "report_path": ".skills/reports/pdf-process-mineru.md",
       "source_path": ".skills/sources/pdf-process-mineru.json",
-      "skill_path": "pdf-process-mineru",
+      "skill_path": ".skills/archived-skills/pdf-process-mineru",
       "upstream_path": ".skills/upstream/pdf-process-mineru",
       "managed_revision": "sha256:97af2f567e5937bb368f8f166aff647ea17c5da24c62beed33375569b6595a71",
-      "last_updated_at": "2026-03-02T17:21:10Z",
+      "last_updated_at": "2026-03-06T07:27:56Z",
       "risk_status": "passed",
       "upstream_enabled": false
     },
     "qwen-asr": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/qwen-asr",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/qwen-asr",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        }
-      },
+      "distribution": {},
       "display_name": "siliconflow-qwen-asr",
       "description": "语音转文字技能（SiliconFlow优先，Qwen ASR兜底）。当需要处理语音消息、语音附件、音频文件或音频URL并提取可读文本时使用。支持本地音频与公网URL输入，默认先调用SiliconFlow /audio/transcriptions，失败后自动回退到Qwen3-ASR-Flash。",
-      "status": "managed",
+      "status": "archived",
       "managed_dirty": false,
       "report_path": ".skills/reports/qwen-asr.md",
       "source_path": ".skills/sources/qwen-asr.json",
-      "skill_path": "qwen-asr",
+      "skill_path": ".skills/archived-skills/qwen-asr",
       "upstream_path": ".skills/upstream/qwen-asr",
       "managed_revision": "sha256:df431d01d0774df88afa70a923235ed83edc8f3fafe7fc36494fe8381609893c",
-      "last_updated_at": "2026-03-02T17:21:10Z",
+      "last_updated_at": "2026-03-06T07:27:56Z",
       "risk_status": "warned",
       "upstream_enabled": false
     },
     "research": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/research",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/research",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        }
-      },
+      "distribution": {},
       "display_name": "research",
       "description": "深度研究技术问题和代码库。使用 GitHub 代码搜索查找真实代码示例，使用 Exa 获取官方文档和最新网络内容。当需要查找代码模式、API 文档、最佳实践或解决技术问题时使用此技能。",
-      "status": "managed",
+      "status": "archived",
       "managed_dirty": false,
       "report_path": ".skills/reports/research.md",
       "source_path": ".skills/sources/research.json",
-      "skill_path": "research",
+      "skill_path": ".skills/archived-skills/research",
       "upstream_path": ".skills/upstream/research",
       "managed_revision": "sha256:2f745249547749ffc5b8902595c7790d133df9446f4367de46106233eb4379d2",
-      "last_updated_at": "2026-03-02T17:21:10Z",
+      "last_updated_at": "2026-03-06T07:27:56Z",
       "risk_status": "warned",
       "upstream_enabled": false
     },
     "session-logs": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/session-logs",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/session-logs",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        }
-      },
+      "distribution": {},
       "display_name": "session-logs",
       "description": "Search and analyze your own session logs (older/parent conversations) using jq.",
-      "status": "managed",
+      "status": "archived",
       "managed_dirty": false,
       "report_path": ".skills/reports/session-logs.md",
       "source_path": ".skills/sources/session-logs.json",
-      "skill_path": "session-logs",
+      "skill_path": ".skills/archived-skills/session-logs",
       "upstream_path": ".skills/upstream/session-logs",
       "managed_revision": "sha256:26168359360ef638613a209299f7582b80c8b7ed53afe52c455ac213096d8b08",
-      "last_updated_at": "2026-03-02T17:21:10Z",
+      "last_updated_at": "2026-03-06T07:27:56Z",
       "risk_status": "warned",
       "upstream_enabled": false
     },
@@ -338,170 +195,92 @@
       "upstream_enabled": false
     },
     "summarize": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/summarize",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/summarize",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        }
-      },
+      "distribution": {},
       "display_name": "summarize",
       "description": "Summarize or extract text/transcripts from URLs, podcasts, and local files (great fallback for “transcribe this YouTube/video”).",
-      "status": "managed",
+      "status": "archived",
       "managed_dirty": false,
       "report_path": ".skills/reports/summarize.md",
       "source_path": ".skills/sources/summarize.json",
-      "skill_path": "summarize",
+      "skill_path": ".skills/archived-skills/summarize",
       "upstream_path": ".skills/upstream/summarize",
       "managed_revision": "sha256:16288ca7e8a545c762eea3a69c8f71c9602372bb24ab3d4d8255a7ca476802e0",
-      "last_updated_at": "2026-03-02T17:21:10Z",
+      "last_updated_at": "2026-03-06T07:27:57Z",
       "risk_status": "warned",
       "upstream_enabled": false
     },
     "tm": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/tm",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/tm",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        }
-      },
+      "distribution": {},
       "display_name": "tm",
       "description": "Remote GPU server management via `tm` CLI. Use when user needs to: (1) execute commands on remote servers, (2) run GPU training/evaluation experiments, (3) sync code to servers, (4) check GPU availability, (5) manage background jobs on servers. All operations are stateless SSH calls — develop locally, execute remotely.",
-      "status": "managed",
+      "status": "archived",
       "managed_dirty": false,
       "report_path": ".skills/reports/tm.md",
       "source_path": ".skills/sources/tm.json",
-      "skill_path": "tm",
+      "skill_path": ".skills/archived-skills/tm",
       "upstream_path": ".skills/upstream/tm",
       "managed_revision": "sha256:7dd7091a427909b126288c8806e022f6d7d35ae02b74abfa68dfc7e20e1e4928",
-      "last_updated_at": "2026-03-02T17:21:10Z",
+      "last_updated_at": "2026-03-06T07:27:57Z",
       "risk_status": "warned",
       "upstream_enabled": false
     },
     "tmux": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/tmux",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/tmux",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        }
-      },
+      "distribution": {},
       "display_name": "tmux",
       "description": "Remote-control tmux sessions for interactive CLIs by sending keystrokes and scraping pane output.",
-      "status": "managed",
+      "status": "archived",
       "managed_dirty": false,
       "report_path": ".skills/reports/tmux.md",
       "source_path": ".skills/sources/tmux.json",
-      "skill_path": "tmux",
+      "skill_path": ".skills/archived-skills/tmux",
       "upstream_path": ".skills/upstream/tmux",
       "managed_revision": "sha256:068e613f05828707021f5cad449eedead0fa865cb0ef4ccfe258b84d702b1cef",
-      "last_updated_at": "2026-03-02T17:21:10Z",
+      "last_updated_at": "2026-03-06T07:27:57Z",
       "risk_status": "passed",
       "upstream_enabled": false
     },
     "video-frames": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/video-frames",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/video-frames",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        }
-      },
+      "distribution": {},
       "display_name": "video-frames",
       "description": "Extract frames or short clips from videos using ffmpeg.",
-      "status": "managed",
+      "status": "archived",
       "managed_dirty": false,
       "report_path": ".skills/reports/video-frames.md",
       "source_path": ".skills/sources/video-frames.json",
-      "skill_path": "video-frames",
+      "skill_path": ".skills/archived-skills/video-frames",
       "upstream_path": ".skills/upstream/video-frames",
       "managed_revision": "sha256:fa6d39b971c3d350563a3c242ede6d84e0fd9fd6aca68090bf980f68fca41185",
-      "last_updated_at": "2026-03-02T17:21:10Z",
+      "last_updated_at": "2026-03-06T07:27:58Z",
       "risk_status": "passed",
       "upstream_enabled": false
     },
     "weather": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/weather",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/weather",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-04T17:34:00Z"
-        }
-      },
+      "distribution": {},
       "display_name": "weather",
       "description": "Get current weather and forecasts (no API key required).",
-      "status": "managed",
+      "status": "archived",
       "managed_dirty": false,
       "report_path": ".skills/reports/weather.md",
       "source_path": ".skills/sources/weather.json",
-      "skill_path": "weather",
+      "skill_path": ".skills/archived-skills/weather",
       "upstream_path": ".skills/upstream/weather",
       "managed_revision": "sha256:52b1e2ca06205e267caa8caa0238c19a96a60d779e047d171f4786f1bd0a0071",
-      "last_updated_at": "2026-03-02T17:21:10Z",
+      "last_updated_at": "2026-03-06T07:27:58Z",
       "risk_status": "passed",
       "upstream_enabled": false
     },
     "skill-creator": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/skill-creator",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-05T08:26:51Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/skill-creator",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-05T08:26:51Z"
-        }
-      },
+      "distribution": {},
       "display_name": "skill-creator",
       "description": "Create new skills, modify and improve existing skills, and measure skill performance. Use when users want to create a skill from scratch, update or optimize an existing skill, run evals to test a skill, benchmark skill performance with variance analysis, or optimize a skill's description for better triggering accuracy.",
-      "status": "managed",
+      "status": "archived",
       "managed_dirty": false,
       "report_path": ".skills/reports/skill-creator.md",
       "source_path": ".skills/sources/skill-creator.json",
-      "skill_path": "skill-creator",
+      "skill_path": ".skills/archived-skills/skill-creator",
       "upstream_path": ".skills/upstream/skill-creator",
       "managed_revision": "sha256:e7ec972fc0c8a9a38b111b5b6c30e2949792b740d61dc20990b7373b0c63504c",
-      "last_updated_at": "2026-03-05T08:26:20Z",
+      "last_updated_at": "2026-03-06T07:27:57Z",
       "risk_status": "warned",
       "upstream_enabled": true
     }

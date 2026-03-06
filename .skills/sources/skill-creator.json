@@ -1,7 +1,7 @@
 {
   "skill_id": "skill-creator",
   "display_name": "skill-creator",
-  "skill_path": "skill-creator",
+  "skill_path": ".skills/archived-skills/skill-creator",
   "source_type": "github",
   "source": "https://github.com/anthropics/skills/tree/main/skills/skill-creator",
   "source_url": "https://github.com/anthropics/skills.git",
@@ -13,5 +13,7 @@
   "last_imported_at": "2026-03-05T08:26:20Z",
   "upstream_revision": "7029232b9212482c0476da354b83364bd28fab2f",
   "managed_revision": "sha256:e7ec972fc0c8a9a38b111b5b6c30e2949792b740d61dc20990b7373b0c63504c",
-  "managed_dirty": false
+  "managed_dirty": false,
+  "archived": true,
+  "archived_at": "2026-03-06T07:27:57Z"
 }
