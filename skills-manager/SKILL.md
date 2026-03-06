@@ -1,6 +1,6 @@
 ---
 name: skills-manager
-description: 统一处理所有 skills 操作的总控 skill，包括搜索、导入、创建、手动编辑后同步、规则与语义审核、中文优化、上游跟踪、分发、归档与发布。默认将所有下载/托管技能集中到 `my-skills` 仓库管理；即使在其他路径触发，也应回到该仓库执行管理流程。
+description: 统一处理所有 skills 操作的总控 skill，包括搜索、导入、创建、编辑、优化、上游跟踪、分发、归档与发布。默认将所有下载/托管技能集中到  `~/project/my-skills` 仓库管理；即使在其他路径触发，也应回到该仓库执行管理流程。
 ---
 
 # Skills Manager
