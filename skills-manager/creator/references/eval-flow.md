@@ -19,6 +19,7 @@
 ## Default Eval Loop
 
 1. 设计 2-3 个真实测试 prompt
+   如果被测 skill 是路由型（包含多条路由分支），测试集必须覆盖每条路由分支，并包含至少一个跨分支的歧义 case
 2. 在 workspace 下写 `evals/evals.json`
 3. 对每个 case 跑 with-skill 与 baseline
 4. 补 assertions 与 grading
