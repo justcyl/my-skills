@@ -7,7 +7,7 @@ Usage:
 
 Example:
     python skills-manager/creator/scripts/package_skill.py /Users/chenyl/project/my-skills/my-skill
-    python skills-manager/creator/scripts/package_skill.py /Users/chenyl/project/my-skills/my-skill ./dist
+    python skills-manager/creator/scripts/package_skill.py /Users/chenyl/project/my-skills/my-skill /Users/chenyl/project/my-skills/.skills/packages
 """
 
 import fnmatch
@@ -21,6 +21,8 @@ if str(PACKAGE_ROOT) not in sys.path:
     sys.path.insert(0, str(PACKAGE_ROOT))
 
 from scripts.quick_validate import validate_skill
+from scripts.utils import find_my_skills_root
+from scripts.utils import package_output_root
 
 # Patterns to exclude when packaging skills.
 EXCLUDE_DIRS = {"__pycache__", "node_modules"}
@@ -51,7 +53,7 @@ def package_skill(skill_path, output_dir=None):
 
     Args:
         skill_path: Path to the skill folder
-        output_dir: Optional output directory for the .skill file (defaults to current directory)
+        output_dir: Optional output directory for the .skill file (defaults to my-skills/.skills/packages)
 
     Returns:
         Path to the created .skill file, or None if error
@@ -84,11 +86,13 @@ def package_skill(skill_path, output_dir=None):
 
     # Determine output location
     skill_name = skill_path.name
+    repo_root = find_my_skills_root(skill_path.parent)
     if output_dir:
         output_path = Path(output_dir).resolve()
         output_path.mkdir(parents=True, exist_ok=True)
     else:
-        output_path = Path.cwd()
+        output_path = package_output_root(repo_root)
+        output_path.mkdir(parents=True, exist_ok=True)
 
     skill_filename = output_path / f"{skill_name}.skill"
 
@@ -119,7 +123,7 @@ def main():
         print("Usage: python skills-manager/creator/scripts/package_skill.py <path/to/skill-folder> [output-directory]")
         print("\nExample:")
         print("  python skills-manager/creator/scripts/package_skill.py /Users/chenyl/project/my-skills/my-skill")
-        print("  python skills-manager/creator/scripts/package_skill.py /Users/chenyl/project/my-skills/my-skill ./dist")
+        print("  python skills-manager/creator/scripts/package_skill.py /Users/chenyl/project/my-skills/my-skill /Users/chenyl/project/my-skills/.skills/packages")
         sys.exit(1)
 
     skill_path = sys.argv[1]
@@ -128,6 +132,9 @@ def main():
     print(f"📦 Packaging skill: {skill_path}")
     if output_dir:
         print(f"   Output directory: {output_dir}")
+    else:
+        default_output = package_output_root(find_my_skills_root(Path(skill_path).resolve().parent))
+        print(f"   Output directory: {default_output}")
     print()
 
     result = package_skill(skill_path, output_dir)

@@ -71,3 +71,9 @@ def skill_workspace_root(skill_path: Path, repo_root: Path | None = None) -> Pat
     resolved_skill_path = skill_path.resolve()
     resolved_repo_root = repo_root or find_my_skills_root(resolved_skill_path.parent)
     return resolved_repo_root / ".skills" / "workspaces" / resolved_skill_path.name
+
+
+def package_output_root(repo_root: Path | None = None) -> Path:
+    """Return the canonical package output directory for my-skills."""
+    resolved_repo_root = repo_root or find_my_skills_root()
+    return resolved_repo_root / ".skills" / "packages"
