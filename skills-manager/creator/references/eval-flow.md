@@ -32,7 +32,7 @@
 从仓库根目录直接调用：
 
 ```bash
-python skills-manager/creator/scripts/aggregate_benchmark.py <workspace>/iteration-N --skill-name <name>
+python skills-manager/creator/scripts/aggregate_benchmark.py <workspace>/iteration-N
 python skills-manager/creator/eval-viewer/generate_review.py <workspace>/iteration-N --skill-name <name>
 ```
 

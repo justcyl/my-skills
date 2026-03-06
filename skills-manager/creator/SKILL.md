@@ -53,8 +53,11 @@ description: 在 `my-skills` 仓库内创建、重写、评测并优化 skill。
 如果目标 skill 尚不存在，应先让 manager 运行：
 
 ```bash
-bash skills-manager/scripts/create_skill.sh --skill-id <id> --name <name> --description <description>
+bash skills-manager/scripts/create_skill.sh --skill-id <id> --name <name> --description <description> [--force] [--dry-run]
 ```
+
+> 注意：creator 内所有脚本路径均以仓库根目录为 cwd，因此前缀为 `skills-manager/scripts/...`。
+> 而 manager 自身的文档以 `skills-manager/` 为 cwd，前缀为 `scripts/...`。
 
 ## Routing
 
@@ -66,6 +69,8 @@ bash skills-manager/scripts/create_skill.sh --skill-id <id> --name <name> --desc
    读 `references/eval-flow.md`
 3. 用户要优化 frontmatter 中的 `description` 触发效果：
    读 `references/description-flow.md`
+
+评测过程中如需正式 grading、分析或盲评，按需读取 `agents/grader.md`、`agents/analyzer.md`、`agents/comparator.md`。
 
 ## How To Communicate
 
@@ -239,7 +244,7 @@ workspace 统一使用：
 常用命令：
 
 ```bash
-python skills-manager/creator/scripts/aggregate_benchmark.py <workspace>/iteration-N --skill-name <name>
+python skills-manager/creator/scripts/aggregate_benchmark.py <workspace>/iteration-N
 python skills-manager/creator/eval-viewer/generate_review.py <workspace>/iteration-N --skill-name <name>
 ```
 
@@ -312,12 +317,23 @@ python skills-manager/creator/scripts/package_skill.py /Users/chenyl/project/my-
 
 按需使用这些资源：
 
-1. `agents/grader.md`
-2. `agents/analyzer.md`
-3. `agents/comparator.md`
-4. `references/schemas.md`
-5. `eval-viewer/generate_review.py`
-6. `scripts/*.py`
+1. `agents/grader.md` — 期望断言评分
+2. `agents/analyzer.md` — benchmark 分析与盲评后因分析
+3. `agents/comparator.md` — 两组输出盲评比较
+4. `references/schemas.md` — 所有 JSON 数据结构定义
+5. `eval-viewer/generate_review.py` — 评测结果交互式审阅页面（HTTP 服务）
+6. `assets/eval_review.html` — description 优化评审静态模板
+
+核心 Python 脚本：
+
+7. `scripts/run_eval.py` — 对指定 description 跑触发评测
+8. `scripts/improve_description.py` — 基于评测结果用 Claude 生成改进 description
+9. `scripts/run_loop.py` — 将 eval + improve 串成迭代循环
+10. `scripts/aggregate_benchmark.py` — 聚合多轮评测结果为 benchmark 统计
+11. `scripts/generate_report.py` — 将迭代循环结果生成 HTML 报告
+12. `scripts/package_skill.py` — 将 skill 打包为 `.skill` 文件（自动创建 `.skills/packages/`）
+13. `scripts/quick_validate.py` — skill 基础结构快速校验
+14. `scripts/utils.py` — 公共工具函数（frontmatter 解析、路径解析等）
 
 ## Finish
 

@@ -34,6 +34,7 @@ bash scripts/finalize_manual_edits.sh --publish --push
 4. 重写 `.skills/reports/*.md`
 5. 重新做规则审计
 6. 默认触发分发
+7. 若传 `--publish`，自动 `git add -A && git commit`；若同时传 `--push`，自动 `git push`
 
 ## Distribution
 
@@ -49,6 +50,12 @@ bash scripts/distribute_skills.sh sync
 2. `--skill-id <id>`
 3. `--mode auto|symlink|copy`
 4. `--dry-run`
+
+归档也支持 `--dry-run`：
+
+```bash
+bash scripts/distribute_skills.sh archive --skill-id <id> [--dry-run]
+```
 
 查看状态：
 

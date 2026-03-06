@@ -46,7 +46,7 @@ bash scripts/find_or_import_skill.sh search <query>
 导入入口：
 
 ```bash
-bash scripts/find_or_import_skill.sh import <source> [--skill-id <id>] [--subpath <path>] [--ref <branch>] [--force]
+bash scripts/find_or_import_skill.sh import <source> [--skill-id <id>] [--subpath <path>] [--ref <branch>] [--force] [--dry-run]
 ```
 
 脚本职责：

@@ -18,7 +18,7 @@
 ## Routing
 
 1. 目标 skill 还不存在：
-   先运行 `bash scripts/create_skill.sh --skill-id <id> --name <name> --description <description>`，
+   先运行 `bash scripts/create_skill.sh --skill-id <id> --name <name> --description <description> [--force] [--dry-run]`，
    然后进入 `creator/SKILL.md`
 2. 目标 skill 已存在，但用户要重写结构或扩展内容：
    直接进入 `creator/SKILL.md`
