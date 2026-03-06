@@ -3,11 +3,11 @@
 Skill Packager - Creates a distributable .skill file of a skill folder
 
 Usage:
-    python skills-manager/subskills/skill-creator/scripts/package_skill.py <path/to/skill-folder> [output-directory]
+    python skills-manager/creator/scripts/package_skill.py <path/to/skill-folder> [output-directory]
 
 Example:
-    python skills-manager/subskills/skill-creator/scripts/package_skill.py /Users/chenyl/project/my-skills/my-skill
-    python skills-manager/subskills/skill-creator/scripts/package_skill.py /Users/chenyl/project/my-skills/my-skill ./dist
+    python skills-manager/creator/scripts/package_skill.py /Users/chenyl/project/my-skills/my-skill
+    python skills-manager/creator/scripts/package_skill.py /Users/chenyl/project/my-skills/my-skill ./dist
 """
 
 import fnmatch
@@ -116,10 +116,10 @@ def package_skill(skill_path, output_dir=None):
 
 def main():
     if len(sys.argv) < 2:
-        print("Usage: python skills-manager/subskills/skill-creator/scripts/package_skill.py <path/to/skill-folder> [output-directory]")
+        print("Usage: python skills-manager/creator/scripts/package_skill.py <path/to/skill-folder> [output-directory]")
         print("\nExample:")
-        print("  python skills-manager/subskills/skill-creator/scripts/package_skill.py /Users/chenyl/project/my-skills/my-skill")
-        print("  python skills-manager/subskills/skill-creator/scripts/package_skill.py /Users/chenyl/project/my-skills/my-skill ./dist")
+        print("  python skills-manager/creator/scripts/package_skill.py /Users/chenyl/project/my-skills/my-skill")
+        print("  python skills-manager/creator/scripts/package_skill.py /Users/chenyl/project/my-skills/my-skill ./dist")
         sys.exit(1)
 
     skill_path = sys.argv[1]

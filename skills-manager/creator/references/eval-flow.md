@@ -32,8 +32,8 @@
 从仓库根目录直接调用：
 
 ```bash
-python skills-manager/subskills/skill-creator/scripts/aggregate_benchmark.py <workspace>/iteration-N --skill-name <name>
-python skills-manager/subskills/skill-creator/eval-viewer/generate_review.py <workspace>/iteration-N --skill-name <name>
+python skills-manager/creator/scripts/aggregate_benchmark.py <workspace>/iteration-N --skill-name <name>
+python skills-manager/creator/eval-viewer/generate_review.py <workspace>/iteration-N --skill-name <name>
 ```
 
 如果需要正式 grading、分析或盲评，按需读取：

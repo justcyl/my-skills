@@ -16,14 +16,14 @@
 
 需要人工审查时，可使用：
 
-`skills-manager/subskills/skill-creator/assets/eval_review.html`
+`skills-manager/creator/assets/eval_review.html`
 
 ## Optimization Command
 
 从仓库根目录直接调用：
 
 ```bash
-python skills-manager/subskills/skill-creator/scripts/run_loop.py --eval-set /Users/chenyl/project/my-skills/.skills/workspaces/<skill-id>/description-evals.json --skill-path /Users/chenyl/project/my-skills/<skill-id> --model <model> --max-iterations 5 --verbose
+python skills-manager/creator/scripts/run_loop.py --eval-set /Users/chenyl/project/my-skills/.skills/workspaces/<skill-id>/description-evals.json --skill-path /Users/chenyl/project/my-skills/<skill-id> --model <model> --max-iterations 5 --verbose
 ```
 
 ## Apply

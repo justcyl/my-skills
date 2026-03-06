@@ -13,19 +13,19 @@
 
 具体的创建、评测和 description 优化，统一交给：
 
-`subskills/skill-creator/SKILL.md`
+`creator/SKILL.md`
 
 ## Routing
 
 1. 目标 skill 还不存在：
    先运行 `bash scripts/create_skill.sh --skill-id <id> --name <name> --description <description>`，
-   然后进入 `subskills/skill-creator/SKILL.md`
+   然后进入 `creator/SKILL.md`
 2. 目标 skill 已存在，但用户要重写结构或扩展内容：
-   直接进入 `subskills/skill-creator/SKILL.md`
+   直接进入 `creator/SKILL.md`
 3. 用户只要评测、benchmark、viewer 审阅或 description 优化：
-   直接进入 `subskills/skill-creator/SKILL.md`
+   直接进入 `creator/SKILL.md`
 4. 用户只改了文件，希望同步状态并发布：
-   不进入 creator，改读 `scene-manual-edit-followup.md`
+   不进入 creator，改读 `scene-manage-skills.md`
 
 ## Outputs Owned By Manager
 
