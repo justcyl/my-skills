@@ -26,7 +26,8 @@
 5. 聚合 benchmark
 6. 用 viewer 给用户审阅
 7. 根据反馈修改根目录 `<skill-id>/`
-8. 继续下一轮，直到满意为止
+8. 每轮迭代改完后，回到 manager 执行 `bash skills-manager/scripts/finalize_manual_edits.sh --skill-id <id> --publish --push` 完成提交推送
+9. 继续下一轮，直到满意为止
 
 ## Tools
 
@@ -47,4 +48,4 @@ python skills-manager/creator/eval-viewer/generate_review.py <workspace>/iterati
 
 1. 根目录 `<skill-id>/` 是唯一真源
 2. workspace 只存评测过程与中间结果
-3. 每轮修改结束后，把改动交回 manager finalize
+3. 每轮修改结束后，执行 `bash skills-manager/scripts/finalize_manual_edits.sh --skill-id <id> --publish --push` 提交推送
