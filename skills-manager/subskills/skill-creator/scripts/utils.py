@@ -1,5 +1,6 @@
 """Shared utilities for skill-creator scripts."""
 
+import os
 from pathlib import Path
 
 
@@ -45,3 +46,28 @@ def parse_skill_md(skill_path: Path) -> tuple[str, str, str]:
         i += 1
 
     return name, description, content
+
+
+def find_my_skills_root(start: Path | None = None) -> Path:
+    """Resolve the managed my-skills repository root."""
+    env_root = os.environ.get("MY_SKILLS_REPO_ROOT")
+    if env_root:
+        candidate = Path(env_root).expanduser().resolve()
+        if (candidate / "skills-manager" / "SKILL.md").exists():
+            return candidate
+
+    current = (start or Path.cwd()).resolve()
+    for parent in [current, *current.parents]:
+        if (parent / "skills-manager" / "SKILL.md").exists():
+            return parent
+        if (parent / ".skills").is_dir():
+            return parent
+
+    return current
+
+
+def skill_workspace_root(skill_path: Path, repo_root: Path | None = None) -> Path:
+    """Return the canonical workspace directory for a managed skill."""
+    resolved_skill_path = skill_path.resolve()
+    resolved_repo_root = repo_root or find_my_skills_root(resolved_skill_path.parent)
+    return resolved_repo_root / ".skills" / "workspaces" / resolved_skill_path.name

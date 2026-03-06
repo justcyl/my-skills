@@ -59,6 +59,7 @@ require_jq
 ensure_state_dirs
 
 skill_path="$(skill_root_path "${skill_id}")"
+workspace_path="$(workspace_root_path "${skill_id}")"
 if [[ -e "${skill_path}" && "${force}" -ne 1 ]]; then
   echo "error: ${skill_id} already exists; use --force to overwrite" >&2
   exit 1
@@ -69,11 +70,14 @@ if [[ "${dry_run}" -eq 1 ]]; then
   echo "repo_root=${REPO_ROOT}"
   echo "skill_id=${skill_id}"
   echo "skill_path=${skill_id}"
+  echo "workspace_path=.skills/workspaces/${skill_id}"
   exit 0
 fi
 
 rm -rf "${skill_path}"
+rm -rf "${workspace_path}"
 mkdir -p "${skill_path}/references" "${skill_path}/scripts"
+mkdir -p "${workspace_path}"
 cat > "${skill_path}/SKILL.md" <<MARKDOWN
 ---
 name: ${skill_name}
@@ -99,3 +103,4 @@ upsert_registry_entry "${skill_id}" "${skill_name}" "${skill_description}" creat
 
 echo "created ${skill_id}"
 echo "skill_path=${skill_id}"
+echo "workspace_path=.skills/workspaces/${skill_id}"

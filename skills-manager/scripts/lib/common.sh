@@ -29,6 +29,7 @@ SOURCES_DIR="${STATE_DIR}/sources"
 REPORTS_DIR="${STATE_DIR}/reports"
 AGENTS_DIR="${STATE_DIR}/agents"
 UPSTREAM_DIR="${STATE_DIR}/upstream"
+WORKSPACES_DIR="${STATE_DIR}/workspaces"
 REGISTRY_PATH="${STATE_DIR}/registry.json"
 TIMESTAMP="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 
@@ -43,7 +44,7 @@ require_jq() {
 }
 
 ensure_state_dirs() {
-  mkdir -p "${STATE_DIR}" "${ARCHIVED_SKILLS_DIR}" "${SOURCES_DIR}" "${REPORTS_DIR}" "${AGENTS_DIR}" "${UPSTREAM_DIR}"
+  mkdir -p "${STATE_DIR}" "${ARCHIVED_SKILLS_DIR}" "${SOURCES_DIR}" "${REPORTS_DIR}" "${AGENTS_DIR}" "${UPSTREAM_DIR}" "${WORKSPACES_DIR}"
   if [[ ! -f "${REGISTRY_PATH}" ]]; then
     cat > "${REGISTRY_PATH}" <<'JSON'
 {
@@ -152,6 +153,11 @@ report_md_path() {
 upstream_skill_path() {
   local skill_id="$1"
   printf '%s\n' "${UPSTREAM_DIR}/${skill_id}"
+}
+
+workspace_root_path() {
+  local skill_id="$1"
+  printf '%s\n' "${WORKSPACES_DIR}/${skill_id}"
 }
 
 reset_risk_scan() {
