@@ -300,32 +300,19 @@
       "last_updated_at": "2026-03-06T08:52:31Z"
     },
     "tech-blog-writer": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/tech-blog-writer",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-08T14:31:54Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/tech-blog-writer",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-08T14:31:54Z"
-        }
-      },
+      "distribution": {},
       "display_name": "tech-blog-writer",
       "description": "产出中文技术博客，重点解释工具/库/框架/技术路线背后的设计动机与哲学，而不只是功能说明。适用于“写一篇关于 X 的技术博客”“介绍 X 的设计思想”“解释 X 为什么这样设计”等请求。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "passed",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/tech-blog-writer.md",
       "source_path": ".skills/sources/tech-blog-writer.json",
-      "skill_path": "tech-blog-writer",
+      "skill_path": ".skills/archived-skills/tech-blog-writer",
       "upstream_path": ".skills/upstream/tech-blog-writer",
       "managed_revision": "sha256:01b3ef4a18fc98432c3c4f9091fee051714c62a8c45154b83ecbff26af13ba16",
-      "last_updated_at": "2026-03-08T14:31:54Z"
+      "last_updated_at": "2026-03-08T14:33:14Z"
     }
   }
 }

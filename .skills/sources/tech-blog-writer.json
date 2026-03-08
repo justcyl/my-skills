@@ -1,7 +1,7 @@
 {
   "skill_id": "tech-blog-writer",
   "display_name": "tech-blog-writer",
-  "skill_path": "tech-blog-writer",
+  "skill_path": ".skills/archived-skills/tech-blog-writer",
   "source_type": "local",
   "source": "/Users/chenyl/.claude/skills_backup/20260305-013203/tech-blog-writer",
   "source_url": "/Users/chenyl/.claude/skills_backup/20260305-013203/tech-blog-writer",
@@ -13,5 +13,7 @@
   "last_imported_at": "2026-03-08T14:31:54Z",
   "upstream_revision": "sha256:10e64e97e45eb6b8feb7ae443fdadc11a660b16296a10be8bfb5683eb407f1fa",
   "managed_revision": "sha256:01b3ef4a18fc98432c3c4f9091fee051714c62a8c45154b83ecbff26af13ba16",
-  "managed_dirty": false
+  "managed_dirty": false,
+  "archived": true,
+  "archived_at": "2026-03-08T14:33:14Z"
 }
