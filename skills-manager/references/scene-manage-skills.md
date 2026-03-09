@@ -12,6 +12,22 @@
 4. 归档 skill
 5. 在需要时提交并推送
 
+## Git Workspace Hygiene
+
+开始执行本场景前：
+
+```bash
+git status --short
+```
+
+若输出非空，先执行：
+
+```bash
+bash scripts/publish_repo.sh
+```
+
+结束本场景前重复上述检查。若仍有改动，必须再次执行 `bash scripts/publish_repo.sh`，直到工作区干净。
+
 ## Manual Edit Follow-up
 
 单个 skill：
@@ -84,3 +100,4 @@ bash scripts/distribute_skills.sh archive --skill-id <id>
 2. 默认优先 `symlink`
 3. 如果用户明确指定 `copy`，不要回退成 `symlink`
 4. 如果审计结果为 `warned` 或 `blocked`，要人工复核是否继续分发
+5. 场景开始前与结束后都必须保持 `git status --short` 为空；不为空时由 agent 自动提交
