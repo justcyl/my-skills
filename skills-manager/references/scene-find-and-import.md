@@ -87,7 +87,7 @@ bash scripts/find_or_import_skill.sh update --skill-id <id> --allow-dirty
 完成导入后的任何手工优化后，统一收尾：
 
 ```bash
-bash scripts/finalize_manual_edits.sh --skill-id <id> --publish --push
+bash scripts/sync_skill_state.sh --skill-id <id> --push
 ```
 
 失败处理：

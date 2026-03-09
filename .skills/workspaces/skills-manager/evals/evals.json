@@ -25,7 +25,7 @@
         "读取 references/scene-manage-skills.md",
         "不读取 references/scene-create-skill.md",
         "不进入 creator/SKILL.md",
-        "最终调用 finalize_manual_edits.sh"
+        "最终调用 sync_skill_state.sh"
       ]
     },
     {

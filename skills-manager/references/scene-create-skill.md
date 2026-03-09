@@ -42,5 +42,5 @@
 子技能完成后，统一回到 manager 收尾：
 
 ```bash
-bash scripts/finalize_manual_edits.sh --skill-id <id> --publish --push
+bash scripts/sync_skill_state.sh --skill-id <id> --push
 ```

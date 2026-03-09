@@ -7,13 +7,13 @@ source "${SCRIPT_DIR}/lib/common.sh"
 
 usage() {
   cat >&2 <<'TEXT'
-usage: bash scripts/finalize_manual_edits.sh [--skill-id <id>] [--skip-distribute] [--publish] [--push] [--dry-run]
+usage: bash scripts/sync_skill_state.sh [--skill-id <id>] [--skip-distribute] [--push] [--non-commit] [--dry-run]
 TEXT
 }
 
 skill_id=""
 skip_distribute=0
-publish=0
+publish=1
 push=0
 dry_run=0
 
@@ -27,13 +27,12 @@ while [[ "$#" -gt 0 ]]; do
       skip_distribute=1
       shift
       ;;
-    --publish)
-      publish=1
+    --push)
+      push=1
       shift
       ;;
-    --push)
-      publish=1
-      push=1
+    --non-commit)
+      publish=0
       shift
       ;;
     --dry-run)
@@ -50,6 +49,11 @@ while [[ "$#" -gt 0 ]]; do
       ;;
   esac
 done
+
+if [[ "${publish}" -eq 0 && "${push}" -eq 1 ]]; then
+  echo "error: --push cannot be used with --non-commit" >&2
+  exit 1
+fi
 
 require_jq
 ensure_state_dirs
@@ -114,6 +118,7 @@ done
 if [[ "${dry_run}" -eq 1 ]]; then
   echo "repo_root=${REPO_ROOT}"
   echo "skill_filter=${skill_id:-all}"
+  echo "skip_distribute=${skip_distribute}"
   echo "publish=${publish}"
   echo "push=${push}"
   exit 0

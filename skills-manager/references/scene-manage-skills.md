@@ -17,13 +17,13 @@
 单个 skill：
 
 ```bash
-bash scripts/finalize_manual_edits.sh --skill-id <id> --publish --push
+bash scripts/sync_skill_state.sh --skill-id <id> --push
 ```
 
 全部 skill：
 
 ```bash
-bash scripts/finalize_manual_edits.sh --publish --push
+bash scripts/sync_skill_state.sh --push
 ```
 
 该脚本会：
@@ -34,7 +34,8 @@ bash scripts/finalize_manual_edits.sh --publish --push
 4. 重写 `.skills/reports/*.md`
 5. 重新做规则审计
 6. 默认触发分发
-7. 若传 `--publish`，自动 `git add -A && git commit`；若同时传 `--push`，自动 `git push`
+7. 默认自动 `git add -A && git commit`；若传 `--push`，自动 `git push`
+8. 若传 `--non-commit`，跳过提交与推送
 
 ## Distribution
 

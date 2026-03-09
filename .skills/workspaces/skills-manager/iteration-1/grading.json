@@ -51,7 +51,7 @@
       "evidence": "第 3 条处理链不涉及 creator"
     },
     {
-      "text": "[Case2] 最终调用 finalize_manual_edits.sh",
+      "text": "[Case2] 最终调用 sync_skill_state.sh",
       "passed": true,
       "evidence": "Workflow 3.2 明确指出"
     },

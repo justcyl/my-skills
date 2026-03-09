@@ -341,5 +341,5 @@ python skills-manager/creator/scripts/package_skill.py /Users/chenyl/project/my-
 统一回到仓库根目录执行：
 
 ```bash
-bash skills-manager/scripts/finalize_manual_edits.sh --skill-id <id> --publish --push
+bash skills-manager/scripts/sync_skill_state.sh --skill-id <id> --push
 ```
