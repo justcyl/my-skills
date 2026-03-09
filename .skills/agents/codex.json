@@ -28,6 +28,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-03-09T10:15:05Z"
+    },
+    "external-repo": {
+      "source_path": "external-repo",
+      "target_path": "/Users/chenyl/.codex/skills/external-repo",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-09T16:47:59Z"
     }
   }
 }

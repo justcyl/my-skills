@@ -397,6 +397,34 @@
       "upstream_path": ".skills/upstream/brainstorm-agent",
       "managed_revision": "sha256:e2db1bf4b5eb88940c854773814a4f04720d077cbac7ae2f76789acc7378e1f2",
       "last_updated_at": "2026-03-09T10:15:05Z"
+    },
+    "external-repo": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/external-repo",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-03-09T16:47:59Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/external-repo",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-03-09T16:47:59Z"
+        }
+      },
+      "display_name": "external-repo",
+      "description": "研究和探索外部 GitHub 仓库。当需要了解开源项目的架构、API、代码实现或文档时使用。支持 DeepWiki、gh CLI、浅克隆三种策略，模型自主选择。",
+      "status": "managed",
+      "risk_status": "passed",
+      "managed_dirty": false,
+      "upstream_enabled": false,
+      "report_path": ".skills/reports/external-repo.md",
+      "source_path": ".skills/sources/external-repo.json",
+      "skill_path": "external-repo",
+      "upstream_path": ".skills/upstream/external-repo",
+      "managed_revision": "sha256:f09b10e77f9092fbb0480f4d237c98a680b98b13adb5191d721044696f0f6cae",
+      "last_updated_at": "2026-03-09T16:47:59Z"
     }
   }
 }
