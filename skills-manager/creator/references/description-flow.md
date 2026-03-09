@@ -23,7 +23,7 @@
 从仓库根目录直接调用：
 
 ```bash
-python skills-manager/creator/scripts/run_loop.py --eval-set /Users/chenyl/project/my-skills/.skills/workspaces/<skill-id>/description-evals.json --skill-path /Users/chenyl/project/my-skills/<skill-id> --model <model> --max-iterations 5 --verbose
+python skills-manager/creator/scripts/run_loop.py --eval-set ~/project/my-skills/.skills/workspaces/<skill-id>/description-evals.json --skill-path ~/project/my-skills/<skill-id> --model <model> --max-iterations 5 --verbose
 ```
 
 ## Apply

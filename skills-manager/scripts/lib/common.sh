@@ -16,7 +16,7 @@ COMMON_SKILL_DIR="$(cd "${COMMON_SCRIPTS_DIR}/.." && pwd)"
 COMMON_SCRIPT_BASE_REPO_ROOT="$(cd "${COMMON_SKILL_DIR}/.." && pwd)"
 
 # 默认把 my-skills 作为统一技能仓库；可通过环境变量覆盖。
-PREFERRED_REPO_ROOT="${MY_SKILLS_REPO_ROOT:-/Users/chenyl/project/my-skills}"
+PREFERRED_REPO_ROOT="${MY_SKILLS_REPO_ROOT:-${HOME}/project/my-skills}"
 if [[ -f "${PREFERRED_REPO_ROOT}/skills-manager/SKILL.md" ]]; then
   REPO_ROOT="${PREFERRED_REPO_ROOT}"
 else

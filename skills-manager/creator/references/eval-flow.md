@@ -6,7 +6,7 @@
 
 统一使用：
 
-`/Users/chenyl/project/my-skills/.skills/workspaces/<skill-id>/`
+`~/project/my-skills/.skills/workspaces/<skill-id>/`
 
 推荐结构：
 

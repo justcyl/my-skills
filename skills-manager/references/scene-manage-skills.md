@@ -17,14 +17,14 @@
 开始执行本场景前：
 
 ```bash
-git -C /Users/chenyl/project/my-skills status --short
+git -C ~/project/my-skills status --short
 ```
 
 若输出非空，先执行：
 
 ```bash
-git -C /Users/chenyl/project/my-skills add -A
-git -C /Users/chenyl/project/my-skills commit -m "<message>"
+git -C ~/project/my-skills add -A
+git -C ~/project/my-skills commit -m "<message>"
 ```
 
 结束本场景前重复上述检查。若仍有改动，必须再次使用上述 git 命令提交，直到工作区干净。
@@ -101,4 +101,4 @@ bash scripts/distribute_skills.sh archive --skill-id <id>
 2. 默认优先 `symlink`
 3. 如果用户明确指定 `copy`，不要回退成 `symlink`
 4. 如果审计结果为 `warned` 或 `blocked`，要人工复核是否继续分发
-5. 场景开始前与结束后都必须保持 `git -C /Users/chenyl/project/my-skills status --short` 为空；不为空时由 agent 直接执行 git 命令提交（不得通过脚本代提）
+5. 场景开始前与结束后都必须保持 `git -C ~/project/my-skills status --short` 为空；不为空时由 agent 直接执行 git 命令提交（不得通过脚本代提）
