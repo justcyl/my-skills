@@ -7,6 +7,27 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-03-05T09:07:18Z"
+    },
+    "mistake-notebook": {
+      "source_path": "mistake-notebook",
+      "target_path": "/Users/chenyl/.codex/skills/mistake-notebook",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-09T10:15:00Z"
+    },
+    "cli-creator": {
+      "source_path": "cli-creator",
+      "target_path": "/Users/chenyl/.codex/skills/cli-creator",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-09T10:15:57Z"
+    },
+    "brainstorm-agent": {
+      "source_path": "brainstorm-agent",
+      "target_path": "/Users/chenyl/.codex/skills/brainstorm-agent",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-09T10:15:05Z"
     }
   }
 }

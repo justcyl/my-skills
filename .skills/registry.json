@@ -313,6 +313,90 @@
       "upstream_path": ".skills/upstream/tech-blog-writer",
       "managed_revision": "sha256:01b3ef4a18fc98432c3c4f9091fee051714c62a8c45154b83ecbff26af13ba16",
       "last_updated_at": "2026-03-08T14:33:14Z"
+    },
+    "mistake-notebook": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/mistake-notebook",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-03-09T10:15:00Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/mistake-notebook",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-03-09T10:15:00Z"
+        }
+      },
+      "display_name": "mistake-notebook",
+      "description": "|",
+      "status": "managed",
+      "risk_status": "passed",
+      "managed_dirty": false,
+      "upstream_enabled": true,
+      "report_path": ".skills/reports/mistake-notebook.md",
+      "source_path": ".skills/sources/mistake-notebook.json",
+      "skill_path": "mistake-notebook",
+      "upstream_path": ".skills/upstream/mistake-notebook",
+      "managed_revision": "sha256:b842b1bd6c3966449abc6ff95cd81808e7896d34f028fcc63d76ee094432f782",
+      "last_updated_at": "2026-03-09T10:15:00Z"
+    },
+    "cli-creator": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/cli-creator",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-03-09T10:15:57Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/cli-creator",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-03-09T10:15:57Z"
+        }
+      },
+      "display_name": "cli-creator",
+      "description": "Spec CLI surface area before implementation - command tree, flags, exit codes, I/O contract. Use when designing or planning a CLI interface.",
+      "status": "managed",
+      "risk_status": "warned",
+      "managed_dirty": false,
+      "upstream_enabled": true,
+      "report_path": ".skills/reports/cli-creator.md",
+      "source_path": ".skills/sources/cli-creator.json",
+      "skill_path": "cli-creator",
+      "upstream_path": ".skills/upstream/cli-creator",
+      "managed_revision": "sha256:b1c8c65f763b8803608e40c01f2d9b050440f2f2197bb98269f32741d02736a4",
+      "last_updated_at": "2026-03-09T10:15:05Z"
+    },
+    "brainstorm-agent": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/brainstorm-agent",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-03-09T10:15:05Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/brainstorm-agent",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-03-09T10:15:05Z"
+        }
+      },
+      "display_name": "brainstorm-agent",
+      "description": "先澄清目标与约束，再把需求拆成按依赖层次排序的可执行任务并输出 tasks.json；只做规划不做实现。",
+      "status": "managed",
+      "risk_status": "warned",
+      "managed_dirty": false,
+      "upstream_enabled": false,
+      "report_path": ".skills/reports/brainstorm-agent.md",
+      "source_path": ".skills/sources/brainstorm-agent.json",
+      "skill_path": "brainstorm-agent",
+      "upstream_path": ".skills/upstream/brainstorm-agent",
+      "managed_revision": "sha256:e2db1bf4b5eb88940c854773814a4f04720d077cbac7ae2f76789acc7378e1f2",
+      "last_updated_at": "2026-03-09T10:15:05Z"
     }
   }
 }

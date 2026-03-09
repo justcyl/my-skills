@@ -1,0 +1,17 @@
+{
+  "skill_id": "cli-creator",
+  "display_name": "cli-creator",
+  "skill_path": "cli-creator",
+  "source_type": "github",
+  "source": "https://github.com/archibate/dotfiles-opencode/tree/main/skills/cli-creator",
+  "source_url": "https://github.com/archibate/dotfiles-opencode.git",
+  "ref": "main",
+  "subpath": "skills/cli-creator",
+  "bootstrap": true,
+  "upstream_enabled": true,
+  "upstream_path": ".skills/upstream/cli-creator",
+  "last_imported_at": "2026-03-09T10:15:05Z",
+  "upstream_revision": "cfad6df41aff1d4024b668ce8b775bb1d4f2ea2b",
+  "managed_revision": "sha256:b1c8c65f763b8803608e40c01f2d9b050440f2f2197bb98269f32741d02736a4",
+  "managed_dirty": false
+}

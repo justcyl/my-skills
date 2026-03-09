@@ -1,0 +1,17 @@
+{
+  "skill_id": "brainstorm-agent",
+  "display_name": "brainstorm-agent",
+  "skill_path": "brainstorm-agent",
+  "source_type": "local-created",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/brainstorm-agent",
+  "last_imported_at": "2026-03-09T10:15:05Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:e2db1bf4b5eb88940c854773814a4f04720d077cbac7ae2f76789acc7378e1f2",
+  "managed_dirty": false
+}
