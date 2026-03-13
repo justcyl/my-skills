@@ -425,6 +425,34 @@
       "upstream_path": ".skills/upstream/external-repo",
       "managed_revision": "sha256:f09b10e77f9092fbb0480f4d237c98a680b98b13adb5191d721044696f0f6cae",
       "last_updated_at": "2026-03-09T16:47:59Z"
+    },
+    "ai-avoid": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/ai-avoid",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-03-13T07:11:35Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/ai-avoid",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-03-13T07:11:35Z"
+        }
+      },
+      "display_name": "ai-avoid",
+      "description": "|",
+      "status": "managed",
+      "risk_status": "passed",
+      "managed_dirty": false,
+      "upstream_enabled": true,
+      "report_path": ".skills/reports/ai-avoid.md",
+      "source_path": ".skills/sources/ai-avoid.json",
+      "skill_path": "ai-avoid",
+      "upstream_path": ".skills/upstream/ai-avoid",
+      "managed_revision": "sha256:9531d6886bd1ea398b2d09d4ace4828d152d5b219fa68f864b117c3ba3104a40",
+      "last_updated_at": "2026-03-13T07:11:35Z"
     }
   }
 }
