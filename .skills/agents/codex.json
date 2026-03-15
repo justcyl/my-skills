@@ -42,6 +42,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-03-13T07:11:35Z"
+    },
+    "tech-blog-writer": {
+      "source_path": "tech-blog-writer",
+      "target_path": "/Users/chenyl/.codex/skills/tech-blog-writer",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-15T12:10:39Z"
     }
   }
 }
