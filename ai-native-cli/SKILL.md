@@ -10,7 +10,7 @@ description: 设计 AI-Native CLI 接口规范——agent-first, human-compatibl
 ## Do This First
 
 - 加载 `references/ai-native-principles.md` 作为设计准则。
-- 如果用户需要的是 human-first、script-friendly 的传统 CLI，引导到 `cli-creator` skill。
+- 本 skill 专注 agent-first CLI 设计。如果用户需要 human-first、script-friendly 的传统 CLI，告知其不在本 skill 范围内。
 
 ## Clarify (fast)
 
@@ -60,7 +60,7 @@ description: 设计 AI-Native CLI 接口规范——agent-first, human-compatibl
 - 退出码语义化（0-5）
 - 幂等设计，`--dry-run` 预检副作用
 
-### 借鉴 cli-creator 的通用项
+### 通用工程实践
 - 配置优先级：flags > env > project config > user config > system config
 - XDG Base Directory 规范存放用户配置
 - 信号处理：Ctrl-C 快速退出、有界清理（≤2s）、crash-only 设计
@@ -78,5 +78,5 @@ description: 设计 AI-Native CLI 接口规范——agent-first, human-compatibl
 ## Notes
 
 - 本 skill 语言无关，不推荐特定实现语言或框架。
-- 如果用户需要 human-first CLI 设计，使用 `cli-creator` skill。
+- 本 skill 不覆盖 human-first CLI 设计场景。
 - 本 skill 只设计接口规范，不生成实现代码。如需实现，用户应将规范交给编码 agent。

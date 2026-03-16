@@ -10,8 +10,8 @@
   "bootstrap": true,
   "upstream_enabled": false,
   "upstream_path": ".skills/upstream/ai-native-cli",
-  "last_imported_at": "2026-03-16T03:51:30Z",
+  "last_imported_at": "2026-03-16T04:02:32Z",
   "upstream_revision": "",
-  "managed_revision": "sha256:4846266496a1835b05a8695bbe70f40af461909ee87d2e2fdf20a1399a658390",
+  "managed_revision": "sha256:fa3dea01d73789557aa911556a08515b1a8667d0e945d1dafee1a4e6f654ee3c",
   "managed_dirty": false
 }

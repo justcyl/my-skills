@@ -460,13 +460,13 @@
           "target_path": "/Users/chenyl/.codex/skills/ai-native-cli",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-16T03:51:31Z"
+          "last_synced_at": "2026-03-16T04:02:32Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/ai-native-cli",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-16T03:51:31Z"
+          "last_synced_at": "2026-03-16T04:02:32Z"
         }
       },
       "display_name": "ai-native-cli",
@@ -479,8 +479,8 @@
       "source_path": ".skills/sources/ai-native-cli.json",
       "skill_path": "ai-native-cli",
       "upstream_path": ".skills/upstream/ai-native-cli",
-      "managed_revision": "sha256:4846266496a1835b05a8695bbe70f40af461909ee87d2e2fdf20a1399a658390",
-      "last_updated_at": "2026-03-16T03:51:30Z"
+      "managed_revision": "sha256:fa3dea01d73789557aa911556a08515b1a8667d0e945d1dafee1a4e6f654ee3c",
+      "last_updated_at": "2026-03-16T04:02:32Z"
     }
   }
 }
