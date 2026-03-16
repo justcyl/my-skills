@@ -15,13 +15,6 @@
       "sync_status": "synced",
       "last_synced_at": "2026-03-09T10:15:00Z"
     },
-    "cli-creator": {
-      "source_path": "cli-creator",
-      "target_path": "/Users/chenyl/.codex/skills/cli-creator",
-      "mode": "symlink",
-      "sync_status": "synced",
-      "last_synced_at": "2026-03-09T10:15:57Z"
-    },
     "brainstorm-agent": {
       "source_path": "brainstorm-agent",
       "target_path": "/Users/chenyl/.codex/skills/brainstorm-agent",
@@ -49,6 +42,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-03-15T12:10:39Z"
+    },
+    "ai-native-cli": {
+      "source_path": "ai-native-cli",
+      "target_path": "/Users/chenyl/.codex/skills/ai-native-cli",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-16T03:51:31Z"
     }
   }
 }

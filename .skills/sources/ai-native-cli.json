@@ -1,0 +1,17 @@
+{
+  "skill_id": "ai-native-cli",
+  "display_name": "ai-native-cli",
+  "skill_path": "ai-native-cli",
+  "source_type": "local-manual",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/ai-native-cli",
+  "last_imported_at": "2026-03-16T03:51:30Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:4846266496a1835b05a8695bbe70f40af461909ee87d2e2fdf20a1399a658390",
+  "managed_dirty": false
+}
