@@ -193,3 +193,5 @@ ph --debug-log paper search "transformer" --max-items 3
 2. **每次搜索都会创建新的 session 文件**（默认 `--output-format file`），文件路径在输出中。
 3. **`--source` 不指定时自动选择**，指定时确保使用正确的数据源名称（全小写）。
 4. **论文 ID 区分大小写**，从搜索结果中复制 URI 时请保持原样。
+5. **`fetch-fulltext` 是异步任务，耗时较长**：MinerU 在后端解析 PDF，通常需要数十秒至数分钟。命令会阻塞直到解析完成，期间不要认为是卡死。告知用户正在等待解析。
+6. **国外 URL 网络限制**：MinerU 对 arXiv 等国外来源有网络限制，可能导致 `E_PROVIDER_FAILURE`。遇到此错误时先稍等再重试，而不是立即放弃。响应的 `notices` 字段会包含这两条提醒。
