@@ -483,10 +483,23 @@
       "last_updated_at": "2026-03-16T04:02:32Z"
     },
     "research-refine": {
-      "distribution": {},
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/research-refine",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-03-17T07:40:54Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/research-refine",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-03-17T07:40:54Z"
+        }
+      },
       "display_name": "research-refine",
       "description": "Turn a vague research direction into a problem-anchored, elegant, frontier-aware, implementation-oriented method plan via iterative GPT-5.4 review. Use when the user says \"refine my approach\", \"帮我细化方案\", \"decompose this problem\", \"打磨idea\", \"refine research plan\", \"细化研究方案\", or wants a concrete research method that stays simple, focused, and top-venue ready instead of a vague or overbuilt idea.",
-      "status": "imported",
+      "status": "managed",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": true,
@@ -495,7 +508,7 @@
       "skill_path": "research-refine",
       "upstream_path": ".skills/upstream/research-refine",
       "managed_revision": "sha256:dbb89352beecf3e13ec56699d16176c7559f985e97a18bdeba6325e1d907d145",
-      "last_updated_at": "2026-03-17T07:40:12Z"
+      "last_updated_at": "2026-03-17T07:40:54Z"
     },
     "web-reader": {
       "distribution": {

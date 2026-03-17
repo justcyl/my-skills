@@ -56,6 +56,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-03-17T07:40:27Z"
+    },
+    "research-refine": {
+      "source_path": "research-refine",
+      "target_path": "/Users/chenyl/.claude/skills/research-refine",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-17T07:40:54Z"
     }
   }
 }
