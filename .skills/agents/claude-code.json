@@ -70,6 +70,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-03-17T13:45:26Z"
+    },
+    "ph-papers-helper": {
+      "source_path": "ph-papers-helper",
+      "target_path": "/Users/chenyl/.claude/skills/ph-papers-helper",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-17T13:53:05Z"
     }
   }
 }
