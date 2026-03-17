@@ -63,6 +63,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-03-17T07:40:54Z"
+    },
+    "ph-paper-research": {
+      "source_path": "ph-paper-research",
+      "target_path": "/Users/chenyl/.codex/skills/ph-paper-research",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-17T13:38:51Z"
     }
   }
 }

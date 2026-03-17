@@ -1,0 +1,17 @@
+{
+  "skill_id": "ph-paper-research",
+  "display_name": "ph-paper-research",
+  "skill_path": "ph-paper-research",
+  "source_type": "local-created",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/ph-paper-research",
+  "last_imported_at": "2026-03-17T13:38:51Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:b3134109d66891efebeef2579769a1bf10afee59a29fcbe8d3682fa8e5f65fa3",
+  "managed_dirty": false
+}
