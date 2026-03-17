@@ -1,8 +1,8 @@
-# ph-papers-helper
+# ph-paper-helper
 
-- skill_id: `ph-papers-helper`
+- skill_id: `ph-paper-helper`
 - status: `managed`
-- skill_path: `ph-papers-helper`
+- skill_path: `ph-paper-helper`
 - source_type: `local-created`
 - source: ``
 - upstream_enabled: `false`
@@ -19,5 +19,5 @@
 ## Boundaries
 
 - Script-generated state lives in `.skills/`.
-- Skill content lives directly in `ph-papers-helper/`.
+- Skill content lives directly in `ph-paper-helper/`.
 - LLM review should focus on semantics, prompt safety, and Chinese optimization.
