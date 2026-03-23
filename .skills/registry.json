@@ -572,17 +572,17 @@
           "target_path": "/Users/chenyl/.codex/skills/paper-sense-making",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-23T12:51:07Z"
+          "last_synced_at": "2026-03-23T15:57:13Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/paper-sense-making",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-23T12:51:07Z"
+          "last_synced_at": "2026-03-23T15:57:13Z"
         }
       },
       "display_name": "paper-sense-making",
-      "description": "",
+      "description": "通过三幕对话（理解、冲突、重构）引导用户完成论文意义建构，输出可视化认知轨迹 JSON。",
       "status": "managed",
       "risk_status": "passed",
       "managed_dirty": false,
@@ -591,8 +591,8 @@
       "source_path": ".skills/sources/paper-sense-making.json",
       "skill_path": "paper-sense-making",
       "upstream_path": ".skills/upstream/paper-sense-making",
-      "managed_revision": "sha256:157452fa48580c6037d25e9dd896307db8cabed6327d862331335748f70174a0",
-      "last_updated_at": "2026-03-23T12:51:06Z"
+      "managed_revision": "sha256:cec1d480c9dd58ca3959c03a90c7ac3d1f43cdcf4d9a59b1f2e54ab652dc1a84",
+      "last_updated_at": "2026-03-23T15:57:12Z"
     }
   }
 }

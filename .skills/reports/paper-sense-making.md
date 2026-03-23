@@ -10,7 +10,7 @@
 
 ## Summary
 
-No description found in frontmatter.
+通过三幕对话（理解、冲突、重构）引导用户完成论文意义建构，输出可视化认知轨迹 JSON。
 
 ## Risk Findings
 
