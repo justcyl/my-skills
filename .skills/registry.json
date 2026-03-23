@@ -544,27 +544,27 @@
           "target_path": "/Users/chenyl/.codex/skills/ph-paper-helper",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-17T13:55:33Z"
+          "last_synced_at": "2026-03-23T14:11:56Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/ph-paper-helper",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-17T13:55:33Z"
+          "last_synced_at": "2026-03-23T14:11:56Z"
         }
       },
       "display_name": "ph-paper-helper",
-      "description": "使用 paper-helper (ph) CLI 进行学术论文检索与渐进式阅读。当 agent 需要查找论文、了解某研究领域的现状、获取论文摘要或精读全文时使用。覆盖完整工作流：初始化 workspace → 搜索 → L1 摘要筛选 → 按需获取 L2 全文。适用场景包括\"帮我找关于 X 的论文\"、\"调研 Y 方向的工作\"、\"精读这篇论文\"、\"搜索 Z 作者的研究\"。",
+      "description": "使用 paper-helper (ph) CLI 进行学术论文检索、导入与渐进式阅读。当 agent 需要搜索论文、调研研究方向、导入指定论文、获取完整 metadata、或精读全文时使用。覆盖完整工作流：快路径（search/add）→ 慢路径（fetch）→ SQL 查询本地库。适用场景包括\"帮我找关于 X 的论文\"、\"调研 Y 方向的工作\"、\"精读这篇论文\"、\"搜索 Z 作者的研究\"、\"查一下本地收录了哪些论文\"。",
       "status": "managed",
-      "risk_status": "passed",
+      "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": false,
       "report_path": ".skills/reports/ph-paper-helper.md",
       "source_path": ".skills/sources/ph-paper-helper.json",
       "skill_path": "ph-paper-helper",
       "upstream_path": ".skills/upstream/ph-paper-helper",
-      "managed_revision": "sha256:5fced0fabf72b94bff61156234642c87543f849e63d362f89501875e94572f38",
-      "last_updated_at": "2026-03-17T13:55:33Z"
+      "managed_revision": "sha256:0ffbe30ebc11056d290ea35777680b37f595a9aea5d7f187078c392c8cd2185c",
+      "last_updated_at": "2026-03-23T14:11:56Z"
     },
     "paper-sense-making": {
       "distribution": {
