@@ -565,6 +565,34 @@
       "upstream_path": ".skills/upstream/ph-paper-helper",
       "managed_revision": "sha256:5fced0fabf72b94bff61156234642c87543f849e63d362f89501875e94572f38",
       "last_updated_at": "2026-03-17T13:55:33Z"
+    },
+    "paper-sense-making": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/paper-sense-making",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-03-23T12:51:07Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/paper-sense-making",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-03-23T12:51:07Z"
+        }
+      },
+      "display_name": "paper-sense-making",
+      "description": "",
+      "status": "managed",
+      "risk_status": "passed",
+      "managed_dirty": false,
+      "upstream_enabled": true,
+      "report_path": ".skills/reports/paper-sense-making.md",
+      "source_path": ".skills/sources/paper-sense-making.json",
+      "skill_path": "paper-sense-making",
+      "upstream_path": ".skills/upstream/paper-sense-making",
+      "managed_revision": "sha256:157452fa48580c6037d25e9dd896307db8cabed6327d862331335748f70174a0",
+      "last_updated_at": "2026-03-23T12:51:06Z"
     }
   }
 }
