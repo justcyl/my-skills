@@ -172,13 +172,13 @@
           "target_path": "/Users/chenyl/.codex/skills/skills-manager",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-05T09:07:18Z"
+          "last_synced_at": "2026-03-23T16:45:17Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/skills-manager",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-05T09:07:18Z"
+          "last_synced_at": "2026-03-23T16:45:17Z"
         }
       },
       "display_name": "skills-manager",
@@ -305,13 +305,13 @@
           "target_path": "/Users/chenyl/.codex/skills/tech-blog-writer",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-15T12:10:39Z"
+          "last_synced_at": "2026-03-23T16:45:17Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/tech-blog-writer",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-15T12:10:39Z"
+          "last_synced_at": "2026-03-23T16:45:17Z"
         }
       },
       "display_name": "tech-blog-writer",
@@ -333,13 +333,13 @@
           "target_path": "/Users/chenyl/.codex/skills/mistake-notebook",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-09T10:15:00Z"
+          "last_synced_at": "2026-03-23T16:45:17Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/mistake-notebook",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-09T10:15:00Z"
+          "last_synced_at": "2026-03-23T16:45:17Z"
         }
       },
       "display_name": "mistake-notebook",
@@ -376,13 +376,13 @@
           "target_path": "/Users/chenyl/.codex/skills/brainstorm-agent",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-09T10:15:05Z"
+          "last_synced_at": "2026-03-23T16:45:17Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/brainstorm-agent",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-09T10:15:05Z"
+          "last_synced_at": "2026-03-23T16:45:17Z"
         }
       },
       "display_name": "brainstorm-agent",
@@ -404,13 +404,13 @@
           "target_path": "/Users/chenyl/.codex/skills/external-repo",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-09T16:47:59Z"
+          "last_synced_at": "2026-03-23T16:45:17Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/external-repo",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-09T16:47:59Z"
+          "last_synced_at": "2026-03-23T16:45:17Z"
         }
       },
       "display_name": "external-repo",
@@ -432,13 +432,13 @@
           "target_path": "/Users/chenyl/.codex/skills/ai-avoid",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-13T07:11:35Z"
+          "last_synced_at": "2026-03-23T16:45:17Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/ai-avoid",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-13T07:11:35Z"
+          "last_synced_at": "2026-03-23T16:45:17Z"
         }
       },
       "display_name": "ai-avoid",
@@ -460,13 +460,13 @@
           "target_path": "/Users/chenyl/.codex/skills/ai-native-cli",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-16T04:02:32Z"
+          "last_synced_at": "2026-03-23T16:45:17Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/ai-native-cli",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-16T04:02:32Z"
+          "last_synced_at": "2026-03-23T16:45:17Z"
         }
       },
       "display_name": "ai-native-cli",
@@ -488,13 +488,13 @@
           "target_path": "/Users/chenyl/.codex/skills/research-refine",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-17T07:40:54Z"
+          "last_synced_at": "2026-03-23T16:45:17Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/research-refine",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-17T07:40:54Z"
+          "last_synced_at": "2026-03-23T16:45:17Z"
         }
       },
       "display_name": "research-refine",
@@ -516,13 +516,13 @@
           "target_path": "/Users/chenyl/.codex/skills/web-reader",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-17T07:40:18Z"
+          "last_synced_at": "2026-03-23T16:45:17Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/web-reader",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-17T07:40:27Z"
+          "last_synced_at": "2026-03-23T16:45:17Z"
         }
       },
       "display_name": "web-reader",
@@ -544,13 +544,13 @@
           "target_path": "/Users/chenyl/.codex/skills/ph-paper-helper",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-23T14:11:56Z"
+          "last_synced_at": "2026-03-23T16:45:17Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/ph-paper-helper",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-23T14:11:56Z"
+          "last_synced_at": "2026-03-23T16:45:17Z"
         }
       },
       "display_name": "ph-paper-helper",
@@ -567,32 +567,19 @@
       "last_updated_at": "2026-03-23T14:11:56Z"
     },
     "paper-sense-making": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/paper-sense-making",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-23T16:03:02Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/paper-sense-making",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-23T16:03:02Z"
-        }
-      },
+      "distribution": {},
       "display_name": "paper-sense-making",
       "description": "通过三幕对话（理解、冲突、重构）引导用户完成论文意义建构，输出可视化认知轨迹 JSON。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "passed",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/paper-sense-making.md",
       "source_path": ".skills/sources/paper-sense-making.json",
-      "skill_path": "paper-sense-making",
+      "skill_path": ".skills/archived-skills/paper-sense-making",
       "upstream_path": ".skills/upstream/paper-sense-making",
       "managed_revision": "sha256:0f612c599f7fa6cd41ca0cbdd17349aaabe053ced6289a8d18f0dd9969977a80",
-      "last_updated_at": "2026-03-23T16:03:01Z"
+      "last_updated_at": "2026-03-23T16:43:47Z"
     }
   }
 }

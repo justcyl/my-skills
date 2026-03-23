@@ -1,7 +1,7 @@
 {
   "skill_id": "paper-sense-making",
   "display_name": "paper-sense-making",
-  "skill_path": "paper-sense-making",
+  "skill_path": ".skills/archived-skills/paper-sense-making",
   "source_type": "github",
   "source": "https://github.com/edu-ai-builders/paper-sense-making",
   "source_url": "https://github.com/edu-ai-builders/paper-sense-making.git",
@@ -13,5 +13,7 @@
   "last_imported_at": "2026-03-23T16:03:01Z",
   "upstream_revision": "e912ee643c62e599d8d4018fb7a45987e53b9dba",
   "managed_revision": "sha256:0f612c599f7fa6cd41ca0cbdd17349aaabe053ced6289a8d18f0dd9969977a80",
-  "managed_dirty": false
+  "managed_dirty": false,
+  "archived": true,
+  "archived_at": "2026-03-23T16:43:47Z"
 }
