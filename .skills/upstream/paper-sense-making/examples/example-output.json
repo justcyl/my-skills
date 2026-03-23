@@ -1,0 +1,38 @@
+{
+  "meta": {
+    "paper_title": "Vibe Researching as Wolf Coming: Can AI Agents with Skills Replace or Augment Social Scientists?",
+    "profile_read": "EdTech 创业者兼教育学博士，正在构建 edu-ai-builders skill pipeline，核心 mission 是把 AI 和学习科学结合，帮助教育工作者和研究者更有效地使用 AI。",
+    "session_date": "2026-03-19"
+  },
+
+  "act1_comprehension": {
+    "core_claim": "AI agents 的 delegation boundary 是认知维度的，不是阶段维度的——在研究 pipeline 的每个阶段里，可编码、低隐性知识的任务可以授权给 AI，但涉及理论原创性和领域隐性知识的任务无法授权。过度授权会产生 verification gap：用户如果从未亲自做过某件事，就无法判断 AI 做得对不对。",
+    "learning_mechanism": "研究者授权 AI 执行任务 → AI 生成选项和草稿 → 研究者评估、选择、修订 → 但如果研究者从未掌握执行能力，评估就失效了",
+    "user_perspective": "你正在构建的 edu-ai-builders skill pipeline 和 Zhang 研究的 scholar-skill 在架构上高度同构——都是把复杂工作流分解成专项 skill，降低用户执行门槛。这篇 paper 直接质问：你的 skill 帮用户做得更快，但有没有可能同时在帮用户绕过他们本应建立的能力？"
+  },
+
+  "act2_collision": {
+    "user_schema_before": "skill pipeline 的价值在于降低门槛、提升效率——让原来做不到的人能做到，让原来做得慢的人做得快。工具越好用，用户受益越大。",
+    "paper_challenge": "速度和覆盖度不等于能力建立。如果用户从未亲手做过某件事——从未手动跑过文献综述、从未自己写过 DiD 分析——他们就无法验证 AI 的输出是否正确。Verification requires the same expertise as production. 一个好用的 skill 可能在提升生产效率的同时，系统性地侵蚀用户的验证能力。",
+    "friction": "你的 skill 设计逻辑是「让用户做到更多」，但 Zhang 的框架说的是「做到更多」和「理解更深」之间存在结构性张力——delegation 不等于 augmentation，当用户把 Type A（理论原创）和 Type B（规划判断）也一起授权出去时，他们获得了输出但失去了判断输出好坏的能力。",
+    "user_stance": "agree",
+    "user_reasoning": "我同意这个冲突是真实的。我一直在想 skill 要有教学性，但我还没有认真想过：如果用户从来没有做过 paper sensemaking，他们能不能判断 AI 的 sensemaking 输出是否准确？可能不能。这让我觉得 skill 的设计需要区分两种用户：一种是已经有能力的用户（skill 帮他们提速），另一种是没有能力的用户（skill 可能在帮他们绕过能力建立）。",
+    "probe_exchange": [
+      {
+        "probe": "你说要区分「有能力」和「没能力」的用户——在你的 skill pipeline 里，目前有没有设计来区分这两类用户？还是说所有人用的是同一套流程？",
+        "response": "目前是同一套流程。我假设用户是 educator 或 researcher，有一定基础，但我没有区分「熟悉 sensemaking」和「完全不知道 sensemaking 是什么」的用户。所有人拿到的是同样的 system prompt 和 canvas。"
+      },
+      {
+        "probe": "所以对于完全不懂 sensemaking 的用户，你的 skill 给他们的是一个他们无法验证的 AI 输出。Zhang 的 paper 说这叫 verification gap。你觉得这个 gap 在你的场景里有多大？",
+        "response": "应该挺大的。如果用户没有 sensemaking 的概念，他们看到 AI 输出的「认知冲突」和「重构」，可能会直接接受，不会质疑。这比 Zhang 说的 DiD 代码还危险——代码跑不出来会报错，但 sensemaking 的质量没有显式的报错机制。"
+      }
+    ]
+  },
+
+  "act3_reconstruction": {
+    "before": "skill 越好用、输出越完整，用户受益越大。降低门槛是核心价值，不需要区分用户是否已经具备底层能力。",
+    "after": "skill 的价值取决于用户是否有能力验证它的输出。对于已经具备底层能力的用户，skill 是真正的 augmentation；对于没有底层能力的用户，skill 可能在制造一个他们无法识别的 verification gap。我的 skill 需要区分这两类用户，或者在设计里加入帮助用户建立验证能力的机制。",
+    "delta": "认知从「工具越好用越好」转变为「工具的价值依赖用户的验证能力」。这不是反对 skill pipeline，而是要在 skill 设计里区分两件事：提升执行效率（对有能力的用户），和帮助建立验证能力（对没有能力的用户）。两件事需要不同的设计逻辑。",
+    "one_change": "在 skill-paper-sensemaking 里加一个「能力校准」环节：在幕一结束后，先问用户对 sensemaking 的熟悉程度，对于不熟悉的用户，在 canvas 里加一个「AI 的判断依据」层，展示 AI 为什么认为存在这个冲突，让用户有机会质疑和验证，而不是直接接受。"
+  }
+}

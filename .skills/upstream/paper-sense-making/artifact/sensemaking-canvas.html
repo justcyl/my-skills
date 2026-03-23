@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sensemaking Canvas</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500&family=Caveat:wght@500;600&family=Space+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #f5f0e8;
+  --cream-dark: #ede7d9;
+  --ink: #1a1410;
+  --ink-light: #4a4640;
+  --ink-muted: #8a847c;
+  --accent: #c17f3e;
+  --accent-light: #e8d5b8;
+  --accent-pale: #f7f0e4;
+  --border: rgba(26,20,16,0.11);
+  --border-strong: rgba(26,20,16,0.22);
+  --shadow: 3px 3px 0 rgba(26,20,16,0.08);
+  --red: #b03030;
+  --red-pale: rgba(176,48,48,0.07);
+  --green: #2a6e52;
+  --green-pale: rgba(42,110,82,0.07);
+  --font-serif: 'Noto Serif SC', serif;
+  --font-sans: 'Noto Sans SC', sans-serif;
+  --font-hand: 'Caveat', cursive;
+  --font-mono: 'Space Mono', monospace;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  background: var(--cream);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  background-image: radial-gradient(circle, rgba(26,20,16,0.03) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* ── EMPTY STATE ── */
+.empty {
+  min-height: 100vh;
+  display: flex; align-items: center; justify-content: center;
+  padding: 40px 20px;
+}
+.empty-card {
+  background: white;
+  border: 1.5px solid var(--border-strong);
+  box-shadow: var(--shadow);
+  width: 100%; max-width: 520px;
+  padding: 40px 44px;
+}
+.empty-brand { font-family: var(--font-hand); font-size: 22px; color: var(--accent); margin-bottom: 16px; }
+.empty-title { font-family: var(--font-serif); font-size: 20px; line-height: 1.4; margin-bottom: 10px; }
+.empty-sub { font-size: 13px; color: var(--ink-muted); line-height: 1.8; margin-bottom: 28px; }
+.code-block {
+  background: var(--ink); color: var(--cream);
+  padding: 14px 16px; font-family: var(--font-mono);
+  font-size: 11px; line-height: 1.9; margin-bottom: 20px;
+}
+.code-block .kw { color: var(--accent-light); }
+.code-block .cm { color: rgba(245,240,232,0.38); }
+.paste-label { font-family: var(--font-mono); font-size: 9px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-muted); margin-bottom: 6px; }
+.paste-area {
+  width: 100%; font-family: var(--font-mono); font-size: 11px;
+  padding: 10px 12px; border: 1.5px solid var(--border);
+  background: var(--cream); color: var(--ink);
+  outline: none; resize: none; height: 110px; line-height: 1.6;
+  transition: border-color 0.15s;
+}
+.paste-area:focus { border-color: var(--accent); }
+.paste-area::placeholder { color: var(--ink-muted); }
+.render-btn {
+  width: 100%; margin-top: 8px;
+  font-family: var(--font-mono); font-size: 11px; padding: 13px;
+  background: var(--accent); border: none; color: white;
+  cursor: pointer; letter-spacing: 0.08em; text-transform: uppercase;
+  box-shadow: var(--shadow); transition: background 0.15s;
+}
+.render-btn:hover { background: var(--ink); }
+
+/* ── CANVAS ── */
+.canvas { display: none; }
+.canvas.active { display: block; }
+
+/* Topbar */
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--cream); border-bottom: 1.5px solid var(--border);
+  height: 48px; display: flex; align-items: center;
+  padding: 0 24px; gap: 14px;
+}
+.tb-brand { font-family: var(--font-hand); font-size: 18px; color: var(--accent); flex-shrink: 0; }
+.tb-sep { width: 1px; height: 16px; background: var(--border); }
+.tb-paper { font-family: var(--font-mono); font-size: 10px; color: var(--ink-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; flex: 1; }
+.tb-profile { font-size: 11px; color: var(--ink-light); flex-shrink: 0; max-width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.tb-date { font-family: var(--font-mono); font-size: 10px; color: var(--ink-muted); flex-shrink: 0; }
+.tbtn {
+  font-family: var(--font-mono); font-size: 9px; padding: 5px 10px;
+  border: 1.5px solid var(--border); background: transparent;
+  color: var(--ink-light); cursor: pointer; letter-spacing: 0.04em;
+  text-transform: uppercase; transition: all 0.15s; white-space: nowrap; flex-shrink: 0;
+}
+.tbtn:hover { background: var(--ink); color: var(--cream); border-color: var(--ink); }
+
+/* Main layout */
+.canvas-body { max-width: 960px; margin: 0 auto; padding: 40px 32px 80px; }
+
+/* Act header */
+.act-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 20px; margin-top: 48px;
+}
+.act-header:first-child { margin-top: 0; }
+.act-num {
+  font-family: var(--font-hand); font-size: 32px; color: var(--accent);
+  line-height: 1; flex-shrink: 0;
+}
+.act-title { font-family: var(--font-serif); font-size: 18px; color: var(--ink); }
+.act-subtitle { font-family: var(--font-mono); font-size: 10px; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.1em; margin-left: auto; }
+.act-divider { height: 1.5px; background: var(--border); margin-bottom: 24px; }
+
+/* Cards */
+.card {
+  background: white; border: 1.5px solid var(--border);
+  box-shadow: var(--shadow); padding: 18px 22px;
+  margin-bottom: 12px;
+}
+.card-label {
+  font-family: var(--font-mono); font-size: 9px; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--ink-muted); margin-bottom: 8px;
+  display: flex; align-items: center; gap: 6px;
+}
+.card-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--ink-muted); flex-shrink: 0; }
+.card-dot.orange { background: var(--accent); }
+.card-dot.red { background: var(--red); }
+.card-dot.green { background: var(--green); }
+.card-text { font-family: var(--font-serif); font-size: 14px; line-height: 1.85; color: var(--ink); }
+.card-mono { font-family: var(--font-mono); font-size: 12px; line-height: 1.9; color: var(--ink-light); }
+
+/* Two-col for act1 */
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+
+/* Collision card */
+.collision-card {
+  background: white; border: 1.5px solid var(--border);
+  box-shadow: var(--shadow); margin-bottom: 12px; overflow: hidden;
+}
+.collision-row { display: grid; grid-template-columns: 1fr 1fr; }
+.col-before {
+  padding: 18px 22px;
+  background: var(--red-pale);
+  border-right: 1.5px solid rgba(176,48,48,0.15);
+}
+.col-after { padding: 18px 22px; }
+.col-label {
+  font-family: var(--font-mono); font-size: 9px; text-transform: uppercase;
+  letter-spacing: 0.1em; margin-bottom: 10px;
+  display: flex; align-items: center; gap: 6px;
+}
+.col-before .col-label { color: var(--red); }
+.col-after .col-label { color: var(--ink-muted); }
+.col-before .col-text {
+  font-family: var(--font-serif); font-size: 13px; line-height: 1.8;
+  color: var(--red); text-decoration: line-through; opacity: 0.75;
+}
+.col-after .col-text { font-family: var(--font-serif); font-size: 13px; line-height: 1.8; color: var(--ink); }
+.friction-row {
+  padding: 14px 22px; border-top: 1.5px solid var(--border);
+  background: var(--cream);
+}
+.friction-label {
+  font-family: var(--font-mono); font-size: 9px; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--ink-muted); margin-bottom: 6px;
+}
+.friction-text { font-family: var(--font-serif); font-size: 13px; line-height: 1.8; color: var(--ink-light); }
+
+/* Stance badge */
+.stance-row { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+.stance-badge {
+  font-family: var(--font-mono); font-size: 10px; text-transform: uppercase;
+  letter-spacing: 0.08em; padding: 5px 12px;
+}
+.stance-badge.agree { background: var(--green); color: white; }
+.stance-badge.unsure { background: var(--accent); color: white; }
+.stance-badge.disagree { background: var(--red); color: white; }
+.stance-reason { font-size: 13px; color: var(--ink-light); font-family: var(--font-serif); line-height: 1.7; flex: 1; }
+
+/* Probe exchange */
+.probe-item { margin-bottom: 10px; }
+.probe-q { font-family: var(--font-mono); font-size: 11px; color: var(--ink-muted); margin-bottom: 4px; }
+.probe-q::before { content: 'AI → '; }
+.probe-a { font-family: var(--font-serif); font-size: 13px; line-height: 1.8; color: var(--ink); padding-left: 12px; border-left: 2px solid var(--border-strong); }
+
+/* Reconstruction before/after */
+.recon-card {
+  background: white; border: 1.5px solid var(--border);
+  box-shadow: var(--shadow); overflow: hidden; margin-bottom: 12px;
+}
+.recon-grid { display: grid; grid-template-columns: 1fr 1fr; }
+.recon-before {
+  padding: 18px 22px;
+  background: var(--red-pale);
+  border-right: 1.5px solid rgba(176,48,48,0.15);
+}
+.recon-after { padding: 18px 22px; background: var(--green-pale); }
+.recon-label {
+  font-family: var(--font-mono); font-size: 9px; text-transform: uppercase;
+  letter-spacing: 0.1em; margin-bottom: 10px;
+  display: flex; align-items: center; gap: 6px;
+}
+.recon-before .recon-label { color: var(--red); }
+.recon-after .recon-label { color: var(--green); }
+.recon-text { font-family: var(--font-serif); font-size: 13px; line-height: 1.85; color: var(--ink); }
+.recon-delta {
+  padding: 16px 22px; border-top: 1.5px solid var(--border);
+  background: var(--ink); color: var(--cream);
+}
+.recon-delta-label {
+  font-family: var(--font-hand); font-size: 15px; color: var(--accent-light); margin-bottom: 8px;
+}
+.recon-delta-text { font-family: var(--font-serif); font-size: 14px; line-height: 1.85; }
+
+/* One change */
+.one-change {
+  background: white; border: 1.5px solid var(--border-strong);
+  box-shadow: var(--shadow); padding: 20px 22px;
+}
+.one-change-label {
+  font-family: var(--font-mono); font-size: 9px; text-transform: uppercase;
+  letter-spacing: 0.1em; color: var(--green); margin-bottom: 10px;
+}
+.one-change-text { font-family: var(--font-serif); font-size: 15px; line-height: 1.85; color: var(--ink); }
+
+/* Fade in */
+.fade-in { animation: fi 0.35s ease; }
+@keyframes fi { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-thumb { background: var(--border); }
+</style>
+</head>
+<body>
+
+<!-- EMPTY STATE -->
+<div class="empty" id="empty">
+  <div class="empty-card">
+    <div class="empty-brand">Sensemaking Canvas</div>
+    <div class="empty-title">认知轨迹可视化</div>
+    <div class="empty-sub">
+      在 Claude 对话窗口完成三幕 sensemaking 对话，把最后输出的 JSON 粘贴到这里。
+    </div>
+    <div class="code-block">
+<span class="kw">/sensemaking</span>
+<span class="cm">profile: 初中数学老师，做 proof 反馈工具</span>
+
+<span class="cm">[粘贴论文全文]</span>
+    </div>
+    <div class="paste-label">粘贴 Claude 最终输出的 JSON</div>
+    <textarea class="paste-area" id="json-input" placeholder='{"meta":{...},"act1_comprehension":{...},"act2_collision":{...},"act3_reconstruction":{...}}'></textarea>
+    <button class="render-btn" onclick="render()">渲染认知轨迹 →</button>
+  </div>
+</div>
+
+<!-- CANVAS -->
+<div class="canvas" id="canvas">
+  <div class="topbar">
+    <div class="tb-brand">Sensemaking Canvas</div>
+    <div class="tb-sep"></div>
+    <div class="tb-paper" id="tb-paper">—</div>
+    <div class="tb-sep"></div>
+    <div class="tb-profile" id="tb-profile">—</div>
+    <div class="tb-sep"></div>
+    <div class="tb-date" id="tb-date">—</div>
+    <div style="margin-left:auto;display:flex;gap:6px">
+      <button class="tbtn" onclick="reset()">重置</button>
+    </div>
+  </div>
+  <div class="canvas-body" id="canvas-body"></div>
+</div>
+
+<script>
+function render() {
+  const raw = document.getElementById('json-input').value.trim();
+  if (!raw) return;
+  let d;
+  try {
+    d = JSON.parse(raw.replace(/```json|```/g, '').trim());
+  } catch(e) {
+    alert('JSON 格式有误：' + e.message);
+    return;
+  }
+  document.getElementById('empty').style.display = 'none';
+  document.getElementById('canvas').classList.add('active');
+  buildCanvas(d);
+}
+
+function buildCanvas(d) {
+  const meta = d.meta || {};
+  const a1 = d.act1_comprehension || {};
+  const a2 = d.act2_collision || {};
+  const a3 = d.act3_reconstruction || {};
+
+  document.getElementById('tb-paper').textContent = meta.paper_title || '—';
+  document.getElementById('tb-profile').textContent = meta.profile_read || '—';
+  document.getElementById('tb-date').textContent = meta.session_date || '—';
+
+  const body = document.getElementById('canvas-body');
+  body.innerHTML = '';
+
+  // ── ACT 1 ──
+  body.appendChild(actHeader('一', '理解', 'Comprehension'));
+
+  if (a1.core_claim) {
+    body.appendChild(card('核心主张', 'orange', a1.core_claim, 'serif'));
+  }
+
+  if (a1.learning_mechanism || a1.user_perspective) {
+    const row = el('div', 'two-col fade-in');
+    if (a1.learning_mechanism) row.appendChild(card('学习机制', 'orange', a1.learning_mechanism, 'mono', true));
+    if (a1.user_perspective) row.appendChild(card('从你的视角', 'orange', a1.user_perspective, 'serif', true));
+    body.appendChild(row);
+  }
+
+  // ── ACT 2 ──
+  body.appendChild(actHeader('二', '冲突', 'Collision'));
+
+  if (a2.user_schema_before || a2.paper_challenge) {
+    const cc = el('div', 'collision-card fade-in');
+    const row = el('div', 'collision-row');
+
+    const before = el('div', 'col-before');
+    before.innerHTML = `
+      <div class="col-label"><span class="card-dot red"></span>你原来的认知</div>
+      <div class="col-text">${esc(a2.user_schema_before || '—')}</div>`;
+
+    const after = el('div', 'col-after');
+    after.innerHTML = `
+      <div class="col-label"><span class="card-dot orange"></span>Paper 挑战</div>
+      <div class="col-text">${esc(a2.paper_challenge || '—')}</div>`;
+
+    row.appendChild(before);
+    row.appendChild(after);
+    cc.appendChild(row);
+
+    if (a2.friction) {
+      const fr = el('div', 'friction-row');
+      fr.innerHTML = `<div class="friction-label">摩擦点</div><div class="friction-text">${esc(a2.friction)}</div>`;
+      cc.appendChild(fr);
+    }
+    body.appendChild(cc);
+  }
+
+  if (a2.user_stance || a2.user_reasoning) {
+    const stanceCard = el('div', 'card fade-in');
+    const stanceLabel = el('div', 'card-label');
+    stanceLabel.innerHTML = `<span class="card-dot red"></span>你的立场`;
+    stanceCard.appendChild(stanceLabel);
+
+    const stanceRow = el('div', 'stance-row');
+    if (a2.user_stance) {
+      const badge = el('div', 'stance-badge ' + (a2.user_stance || 'unsure'));
+      const labels = { agree: '同意', unsure: '不确定', disagree: '不同意' };
+      badge.textContent = labels[a2.user_stance] || a2.user_stance;
+      stanceRow.appendChild(badge);
+    }
+    if (a2.user_reasoning) {
+      const reason = el('div', 'stance-reason');
+      reason.textContent = a2.user_reasoning;
+      stanceRow.appendChild(reason);
+    }
+    stanceCard.appendChild(stanceRow);
+    body.appendChild(stanceCard);
+  }
+
+  if (a2.probe_exchange && a2.probe_exchange.length) {
+    const pc = el('div', 'card fade-in');
+    const pl = el('div', 'card-label');
+    pl.innerHTML = `<span class="card-dot red"></span>追问过程`;
+    pc.appendChild(pl);
+    a2.probe_exchange.forEach(item => {
+      const pi = el('div', 'probe-item');
+      pi.innerHTML = `
+        <div class="probe-q">${esc(item.probe || '')}</div>
+        <div class="probe-a">${esc(item.response || '')}</div>`;
+      pc.appendChild(pi);
+    });
+    body.appendChild(pc);
+  }
+
+  // ── ACT 3 ──
+  body.appendChild(actHeader('三', '重构', 'Reconstruction'));
+
+  if (a3.before || a3.after) {
+    const rc = el('div', 'recon-card fade-in');
+    const grid = el('div', 'recon-grid');
+
+    const rb = el('div', 'recon-before');
+    rb.innerHTML = `<div class="recon-label"><span class="card-dot red"></span>读之前</div><div class="recon-text">${esc(a3.before || '—')}</div>`;
+
+    const ra = el('div', 'recon-after');
+    ra.innerHTML = `<div class="recon-label"><span class="card-dot green"></span>读之后</div><div class="recon-text">${esc(a3.after || '—')}</div>`;
+
+    grid.appendChild(rb);
+    grid.appendChild(ra);
+    rc.appendChild(grid);
+
+    if (a3.delta) {
+      const delta = el('div', 'recon-delta');
+      delta.innerHTML = `<div class="recon-delta-label">认知 delta</div><div class="recon-delta-text">${esc(a3.delta)}</div>`;
+      rc.appendChild(delta);
+    }
+    body.appendChild(rc);
+  }
+
+  if (a3.one_change) {
+    const oc = el('div', 'one-change fade-in');
+    oc.innerHTML = `<div class="one-change-label">我打算改变的一件事</div><div class="one-change-text">${esc(a3.one_change)}</div>`;
+    body.appendChild(oc);
+  }
+}
+
+function actHeader(num, title, sub) {
+  const wrap = el('div', '');
+  wrap.innerHTML = `
+    <div class="act-header fade-in">
+      <div class="act-num">${num}</div>
+      <div class="act-title">${title}</div>
+      <div class="act-subtitle">${sub}</div>
+    </div>
+    <div class="act-divider"></div>`;
+  return wrap;
+}
+
+function card(label, dot, text, type, noWrap) {
+  const c = el('div', 'card fade-in');
+  c.innerHTML = `<div class="card-label"><span class="card-dot ${dot}"></span>${label}</div>
+    <div class="${type === 'mono' ? 'card-mono' : 'card-text'}">${esc(text)}</div>`;
+  return c;
+}
+
+function el(tag, cls) {
+  const e = document.createElement(tag);
+  if (cls) e.className = cls;
+  return e;
+}
+
+function esc(t) {
+  return String(t || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+}
+
+function reset() {
+  if (confirm('重置会清除所有内容，确定吗？')) location.reload();
+}
+</script>
+</body>
+</html>

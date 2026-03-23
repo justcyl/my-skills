@@ -10,8 +10,8 @@
   "bootstrap": true,
   "upstream_enabled": true,
   "upstream_path": ".skills/upstream/paper-sense-making",
-  "last_imported_at": "2026-03-23T15:57:12Z",
+  "last_imported_at": "2026-03-23T16:03:01Z",
   "upstream_revision": "e912ee643c62e599d8d4018fb7a45987e53b9dba",
-  "managed_revision": "sha256:cec1d480c9dd58ca3959c03a90c7ac3d1f43cdcf4d9a59b1f2e54ab652dc1a84",
+  "managed_revision": "sha256:0f612c599f7fa6cd41ca0cbdd17349aaabe053ced6289a8d18f0dd9969977a80",
   "managed_dirty": false
 }
