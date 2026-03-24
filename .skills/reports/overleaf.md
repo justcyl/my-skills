@@ -6,7 +6,7 @@
 - source_type: `local-manual`
 - source: ``
 - upstream_enabled: `false`
-- risk_status: `passed`
+- risk_status: `warned`
 
 ## Summary
 
@@ -14,7 +14,7 @@
 
 ## Risk Findings
 
-- No heuristic findings.
+- mentions secrets, tokens, or private keys
 
 ## Boundaries
 
