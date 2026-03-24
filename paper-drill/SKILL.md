@@ -1,10 +1,7 @@
 ---
 name: paper-drill
-description: >
-  深度论文精读训练工具。当用户提到"读论文"、"精读"、"paper drill"、"吃透论文"、
-  "论文测试"、"帮我理解这篇论文"、"我有一篇论文和总结"，或上传了论文 PDF 并希望
-  深入理解时触发。专为 AI/ML 领域论文设计，但也适用于其他 CS 论文。
- 
+description: 深度论文精读训练工具，通过 gap analysis 与互动训练补全论文理解，适用于 AI/ML 及其他 CS 论文场景。
+
 ---
 
 # Paper Drill — 论文精读训练

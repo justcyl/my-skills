@@ -10,7 +10,7 @@
 
 ## Summary
 
->
+深度论文精读训练工具，通过 gap analysis 与互动训练补全论文理解，适用于 AI/ML 及其他 CS 论文场景。
 
 ## Risk Findings
 
