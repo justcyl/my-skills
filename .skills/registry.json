@@ -172,26 +172,26 @@
           "target_path": "/Users/chenyl/.codex/skills/skills-manager",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-23T16:45:17Z"
+          "last_synced_at": "2026-03-24T07:17:25Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/skills-manager",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-23T16:45:17Z"
+          "last_synced_at": "2026-03-24T07:17:25Z"
         }
       },
       "display_name": "skills-manager",
-      "description": "统一处理所有 skills 操作的总控 skill，包括搜索、导入、创建、手动编辑后同步、规则与语义审核、中文优化、上游跟踪、分发、归档与发布。默认将所有下载/托管技能集中到 `my-skills` 仓库管理；即使在其他路径触发，也应回到该仓库执行管理流程。",
+      "description": "统一处理所有 skills 操作的总控 skill，包括搜索、导入、创建、重构、编辑、优化、上游跟踪、分发、归档与发布。默认将所有下载/托管技能集中到  `~/project/my-skills` 仓库管理；即使在其他路径触发，也应回到该仓库执行管理流程。",
       "status": "managed",
       "managed_dirty": false,
       "report_path": ".skills/reports/skills-manager.md",
       "source_path": ".skills/sources/skills-manager.json",
       "skill_path": "skills-manager",
       "upstream_path": ".skills/upstream/skills-manager",
-      "managed_revision": "sha256:68cccf7028d470aa2a2697975611b811d5edbb67e1b651ff915b3cce88a82353",
-      "last_updated_at": "2026-03-05T09:16:14Z",
-      "risk_status": "passed",
+      "managed_revision": "sha256:4d61e9c4dcc6cf9458dd3fe92155b9828c983874de83c7b152e1392078c863f0",
+      "last_updated_at": "2026-03-24T07:17:24Z",
+      "risk_status": "warned",
       "upstream_enabled": false
     },
     "summarize": {

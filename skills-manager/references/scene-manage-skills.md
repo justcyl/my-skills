@@ -34,13 +34,13 @@ git -C ~/project/my-skills commit -m "<message>"
 单个 skill：
 
 ```bash
-bash scripts/sync_skill_state.sh --skill-id <id> --push
+bash skills-manager/scripts/sync_skill_state.sh --skill-id <id> --push
 ```
 
 全部 skill：
 
 ```bash
-bash scripts/sync_skill_state.sh --push
+bash skills-manager/scripts/sync_skill_state.sh --push
 ```
 
 该脚本会：
@@ -59,7 +59,7 @@ bash scripts/sync_skill_state.sh --push
 同步分发：
 
 ```bash
-bash scripts/distribute_skills.sh sync
+bash skills-manager/scripts/distribute_skills.sh sync
 ```
 
 常见参数：
@@ -72,13 +72,13 @@ bash scripts/distribute_skills.sh sync
 归档也支持 `--dry-run`：
 
 ```bash
-bash scripts/distribute_skills.sh archive --skill-id <id> [--dry-run]
+bash skills-manager/scripts/distribute_skills.sh archive --skill-id <id> [--dry-run]
 ```
 
 查看状态：
 
 ```bash
-bash scripts/distribute_skills.sh status
+bash skills-manager/scripts/distribute_skills.sh status
 ```
 
 ## Archive
@@ -86,7 +86,7 @@ bash scripts/distribute_skills.sh status
 归档某个 skill：
 
 ```bash
-bash scripts/distribute_skills.sh archive --skill-id <id>
+bash skills-manager/scripts/distribute_skills.sh archive --skill-id <id>
 ```
 
 归档后：

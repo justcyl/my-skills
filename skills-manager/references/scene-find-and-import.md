@@ -28,7 +28,7 @@
 统一入口：
 
 ```bash
-bash scripts/find_or_import_skill.sh search <query>
+bash skills-manager/scripts/find_or_import_skill.sh search <query>
 ```
 
 说明：
@@ -46,7 +46,7 @@ bash scripts/find_or_import_skill.sh search <query>
 导入入口：
 
 ```bash
-bash scripts/find_or_import_skill.sh import <source> [--skill-id <id>] [--subpath <path>] [--ref <branch>] [--force] [--dry-run]
+bash skills-manager/scripts/find_or_import_skill.sh import <source> [--skill-id <id>] [--subpath <path>] [--ref <branch>] [--force] [--dry-run]
 ```
 
 脚本职责：
@@ -73,13 +73,13 @@ bash scripts/find_or_import_skill.sh import <source> [--skill-id <id>] [--subpat
 常规更新：
 
 ```bash
-bash scripts/find_or_import_skill.sh update --skill-id <id>
+bash skills-manager/scripts/find_or_import_skill.sh update --skill-id <id>
 ```
 
 本地有未收尾改动时，默认阻断覆盖；只有用户明确同意时才执行：
 
 ```bash
-bash scripts/find_or_import_skill.sh update --skill-id <id> --allow-dirty
+bash skills-manager/scripts/find_or_import_skill.sh update --skill-id <id> --allow-dirty
 ```
 
 ## Finish
@@ -87,7 +87,7 @@ bash scripts/find_or_import_skill.sh update --skill-id <id> --allow-dirty
 完成导入后的任何手工优化后，统一收尾：
 
 ```bash
-bash scripts/sync_skill_state.sh --skill-id <id> --push
+bash skills-manager/scripts/sync_skill_state.sh --skill-id <id> --push
 ```
 
 失败处理：

@@ -57,7 +57,7 @@ bash skills-manager/scripts/create_skill.sh --skill-id <id> --name <name> --desc
 ```
 
 > 注意：creator 内所有脚本路径均以仓库根目录为 cwd，因此前缀为 `skills-manager/creator/scripts/...`。
-> 而 manager 自身的文档以 `skills-manager/` 为 cwd，前缀为 `scripts/...`。
+> 而 manager 自身的文档以仓库根目录为 cwd，前缀为 `skills-manager/scripts/...`。
 
 ## Routing
 
