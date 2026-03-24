@@ -587,13 +587,13 @@
           "target_path": "/Users/chenyl/.codex/skills/overleaf",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-24T12:07:07Z"
+          "last_synced_at": "2026-03-24T15:28:10Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/overleaf",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-24T12:07:07Z"
+          "last_synced_at": "2026-03-24T15:28:10Z"
         }
       },
       "display_name": "overleaf",
@@ -606,8 +606,8 @@
       "source_path": ".skills/sources/overleaf.json",
       "skill_path": "overleaf",
       "upstream_path": ".skills/upstream/overleaf",
-      "managed_revision": "sha256:69463cdc8ac625d9a6284b9407be5cdaf08888ee2f953d8be70f760b9b3e8d50",
-      "last_updated_at": "2026-03-24T12:07:07Z"
+      "managed_revision": "sha256:006265a57c8b98ff147ec433aa3f7e54396382806dade007836824e5fd05bcee",
+      "last_updated_at": "2026-03-24T15:28:10Z"
     }
   }
 }
