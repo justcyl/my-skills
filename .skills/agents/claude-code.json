@@ -77,6 +77,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-03-24T15:28:10Z"
+    },
+    "paper-drill": {
+      "source_path": "paper-drill",
+      "target_path": "/Users/chenyl/.claude/skills/paper-drill",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-24T16:36:11Z"
     }
   }
 }
