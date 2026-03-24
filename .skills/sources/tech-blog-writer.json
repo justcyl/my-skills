@@ -10,7 +10,7 @@
   "bootstrap": true,
   "upstream_enabled": true,
   "upstream_path": ".skills/upstream/tech-blog-writer",
-  "last_imported_at": "2026-03-15T12:10:38Z",
+  "last_imported_at": "2026-03-24T17:13:10Z",
   "upstream_revision": "sha256:10e64e97e45eb6b8feb7ae443fdadc11a660b16296a10be8bfb5683eb407f1fa",
   "managed_revision": "sha256:01b3ef4a18fc98432c3c4f9091fee051714c62a8c45154b83ecbff26af13ba16",
   "managed_dirty": false

@@ -53,7 +53,7 @@ ensure_state_dirs() {
 }
 JSON
   fi
-  for agent in codex claude-code; do
+  for agent in codex claude-code agents; do
     if [[ ! -f "${AGENTS_DIR}/${agent}.json" ]]; then
       cat > "${AGENTS_DIR}/${agent}.json" <<'JSON'
 {
@@ -493,6 +493,9 @@ resolve_agent_target_dir() {
       ;;
     claude-code)
       printf '%s\n' "${CLAUDE_SKILLS_DIR:-${HOME}/.claude/skills}"
+      ;;
+    agents)
+      printf '%s\n' "${AGENTS_SKILLS_DIR:-${HOME}/.agents/skills}"
       ;;
     *)
       echo "error: unsupported agent '${agent}'" >&2

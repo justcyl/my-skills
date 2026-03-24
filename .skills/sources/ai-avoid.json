@@ -10,7 +10,7 @@
   "bootstrap": true,
   "upstream_enabled": true,
   "upstream_path": ".skills/upstream/ai-avoid",
-  "last_imported_at": "2026-03-13T07:11:35Z",
+  "last_imported_at": "2026-03-24T17:13:10Z",
   "upstream_revision": "7836c899676f01d1d88ad926c15e2e2a78bfd7d4",
   "managed_revision": "sha256:9531d6886bd1ea398b2d09d4ace4828d152d5b219fa68f864b117c3ba3104a40",
   "managed_dirty": false

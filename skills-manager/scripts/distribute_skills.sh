@@ -8,8 +8,8 @@ source "${SCRIPT_DIR}/lib/common.sh"
 usage() {
   cat >&2 <<'TEXT'
 usage:
-  bash scripts/distribute_skills.sh sync [--agent <codex|claude-code|all>] [--skill-id <id>] [--mode <auto|symlink|copy>] [--dry-run]
-  bash scripts/distribute_skills.sh status [--agent <codex|claude-code|all>] [--skill-id <id>]
+  bash scripts/distribute_skills.sh sync [--agent <codex|claude-code|agents|all>] [--skill-id <id>] [--mode <auto|symlink|copy>] [--dry-run]
+  bash scripts/distribute_skills.sh status [--agent <codex|claude-code|agents|all>] [--skill-id <id>]
   bash scripts/distribute_skills.sh archive --skill-id <id> [--dry-run]
 TEXT
 }
@@ -193,8 +193,8 @@ command_sync() {
   ensure_state_dirs
 
   case "${target_agent}" in
-    all) agents=(codex claude-code) ;;
-    codex|claude-code) agents=("${target_agent}") ;;
+    all) agents=(codex claude-code agents) ;;
+    codex|claude-code|agents) agents=("${target_agent}") ;;
     *) echo "error: invalid agent '${target_agent}'" >&2; exit 1 ;;
   esac
 
@@ -251,8 +251,8 @@ command_status() {
   ensure_state_dirs
 
   case "${target_agent}" in
-    all) agents=(codex claude-code) ;;
-    codex|claude-code) agents=("${target_agent}") ;;
+    all) agents=(codex claude-code agents) ;;
+    codex|claude-code|agents) agents=("${target_agent}") ;;
     *) echo "error: invalid agent '${target_agent}'" >&2; exit 1 ;;
   esac
 
@@ -325,7 +325,7 @@ command_archive() {
   mkdir -p "${ARCHIVED_SKILLS_DIR}"
   mv "${source_path}" "${archived_path}"
 
-  for agent in codex claude-code; do
+  for agent in codex claude-code agents; do
     target_base="$(resolve_agent_target_dir "${agent}")"
     rm -rf "${target_base}/${skill_id}"
     remove_agent_state "${agent}" "${skill_id}"

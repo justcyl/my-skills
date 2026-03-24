@@ -7,7 +7,7 @@
 这个场景负责：
 
 1. 手动编辑后的状态刷新与审计
-2. 分发到 Codex / Claude Code
+2. 分发到 Codex / Claude Code / Agents
 3. 查看分发状态
 4. 归档 skill
 5. 在需要时提交并推送
@@ -64,7 +64,7 @@ bash skills-manager/scripts/distribute_skills.sh sync
 
 常见参数：
 
-1. `--agent codex|claude-code|all`
+1. `--agent codex|claude-code|agents|all`
 2. `--skill-id <id>`
 3. `--mode auto|symlink|copy`
 4. `--dry-run`

@@ -10,7 +10,7 @@
   "bootstrap": true,
   "upstream_enabled": true,
   "upstream_path": ".skills/upstream/research-refine",
-  "last_imported_at": "2026-03-17T07:40:54Z",
+  "last_imported_at": "2026-03-24T17:13:10Z",
   "upstream_revision": "a1f14495856afe1e400c65d84ce22f68a027ef75",
   "managed_revision": "sha256:dbb89352beecf3e13ec56699d16176c7559f985e97a18bdeba6325e1d907d145",
   "managed_dirty": false

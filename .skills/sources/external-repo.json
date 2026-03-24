@@ -10,7 +10,7 @@
   "bootstrap": true,
   "upstream_enabled": false,
   "upstream_path": ".skills/upstream/external-repo",
-  "last_imported_at": "2026-03-09T16:47:59Z",
+  "last_imported_at": "2026-03-24T17:13:10Z",
   "upstream_revision": "",
   "managed_revision": "sha256:f09b10e77f9092fbb0480f4d237c98a680b98b13adb5191d721044696f0f6cae",
   "managed_dirty": false

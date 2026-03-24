@@ -10,7 +10,7 @@
   "bootstrap": true,
   "upstream_enabled": false,
   "upstream_path": ".skills/upstream/web-reader",
-  "last_imported_at": "2026-03-17T07:40:17Z",
+  "last_imported_at": "2026-03-24T17:13:10Z",
   "upstream_revision": "",
   "managed_revision": "sha256:38721d08c16da4fbe14c84b21d6fdfe8055531d4ed696314520759cde54b6e17",
   "managed_dirty": false
