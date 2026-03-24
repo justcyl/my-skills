@@ -1,6 +1,6 @@
 ---
 name: overleaf
-description: 通过 pyoverleaf 与 Overleaf 项目交互。当用户需要读取、编辑、上传 LaTeX 文件，列出 Overleaf 项目，下载项目 ZIP，或在 Overleaf 编辑论文时使用。所有写操作（write、mkdir、rm）必须先向用户展示变更内容并等待确认，绝不自动推送。依赖环境变量 OVERLEAF_COOKIE 和 OVERLEAF_HOST。
+description: 通过 pyoverleaf 与 Overleaf 项目交互。当用户需要读取、编辑、上传 LaTeX 文件，列出 Overleaf 项目，下载项目 ZIP，或在 Overleaf 编辑论文时使用。
 ---
 
 # Overleaf Skill
@@ -28,13 +28,7 @@ export OVERLEAF_COOKIE="overleaf_session2=s%3Axxx; gke-route=yyy"
 所有操作统一通过 wrapper 脚本执行：
 
 ```bash
-bash ~/project/my-skills/overleaf/scripts/ol.sh <命令> [参数]
-```
-
-为方便起见，可以设置别名：
-
-```bash
-alias ol="bash ~/project/my-skills/overleaf/scripts/ol.sh"
+bash scripts/ol.sh <命令> [参数]
 ```
 
 ## 命令参考
@@ -43,52 +37,52 @@ alias ol="bash ~/project/my-skills/overleaf/scripts/ol.sh"
 
 ```bash
 # 列出全部项目
-bash ol.sh ls
+bash scripts/ol.sh ls
 
 # 列出项目根目录文件
-bash ol.sh ls "MyProject"
+bash scripts/ol.sh ls "MyProject"
 
 # 列出子目录
-bash ol.sh ls "MyProject/chapters"
+bash scripts/ol.sh ls "MyProject/chapters"
 ```
 
 ### 读取文件
 
 ```bash
 # 输出到终端
-bash ol.sh read "MyProject/main.tex"
+bash scripts/ol.sh read "MyProject/main.tex"
 
 # 保存到本地
-bash ol.sh read "MyProject/main.tex" > /tmp/main.tex
+bash scripts/ol.sh read "MyProject/main.tex" > /tmp/main.tex
 ```
 
 ### 写入文件（覆盖）
 
 ```bash
 # 从标准输入写入
-echo "Hello World" | bash ol.sh write "MyProject/test.tex"
+echo "Hello World" | bash scripts/ol.sh write "MyProject/test.tex"
 
 # 从本地文件写入
-cat local_file.tex | bash ol.sh write "MyProject/main.tex"
+cat local_file.tex | bash scripts/ol.sh write "MyProject/main.tex"
 ```
 
 ### 创建目录
 
 ```bash
-bash ol.sh mkdir "MyProject/figures"
-bash ol.sh mkdir -p "MyProject/sections/appendix"
+bash scripts/ol.sh mkdir "MyProject/figures"
+bash scripts/ol.sh mkdir -p "MyProject/sections/appendix"
 ```
 
 ### 删除文件或目录
 
 ```bash
-bash ol.sh rm "MyProject/old_draft.tex"
+bash scripts/ol.sh rm "MyProject/old_draft.tex"
 ```
 
 ### 下载整个项目
 
 ```bash
-bash ol.sh download "MyProject" /tmp/MyProject.zip
+bash scripts/ol.sh download "MyProject" /tmp/MyProject.zip
 ```
 
 ## 安全规则（重要）
@@ -113,10 +107,10 @@ bash ol.sh download "MyProject" /tmp/MyProject.zip
 
 ```bash
 # 1. 查看项目结构
-bash ol.sh ls "MyProject"
+bash scripts/ol.sh ls "MyProject"
 
 # 2. 读取目标文件
-bash ol.sh read "MyProject/main.tex" > /tmp/main.tex
+bash scripts/ol.sh read "MyProject/main.tex" > /tmp/main.tex
 
 # 3. 在本地编辑（由 agent 或用户完成）
 
@@ -124,13 +118,13 @@ bash ol.sh read "MyProject/main.tex" > /tmp/main.tex
 diff /tmp/main.tex /tmp/main_edited.tex
 
 # 5. 用户确认后写回
-cat /tmp/main_edited.tex | bash ol.sh write "MyProject/main.tex"
+cat /tmp/main_edited.tex | bash scripts/ol.sh write "MyProject/main.tex"
 ```
 
 ### 下载项目用于本地编译
 
 ```bash
-bash ol.sh download "MyProject" ~/Downloads/MyProject.zip
+bash scripts/ol.sh download "MyProject" ~/Downloads/MyProject.zip
 unzip ~/Downloads/MyProject.zip -d ~/Downloads/MyProject
 ```
 
