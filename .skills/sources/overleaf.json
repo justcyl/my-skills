@@ -1,0 +1,17 @@
+{
+  "skill_id": "overleaf",
+  "display_name": "overleaf",
+  "skill_path": "overleaf",
+  "source_type": "local-manual",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/overleaf",
+  "last_imported_at": "2026-03-24T07:06:15Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:04097431d56d3e9ce17ae8fe341e12d72a0cbb0678655530872a14bf670543cd",
+  "managed_dirty": false
+}

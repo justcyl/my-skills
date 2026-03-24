@@ -580,6 +580,34 @@
       "upstream_path": ".skills/upstream/paper-sense-making",
       "managed_revision": "sha256:0f612c599f7fa6cd41ca0cbdd17349aaabe053ced6289a8d18f0dd9969977a80",
       "last_updated_at": "2026-03-23T16:43:47Z"
+    },
+    "overleaf": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/overleaf",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-03-24T07:06:15Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/overleaf",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-03-24T07:06:15Z"
+        }
+      },
+      "display_name": "overleaf",
+      "description": "通过 pyoverleaf 与 Overleaf 项目交互。当用户需要读取、编辑、上传 LaTeX 文件，列出 Overleaf 项目，下载项目 ZIP，或在 Overleaf 编辑论文时使用。所有写操作（write、mkdir、rm）必须先向用户展示变更内容并等待确认，绝不自动推送。依赖环境变量 OVERLEAF_COOKIE 和 OVERLEAF_HOST。",
+      "status": "managed",
+      "risk_status": "passed",
+      "managed_dirty": false,
+      "upstream_enabled": false,
+      "report_path": ".skills/reports/overleaf.md",
+      "source_path": ".skills/sources/overleaf.json",
+      "skill_path": "overleaf",
+      "upstream_path": ".skills/upstream/overleaf",
+      "managed_revision": "sha256:04097431d56d3e9ce17ae8fe341e12d72a0cbb0678655530872a14bf670543cd",
+      "last_updated_at": "2026-03-24T07:06:15Z"
     }
   }
 }

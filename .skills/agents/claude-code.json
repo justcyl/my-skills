@@ -70,6 +70,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-03-23T16:45:17Z"
+    },
+    "overleaf": {
+      "source_path": "overleaf",
+      "target_path": "/Users/chenyl/.claude/skills/overleaf",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-03-24T07:06:15Z"
     }
   }
 }
