@@ -207,8 +207,8 @@ def _fetch_review_threads(api: Api, project_id: str) -> dict[str, Any]:
     return data
 
 
-def _read_file_from_project_zip(api: Api, project_id: str, rel_path: str) -> str:
-    """从项目 ZIP 中读取文本文件内容，避免 doc 读取链路导致乱码。"""
+def _read_file_bytes_from_project_zip(api: Api, project_id: str, rel_path: str) -> bytes:
+    """从项目 ZIP 中读取文件原始字节，避免 doc 读取链路导致乱码。"""
     zip_bytes = api.download_project(project_id)
     normalized = pathlib.PurePosixPath(rel_path).as_posix().lstrip("/")
     with zipfile.ZipFile(pyio.BytesIO(zip_bytes), "r") as zf:
@@ -222,13 +222,82 @@ def _read_file_from_project_zip(api: Api, project_id: str, rel_path: str) -> str
                 name = matched[0]
             else:
                 raise click.ClickException(f"在项目 ZIP 中找不到文件：{rel_path}")
-        raw = zf.read(name)
+        return zf.read(name)
+
+
+def _read_file_from_project_zip(api: Api, project_id: str, rel_path: str) -> str:
+    """从项目 ZIP 中读取 UTF-8 文本内容。"""
+    raw = _read_file_bytes_from_project_zip(api, project_id, rel_path)
     try:
         return raw.decode("utf-8")
     except UnicodeDecodeError as exc:
         raise click.ClickException(
             f"文件 '{rel_path}' 不是 UTF-8 文本，无法执行 edit：{exc}"
         ) from exc
+
+
+def _resolve_file_entity(
+    api: Api, project_id: str, rel_path: str
+) -> tuple[str, str]:
+    """解析项目内文件路径，返回 (entity_type, entity_id)。"""
+    normalized = pathlib.PurePosixPath(rel_path).as_posix().lstrip("/")
+    if not normalized:
+        raise click.ClickException("文件路径不能为空。")
+
+    path_obj = pathlib.PurePosixPath(normalized)
+    root = api.project_get_files(project_id)
+    folder = root
+    for part in path_obj.parts[:-1]:
+        next_folder = None
+        for child in folder.children:
+            if child.name == part and getattr(child, "type", None) == "folder":
+                next_folder = child
+                break
+        if next_folder is None:
+            raise click.ClickException(f"路径不存在：{rel_path}")
+        folder = next_folder
+
+    filename = path_obj.parts[-1]
+    for child in folder.children:
+        child_type = getattr(child, "type", None)
+        if child.name == filename and child_type != "folder":
+            entity_id = getattr(child, "id", None)
+            if isinstance(child_type, str) and isinstance(entity_id, str):
+                return child_type, entity_id
+            raise click.ClickException(f"文件实体信息异常：{rel_path}")
+
+    raise click.ClickException(f"文件不存在：{rel_path}")
+
+
+def _read_file_text_for_edit(api: Api, project_id: str, rel_path: str) -> str:
+    """读取 edit 所需文本，不走整项目 ZIP 下载。"""
+    def _decode_ws_text(text: str) -> str:
+        """反转 websocket 文本转义（JS: decodeURIComponent(escape(text))）。"""
+        try:
+            return text.encode("latin-1").decode("utf-8")
+        except (UnicodeEncodeError, UnicodeDecodeError):
+            return text
+
+    entity_type, entity_id = _resolve_file_entity(api, project_id, rel_path)
+    if entity_type == "doc":
+        payload = _pull_doc_join_payload(api, project_id, entity_id)
+        lines_raw = payload[1] if len(payload) > 1 and isinstance(payload[1], list) else []
+        return "\n".join(_decode_ws_text(str(item)) for item in lines_raw)
+
+    if entity_type == "file":
+        io = ProjectIO(api, project_id)
+        with io.open(rel_path, "rb") as f:
+            raw = f.read()
+        try:
+            return raw.decode("utf-8")
+        except UnicodeDecodeError as exc:
+            raise click.ClickException(
+                f"文件 '{rel_path}' 不是 UTF-8 文本，无法执行 edit：{exc}"
+            ) from exc
+
+    raise click.ClickException(
+        f"文件 '{rel_path}' 类型为 '{entity_type}'，当前不支持 edit。"
+    )
 
 
 def _collect_project_docs(api: Api, project_id: str) -> list[dict[str, str]]:
@@ -395,9 +464,8 @@ def cmd_read(path: str):
       ol.py read MyProject/main.tex
     """
     api = _build_api()
-    io, rel_path = _resolve_project_and_path(api, path)
-    with io.open(rel_path, "rb") as f:
-        shutil.copyfileobj(f, sys.stdout.buffer)
+    project_id, _, rel_path = _resolve_project_and_path_to_ids(api, path)
+    sys.stdout.buffer.write(_read_file_bytes_from_project_zip(api, project_id, rel_path))
 
 
 @cli.command("write")
@@ -432,7 +500,7 @@ def cmd_edit(path: str, old_text: str, new_text: str, replace_all: bool):
 
     api = _build_api()
     project_id, project_name, rel_path = _resolve_project_and_path_to_ids(api, path)
-    original = _read_file_from_project_zip(api, project_id, rel_path)
+    original = _read_file_text_for_edit(api, project_id, rel_path)
 
     matches = original.count(old_text)
     if matches == 0:
@@ -450,8 +518,8 @@ def cmd_edit(path: str, old_text: str, new_text: str, replace_all: bool):
         else original.replace(old_text, new_text, 1)
     )
     io = ProjectIO(api, project_id)
-    with io.open(rel_path, "w", encoding="utf-8") as f:
-        f.write(updated)
+    with io.open(rel_path, "wb+") as f:
+        f.write(updated.encode("utf-8"))
     print(
         f"已编辑：{project_name}/{rel_path}（替换 {replaced} 处）",
         file=sys.stderr,
