@@ -1,5 +1,5 @@
 ---
-name: skill-creator
+name: creator
 description: 在 `my-skills` 仓库内创建、重写、评测并优化 skill。只在 `skills-manager` 已把任务路由到创建场景时使用。负责需求访谈、SKILL.md 设计、测试集、benchmark、review viewer、description optimization 和打包；不负责仓库分发、归档或发布。
 ---
 

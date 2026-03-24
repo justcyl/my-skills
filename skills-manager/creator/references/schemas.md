@@ -1,6 +1,6 @@
 # JSON 数据结构定义
 
-本文档定义了 skill-creator 所使用的各类 JSON 数据结构。
+本文档定义了 creator 所使用的各类 JSON 数据结构。
 
 ---
 
