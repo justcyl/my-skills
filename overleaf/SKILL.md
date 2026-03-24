@@ -5,7 +5,7 @@ description: 通过 pyoverleaf 与 Overleaf 项目交互。当用户需要读取
 
 # Overleaf Skill
 
-通过 `pyoverleaf` 库与 Overleaf 实例交互，支持列出项目与文件、读写 LaTeX 文件、下载整个项目。
+通过 `pyoverleaf` 库与 Overleaf 实例交互，支持列出项目与文件、读写 LaTeX 文件、增量编辑文本、获取与解决 review 评论线程、下载整个项目。
 
 ## 环境准备
 
@@ -66,6 +66,21 @@ echo "Hello World" | bash scripts/ol.sh write "MyProject/test.tex"
 cat local_file.tex | bash scripts/ol.sh write "MyProject/main.tex"
 ```
 
+### 增量编辑文件（edit）
+
+```bash
+# 精确匹配 old（默认必须仅匹配 1 处）
+bash scripts/ol.sh edit "MyProject/main.tex" --old "\\section{Old}" --new "\\section{New}"
+
+# 替换所有匹配
+bash scripts/ol.sh edit "MyProject/main.tex" --old "\\cite{a}" --new "\\cite{b}" --replace-all
+```
+
+说明：
+- `edit` 采用类似 codex/opencode 的语义：`old` 必须精确匹配（包含空格和换行）。
+- 默认要求唯一匹配。若匹配到 0 处或多处会报错。
+- 加 `--replace-all` 后会替换全部匹配。
+
 ### 创建目录
 
 ```bash
@@ -77,6 +92,37 @@ bash scripts/ol.sh mkdir -p "MyProject/sections/appendix"
 
 ```bash
 bash scripts/ol.sh rm "MyProject/old_draft.tex"
+```
+
+### 获取项目 review 评论线程
+
+```bash
+# 输出带缩进 JSON
+bash scripts/ol.sh review list "MyProject"
+
+# 输出紧凑 JSON（便于管道处理）
+bash scripts/ol.sh review list "MyProject" --compact
+```
+
+### 自动定位某条 review 对应文件
+
+```bash
+# 输出单条线程的精确 doc/path 映射（基于 Overleaf doc comments）
+bash scripts/ol.sh review locate "MyProject" "69c2745dc0f84b044e000001"
+```
+
+说明：
+- `review list` 默认已经包含每条 review 的 `location` 字段（`doc_id`、`path`、`line`、`position`）。
+- 定位基于 Overleaf 的 `joinDoc` 原生 comments 数据，不使用关键词猜测。
+
+### 标记 review 线程为已解决
+
+```bash
+# 使用线程首条消息用户作为 resolve 用户
+bash scripts/ol.sh review resolve "MyProject" "69c2745dc0f84b044e000001"
+
+# 显式指定 user_id
+bash scripts/ol.sh review resolve "MyProject" "69c2745dc0f84b044e000001" --user-id "69a65a7a8f69a4e6b57d0ddd"
 ```
 
 ### 下载整个项目
@@ -133,6 +179,7 @@ unzip ~/Downloads/MyProject.zip -d ~/Downloads/MyProject
 - `pyoverleaf` 的 Cookie 认证依赖浏览器登录状态，Cookie 过期后需重新获取
 - 不支持创建新项目（需在 Overleaf 界面完成）
 - WebSocket 操作（读取 `.tex` doc 类型文件）在网络不稳定时可能超时，可重试
+- `review list/review locate/review resolve` 依赖 Overleaf 的内部评论线程与 `joinDoc` 接口（非官方公开 API）；不同私有部署版本可能存在字段差异
 - 当前 Overleaf 实例（`OVERLEAF_HOST`）未通网时，所有命令均失败，这是预期行为
 
 ## 依赖
