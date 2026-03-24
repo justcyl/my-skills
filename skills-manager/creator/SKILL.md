@@ -466,14 +466,14 @@ python skills-manager/creator/scripts/package_skill.py ~/project/my-skills/<skil
 
 核心 Python 脚本：
 
-7. `scripts/run_eval.py` — 对指定 description 跑触发评测
-8. `scripts/improve_description.py` — 基于评测结果用 Claude 生成改进 description
-9. `scripts/run_loop.py` — 将 eval + improve 串成迭代循环
-10. `scripts/aggregate_benchmark.py` — 聚合多轮评测结果为 benchmark 统计
-11. `scripts/generate_report.py` — 将迭代循环结果生成 HTML 报告
-12. `scripts/package_skill.py` — 将 skill 打包为 `.skill` 文件（自动创建 `.skills/packages/`）
-13. `scripts/quick_validate.py` — skill 基础结构快速校验
-14. `scripts/utils.py` — 公共工具函数（frontmatter 解析、路径解析等）
+7. `skills-manager/creator/scripts/run_eval.py` — 对指定 description 跑触发评测
+8. `skills-manager/creator/scripts/improve_description.py` — 基于评测结果用 Claude 生成改进 description
+9. `skills-manager/creator/scripts/run_loop.py` — 将 eval + improve 串成迭代循环
+10. `skills-manager/creator/scripts/aggregate_benchmark.py` — 聚合多轮评测结果为 benchmark 统计
+11. `skills-manager/creator/scripts/generate_report.py` — 将迭代循环结果生成 HTML 报告
+12. `skills-manager/creator/scripts/package_skill.py` — 将 skill 打包为 `.skill` 文件（自动创建 `.skills/packages/`）
+13. `skills-manager/creator/scripts/quick_validate.py` — skill 基础结构快速校验
+14. `skills-manager/creator/scripts/utils.py` — 公共工具函数（frontmatter 解析、路径解析等）
 
 ## Finish
 
