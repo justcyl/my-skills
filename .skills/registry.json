@@ -708,6 +708,40 @@
       "upstream_path": ".skills/upstream/paper-drill",
       "managed_revision": "sha256:b50fc0472009599df1ebd4e2a2b7293654a27ca81e5ff7b7bb8a3ee7158c6036",
       "last_updated_at": "2026-03-24T17:13:10Z"
+    },
+    "research-proposal": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/research-proposal",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-03-25T03:35:55Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/research-proposal",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-03-25T03:35:55Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/research-proposal",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-03-25T03:35:55Z"
+        }
+      },
+      "display_name": "research-proposal",
+      "description": "将用户的 ML/AI 想法写成结构化研究提案。适用于“proposal / research plan / experiment plan / paper idea / write up my idea”等请求，尤其是在用户提供了假设或方法草图、希望补全相关工作、实验设计与成功判据时。",
+      "status": "managed",
+      "risk_status": "passed",
+      "managed_dirty": false,
+      "upstream_enabled": true,
+      "report_path": ".skills/reports/research-proposal.md",
+      "source_path": ".skills/sources/research-proposal.json",
+      "skill_path": "research-proposal",
+      "upstream_path": ".skills/upstream/research-proposal",
+      "managed_revision": "sha256:0574948206ddb20d7af752a6705c9a69dbc5e193385b67e67302baae10672084",
+      "last_updated_at": "2026-03-25T03:35:54Z"
     }
   }
 }
