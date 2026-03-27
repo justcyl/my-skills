@@ -1,0 +1,17 @@
+{
+  "skill_id": "ljg-paper",
+  "display_name": "ljg-paper",
+  "skill_path": "ljg-paper",
+  "source_type": "github",
+  "source": "https://github.com/lijigang/ljg-skills/tree/master/skills/ljg-paper",
+  "source_url": "https://github.com/lijigang/ljg-skills.git",
+  "ref": "master",
+  "subpath": "skills/ljg-paper",
+  "bootstrap": true,
+  "upstream_enabled": true,
+  "upstream_path": ".skills/upstream/ljg-paper",
+  "last_imported_at": "2026-03-27T02:03:27Z",
+  "upstream_revision": "37479d0b2253462b94e8075f3fe6500b06b644f6",
+  "managed_revision": "sha256:6417f73d875bce207fe3a1224b4eb004d4f52b71ceaf936ac948e2cff8a80fd9",
+  "managed_dirty": false
+}

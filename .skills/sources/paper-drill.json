@@ -1,7 +1,7 @@
 {
   "skill_id": "paper-drill",
   "display_name": "paper-drill",
-  "skill_path": "paper-drill",
+  "skill_path": ".skills/archived-skills/paper-drill",
   "source_type": "local",
   "source": "/Users/chenyl/chat/task-add-skill-paper-drill-20260325/source",
   "source_url": "/Users/chenyl/chat/task-add-skill-paper-drill-20260325/source",
@@ -13,5 +13,7 @@
   "last_imported_at": "2026-03-24T17:13:10Z",
   "upstream_revision": "sha256:702e5e80b8acdafd36467fbe9129fb6ba1231bd5a33e5529b933c79bfa6cc9ee",
   "managed_revision": "sha256:b50fc0472009599df1ebd4e2a2b7293654a27ca81e5ff7b7bb8a3ee7158c6036",
-  "managed_dirty": false
+  "managed_dirty": false,
+  "archived": true,
+  "archived_at": "2026-03-27T02:02:55Z"
 }

@@ -525,38 +525,19 @@
       "last_updated_at": "2026-03-24T17:13:10Z"
     },
     "research-refine": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/research-refine",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-24T17:13:12Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/research-refine",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-24T17:13:12Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/research-refine",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-24T17:13:12Z"
-        }
-      },
+      "distribution": {},
       "display_name": "research-refine",
       "description": "Turn a vague research direction into a problem-anchored, elegant, frontier-aware, implementation-oriented method plan via iterative GPT-5.4 review. Use when the user says \"refine my approach\", \"帮我细化方案\", \"decompose this problem\", \"打磨idea\", \"refine research plan\", \"细化研究方案\", or wants a concrete research method that stays simple, focused, and top-venue ready instead of a vague or overbuilt idea.",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/research-refine.md",
       "source_path": ".skills/sources/research-refine.json",
-      "skill_path": "research-refine",
+      "skill_path": ".skills/archived-skills/research-refine",
       "upstream_path": ".skills/upstream/research-refine",
       "managed_revision": "sha256:dbb89352beecf3e13ec56699d16176c7559f985e97a18bdeba6325e1d907d145",
-      "last_updated_at": "2026-03-24T17:13:10Z"
+      "last_updated_at": "2026-03-27T02:32:13Z"
     },
     "web-reader": {
       "distribution": {
@@ -676,38 +657,19 @@
       "last_updated_at": "2026-03-24T17:13:10Z"
     },
     "paper-drill": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/paper-drill",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-24T17:13:12Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/paper-drill",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-24T17:13:12Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/paper-drill",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-24T17:13:12Z"
-        }
-      },
+      "distribution": {},
       "display_name": "paper-drill",
       "description": "深度论文精读训练工具，通过 gap analysis 与互动训练补全论文理解，适用于 AI/ML 及其他 CS 论文场景。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "passed",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/paper-drill.md",
       "source_path": ".skills/sources/paper-drill.json",
-      "skill_path": "paper-drill",
+      "skill_path": ".skills/archived-skills/paper-drill",
       "upstream_path": ".skills/upstream/paper-drill",
       "managed_revision": "sha256:b50fc0472009599df1ebd4e2a2b7293654a27ca81e5ff7b7bb8a3ee7158c6036",
-      "last_updated_at": "2026-03-24T17:13:10Z"
+      "last_updated_at": "2026-03-27T02:02:55Z"
     },
     "research-proposal": {
       "distribution": {
@@ -742,6 +704,40 @@
       "upstream_path": ".skills/upstream/research-proposal",
       "managed_revision": "sha256:0574948206ddb20d7af752a6705c9a69dbc5e193385b67e67302baae10672084",
       "last_updated_at": "2026-03-25T03:35:54Z"
+    },
+    "ljg-paper": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/ljg-paper",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-03-27T02:03:27Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/ljg-paper",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-03-27T02:03:27Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/ljg-paper",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-03-27T02:03:27Z"
+        }
+      },
+      "display_name": "ljg-paper",
+      "description": "",
+      "status": "managed",
+      "risk_status": "passed",
+      "managed_dirty": false,
+      "upstream_enabled": true,
+      "report_path": ".skills/reports/ljg-paper.md",
+      "source_path": ".skills/sources/ljg-paper.json",
+      "skill_path": "ljg-paper",
+      "upstream_path": ".skills/upstream/ljg-paper",
+      "managed_revision": "sha256:6417f73d875bce207fe3a1224b4eb004d4f52b71ceaf936ac948e2cff8a80fd9",
+      "last_updated_at": "2026-03-27T02:03:27Z"
     }
   }
 }
