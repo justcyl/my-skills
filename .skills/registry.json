@@ -628,23 +628,23 @@
           "target_path": "/Users/chenyl/.codex/skills/overleaf",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-27T10:53:36Z"
+          "last_synced_at": "2026-03-27T11:18:32Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/overleaf",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-27T10:53:36Z"
+          "last_synced_at": "2026-03-27T11:18:32Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/overleaf",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-27T10:53:36Z"
+          "last_synced_at": "2026-03-27T11:18:32Z"
         }
       },
       "display_name": "overleaf",
-      "description": "通过 pyoverleaf 与 Overleaf 项目交互。当用户需要读取、编辑、上传 LaTeX 文件，列出 Overleaf 项目，下载项目 ZIP，或在 Overleaf 编辑论文时使用。",
+      "description": "通过 Git 和 Review API 与 Overleaf 项目交互。当用户需要克隆、编辑并推送 Overleaf 项目，或查看、定位、解决 review 评论线程时使用。",
       "status": "managed",
       "risk_status": "warned",
       "managed_dirty": false,
@@ -653,8 +653,8 @@
       "source_path": ".skills/sources/overleaf.json",
       "skill_path": "overleaf",
       "upstream_path": ".skills/upstream/overleaf",
-      "managed_revision": "sha256:041afabd2115ef759a94430fae90764ccb0129475996e9d96e900a141c09b92e",
-      "last_updated_at": "2026-03-27T10:53:35Z"
+      "managed_revision": "sha256:f4eedd18f7529d8d256d9c22f191d4ddec014ab5459dc2682341b1d3b204b039",
+      "last_updated_at": "2026-03-27T11:18:32Z"
     },
     "paper-drill": {
       "distribution": {},

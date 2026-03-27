@@ -1,21 +1,14 @@
 #!/usr/bin/env python3
 """
-Overleaf CLI 包装器。
+Overleaf CLI 包装器（精简版：仅 git + review）。
 
-通过环境变量认证（而非从浏览器读取 Cookie），支持以下操作：
-  ls [PATH]                  列出项目或文件
+支持以下操作：
   git urls                   获取每个项目的 Git 地址
-  read <PROJECT/PATH>        读取文件内容到标准输出
-  write <PROJECT/PATH>       从标准输入写入文件
-  edit <PROJECT/PATH>        按 old/new 精确匹配进行增量编辑
   review list <PROJECT>      获取项目 review 评论线程
   review locate <PROJECT> <THREAD_ID>
                              自动定位该 review 可能对应的文件
   review resolve <PROJECT> <THREAD_ID>
                              标记指定 review 线程为已解决
-  mkdir [-p] <PROJECT/PATH>  创建目录
-  rm <PROJECT/PATH>          删除文件或目录
-  download <PROJECT> <OUT>   下载项目为 ZIP
 
 环境变量：
   OVERLEAF_HOST    Overleaf 实例域名（不含协议），如 overleaf.mycompany.com
@@ -24,18 +17,14 @@ Overleaf CLI 包装器。
 
 import os
 import sys
-import shutil
 import json
-import io as pyio
 import pathlib
-import zipfile
 from urllib.parse import urlparse, urlunparse
 from typing import Any
 import click
 
-# 确保在找不到 pyoverleaf 时给出清晰的错误信息
 try:
-    from pyoverleaf import Api, ProjectIO
+    from pyoverleaf import Api
 except ImportError:
     print(
         "错误：无法导入 pyoverleaf。请确认使用正确的 Python 解释器运行本脚本：\n"
@@ -48,7 +37,6 @@ except ImportError:
 def _build_api() -> Api:
     """从环境变量构建已认证的 API 实例。"""
     host = os.environ.get("OVERLEAF_HOST", "www.overleaf.com")
-    # 去除可能附带的 https:// 前缀
     host = host.removeprefix("https://").removeprefix("http://").rstrip("/")
 
     cookie_str = os.environ.get("OVERLEAF_COOKIE", "").strip()
@@ -59,7 +47,6 @@ def _build_api() -> Api:
             "  export OVERLEAF_COOKIE='overleaf_session2=s%3Axxx; gke-route=yyy'"
         )
 
-    # 解析 "name=value; name2=value2" 格式的 Cookie 字符串
     cookies: dict[str, str] = {}
     for segment in cookie_str.split(";"):
         segment = segment.strip()
@@ -76,9 +63,9 @@ def _build_api() -> Api:
 
 def _fetch_user_projects_json(api: Api) -> dict[str, Any]:
     """通过 /user/projects 接口获取项目列表 JSON。"""
-    url = f"https://{api._host}/user/projects"  # pylint: disable=protected-access
-    session = api._get_session()  # pylint: disable=protected-access
-    request_kwargs = dict(api._request_kwargs)  # pylint: disable=protected-access
+    url = f"https://{api._host}/user/projects"
+    session = api._get_session()
+    request_kwargs = dict(api._request_kwargs)
     headers = dict(request_kwargs.get("headers", {}))
     headers["Accept"] = "application/json"
     request_kwargs["headers"] = headers
@@ -90,7 +77,7 @@ def _fetch_user_projects_json(api: Api) -> dict[str, Any]:
         )
     try:
         resp.raise_for_status()
-    except Exception as exc:  # pylint: disable=broad-exception-caught
+    except Exception as exc:
         raise click.ClickException(f"调用 {url} 失败：{exc}") from exc
 
     final_url = str(getattr(resp, "url", ""))
@@ -128,7 +115,7 @@ def _list_projects(api: Api) -> list[dict[str, str]]:
         if parsed:
             return parsed
         errors.append("api.get_projects 返回空列表。")
-    except Exception as exc:  # pylint: disable=broad-exception-caught
+    except Exception as exc:
         errors.append(f"api.get_projects 失败：{exc}")
 
     try:
@@ -178,50 +165,16 @@ def _resolve_project(api: Api, project_name_or_id: str) -> tuple[str, str]:
     )
 
 
-def _resolve_project_and_path_to_ids(api: Api, path: str) -> tuple[str, str, str]:
-    """
-    将 <项目名>/<相对路径> 解析为 (project_id, project_name, rel_path)。
-    """
-    if path.startswith("/"):
-        path = path[1:]
-    if "/" not in path:
-        raise click.BadParameter(
-            f"路径 '{path}' 格式错误，应为 <项目名>/<文件路径>，例如：MyProject/main.tex"
-        )
-    project_name, _, rel_path = path.partition("/")
-    project_id, resolved_project_name = _resolve_project(api, project_name)
-    if not rel_path:
-        raise click.BadParameter("文件路径不能为空。")
-    return project_id, resolved_project_name, rel_path
-
-
-def _resolve_project_and_path(api: Api, path: str):
-    """
-    将 <项目名>/<相对路径> 解析为 (ProjectIO, rel_path)。
-
-    路径格式：MyProject/chapters/intro.tex
-    """
-    if path.startswith("/"):
-        path = path[1:]
-    if "/" not in path:
-        raise click.BadParameter(
-            f"路径 '{path}' 格式错误，应为 <项目名>/<文件路径>，例如：MyProject/main.tex"
-        )
-    project_name, _, rel_path = path.partition("/")
-    project_id, _ = _resolve_project(api, project_name)
-    return ProjectIO(api, project_id), rel_path
-
-
 def _review_get(
     api: Api, project_id: str, suffix: str, *, expected_json: bool = True
 ) -> Any:
     """调用 review GET 接口，兼容不同部署路径。"""
     candidates = [
-        f"https://{api._host}/project/{project_id}/{suffix}",  # pylint: disable=protected-access
-        f"https://{api._host}/chat/project/{project_id}/{suffix}",  # pylint: disable=protected-access
+        f"https://{api._host}/project/{project_id}/{suffix}",
+        f"https://{api._host}/chat/project/{project_id}/{suffix}",
     ]
-    session = api._get_session()  # pylint: disable=protected-access
-    request_kwargs = dict(api._request_kwargs)  # pylint: disable=protected-access
+    session = api._get_session()
+    request_kwargs = dict(api._request_kwargs)
     request_kwargs["headers"] = {"Accept": "application/json"}
 
     errors: list[str] = []
@@ -236,7 +189,7 @@ def _review_get(
             continue
         try:
             resp.raise_for_status()
-        except Exception as exc:  # pylint: disable=broad-exception-caught
+        except Exception as exc:
             errors.append(f"{url} -> {exc}")
             continue
 
@@ -256,14 +209,14 @@ def _review_get(
 def _review_post(api: Api, project_id: str, suffix: str, payload: dict[str, Any]) -> None:
     """调用 review POST 接口，兼容不同部署路径。"""
     candidates = [
-        f"https://{api._host}/project/{project_id}/{suffix}",  # pylint: disable=protected-access
-        f"https://{api._host}/chat/project/{project_id}/{suffix}",  # pylint: disable=protected-access
+        f"https://{api._host}/project/{project_id}/{suffix}",
+        f"https://{api._host}/chat/project/{project_id}/{suffix}",
     ]
-    session = api._get_session()  # pylint: disable=protected-access
-    request_kwargs = dict(api._request_kwargs)  # pylint: disable=protected-access
-    csrf = api._get_csrf_token(project_id)  # pylint: disable=protected-access
+    session = api._get_session()
+    request_kwargs = dict(api._request_kwargs)
+    csrf = api._get_csrf_token(project_id)
     headers = {
-        "Referer": f"https://{api._host}/project/{project_id}",  # pylint: disable=protected-access
+        "Referer": f"https://{api._host}/project/{project_id}",
         "Accept": "application/json",
         "Cache-Control": "no-cache",
         "x-csrf-token": csrf,
@@ -283,7 +236,7 @@ def _review_post(api: Api, project_id: str, suffix: str, payload: dict[str, Any]
         try:
             resp.raise_for_status()
             return
-        except Exception as exc:  # pylint: disable=broad-exception-caught
+        except Exception as exc:
             errors.append(f"{url} -> {exc}")
             continue
 
@@ -298,99 +251,6 @@ def _fetch_review_threads(api: Api, project_id: str) -> dict[str, Any]:
     if not isinstance(data, dict):
         raise click.ClickException("review 接口返回结构异常（期望 object）。")
     return data
-
-
-def _read_file_bytes_from_project_zip(api: Api, project_id: str, rel_path: str) -> bytes:
-    """从项目 ZIP 中读取文件原始字节，避免 doc 读取链路导致乱码。"""
-    zip_bytes = api.download_project(project_id)
-    normalized = pathlib.PurePosixPath(rel_path).as_posix().lstrip("/")
-    with zipfile.ZipFile(pyio.BytesIO(zip_bytes), "r") as zf:
-        names = zf.namelist()
-        candidate_map = {name.lstrip("/"): name for name in names}
-        name = candidate_map.get(normalized)
-        if name is None:
-            # 兼容部分 zip 中包含前缀目录的情况
-            matched = [n for n in names if n.lstrip("/").endswith("/" + normalized)]
-            if len(matched) == 1:
-                name = matched[0]
-            else:
-                raise click.ClickException(f"在项目 ZIP 中找不到文件：{rel_path}")
-        return zf.read(name)
-
-
-def _read_file_from_project_zip(api: Api, project_id: str, rel_path: str) -> str:
-    """从项目 ZIP 中读取 UTF-8 文本内容。"""
-    raw = _read_file_bytes_from_project_zip(api, project_id, rel_path)
-    try:
-        return raw.decode("utf-8")
-    except UnicodeDecodeError as exc:
-        raise click.ClickException(
-            f"文件 '{rel_path}' 不是 UTF-8 文本，无法执行 edit：{exc}"
-        ) from exc
-
-
-def _resolve_file_entity(
-    api: Api, project_id: str, rel_path: str
-) -> tuple[str, str]:
-    """解析项目内文件路径，返回 (entity_type, entity_id)。"""
-    normalized = pathlib.PurePosixPath(rel_path).as_posix().lstrip("/")
-    if not normalized:
-        raise click.ClickException("文件路径不能为空。")
-
-    path_obj = pathlib.PurePosixPath(normalized)
-    root = api.project_get_files(project_id)
-    folder = root
-    for part in path_obj.parts[:-1]:
-        next_folder = None
-        for child in folder.children:
-            if child.name == part and getattr(child, "type", None) == "folder":
-                next_folder = child
-                break
-        if next_folder is None:
-            raise click.ClickException(f"路径不存在：{rel_path}")
-        folder = next_folder
-
-    filename = path_obj.parts[-1]
-    for child in folder.children:
-        child_type = getattr(child, "type", None)
-        if child.name == filename and child_type != "folder":
-            entity_id = getattr(child, "id", None)
-            if isinstance(child_type, str) and isinstance(entity_id, str):
-                return child_type, entity_id
-            raise click.ClickException(f"文件实体信息异常：{rel_path}")
-
-    raise click.ClickException(f"文件不存在：{rel_path}")
-
-
-def _read_file_text_for_edit(api: Api, project_id: str, rel_path: str) -> str:
-    """读取 edit 所需文本，不走整项目 ZIP 下载。"""
-    def _decode_ws_text(text: str) -> str:
-        """反转 websocket 文本转义（JS: decodeURIComponent(escape(text))）。"""
-        try:
-            return text.encode("latin-1").decode("utf-8")
-        except (UnicodeEncodeError, UnicodeDecodeError):
-            return text
-
-    entity_type, entity_id = _resolve_file_entity(api, project_id, rel_path)
-    if entity_type == "doc":
-        payload = _pull_doc_join_payload(api, project_id, entity_id)
-        lines_raw = payload[1] if len(payload) > 1 and isinstance(payload[1], list) else []
-        return "\n".join(_decode_ws_text(str(item)) for item in lines_raw)
-
-    if entity_type == "file":
-        io = ProjectIO(api, project_id)
-        with io.open(rel_path, "rb") as f:
-            raw = f.read()
-        try:
-            return raw.decode("utf-8")
-        except UnicodeDecodeError as exc:
-            raise click.ClickException(
-                f"文件 '{rel_path}' 不是 UTF-8 文本，无法执行 edit：{exc}"
-            ) from exc
-
-    raise click.ClickException(
-        f"文件 '{rel_path}' 类型为 '{entity_type}'，当前不支持 edit。"
-    )
 
 
 def _collect_project_docs(api: Api, project_id: str) -> list[dict[str, str]]:
@@ -414,7 +274,7 @@ def _pull_doc_join_payload(api: Api, project_id: str, doc_id: str) -> list[Any]:
     """拉取单个 doc 的 joinDoc payload。"""
     socket = None
     try:
-        socket = api._open_socket(project_id)  # pylint: disable=protected-access
+        socket = api._open_socket(project_id)
         while True:
             line = socket.recv()
             if line.startswith("7:"):
@@ -450,7 +310,7 @@ def _pull_doc_join_payload(api: Api, project_id: str, doc_id: str) -> list[Any]:
                         break
                     if line.startswith("7:"):
                         break
-            except Exception:  # pylint: disable=broad-exception-caught
+            except Exception:
                 pass
             socket.close()
 
@@ -469,9 +329,7 @@ def _position_to_line(lines: list[str], position: Any) -> int | None:
 
 
 def _build_thread_doc_locations(api: Api, project_id: str) -> dict[str, list[dict[str, Any]]]:
-    """
-    基于 doc comments 原生数据构建 thread -> doc/path 映射。
-    """
+    """基于 doc comments 原生数据构建 thread -> doc/path 映射。"""
     docs = _collect_project_docs(api, project_id)
     mapping: dict[str, list[dict[str, Any]]] = {}
 
@@ -527,27 +385,6 @@ def cli():
     """Overleaf CLI — 使用 OVERLEAF_COOKIE / OVERLEAF_HOST 环境变量认证。"""
 
 
-@cli.command("ls")
-@click.argument("path", default=".")
-def cmd_ls(path: str):
-    """列出所有项目（无参数），或列出项目内的文件。
-
-    示例：
-      ol.py ls                       # 列出全部项目
-      ol.py ls MyProject             # 列出项目根目录
-      ol.py ls MyProject/chapters    # 列出子目录
-    """
-    api = _build_api()
-    if not path or path in {".", "/"}:
-        for project in _list_projects(api):
-            print(project["name"])
-    else:
-        io, rel_path = _resolve_project_and_path(api, path if "/" in path else path + "/")
-        # 对项目根目录做特殊处理（rel_path 为空字符串）
-        files = io.listdir(rel_path)
-        print("\n".join(files))
-
-
 @cli.group("git")
 def cmd_git():
     """Git 集成相关命令。"""
@@ -569,7 +406,7 @@ def cmd_git_urls(compact: bool, base_url: str | None, clone_user: str):
     """获取当前账号每个项目的 Git 地址。"""
     api = _build_api()
     projects = _list_projects(api)
-    default_base_url = f"https://{api._host}/git"  # pylint: disable=protected-access
+    default_base_url = f"https://{api._host}/git"
     resolved_base_url = (base_url or default_base_url).rstrip("/")
 
     rows: list[dict[str, Any]] = []
@@ -587,7 +424,7 @@ def cmd_git_urls(compact: bool, base_url: str | None, clone_user: str):
     print(
         json.dumps(
             {
-                "host": api._host,  # pylint: disable=protected-access
+                "host": api._host,
                 "git_base_url": resolved_base_url,
                 "project_count": len(rows),
                 "projects": rows,
@@ -596,122 +433,6 @@ def cmd_git_urls(compact: bool, base_url: str | None, clone_user: str):
             indent=None if compact else 2,
         )
     )
-
-
-@cli.command("read")
-@click.argument("path")
-def cmd_read(path: str):
-    """读取项目文件并输出到标准输出。
-
-    示例：
-      ol.py read MyProject/main.tex
-    """
-    api = _build_api()
-    project_id, _, rel_path = _resolve_project_and_path_to_ids(api, path)
-    sys.stdout.buffer.write(_read_file_bytes_from_project_zip(api, project_id, rel_path))
-
-
-@cli.command("write")
-@click.argument("path")
-def cmd_write(path: str):
-    """从标准输入读取内容并写入项目文件（覆盖）。
-
-    示例：
-      echo 'Hello' | ol.py write MyProject/hello.tex
-      cat local.tex | ol.py write MyProject/main.tex
-    """
-    api = _build_api()
-    io, rel_path = _resolve_project_and_path(api, path)
-    with io.open(rel_path, "wb+") as f:
-        shutil.copyfileobj(sys.stdin.buffer, f)
-    print(f"已写入：{path}", file=sys.stderr)
-
-
-@cli.command("edit")
-@click.argument("path")
-@click.option("--old", "old_text", required=True, help="需要匹配并替换的原始文本。")
-@click.option("--new", "new_text", required=True, help="替换后的新文本。")
-@click.option(
-    "--replace-all",
-    is_flag=True,
-    help="替换所有匹配；默认要求 old 仅匹配 1 处。",
-)
-def cmd_edit(path: str, old_text: str, new_text: str, replace_all: bool):
-    """按精确文本匹配进行编辑（类似 codex/opencode 的 edit 语义）。"""
-    if old_text == "":
-        raise click.BadParameter("--old 不能为空字符串。")
-
-    api = _build_api()
-    project_id, project_name, rel_path = _resolve_project_and_path_to_ids(api, path)
-    original = _read_file_text_for_edit(api, project_id, rel_path)
-
-    matches = original.count(old_text)
-    if matches == 0:
-        raise click.ClickException("edit 失败：old_text 未匹配到任何内容（0 处）。")
-    if not replace_all and matches > 1:
-        raise click.ClickException(
-            f"edit 失败：old_text 匹配到 {matches} 处。"
-            "默认要求唯一匹配；如需全部替换请加 --replace-all。"
-        )
-
-    replaced = matches if replace_all else 1
-    updated = (
-        original.replace(old_text, new_text)
-        if replace_all
-        else original.replace(old_text, new_text, 1)
-    )
-    io = ProjectIO(api, project_id)
-    with io.open(rel_path, "wb+") as f:
-        f.write(updated.encode("utf-8"))
-    print(
-        f"已编辑：{project_name}/{rel_path}（替换 {replaced} 处）",
-        file=sys.stderr,
-    )
-
-
-@cli.command("mkdir")
-@click.option("-p", "--parents", is_flag=True, help="自动创建缺失的中间目录。")
-@click.argument("path")
-def cmd_mkdir(path: str, parents: bool):
-    """在项目中创建目录。
-
-    示例：
-      ol.py mkdir MyProject/figures
-      ol.py mkdir -p MyProject/a/b/c
-    """
-    api = _build_api()
-    io, rel_path = _resolve_project_and_path(api, path)
-    io.mkdir(rel_path, parents=parents, exist_ok=parents)
-    print(f"目录已创建：{rel_path}", file=sys.stderr)
-
-
-@cli.command("rm")
-@click.argument("path")
-def cmd_rm(path: str):
-    """删除项目中的文件或目录。
-
-    示例：
-      ol.py rm MyProject/old_draft.tex
-    """
-    api = _build_api()
-    io, rel_path = _resolve_project_and_path(api, path)
-    io.remove(rel_path)
-    print(f"已删除：{rel_path}", file=sys.stderr)
-
-
-@cli.command("download")
-@click.argument("project")
-@click.argument("output_path")
-def cmd_download(project: str, output_path: str):
-    """将整个项目下载为 ZIP 文件。
-
-    示例：
-      ol.py download MyProject /tmp/MyProject.zip
-    """
-    api = _build_api()
-    project_id, project_name = _resolve_project(api, project)
-    api.download_project(project_id, output_path)
-    print(f"项目 '{project_name}' 已下载到：{output_path}")
 
 
 @cli.group("review")
@@ -856,7 +577,6 @@ def cmd_review_resolve(project: str, thread_id: str, user_id: str | None):
             "review resolve 失败。尝试 doc 级接口后仍失败。\n\n" + "\n\n".join(resolve_errors)
         )
 
-    # 二次确认
     new_threads = _fetch_review_threads(api, project_id)
     new_thread = new_threads.get(thread_id)
     is_resolved = isinstance(new_thread, dict) and bool(new_thread.get("resolved"))
