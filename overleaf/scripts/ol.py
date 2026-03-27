@@ -4,9 +4,7 @@ Overleaf CLI 包装器（精简版：仅 git + review）。
 
 支持以下操作：
   git urls                   获取每个项目的 Git 地址
-  review list <PROJECT>      获取项目 review 评论线程
-  review locate <PROJECT> <THREAD_ID>
-                             自动定位该 review 可能对应的文件
+  review list <PROJECT>      获取项目 review 评论线程（含位置信息）
   review resolve <PROJECT> <THREAD_ID>
                              标记指定 review 线程为已解决
 
@@ -479,38 +477,6 @@ def cmd_review_list(project: str, compact: bool):
                 "project": {"id": project_id, "name": project_name},
                 "review_count": len(reviews),
                 "reviews": reviews,
-            },
-            ensure_ascii=False,
-            indent=None if compact else 2,
-        )
-    )
-
-
-@cmd_review.command("locate")
-@click.argument("project")
-@click.argument("thread_id")
-@click.option("--compact", is_flag=True, help="使用紧凑 JSON 输出（默认为带缩进）。")
-def cmd_review_locate(project: str, thread_id: str, compact: bool):
-    """精确定位单条 review 对应的 doc/path。"""
-    api = _build_api()
-    project_id, project_name = _resolve_project(api, project)
-    threads = _fetch_review_threads(api, project_id)
-    thread = threads.get(thread_id)
-    if not isinstance(thread, dict):
-        raise click.ClickException(f"线程 {thread_id} 不存在。")
-
-    locations = _build_thread_doc_locations(api, project_id)
-    refs = locations.get(thread_id, [])
-    print(
-        json.dumps(
-            {
-                "project": {"id": project_id, "name": project_name},
-                "thread_id": thread_id,
-                "location": {
-                    "count": len(refs),
-                    "primary": refs[0] if refs else None,
-                    "all": refs,
-                },
             },
             ensure_ascii=False,
             indent=None if compact else 2,

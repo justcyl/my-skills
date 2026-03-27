@@ -628,19 +628,19 @@
           "target_path": "/Users/chenyl/.codex/skills/overleaf",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-27T11:18:32Z"
+          "last_synced_at": "2026-03-27T11:40:35Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/overleaf",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-27T11:18:32Z"
+          "last_synced_at": "2026-03-27T11:40:35Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/overleaf",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-27T11:18:32Z"
+          "last_synced_at": "2026-03-27T11:40:35Z"
         }
       },
       "display_name": "overleaf",
@@ -653,8 +653,8 @@
       "source_path": ".skills/sources/overleaf.json",
       "skill_path": "overleaf",
       "upstream_path": ".skills/upstream/overleaf",
-      "managed_revision": "sha256:f4eedd18f7529d8d256d9c22f191d4ddec014ab5459dc2682341b1d3b204b039",
-      "last_updated_at": "2026-03-27T11:18:32Z"
+      "managed_revision": "sha256:1faae370dc5f72161c2e690a6430cf11a2a166d6900db6a6dd216be6b3d6dba3",
+      "last_updated_at": "2026-03-27T11:40:35Z"
     },
     "paper-drill": {
       "distribution": {},
