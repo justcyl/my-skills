@@ -4,6 +4,7 @@ Overleaf CLI 包装器。
 
 通过环境变量认证（而非从浏览器读取 Cookie），支持以下操作：
   ls [PATH]                  列出项目或文件
+  git urls                   获取每个项目的 Git 地址
   read <PROJECT/PATH>        读取文件内容到标准输出
   write <PROJECT/PATH>       从标准输入写入文件
   edit <PROJECT/PATH>        按 old/new 精确匹配进行增量编辑
@@ -28,6 +29,7 @@ import json
 import io as pyio
 import pathlib
 import zipfile
+from urllib.parse import urlparse, urlunparse
 from typing import Any
 import click
 
@@ -72,14 +74,105 @@ def _build_api() -> Api:
     return api
 
 
+def _fetch_user_projects_json(api: Api) -> dict[str, Any]:
+    """通过 /user/projects 接口获取项目列表 JSON。"""
+    url = f"https://{api._host}/user/projects"  # pylint: disable=protected-access
+    session = api._get_session()  # pylint: disable=protected-access
+    request_kwargs = dict(api._request_kwargs)  # pylint: disable=protected-access
+    headers = dict(request_kwargs.get("headers", {}))
+    headers["Accept"] = "application/json"
+    request_kwargs["headers"] = headers
+
+    resp = session.get(url, **request_kwargs)
+    if resp.status_code in {401, 403}:
+        raise click.ClickException(
+            "认证失败（401/403）。请检查 OVERLEAF_COOKIE 是否过期，或是否对应当前 OVERLEAF_HOST。"
+        )
+    try:
+        resp.raise_for_status()
+    except Exception as exc:  # pylint: disable=broad-exception-caught
+        raise click.ClickException(f"调用 {url} 失败：{exc}") from exc
+
+    final_url = str(getattr(resp, "url", ""))
+    if "/login" in final_url.lower():
+        raise click.ClickException(
+            "请求被重定向到登录页。请检查 OVERLEAF_COOKIE 是否过期。"
+        )
+
+    try:
+        data = resp.json()
+    except ValueError as exc:
+        snippet = resp.text[:300].replace("\n", " ")
+        raise click.ClickException(
+            "接口未返回 JSON，可能是登录态异常或实例接口变更。"
+            f"\nURL: {final_url or url}\n响应片段: {snippet}"
+        ) from exc
+
+    if not isinstance(data, dict):
+        raise click.ClickException("项目列表接口返回结构异常（期望 object）。")
+    return data
+
+
+def _list_projects(api: Api) -> list[dict[str, str]]:
+    """获取项目列表，优先 pyoverleaf，失败后回退到 /user/projects。"""
+    errors: list[str] = []
+
+    try:
+        projects = api.get_projects()
+        parsed: list[dict[str, str]] = []
+        for project in projects:
+            project_id = getattr(project, "id", None)
+            project_name = getattr(project, "name", None)
+            if isinstance(project_id, str) and isinstance(project_name, str):
+                parsed.append({"id": project_id, "name": project_name})
+        if parsed:
+            return parsed
+        errors.append("api.get_projects 返回空列表。")
+    except Exception as exc:  # pylint: disable=broad-exception-caught
+        errors.append(f"api.get_projects 失败：{exc}")
+
+    try:
+        payload = _fetch_user_projects_json(api)
+        raw_projects = payload.get("projects")
+        if not isinstance(raw_projects, list):
+            raise click.ClickException("项目列表接口返回缺少 projects 数组。")
+
+        parsed = []
+        for item in raw_projects:
+            if not isinstance(item, dict):
+                continue
+            project_id = item.get("_id")
+            project_name = item.get("name")
+            if isinstance(project_id, str) and isinstance(project_name, str):
+                parsed.append({"id": project_id, "name": project_name})
+
+        if parsed:
+            return parsed
+        errors.append("/user/projects 返回空列表。")
+    except click.ClickException as exc:
+        errors.append(str(exc))
+
+    raise click.ClickException("获取项目列表失败：\n- " + "\n- ".join(errors))
+
+
+def _build_clone_url(raw_url: str, user: str = "git") -> str:
+    """构造带用户名的克隆地址，例如 https://git@host/git/<id>。"""
+    parsed = urlparse(raw_url)
+    if not parsed.scheme or not parsed.netloc:
+        raise click.ClickException(f"Git URL 无效：{raw_url}")
+    if "@" in parsed.netloc or not user:
+        return raw_url
+    return urlunparse(parsed._replace(netloc=f"{user}@{parsed.netloc}"))
+
+
 def _resolve_project(api: Api, project_name_or_id: str) -> tuple[str, str]:
     """将项目名或项目 ID 解析为 (project_id, project_name)。"""
-    projects = api.get_projects()
+    projects = _list_projects(api)
     for project in projects:
-        if project.name == project_name_or_id or project.id == project_name_or_id:
-            return project.id, project.name
+        if project["name"] == project_name_or_id or project["id"] == project_name_or_id:
+            return project["id"], project["name"]
 
-    names = ", ".join(p.name for p in projects)
+    names = ", ".join(p["name"] for p in projects)
     raise click.ClickException(
         f"项目 '{project_name_or_id}' 不存在。当前可用项目：{names}"
     )
@@ -446,13 +539,63 @@ def cmd_ls(path: str):
     """
     api = _build_api()
     if not path or path in {".", "/"}:
-        for p in api.get_projects():
-            print(p.name)
+        for project in _list_projects(api):
+            print(project["name"])
     else:
         io, rel_path = _resolve_project_and_path(api, path if "/" in path else path + "/")
         # 对项目根目录做特殊处理（rel_path 为空字符串）
         files = io.listdir(rel_path)
         print("\n".join(files))
+
+
+@cli.group("git")
+def cmd_git():
+    """Git 集成相关命令。"""
+
+
+@cmd_git.command("urls")
+@click.option("--compact", is_flag=True, help="使用紧凑 JSON 输出（默认为带缩进）。")
+@click.option(
+    "--base-url",
+    help="可选。指定 Git 地址基础前缀（默认: https://<OVERLEAF_HOST>/git）。",
+)
+@click.option(
+    "--clone-user",
+    default="git",
+    show_default=True,
+    help="克隆地址中的认证用户名。",
+)
+def cmd_git_urls(compact: bool, base_url: str | None, clone_user: str):
+    """获取当前账号每个项目的 Git 地址。"""
+    api = _build_api()
+    projects = _list_projects(api)
+    default_base_url = f"https://{api._host}/git"  # pylint: disable=protected-access
+    resolved_base_url = (base_url or default_base_url).rstrip("/")
+
+    rows: list[dict[str, Any]] = []
+    for project in projects:
+        raw_git_url = f"{resolved_base_url}/{project['id']}"
+        rows.append(
+            {
+                "project_id": project["id"],
+                "project_name": project["name"],
+                "git_url": raw_git_url,
+                "git_clone_url": _build_clone_url(raw_git_url, clone_user),
+            }
+        )
+
+    print(
+        json.dumps(
+            {
+                "host": api._host,  # pylint: disable=protected-access
+                "git_base_url": resolved_base_url,
+                "project_count": len(rows),
+                "projects": rows,
+            },
+            ensure_ascii=False,
+            indent=None if compact else 2,
+        )
+    )
 
 
 @cli.command("read")

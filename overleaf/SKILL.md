@@ -5,7 +5,7 @@ description: 通过 pyoverleaf 与 Overleaf 项目交互。当用户需要读取
 
 # Overleaf Skill
 
-通过 `pyoverleaf` 库与 Overleaf 实例交互，支持列出项目与文件、读写 LaTeX 文件、增量编辑文本、获取与解决 review 评论线程、下载整个项目。
+通过 `pyoverleaf` 库与 Overleaf 实例交互，支持列出项目与文件、读写 LaTeX 文件、增量编辑文本、获取与解决 review 评论线程、下载整个项目，以及批量获取每个项目的 Git 地址。
 
 ## 环境准备
 
@@ -45,6 +45,24 @@ bash scripts/ol.sh ls "MyProject"
 # 列出子目录
 bash scripts/ol.sh ls "MyProject/chapters"
 ```
+
+### 获取每个项目的 Git 地址
+
+```bash
+# 输出带缩进 JSON
+bash scripts/ol.sh git urls
+
+# 输出紧凑 JSON（便于管道处理）
+bash scripts/ol.sh git urls --compact
+
+# 覆盖默认 Git 地址前缀
+bash scripts/ol.sh git urls --base-url "https://git.example.com"
+```
+
+说明：
+- 默认按 `https://<OVERLEAF_HOST>/git/<project_id>` 生成 `git_url`。
+- 默认按 `https://git@<OVERLEAF_HOST>/git/<project_id>` 生成 `git_clone_url`。
+- 可通过 `--clone-user` 自定义克隆地址用户名（默认 `git`）。
 
 ### 读取文件
 
@@ -180,6 +198,7 @@ unzip ~/Downloads/MyProject.zip -d ~/Downloads/MyProject
 - 不支持创建新项目（需在 Overleaf 界面完成）
 - WebSocket 操作（读取 `.tex` doc 类型文件）在网络不稳定时可能超时，可重试
 - `review list/review locate/review resolve` 依赖 Overleaf 的内部评论线程与 `joinDoc` 接口（非官方公开 API）；不同私有部署版本可能存在字段差异
+- `git urls` 依赖 `GET /user/projects` 接口返回项目列表；若实例关闭该接口或 Cookie 无权限，会返回 401/403
 - 当前 Overleaf 实例（`OVERLEAF_HOST`）未通网时，所有命令均失败，这是预期行为
 
 ## 依赖
