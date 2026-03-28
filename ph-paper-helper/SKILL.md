@@ -1,49 +1,132 @@
 ---
 name: ph-paper-helper
-description: 使用 paper-helper (ph) CLI 进行学术论文检索、导入与渐进式阅读。当 agent 需要搜索论文、调研研究方向、导入指定论文、获取完整 metadata、或精读全文时使用。覆盖完整工作流：快路径（search/add）→ 慢路径（fetch）→ SQL 查询本地库。适用场景包括"帮我找关于 X 的论文"、"调研 Y 方向的工作"、"精读这篇论文"、"搜索 Z 作者的研究"、"查一下本地收录了哪些论文"。
+description: 使用 paper-helper (ph) CLI 进行学术论文检索、导入与渐进式阅读。当 agent 需要搜索论文、调研研究方向、导入指定论文、获取完整 metadata、或精读全文时使用。覆盖完整工作流：需求澄清 → 查询构造 → 快路径（search/add）→ 慢路径（fetch）→ SQL 查询本地库。适用场景包括"帮我找关于 X 的论文"、"调研 Y 方向的工作"、"精读这篇论文"、"搜索 Z 作者的研究"、"查一下本地收录了哪些论文"。
 ---
 
 # ph-paper-helper
 
-使用 `ph`（paper-helper）CLI 进行学术论文检索、导入与渐进式阅读的完整操作指南。
-alias ph='uv run --project ~/project/ph2 ph'
-
-## 核心概念：快路径 vs 慢路径
-
-`ph` 把操作分为两条路径：
-
-| 路径 | 命令 | 速度 | 内容 |
-|------|------|------|------|
-| **快路径** | `ph search` / `ph add` | 快 | 基础 metadata（标题、摘要、作者、arXiv 字段），`metadata_state=basic` |
-| **慢路径** | `ph fetch` | 慢（异步） | 完整 metadata 补全（多源 pipeline）+ MinerU PDF 全文解析 |
-
-**原则**：先用快路径大量筛选，再对少数目标论文走慢路径深度补全。不要对所有搜索结果都调用 `fetch`。
-
-## 命令速查
+使用 `ph`（paper-helper）CLI 进行学术论文检索、导入与渐进式阅读。
 
 ```bash
-# 搜索论文（快路径，保存到本地 DB）
-ph search --query "transformer attention mechanism" --max-results 10
-
-# 从 URI 导入指定论文（快路径）
-ph add --input arxiv://1706.03762
-ph add --input doi://10.1145/3340531 --input arxiv://2010.11929
-
-# 完整 metadata 补全 + MinerU 全文解析（慢路径，异步）
-ph fetch --paper-id arxiv://1706.03762
-ph fetch --paper-id arxiv://1706.03762 --include-content  # 完成后内联返回全文
-
-# 查询本地数据库（只读 SQL）
-ph sql --query "SELECT paper_id, title, metadata_state, fetch_state FROM papers ORDER BY created_at DESC LIMIT 10"
-
-# 查看命令结构定义
-ph schema --topic fetch
-ph fetch --help
+alias ph='uv run --project ~/project/ph2 ph'
 ```
 
-## URI Scheme（必须使用）
+## 场景路由
 
-引用论文时必须使用 URI scheme，裸 ID 会触发 `E_UNKNOWN_REF_SCHEME`：
+先判断用户意图属于哪一类，再进入对应流程：
+
+1. **搜索论文 / 调研方向**：用户想找某个主题、作者、领域的论文
+   → 进入「搜索工作流」
+2. **导入已知论文**：用户给出了具体的 arXiv ID、DOI 或标题
+   → 直接使用 `ph add` 或 `ph fetch`，参考「快速导入」
+3. **精读全文**：用户想深入阅读某篇已导入的论文
+   → 使用 `ph fetch --include-content`，参考「慢路径」
+4. **查询本地库**：用户想了解已收录论文的状态
+   → 使用 `ph sql`，参考「本地查询」
+
+不确定时先问用户。不要同时走多条路径。
+
+---
+
+## 搜索工作流（核心）
+
+搜索是使用频率最高的场景。`ph search` 底层调用 arXiv API，查询质量直接决定结果质量。因此搜索前必须先理解用户需求，再构造精确查询。
+
+### Step 1：需求澄清
+
+收到搜索请求后，不要立刻执行。先从用户的话中提取以下信息：
+
+| 维度 | 要搞清楚的 | 示例 |
+|------|-----------|------|
+| **主题** | 用户关心的核心概念是什么？ | "diffusion model 用于图像编辑" |
+| **目的** | 调研综述？找具体方法？对比方案？ | "想了解最新进展" vs "找能用的baseline" |
+| **范围** | 有没有偏好的子领域/类别？ | "只看 CV 方向的" → `cat:cs.CV` |
+| **作者** | 有没有特定作者？ | "Kaiming He 的工作" → `au:he` |
+| **时间** | 有没有时间偏好？ | "最近一年的" → `--sort-by submittedDate` |
+| **数量** | 需要广泛调研还是快速找几篇？ | 广泛 → `--max-results 20`；快速 → 5 |
+
+**判断规则**：
+
+- 如果用户的请求已经足够清晰（如"搜 attention is all you need"），直接执行，不追问。
+- 如果请求模糊（如"帮我找些论文"、"调研一下 LLM"），则追问 1-2 个关键问题来缩小范围。
+- 追问要简洁具体，不要列出长长的问题清单。选择对查询构造影响最大的 1-2 个维度追问即可。
+
+**追问示例**：
+
+> 用户："帮我找 diffusion model 的论文"
+> → "你更关注 diffusion model 的哪个方面？比如图像生成、视频生成、3D、加速采样？另外需要最新的还是经典的都行？"
+
+> 用户："搜一下 RL 在机器人上的应用"
+> → "需要侧重 sim-to-real transfer、manipulation 还是 locomotion？我可以针对性地搜。"
+
+### Step 2：构造查询
+
+arXiv API 支持字段限定和布尔组合，善用这些能力能大幅提升结果质量。
+
+**查询构造规则**：
+
+读取 `references/arxiv-query-syntax.md` 了解完整语法。核心原则：
+
+1. **用英文关键词**：arXiv 是英文数据库
+2. **用字段限定缩小范围**：`ti:` 限标题、`au:` 限作者、`cat:` 限类别、`abs:` 限摘要
+3. **用 AND 组合多个条件**：`ti:diffusion AND cat:cs.CV`
+4. **用 OR 覆盖同义表达**：`ti:(transformer OR attention)`
+5. **不要过度限定**：arXiv 搜索不够智能，关键词太多反而漏掉结果。2-4 个核心术语为宜
+6. **主题宽泛时用 `all:`**，精确找某篇时用 `ti:`
+
+**常见查询模板**：
+
+```bash
+# 主题搜索：用核心术语 + 类别限定
+ph search --query "ti:diffusion AND ti:editing AND cat:cs.CV" --max-results 15
+
+# 作者搜索：au + 可选主题
+ph search --query "au:hinton AND ti:distillation" --max-results 10
+
+# 最新进展：按提交时间降序
+ph search --query "abs:large language model reasoning" --sort-by submittedDate --sort-order desc --max-results 20
+
+# 找特定论文：精确标题词
+ph search --query "ti:attention AND ti:all AND ti:need" --max-results 5
+```
+
+### Step 3：执行搜索
+
+```bash
+ph search --query "<构造好的查询>" --max-results <数量> [--sort-by submittedDate --sort-order desc]
+```
+
+### Step 4：结果分析与迭代
+
+搜索返回后：
+
+1. **阅读摘要**，筛选出与用户需求匹配的论文
+2. **向用户呈现筛选结果**：给出简要的论文列表（标题 + 一句话总结 + 相关度判断）
+3. **判断是否需要调整查询**：
+   - 结果太少 → 放宽查询（减少限定词、用 OR 增加同义词）
+   - 结果不相关 → 换关键词或加限定
+   - 用户需要更多 → 增大 `--max-results` 或换角度再搜
+4. **引导下一步**：问用户是否需要对某些论文做深入阅读（fetch）
+
+**不要**对所有搜索结果都调用 `fetch`。通常只对 1-3 篇核心论文走慢路径。
+
+---
+
+## 快速导入
+
+用户提供了明确的论文标识时，跳过搜索直接导入：
+
+```bash
+# 快路径：只入库基础信息
+ph add --input arxiv://1706.03762
+ph add --input doi://10.1145/3340531
+ph add --input arxiv://2301.00001 --input arxiv://2302.00002  # 批量
+
+# 直接走完整处理（自动 add + fetch）
+ph fetch --paper-id arxiv://1706.03762
+```
+
+### URI Scheme（必须使用）
 
 | 来源 | 格式 | 示例 |
 |------|------|------|
@@ -53,210 +136,80 @@ ph fetch --help
 | 标题文本 | `title://标题` | `title://Attention Is All You Need` |
 | 本地文件 | `file:///path/to/paper.pdf` | `file:///tmp/paper.pdf` |
 
-## 标准工作流
+裸 ID 会触发 `E_UNKNOWN_REF_SCHEME`。
 
-### Step 1：搜索论文（快路径）
+---
 
-```bash
-# 基础搜索（目前仅支持 arxiv provider）
-ph search --query "diffusion models generative" --max-results 15
+## 慢路径（fetch）
 
-# 指定排序方式
-ph search --query "vision transformer" --sort-by submittedDate --sort-order desc --max-results 20
-```
-
-输出示例（`--output-format json` 为默认）：
-
-```json
-{
-  "schema_version": "ph_search_v1",
-  "command": "search",
-  "summary": "Found 3 papers from arxiv; upserted 3 basic records",
-  "result": [
-    {
-      "paper_id": "arxiv://1706.03762v5",
-      "title": "Attention Is All You Need",
-      "authors": "Ashish Vaswani, Noam Shazeer, ...",
-      "abstract": "...",
-      "published_at": "2017-06-12",
-      "metadata_state": "basic",
-      "fetch_state": "none"
-    }
-  ],
-  "errors": []
-}
-```
-
-### Step 2：分析摘要，决定是否需要完整处理
-
-阅读 `abstract` 后判断：
-
-- 摘要已能回答用户问题 → 基于 basic 信息直接回答，无需继续
-- 需要具体实验数据、完整方法、精确引用 → 对该论文调用 `fetch`
-
-通常只对 1-3 篇核心论文调用 `fetch`，而非批量处理所有搜索结果。
-
-### Step 3：完整处理（慢路径，异步）
-
-`fetch` 是异步任务，每次调用都返回当前状态，需轮询直到 `fetch_state=done`。
-
-**首次触发**（自动 add + 启动 pipeline）：
+`fetch` 执行完整 metadata 补全 + MinerU PDF 全文解析。它是异步的，需要轮询。
 
 ```bash
+# 触发（自动先 add 再 fetch）
 ph fetch --paper-id arxiv://1706.03762
-```
 
-```json
-{
-  "schema_version": "ph_fetch_v1",
-  "result": [{
-    "paper_id": "arxiv://1706.03762v5",
-    "auto_add": {"triggered": true, "add_state": "done"},
-    "fetch_state": "pending",
-    "metadata_state": "running",
-    "metadata_stage": "pms",
-    "mineru_task_id": "a90e6ab6-..."
-  }]
-}
-```
-
-**轮询（重复调用相同命令）**：
-
-```bash
+# 轮询（重复相同命令，直到 fetch_state=done）
 ph fetch --paper-id arxiv://1706.03762
+
+# 完成后获取全文
+ph fetch --paper-id arxiv://1706.03762 --include-content
+
+# 强制重新处理
+ph fetch --paper-id arxiv://1706.03762 --force
 ```
 
 状态机：`fetch_state: none → pending → done | failed`
 
-**完成后获取全文**：
+MinerU 解析通常耗时数十秒到数分钟，期间正常等待，不要认为卡死。
+
+---
+
+## 本地查询
+
+用 `ph sql` 查询已收录论文（只读 SQL）：
 
 ```bash
-ph fetch --paper-id arxiv://1706.03762 --include-content
-```
-
-等待期间（通常数十秒到数分钟）不要认为是卡死，MinerU 在后端解析 PDF 属正常耗时。
-
-### Step 4：查询本地数据库
-
-用 `ph sql` 可以直接查询已收录论文的状态和字段：
-
-```bash
-# 查看最近入库的论文
+# 最近入库
 ph sql --query "SELECT paper_id, title, metadata_state, fetch_state FROM papers ORDER BY created_at DESC LIMIT 10"
 
-# 查找全文已完成的论文
-ph sql --query "SELECT paper_id, title, full_text_path FROM papers WHERE fetch_state = 'done'"
+# 已完成全文解析的
+ph sql --query "SELECT paper_id, title FROM papers WHERE fetch_state = 'done'"
 
-# 查看 metadata 补全情况
-ph sql --query "SELECT paper_id, metadata_state, missing_fields_json FROM papers WHERE metadata_state != 'complete'"
+# 按标题模糊搜索
+ph sql --query "SELECT paper_id, title FROM papers WHERE title LIKE '%transformer%'"
 ```
 
-只支持只读 SQL（SELECT / WITH / EXPLAIN QUERY PLAN），写操作会触发 `E_SQL_NOT_READONLY`。
-
-## 常见场景
-
-### 场景 A：调研某个研究方向
-
-```bash
-# 搜索最近的相关工作，按时间排序
-ph search --query "retrieval augmented generation" \
-  --sort-by submittedDate --sort-order desc \
-  --max-results 15
-
-# 对最重要的 1-2 篇做完整处理
-ph fetch --paper-id arxiv://2005.11401
-```
-
-### 场景 B：导入指定论文
-
-用户提供了论文 ID、DOI 或标题：
-
-```bash
-# 快速入库（不触发完整处理）
-ph add --input arxiv://2310.06825
-ph add --input doi://10.1145/3025453.3025575
-ph add --input title://Attention Is All You Need
-
-# 直接全量处理（自动先 add 再 fetch）
-ph fetch --paper-id arxiv://2310.06825
-```
-
-### 场景 C：精读全文
-
-```bash
-# 触发全文解析并内联返回（完成后）
-ph fetch --paper-id arxiv://1706.03762 --include-content
-```
-
-### 场景 D：批量导入后查看状态
-
-```bash
-# 批量导入
-ph add --input arxiv://2301.00001 --input arxiv://2302.00002 --input doi://10.1145/xxx
-
-# 查看导入状态
-ph sql --query "SELECT paper_id, metadata_state, fetch_state FROM papers ORDER BY id DESC LIMIT 5"
-```
-
-### 场景 E：重新处理（忽略缓存）
-
-```bash
-ph fetch --paper-id arxiv://1706.03762 --force
-```
-
-## 全局参数
-
-所有命令支持以下全局参数：
-
-| 参数 | 说明 | 默认值 |
-|------|------|--------|
-| `--output-format` | `json` \| `jsonl` \| `tsv` \| `text` | `json` |
-| `--quiet` | 抑制 stderr | false |
-| `--verbose` | 输出详细执行日志到 stderr | false |
-| `--timeout-seconds` | 单次操作超时秒数 | 30 |
-| `--dry-run` | 预检副作用，不写入 DB 或文件 | false |
-
-调试时用 `--verbose`：
-
-```bash
-ph --verbose search --query "transformer" --max-results 3
-```
+---
 
 ## 错误处理
 
-| 错误码 | 退出码 | 含义 | 建议操作 |
-|--------|--------|------|----------|
-| `E_UNKNOWN_REF_SCHEME` | 2 | URI scheme 不支持 | 使用 `arxiv://`、`doi://`、`url://`、`title://`、`file://` |
-| `E_PARAM_INVALID` | 2 | 参数类型错误（如 `PH_TIMEOUT_SECONDS` 非整数） | 检查环境变量类型 |
-| `E_PARAM_INVALID_ENUM` | 2 | 枚举值非法 | 查看 `--help` 确认合法值 |
-| `E_UNKNOWN_PARAM` | 2 | 未知参数 | 检查参数拼写，`ph` 不静默忽略未知参数 |
-| `E_SQL_NOT_READONLY` | 2 | SQL 包含写操作 | 只用 SELECT/WITH/EXPLAIN |
-| `E_DATA_NOT_FOUND` | 3 | 论文不存在 | 先用 `ph add` 导入，或直接用 `ph fetch` |
-| `E_SOURCE_ALL_MISS` | 3 | 所有 metadata 源均未命中 | 调整 `--preset` 或检查网络 |
-| `E_UPSTREAM_FAILURE` | 4 | 外部数据源请求失败 | 检查网络，稍后重试 |
-| `E_UPSTREAM_TIMEOUT` | 4 | 外部数据源超时 | 调整 `--timeout-seconds` |
-| `E_MINERU_TASK_FAILED` | 4 | MinerU 解析失败 | 检查 PDF 可访问性，检查 `PH_MINERU_TOKEN` |
-| `E_PARTIAL_SUCCESS` | 5 | 批量操作部分失败 | 查看 `errors` 数组 |
+| 错误码 | 含义 | 处理 |
+|--------|------|------|
+| `E_UNKNOWN_REF_SCHEME` | URI scheme 不对 | 用 `arxiv://`、`doi://` 等 |
+| `E_PARAM_INVALID_ENUM` | 枚举值非法 | 检查 `--help` |
+| `E_DATA_NOT_FOUND` | 论文不存在 | 先 `add` 或直接 `fetch` |
+| `E_SOURCE_ALL_MISS` | 所有源均未命中 | 检查 ID 是否正确 |
+| `E_UPSTREAM_FAILURE` | 外部源失败 | 检查网络，稍后重试 |
+| `E_UPSTREAM_TIMEOUT` | 超时 | 增大 `--timeout-seconds` |
+| `E_MINERU_TASK_FAILED` | MinerU 失败 | 检查 PDF 可访问性和 token |
 
-退出码语义：`0` 成功 / `2` 参数错误 / `3` 数据不存在 / `4` 上游失败 / `5` 部分成功
+退出码：`0` 成功 / `2` 参数错误 / `3` 数据不存在 / `4` 上游失败 / `5` 部分成功
 
 ## 环境变量
 
 | 变量 | 说明 |
 |------|------|
-| `PH_DATA_DIR` | DB 和缓存根目录（默认 `~/.local/share/ph`） |
-| `PH_MINERU_TOKEN` | MinerU token（只能通过环境变量或配置文件设置，禁止 flag 传入） |
-| `PH_TIMEOUT_SECONDS` | 默认超时秒数（必须是整数，否则返回 `E_PARAM_INVALID`） |
-| `PH_PRESET` | `fetch` 默认 metadata preset |
+| `PH_DATA_DIR` | DB 根目录（默认 `~/.local/share/ph`） |
+| `PH_MINERU_TOKEN` | MinerU token（仅 fetch 全文时需要） |
+| `PH_TIMEOUT_SECONDS` | 默认超时秒数 |
+| `PH_PRESET` | fetch 默认 metadata preset |
 
-`PH_MINERU_TOKEN` 仅在执行 `ph fetch` 获取全文时需要。未配置时，search/add/sql 照常工作，fetch 的 metadata 补全部分也照常工作，只有 MinerU 全文解析阶段会失败。
+## 全局参数
 
-## 注意事项
-
-1. **`ph search` 目前仅支持 `--provider arxiv`**，其他 provider 会触发 `E_PARAM_INVALID_ENUM`。
-2. **`ph fetch` 是幂等的**：`fetch_state=done` 且无 `--force` 时直接返回已有结果，不重复提交。
-3. **MinerU 解析耗时较长**：通常数十秒到数分钟，命令会阻塞直到解析完成或超时，期间正常等待。
-4. **国外网络限制**：MinerU 解析 arXiv 等国外 PDF 时可能遇到网络问题；遇 `E_MINERU_TASK_FAILED` 先稍等再重试。
-5. **`ph add` 不触发 metadata 补全**：只做基础入库，完整 metadata 和全文需要再调用 `ph fetch`。
-6. **本地 DB 路径**：`$PH_DATA_DIR/ph.db`（默认 `~/.local/share/ph/ph.db`），可用 `ph sql` 直接查询。
-7. **旧命令已废弃**：`ph paper search`、`ph paper fetch-fulltext`、`ph init` 等旧式命令不再存在，请使用新命令树。
+| 参数 | 说明 | 默认值 |
+|------|------|--------|
+| `--output-format` | `json`/`jsonl`/`tsv`/`text` | `json` |
+| `--quiet` | 抑制 stderr | false |
+| `--verbose` | 详细日志 | false |
+| `--timeout-seconds` | 超时秒数 | 30 |
+| `--dry-run` | 预检不写入 | false |
