@@ -43,13 +43,6 @@
       "sync_status": "synced",
       "last_synced_at": "2026-03-27T11:40:35Z"
     },
-    "ph-paper-helper": {
-      "source_path": "ph-paper-helper",
-      "target_path": "/Users/chenyl/.agents/skills/ph-paper-helper",
-      "mode": "symlink",
-      "sync_status": "synced",
-      "last_synced_at": "2026-03-28T09:27:01Z"
-    },
     "skills-manager": {
       "source_path": "skills-manager",
       "target_path": "/Users/chenyl/.agents/skills/skills-manager",
