@@ -1,14 +1,7 @@
 ---
 name: web-reader
 description: |
-  将任意网页转为干净的 Markdown 供 LLM 消费。基于 Jina Reader API，适用于网页研究、文档阅读、内容提取等场景。
-  当用户需要阅读网页、获取在线文档、或从 URL 提取信息时使用。
-allowed-tools:
-  - WebFetch
-  - Bash
-  - Read
-  - Write
-  - Edit
+  将任意网页转为干净的 Markdown 供 LLM 消费。基于 Jina Reader API，适用于网页研究、文档阅读、内容提取等场景。搜索场景请不要使用本 skill。
 ---
 
 # Web Reader — 网页内容提取与阅读
