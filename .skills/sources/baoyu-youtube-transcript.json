@@ -1,7 +1,7 @@
 {
   "skill_id": "baoyu-youtube-transcript",
   "display_name": "baoyu-youtube-transcript",
-  "skill_path": "baoyu-youtube-transcript",
+  "skill_path": ".skills/archived-skills/baoyu-youtube-transcript",
   "source_type": "github",
   "source": "https://github.com/jimliu/baoyu-skills",
   "source_url": "https://github.com/jimliu/baoyu-skills.git",
@@ -13,5 +13,7 @@
   "last_imported_at": "2026-03-29T14:52:50Z",
   "upstream_revision": "9eb032a22f2ed5b617b3e3874c1bf1fb62fd4354",
   "managed_revision": "sha256:5bd51522a07e1758abd8ca4822003b84714614eb8bd16f27053d22cdf57d4dab",
-  "managed_dirty": false
+  "managed_dirty": false,
+  "archived": true,
+  "archived_at": "2026-03-29T15:09:22Z"
 }
