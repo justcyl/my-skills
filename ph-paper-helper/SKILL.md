@@ -1,11 +1,11 @@
 ---
 name: ph-paper-helper
-description: 使用 paper-helper (ph) CLI 进行学术论文检索、导入与渐进式阅读。当 agent 需要搜索论文、调研研究方向、导入指定论文、获取完整 metadata、或精读全文时使用。覆盖完整工作流：需求澄清 → 查询构造 → 快路径（search/add）→ 慢路径（fetch）→ SQL 查询本地库。适用场景包括"帮我找关于 X 的论文"、"调研 Y 方向的工作"、"导入指定论文"、"获取完整 metadata"、"精读全文"、"搜索 Z 作者的研究"、"查一下本地收录了哪些论文"。
+description: 使用 paper-helper (ph) CLI 进行学术论文检索、导入、BibTeX 导出与渐进式阅读。当 agent 需要搜索论文、调研研究方向、导入指定论文、获取完整 metadata、导出参考文献、或精读全文时使用。覆盖完整工作流：需求澄清 → 查询构造 → 快路径（search/add）→ 慢路径（fetch）→ 导出（export）→ SQL 查询本地库。适用场景包括"帮我找关于 X 的论文"、"调研 Y 方向的工作"、"导入指定论文"、"获取完整 metadata"、"导出 BibTeX"、"精读全文"、"搜索 Z 作者的研究"、"查一下本地收录了哪些论文"。
 ---
 
 # ph-paper-helper
 
-使用 `ph`（paper-helper）CLI 进行学术论文检索、导入与渐进式阅读。
+使用 `ph`（paper-helper）CLI 进行学术论文检索、导入、BibTeX 导出与渐进式阅读。
 
 ```bash
 alias ph='uv run --project ~/project/ph2 ph'
@@ -21,7 +21,9 @@ alias ph='uv run --project ~/project/ph2 ph'
    → 直接使用 `ph import` / `ph add` 或 `ph fetch`，参考「快速导入」
 3. **精读全文**：用户想深入阅读某篇已导入的论文
    → 使用 `ph fetch --include-content`，参考「慢路径」
-4. **查询本地库**：用户想了解已收录论文的状态
+4. **导出参考文献**：用户需要导出 BibTeX 格式的参考文献
+   → 使用 `ph export`，参考「BibTeX 导出」
+5. **查询本地库**：用户想了解已收录论文的状态
    → 使用 `ph sql`，参考「本地查询」
 
 不确定时先问用户。不要同时走多条路径。
@@ -169,6 +171,28 @@ ph fetch --paper-id arxiv://1706.03762 --force
 状态机：`fetch_state: none → pending → done | failed`
 
 MinerU 解析通常耗时数十秒到数分钟，期间正常等待，不要认为卡死。
+
+---
+
+## BibTeX 导出
+
+`ph export` 将论文导出为 BibTeX 格式，支持工作区批量导出或指定论文导出：
+
+```bash
+# 导出工作区所有论文到文件
+ph export --workspace . --output refs.bib
+
+# 导出指定论文（可重复 --paper-id）
+ph export --paper-id doi://10.1145/3025453 --paper-id arxiv://1706.03762
+
+# 导出到 stdout（在 JSON 信封的 bibtex 字段中）
+ph export --workspace .
+
+# 预检（不写入文件）
+ph export --workspace . --output refs.bib --dry-run
+```
+
+导出前建议先用 `ph fetch --metadata-only` 补全 bib 元数据，确保 `bib_ready = true`，否则导出的 BibTeX 条目可能缺少 venue、volume 等字段。
 
 ---
 
