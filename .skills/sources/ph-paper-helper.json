@@ -10,8 +10,8 @@
   "bootstrap": true,
   "upstream_enabled": false,
   "upstream_path": ".skills/upstream/ph-paper-helper",
-  "last_imported_at": "2026-03-31T11:55:22Z",
+  "last_imported_at": "2026-03-31T14:56:38Z",
   "upstream_revision": "",
-  "managed_revision": "sha256:590c62c4cfdd92c8e3b08102f6fb3bd243ee44f8df9d13361fdd7c962341c7bb",
+  "managed_revision": "sha256:193e02a0b7c65b51356a542c0a6ad1cc152e0aef2a4b9be4c4aed607228f913e",
   "managed_dirty": false
 }
