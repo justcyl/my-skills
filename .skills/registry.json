@@ -753,6 +753,40 @@
       "upstream_path": ".skills/upstream/baoyu-youtube-transcript",
       "managed_revision": "sha256:5bd51522a07e1758abd8ca4822003b84714614eb8bd16f27053d22cdf57d4dab",
       "last_updated_at": "2026-03-29T15:09:22Z"
+    },
+    "inno-figure-gen": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/inno-figure-gen",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-01T17:32:49Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/inno-figure-gen",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-01T17:32:49Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/inno-figure-gen",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-01T17:32:49Z"
+        }
+      },
+      "display_name": "inno-figure-gen",
+      "description": ">",
+      "status": "managed",
+      "risk_status": "warned",
+      "managed_dirty": false,
+      "upstream_enabled": true,
+      "report_path": ".skills/reports/inno-figure-gen.md",
+      "source_path": ".skills/sources/inno-figure-gen.json",
+      "skill_path": "inno-figure-gen",
+      "upstream_path": ".skills/upstream/inno-figure-gen",
+      "managed_revision": "sha256:5ebf8b4e9facec896ef033a3227a72832d3e2d61bfd049ce7e28d46012787d47",
+      "last_updated_at": "2026-04-01T17:32:49Z"
     }
   }
 }

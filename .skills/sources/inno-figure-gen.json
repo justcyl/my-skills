@@ -1,0 +1,17 @@
+{
+  "skill_id": "inno-figure-gen",
+  "display_name": "inno-figure-gen",
+  "skill_path": "inno-figure-gen",
+  "source_type": "github",
+  "source": "https://github.com/OpenLAIR/dr-claw",
+  "source_url": "https://github.com/OpenLAIR/dr-claw.git",
+  "ref": "main",
+  "subpath": "skills/inno-figure-gen",
+  "bootstrap": true,
+  "upstream_enabled": true,
+  "upstream_path": ".skills/upstream/inno-figure-gen",
+  "last_imported_at": "2026-04-01T17:32:49Z",
+  "upstream_revision": "57d2e3189e531a9b841e949ed7942c3ca6f4d11e",
+  "managed_revision": "sha256:5ebf8b4e9facec896ef033a3227a72832d3e2d61bfd049ce7e28d46012787d47",
+  "managed_dirty": false
+}

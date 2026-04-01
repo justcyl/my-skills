@@ -84,6 +84,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-03-31T17:18:34Z"
+    },
+    "inno-figure-gen": {
+      "source_path": "inno-figure-gen",
+      "target_path": "/Users/chenyl/.codex/skills/inno-figure-gen",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-04-01T17:32:49Z"
     }
   }
 }
