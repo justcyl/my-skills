@@ -1,11 +1,11 @@
 ---
 name: overleaf
-description: 通过 Git 和 Review API 与 Overleaf 项目交互。当用户需要克隆、编辑并推送 Overleaf 项目，或查看、定位、解决 review 评论线程时使用。
+description: 通过 Git 和 Review API 与 Overleaf 项目交互。当用户需要克隆、编辑并推送 Overleaf 项目，或查看、定位、解决 review 评论线程，或触发编译、下载 PDF 时使用。
 ---
 
 # Overleaf Skill
 
-通过 Git 协议操作 Overleaf 项目文件（克隆、拉取、编辑、提交、推送），通过 Review API 管理评论线程（列出、解决）。
+通过 Git 协议操作 Overleaf 项目文件（克隆、拉取、编辑、提交、推送），通过 Review API 管理评论线程（列出、解决），通过 Compile API 触发远程编译并下载 PDF。
 
 所有文件级操作（浏览目录、读写文件、创建删除、下载项目）统一通过 `git clone`/`git pull` + 本地编辑 + `git push` 完成，不再使用 WebSocket/REST 逐文件操作。
 
@@ -81,6 +81,28 @@ bash scripts/ol.sh review resolve "MyProject" "69c2745dc0f84b044e000001"
 bash scripts/ol.sh review resolve "MyProject" "69c2745dc0f84b044e000001" --user-id "69a65a7a8f69a4e6b57d0ddd"
 ```
 
+### 编译项目
+
+```bash
+# 触发编译，输出带缩进 JSON（含状态、PDF 地址、所有输出文件）
+bash scripts/ol.sh compile "MyProject"
+
+# 紧凑 JSON（便于管道处理）
+bash scripts/ol.sh compile "MyProject" --compact
+```
+
+输出字段：`status`（`success` / `failure` / `error`）、`pdf_url`、`output_files`（含 `.pdf`、`.log`、`.bbl` 等）。
+
+### 编译并下载 PDF
+
+```bash
+# 编译并下载 PDF，文件名默认为 <项目名>.pdf
+bash scripts/ol.sh pdf "MyProject"
+
+# 指定输出路径
+bash scripts/ol.sh pdf "MyProject" --output /tmp/paper.pdf
+```
+
 ## 典型工作流
 
 ### 克隆并编辑项目
@@ -141,10 +163,27 @@ git push
 bash scripts/ol.sh review resolve "MyProject" "<thread_id>"
 ```
 
+### 编译并获取 PDF
+
+```bash
+# 1. 推送最新修改
+cd /tmp/my-project
+git add -A && git commit -m "final edits" && git push
+
+# 2. 编译并下载 PDF
+bash /path/to/scripts/ol.sh pdf "MyProject"
+
+# 3. 或先确认编译状态，再手动下载
+bash /path/to/scripts/ol.sh compile "MyProject"
+# 得到 pdf_url 后：
+curl -L -b "$OVERLEAF_COOKIE" "<pdf_url>" -o paper.pdf
+```
+
 ## 已知限制
 
 - Cookie 认证依赖浏览器登录状态，过期后需重新获取
 - `review list/resolve` 依赖 Overleaf 内部评论线程与 `joinDoc` 接口（非官方公开 API），不同私有部署可能有差异
+- `compile` / `pdf` 依赖 `POST /project/{id}/compile` 接口（非官方公开 API），不同私有部署可能有差异
 - `git urls` 依赖 `GET /user/projects` 接口；若实例关闭或 Cookie 无权限会返回 401/403
 - Git 推送后 Overleaf 编辑器需刷新页面才能看到更新
 

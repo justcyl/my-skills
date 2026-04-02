@@ -1,12 +1,14 @@
 #!/usr/bin/env python3
 """
-Overleaf CLI 包装器（精简版：仅 git + review）。
+Overleaf CLI 包装器（精简版：git + review + compile + pdf）。
 
 支持以下操作：
   git urls                   获取每个项目的 Git 地址
   review list <PROJECT>      获取项目 review 评论线程（含位置信息）
   review resolve <PROJECT> <THREAD_ID>
                              标记指定 review 线程为已解决
+  compile <PROJECT>          触发 PDF 编译，输出编译结果 JSON
+  pdf <PROJECT>              编译并下载 PDF 到本地
 
 环境变量：
   OVERLEAF_HOST    Overleaf 实例域名（不含协议），如 overleaf.mycompany.com
@@ -551,6 +553,133 @@ def cmd_review_resolve(project: str, thread_id: str, user_id: str | None):
             f"线程 {thread_id} 请求已发送，但复查仍未标记 resolved。请在网页端确认权限或状态。"
         )
     print(f"项目 '{project_name}' 线程 {thread_id} 已标记为 resolved。")
+
+
+# ─── Compile ──────────────────────────────────────────────────────────────────
+
+
+def _compile_project(api: Api, project_id: str) -> dict[str, Any]:
+    """触发项目编译，返回 compile 接口响应 JSON。"""
+    url = f"https://{api._host}/project/{project_id}/compile?enable_pdf_caching=true"
+    session = api._get_session()
+    request_kwargs = dict(api._request_kwargs)
+    csrf = api._get_csrf_token(project_id)
+    headers = {
+        "Referer": f"https://{api._host}/project/{project_id}",
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "x-csrf-token": csrf,
+    }
+    request_kwargs["headers"] = headers
+
+    body = {
+        "rootDoc_id": None,
+        "draft": False,
+        "check": "silent",
+        "incrementalCompilesEnabled": True,
+    }
+
+    resp = session.post(url, json=body, **request_kwargs)
+    if resp.status_code in {401, 403}:
+        raise click.ClickException("认证失败（401/403）。请检查 OVERLEAF_COOKIE 是否过期。")
+    try:
+        resp.raise_for_status()
+    except Exception as exc:
+        raise click.ClickException(f"编译请求失败：{exc}") from exc
+
+    try:
+        return resp.json()
+    except ValueError as exc:
+        snippet = resp.text[:300].replace("\n", " ")
+        raise click.ClickException(f"编译接口未返回 JSON。响应片段: {snippet}") from exc
+
+
+@cli.command("compile")
+@click.argument("project")
+@click.option("--compact", is_flag=True, help="使用紧凑 JSON 输出（默认为带缩进）。")
+def cmd_compile(project: str, compact: bool):
+    """触发项目 PDF 编译，输出编译结果（状态、PDF 地址、输出文件列表）。"""
+    api = _build_api()
+    project_id, project_name = _resolve_project(api, project)
+
+    print(f"正在编译项目 '{project_name}'...", file=sys.stderr)
+    data = _compile_project(api, project_id)
+
+    status = data.get("status", "unknown")
+    output_files = data.get("outputFiles", [])
+    pdf_file = next((f for f in output_files if f.get("type") == "pdf"), None)
+
+    result: dict[str, Any] = {
+        "project": {"id": project_id, "name": project_name},
+        "status": status,
+        "pdf_url": f"https://{api._host}{pdf_file['url']}" if pdf_file else None,
+        "output_files": [
+            {
+                "path": f.get("path"),
+                "type": f.get("type"),
+                "url": f"https://{api._host}{f['url']}",
+            }
+            for f in output_files
+        ],
+    }
+
+    print(
+        json.dumps(result, ensure_ascii=False, indent=None if compact else 2)
+    )
+
+    if status != "success":
+        sys.exit(1)
+
+
+@cli.command("pdf")
+@click.argument("project")
+@click.option("--output", "-o", default=None, help="输出 PDF 文件路径（默认：<项目名>.pdf）。")
+@click.option("--compile", "do_compile", is_flag=True, default=True, hidden=True)
+def cmd_pdf(project: str, output: str | None, do_compile: bool):
+    """编译项目并下载 PDF 到本地。"""
+    api = _build_api()
+    project_id, project_name = _resolve_project(api, project)
+
+    print(f"正在编译项目 '{project_name}'...", file=sys.stderr)
+    data = _compile_project(api, project_id)
+
+    status = data.get("status", "unknown")
+    if status != "success":
+        output_files = data.get("outputFiles", [])
+        log_file = next((f for f in output_files if f.get("type") == "log"), None)
+        hint = ""
+        if log_file:
+            hint = f"\n编译日志可通过以下地址查看：https://{api._host}{log_file['url']}"
+        raise click.ClickException(f"编译失败，状态：{status}。{hint}")
+
+    output_files = data.get("outputFiles", [])
+    pdf_file = next((f for f in output_files if f.get("type") == "pdf"), None)
+    if not pdf_file:
+        raise click.ClickException("编译成功但未找到 PDF 输出文件。")
+
+    pdf_url = f"https://{api._host}{pdf_file['url']}"
+
+    # 下载 PDF
+    session = api._get_session()
+    request_kwargs = dict(api._request_kwargs)
+    request_kwargs["headers"] = {
+        "Referer": f"https://{api._host}/project/{project_id}",
+    }
+
+    print(f"正在下载 PDF：{pdf_url}", file=sys.stderr)
+    resp = session.get(pdf_url, **request_kwargs)
+    try:
+        resp.raise_for_status()
+    except Exception as exc:
+        raise click.ClickException(f"PDF 下载失败：{exc}") from exc
+
+    # 确定输出路径
+    if output is None:
+        safe_name = project_name.replace("/", "_").replace("\\", "_")
+        output = f"{safe_name}.pdf"
+
+    pathlib.Path(output).write_bytes(resp.content)
+    print(f"PDF 已保存：{output}")
 
 
 if __name__ == "__main__":
