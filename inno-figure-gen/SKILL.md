@@ -3,8 +3,9 @@ name: inno-figure-gen
 description: >
   Generate/edit images with Gemini image models (default:
   gemini-3.1-flash-image-preview). Use for image create/modify requests incl.
-  edits. Supports text-to-image + image-to-image; 1K/2K/4K; use --input-image.
-  Use --model to select a different model.
+  edits. Supports text-to-image + image-to-image; 1K/2K/4K; use --input-image;
+  supports base-url gateways and provider fallback
+  (gemini-native/openai-chat-compat). Use --model to select a different model.
 ---
 
 # Gemini Image Generation & Editing
@@ -16,6 +17,7 @@ Generate new images or edit existing ones using Google's Gemini image generation
 - 适用场景：根据文本生成图片，或基于已有图片做定向编辑。
 - 运行方式：通过 `uv run` 执行当前 skill 目录下的 `scripts/generate_image.py`。
 - 输出位置：图片输出到你执行命令时的当前工作目录（由 `--filename` 决定）。
+- 网关兼容：可通过 `--base-url` 接入中转网关，默认 `--provider auto` 自动回退调用路径。
 - 密钥建议：优先使用环境变量 `GEMINI_API_KEY`，避免在命令参数中明文传 `--api-key`。
 
 ## Usage
@@ -29,12 +31,12 @@ Keep the distinction clear:
 
 **Generate new image:**
 ```bash
-uv run <this-skill-directory>/scripts/generate_image.py --prompt "your image description" --filename "output-name.png" [--resolution 1K|2K|4K] [--model MODEL] [--api-key KEY]
+uv run <this-skill-directory>/scripts/generate_image.py --prompt "your image description" --filename "output-name.png" [--resolution 1K|2K|4K] [--model MODEL] [--api-key KEY] [--base-url URL] [--provider auto|gemini-native|openai-chat-compat]
 ```
 
 **Edit existing image:**
 ```bash
-uv run <this-skill-directory>/scripts/generate_image.py --prompt "editing instructions" --filename "output-name.png" --input-image "path/to/input.png" [--resolution 1K|2K|4K] [--model MODEL] [--api-key KEY]
+uv run <this-skill-directory>/scripts/generate_image.py --prompt "editing instructions" --filename "output-name.png" --input-image "path/to/input.png" [--resolution 1K|2K|4K] [--model MODEL] [--api-key KEY] [--base-url URL] [--provider auto|gemini-native|openai-chat-compat]
 ```
 
 **Important:** Always run from the user's current working directory so images are saved where the user is working, not in the skill directory.
@@ -76,6 +78,31 @@ Available models depend on your Gemini API access. Common options:
 - `gemini-3.1-flash-image-preview` (default) - Fast image generation
 - `gemini-3-pro-image-preview` - Higher quality, slower
 
+## Provider And Gateway Modes
+
+`generate_image.py` now supports three provider modes:
+
+- `auto` (default): try `gemini-native` first, then fallback to `openai-chat-compat` if needed
+- `gemini-native`: force Gemini SDK native call path
+- `openai-chat-compat`: force `/v1/chat/completions` compatible path
+
+For gateway usage, set `--base-url`:
+
+```bash
+uv run <this-skill-directory>/scripts/generate_image.py --prompt "A cute orange cat" --filename "cat.png" --model gemini-3.1-flash-image-preview --base-url "https://api.ikuncode.cc" --provider auto
+```
+
+Explicitly force OpenAI-compatible path:
+
+```bash
+uv run <this-skill-directory>/scripts/generate_image.py --prompt "A red apple on white background" --filename "apple.png" --model gemini-3.1-flash-image-preview --base-url "https://api.ikuncode.cc" --provider openai-chat-compat
+```
+
+Optional resilience flags:
+- `--max-retries` (default `3`)
+- `--retry-backoff-ms` (default `1200`)
+- `--timeout-ms` (default `60000`)
+
 ## API Key
 
 The script checks for API key in this order:
@@ -95,6 +122,8 @@ If neither is available, the script exits with an error message.
   - `Error: No API key provided.` → set `GEMINI_API_KEY` or pass `--api-key`
   - `Error loading input image:` → wrong path / unreadable file; verify `--input-image` points to a real image
   - “quota/permission/403” style API errors → wrong key, no access, or quota exceeded; try a different key/account
+  - `system_cpu_overloaded` / `error code: 524` → transient gateway issue; script auto-retries, rerun if needed
+  - `model_not_found` on one path → use `--provider auto` or switch model/provider
 
 ## Filename Generation
 
@@ -155,4 +184,9 @@ uv run <this-skill-directory>/scripts/generate_image.py --prompt "A serene Japan
 **Edit existing image:**
 ```bash
 uv run <this-skill-directory>/scripts/generate_image.py --prompt "make the sky more dramatic with storm clouds" --filename "2025-11-23-14-25-30-dramatic-sky.png" --input-image "original-photo.jpg" --resolution 2K
+```
+
+**Gateway mode with fallback:**
+```bash
+uv run <this-skill-directory>/scripts/generate_image.py --prompt "一只卡通橘猫坐在草地上，阳光明亮，插画风格" --filename "2026-04-02-14-00-00-cat.png" --model gemini-3.1-flash-image-preview --base-url "https://api.ikuncode.cc" --provider auto
 ```
