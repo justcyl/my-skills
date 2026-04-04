@@ -4,6 +4,7 @@ Overleaf CLI 包装器（精简版：git + review + compile + pdf）。
 
 支持以下操作：
   git urls                   获取每个项目的 Git 地址
+  create <NAME>              创建新 Overleaf 项目
   review list <PROJECT>      获取项目 review 评论线程（含位置信息）
   review resolve <PROJECT> <THREAD_ID>
                              标记指定 review 线程为已解决
@@ -553,6 +554,118 @@ def cmd_review_resolve(project: str, thread_id: str, user_id: str | None):
             f"线程 {thread_id} 请求已发送，但复查仍未标记 resolved。请在网页端确认权限或状态。"
         )
     print(f"项目 '{project_name}' 线程 {thread_id} 已标记为 resolved。")
+
+
+# ─── Create Project ───────────────────────────────────────────────────────────
+
+
+def _create_project(
+    api: Api,
+    project_name: str,
+    *,
+    template: str = "none",
+) -> dict[str, Any]:
+    """通过 /project/new 接口创建新项目。
+
+    template: "none"（空白项目）或 "example"（示例项目）。
+    返回接口响应 JSON（含 project_id）。
+    """
+    url = f"https://{api._host}/project/new"
+    session = api._get_session()
+    request_kwargs = dict(api._request_kwargs)
+
+    # 获取 CSRF token — 需要先访问一个项目页面或首页
+    # pyoverleaf 的 _get_csrf_token 需要 project_id，这里我们直接从首页获取
+    csrf = _get_csrf_token_from_home(api)
+
+    headers = {
+        "Referer": f"https://{api._host}/project",
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "x-csrf-token": csrf,
+    }
+    request_kwargs["headers"] = headers
+
+    body: dict[str, Any] = {"projectName": project_name}
+    if template == "example":
+        body["template"] = "example"
+
+    resp = session.post(url, json=body, **request_kwargs)
+    if resp.status_code in {401, 403}:
+        raise click.ClickException("认证失败（401/403）。请检查 OVERLEAF_COOKIE 是否过期。")
+    try:
+        resp.raise_for_status()
+    except Exception as exc:
+        raise click.ClickException(f"创建项目失败：{exc}") from exc
+
+    try:
+        return resp.json()
+    except ValueError as exc:
+        snippet = resp.text[:300].replace("\n", " ")
+        raise click.ClickException(f"创建项目接口未返回 JSON。响应片段: {snippet}") from exc
+
+
+def _get_csrf_token_from_home(api: Api) -> str:
+    """从 Overleaf 首页或 /project 页面获取 CSRF token。"""
+    session = api._get_session()
+    request_kwargs = dict(api._request_kwargs)
+    request_kwargs.pop("headers", None)
+
+    url = f"https://{api._host}/project"
+    resp = session.get(url, **request_kwargs)
+    try:
+        resp.raise_for_status()
+    except Exception as exc:
+        raise click.ClickException(f"获取 CSRF token 失败：{exc}") from exc
+
+    import re
+    # Overleaf 将 CSRF token 嵌入页面 meta 标签或 JS 变量中
+    # 常见模式：<meta name="ol-csrfToken" content="...">
+    match = re.search(r'name="ol-csrfToken"\s+content="([^"]+)"', resp.text)
+    if not match:
+        # 也可能是 window.csrfToken = "...";
+        match = re.search(r'csrfToken["\']?\s*[:=]\s*["\']([^"\'\ ]+)', resp.text)
+    if not match:
+        raise click.ClickException(
+            "无法从页面中提取 CSRF token。Cookie 可能已过期或页面结构已变更。"
+        )
+    return match.group(1)
+
+
+@cli.command("create")
+@click.argument("project_name")
+@click.option(
+    "--template",
+    type=click.Choice(["none", "example"]),
+    default="none",
+    show_default=True,
+    help="项目模板：none（空白）或 example（Overleaf 示例项目）。",
+)
+@click.option("--compact", is_flag=True, help="使用紧凑 JSON 输出。")
+def cmd_create(project_name: str, template: str, compact: bool):
+    """创建新的 Overleaf 项目。"""
+    api = _build_api()
+
+    print(f"正在创建项目 '{project_name}'...", file=sys.stderr)
+    data = _create_project(api, project_name, template=template)
+
+    project_id = data.get("project_id") or data.get("_id") or data.get("id")
+    if not project_id:
+        raise click.ClickException(f"创建成功但未返回 project_id。响应: {json.dumps(data)}")
+
+    git_url = f"https://{api._host}/git/{project_id}"
+    clone_url = _build_clone_url(git_url, "git")
+
+    result = {
+        "project_id": project_id,
+        "project_name": project_name,
+        "template": template,
+        "git_url": git_url,
+        "git_clone_url": clone_url,
+        "web_url": f"https://{api._host}/project/{project_id}",
+    }
+
+    print(json.dumps(result, ensure_ascii=False, indent=None if compact else 2))
 
 
 # ─── Compile ──────────────────────────────────────────────────────────────────

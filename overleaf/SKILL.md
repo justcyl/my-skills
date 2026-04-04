@@ -1,11 +1,11 @@
 ---
 name: overleaf
-description: 通过 Git 和 Review API 与 Overleaf 项目交互。当用户需要克隆、编辑并推送 Overleaf 项目，或查看、定位、解决 review 评论线程，或触发编译、下载 PDF 时使用。
+description: 通过 Git 和 Review API 与 Overleaf 项目交互。当用户需要创建新项目、克隆、编辑并推送 Overleaf 项目，或查看、定位、解决 review 评论线程，或触发编译、下载 PDF 时使用。
 ---
 
 # Overleaf Skill
 
-通过 Git 协议操作 Overleaf 项目文件（克隆、拉取、编辑、提交、推送），通过 Review API 管理评论线程（列出、解决），通过 Compile API 触发远程编译并下载 PDF。
+通过 Git 协议操作 Overleaf 项目文件（克隆、拉取、编辑、提交、推送），通过 REST API 创建新项目，通过 Review API 管理评论线程（列出、解决），通过 Compile API 触发远程编译并下载 PDF。
 
 所有文件级操作（浏览目录、读写文件、创建删除、下载项目）统一通过 `git clone`/`git pull` + 本地编辑 + `git push` 完成，不再使用 WebSocket/REST 逐文件操作。
 
@@ -45,6 +45,21 @@ bash scripts/ol.sh <命令> [参数]
 获取 git url后，直接使用 `git` 命令行进行管理。
 
 ## 命令参考
+
+### 创建新项目
+
+```bash
+# 创建空白项目
+bash scripts/ol.sh create "My New Paper"
+
+# 创建带 Overleaf 示例内容的项目
+bash scripts/ol.sh create "My New Paper" --template example
+
+# 紧凑 JSON 输出
+bash scripts/ol.sh create "My New Paper" --compact
+```
+
+输出字段：`project_id`、`project_name`、`template`、`git_url`、`git_clone_url`、`web_url`。
 
 ### 获取项目 Git 地址
 
@@ -104,6 +119,25 @@ bash scripts/ol.sh pdf "MyProject" --output /tmp/paper.pdf
 ```
 
 ## 典型工作流
+
+### 创建项目并开始编辑
+
+```bash
+# 1. 创建新项目
+bash scripts/ol.sh create "My New Paper"
+
+# 2. 从输出中获取 git_clone_url，克隆到本地
+git clone https://git@overleaf.mycompany.com/git/<project_id> /tmp/my-new-paper
+
+# 3. 编辑文件
+# ...编辑 /tmp/my-new-paper/main.tex
+
+# 4. 提交并推送
+cd /tmp/my-new-paper
+git add -A
+git commit -m "initial content"
+git push
+```
 
 ### 克隆并编辑项目
 
