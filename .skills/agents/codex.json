@@ -71,13 +71,6 @@
       "sync_status": "synced",
       "last_synced_at": "2026-03-25T03:35:55Z"
     },
-    "ljg-paper": {
-      "source_path": "ljg-paper",
-      "target_path": "/Users/chenyl/.codex/skills/ljg-paper",
-      "mode": "symlink",
-      "sync_status": "synced",
-      "last_synced_at": "2026-03-27T02:03:27Z"
-    },
     "ph-paper-helper": {
       "source_path": "ph-paper-helper",
       "target_path": "/Users/chenyl/.codex/skills/ph-paper-helper",

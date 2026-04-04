@@ -706,38 +706,19 @@
       "last_updated_at": "2026-03-25T03:35:54Z"
     },
     "ljg-paper": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/ljg-paper",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-27T02:03:27Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/ljg-paper",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-27T02:03:27Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/ljg-paper",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-03-27T02:03:27Z"
-        }
-      },
+      "distribution": {},
       "display_name": "ljg-paper",
       "description": "",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "passed",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/ljg-paper.md",
       "source_path": ".skills/sources/ljg-paper.json",
-      "skill_path": "ljg-paper",
+      "skill_path": ".skills/archived-skills/ljg-paper",
       "upstream_path": ".skills/upstream/ljg-paper",
       "managed_revision": "sha256:6417f73d875bce207fe3a1224b4eb004d4f52b71ceaf936ac948e2cff8a80fd9",
-      "last_updated_at": "2026-03-27T02:03:27Z"
+      "last_updated_at": "2026-04-04T09:42:01Z"
     },
     "baoyu-youtube-transcript": {
       "distribution": {},
