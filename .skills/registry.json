@@ -787,6 +787,40 @@
       "upstream_path": ".skills/upstream/inno-figure-gen",
       "managed_revision": "sha256:a29843914edb1bd36fb2906b1eba51be7e287964ea554c1877e2d7f322d8b90a",
       "last_updated_at": "2026-04-02T07:03:15Z"
+    },
+    "grill-me": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/grill-me",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-04T08:17:21Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/grill-me",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-04T08:17:21Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/grill-me",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-04T08:17:21Z"
+        }
+      },
+      "display_name": "grill-me",
+      "description": "Interview the user relentlessly about a plan or design until reaching shared understanding, resolving each branch of the decision tree. Use when user wants to stress-test a plan, get grilled on their design, or mentions \"grill me\".",
+      "status": "managed",
+      "risk_status": "passed",
+      "managed_dirty": false,
+      "upstream_enabled": true,
+      "report_path": ".skills/reports/grill-me.md",
+      "source_path": ".skills/sources/grill-me.json",
+      "skill_path": "grill-me",
+      "upstream_path": ".skills/upstream/grill-me",
+      "managed_revision": "sha256:c1cf50e1f66728ba5c29d50ec90112dfbb1c1de8fad585e588c3bf137f0b34f6",
+      "last_updated_at": "2026-04-04T08:17:21Z"
     }
   }
 }

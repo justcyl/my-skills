@@ -1,0 +1,17 @@
+{
+  "skill_id": "grill-me",
+  "display_name": "grill-me",
+  "skill_path": "grill-me",
+  "source_type": "github",
+  "source": "https://github.com/mattpocock/skills",
+  "source_url": "https://github.com/mattpocock/skills.git",
+  "ref": "",
+  "subpath": "grill-me",
+  "bootstrap": true,
+  "upstream_enabled": true,
+  "upstream_path": ".skills/upstream/grill-me",
+  "last_imported_at": "2026-04-04T08:17:21Z",
+  "upstream_revision": "651eab033bdf8f7fd535c274f8cbe839075aba5e",
+  "managed_revision": "sha256:c1cf50e1f66728ba5c29d50ec90112dfbb1c1de8fad585e588c3bf137f0b34f6",
+  "managed_dirty": false
+}
