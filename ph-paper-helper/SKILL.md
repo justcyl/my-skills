@@ -21,9 +21,11 @@ alias ph='uv run --project ~/project/ph2 ph'
    → 直接使用 `ph import` 或 `ph add --bib`，参考「快速导入」
 3. **添加到 BibTeX**：用户需要将论文写入 .bib 文件
    → 使用 `ph add --bib`，参考「BibTeX 写入」
-4. **精读全文**：用户想深入阅读某篇已导入的论文
+4. **补全 .bib 元数据**：用户的 .bib 中有不完整的 entry
+   → 使用 `ph enrich --bib`，参考「BibTeX 补全」
+5. **精读全文**：用户想深入阅读某篇已导入的论文
    → 使用 `ph fetch --include-content`，参考「慢路径」
-5. **查询本地库**：用户想了解已收录论文的状态
+6. **查询本地库**：用户想了解已收录论文的状态
    → 使用 `ph sql`，参考「本地查询」
 
 不确定时先问用户。不要同时走多条路径。
@@ -108,8 +110,9 @@ ph search --query "<构造好的查询>" --max-results <数量> [--source arxiv]
 ph import --input arxiv://1706.03762
 ph import --input arxiv://2301.00001 --input arxiv://2302.00002  # 批量
 
-# 导入并写入 .bib（推荐：一步完成 import + bib 补全 + 写入 .bib）
+# 导入并写入 .bib（add 只记录，enrich 补全）
 ph add --input arxiv://1706.03762 --bib refs.bib
+ph enrich --bib refs.bib
 
 # 直接走完整处理（自动 import + bib 补全 + 全文提取，不写 .bib）
 ph fetch --paper-id arxiv://1706.03762
@@ -136,7 +139,7 @@ DB 层支持任意 ID 反查。以 `doi://10.xxx` 入库的论文，用 `arxiv:/
 
 ## BibTeX 写入（add --bib）
 
-`ph add` 是将论文写入 .bib 文件的主要命令。它一步完成：导入 → bib 元数据补全 → 写入 .bib。
+`ph add` 是将论文写入 .bib 文件的主要命令。它只做记录：导入 → 写入 .bib，**不补全元数据**（秒级完成）。
 
 ```bash
 # 添加单篇
@@ -144,18 +147,25 @@ ph add --input arxiv://1706.03762 --bib refs.bib
 
 # 批量添加
 ph add --input arxiv://1706.03762 --input doi://10.1145/3025453 --bib refs.bib
+```
 
-# 跳过元数据补全
-ph add --input arxiv://1706.03762 --bib refs.bib --skip-metadata
+要补全元数据，用 `ph enrich`：
+
+```bash
+# add 后补全
+ph add --input arxiv://1706.03762 --bib refs.bib
+ph enrich --bib refs.bib
 ```
 
 ### 三阶段 bib 元数据补全
 
-`add` 默认执行三阶段补全（`--skip-metadata` 跳过）：
+`enrich` 和 `fetch` 执行三阶段补全：
 
 1. **S2 detail API** → venue, journal, volume, pages, abstract, citation_count
 2. **Crossref**（仅有 DOI 时）→ publisher, pages, number, volume, pub_type
 3. **arXiv API**（仅有 arxiv_id 时）→ primary_category, month, journal_ref
+
+`add` 不执行补全，只做记录。
 
 ### bib_ready vs bib_usable
 
@@ -211,6 +221,41 @@ arXiv 预印本自动使用规范格式渲染：
 
 - 再次 add 同一篇论文 → 用最新 metadata 覆盖更新（保留原 cite key）
 - 手写的条目（没有 `% paper_id:` 注释）会被原样保留
+
+---
+
+## BibTeX 补全（enrich）
+
+`ph enrich` 扫描 .bib 文件，对不完整的 entry 跑三阶段 bib 补全并更新 .bib。
+
+```bash
+# 补全所有不完整的 entry
+ph enrich --bib refs.bib
+
+# 强制重新补全所有 entry（包括已 ready 的）
+ph enrich --bib refs.bib --force
+
+# 预检，不写入
+ph enrich --bib refs.bib --dry-run
+```
+
+### 工作原理
+
+1. 解析 .bib 中所有带 `% paper_id: xxx` 注释的 entry
+2. 对 `bib_ready=false` 的 entry 跑三阶段补全（S2 + Crossref + arXiv）
+3. 补全后重新渲染 entry 并原子写回 .bib（保留原 cite key）
+4. 没有 `% paper_id:` 注释的 entry（手写、外部来源）跳过并报 warning
+5. 部分失败时，已成功的照常写回，失败的报 error
+
+### 典型工作流
+
+```bash
+# 1. 快速添加多篇论文（秒级）
+ph add --input arxiv://2310.06825 --input arxiv://2406.00001 --bib refs.bib
+
+# 2. 一次性补全所有不完整的 entry
+ph enrich --bib refs.bib
+```
 
 ---
 

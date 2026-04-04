@@ -579,19 +579,19 @@
           "target_path": "/Users/chenyl/.codex/skills/ph-paper-helper",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-31T17:18:34Z"
+          "last_synced_at": "2026-04-04T08:51:35Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/ph-paper-helper",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-31T17:18:34Z"
+          "last_synced_at": "2026-04-04T08:51:35Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/ph-paper-helper",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-31T17:18:34Z"
+          "last_synced_at": "2026-04-04T08:51:35Z"
         }
       },
       "display_name": "ph-paper-helper",
@@ -604,8 +604,8 @@
       "source_path": ".skills/sources/ph-paper-helper.json",
       "skill_path": "ph-paper-helper",
       "upstream_path": ".skills/upstream/ph-paper-helper",
-      "managed_revision": "sha256:530c7c6c688f5211d8734ad39c3fefb24a1d84356e0ef59c4d9b503239249627",
-      "last_updated_at": "2026-03-31T17:18:34Z"
+      "managed_revision": "sha256:1124c7972875447b0a7519a69c53e4db37706e898eddaf465c218473bec971f1",
+      "last_updated_at": "2026-04-04T08:51:35Z"
     },
     "paper-sense-making": {
       "distribution": {},
