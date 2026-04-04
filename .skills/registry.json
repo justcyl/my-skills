@@ -819,38 +819,19 @@
       "last_updated_at": "2026-04-04T09:04:55Z"
     },
     "pi-tmux": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/pi-tmux",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-04T15:27:15Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/pi-tmux",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-04T15:27:15Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/pi-tmux",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-04T15:27:25Z"
-        }
-      },
+      "distribution": {},
       "display_name": "pi-tmux",
       "description": "指导 agent 正确使用 pi-tmux 扩展管理后台 tmux 进程。涵盖 run/peek/send/kill/list 五个 action 的使用时机与参数选择、silenceTimeout 与 watchInterval 的配置策略、completion/silence/watchdog 三种自动通知的响应方式，以及常见工作流模式（dev server、build、交互式程序、长时间训练）。适用于 agent 需要在后台运行命令、监控进程输出、与交互式程序通信时。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "passed",
       "managed_dirty": false,
       "upstream_enabled": false,
       "report_path": ".skills/reports/pi-tmux.md",
       "source_path": ".skills/sources/pi-tmux.json",
-      "skill_path": "pi-tmux",
+      "skill_path": ".skills/archived-skills/pi-tmux",
       "upstream_path": ".skills/upstream/pi-tmux",
       "managed_revision": "sha256:6b01da7214906480e69386d5b825a98eeed4bc752492ed5f27561e4c39783a87",
-      "last_updated_at": "2026-04-04T15:27:15Z"
+      "last_updated_at": "2026-04-04T16:37:03Z"
     }
   }
 }
