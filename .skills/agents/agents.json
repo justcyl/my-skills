@@ -98,13 +98,6 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-04T08:17:21Z"
-    },
-    "run-in-tmux": {
-      "source_path": "run-in-tmux",
-      "target_path": "/Users/chenyl/.agents/skills/run-in-tmux",
-      "mode": "symlink",
-      "sync_status": "synced",
-      "last_synced_at": "2026-04-04T08:53:49Z"
     }
   }
 }
