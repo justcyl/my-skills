@@ -1,0 +1,17 @@
+{
+  "skill_id": "run-in-tmux",
+  "display_name": "run-in-tmux",
+  "skill_path": "run-in-tmux",
+  "source_type": "github",
+  "source": "https://github.com/normful/picadillo",
+  "source_url": "https://github.com/normful/picadillo.git",
+  "ref": "",
+  "subpath": "skills/run-in-tmux",
+  "bootstrap": true,
+  "upstream_enabled": true,
+  "upstream_path": ".skills/upstream/run-in-tmux",
+  "last_imported_at": "2026-04-04T08:53:49Z",
+  "upstream_revision": "963654a0eaefcd9d9ddafd6f46e7721c6a5acb36",
+  "managed_revision": "sha256:f6c1bcd2bb6311f9c0b09d9449056269e03475c48e659ffcd71efdb1fbe2a8f0",
+  "managed_dirty": false
+}

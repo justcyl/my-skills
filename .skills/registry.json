@@ -821,6 +821,40 @@
       "upstream_path": ".skills/upstream/grill-me",
       "managed_revision": "sha256:c1cf50e1f66728ba5c29d50ec90112dfbb1c1de8fad585e588c3bf137f0b34f6",
       "last_updated_at": "2026-04-04T08:17:21Z"
+    },
+    "run-in-tmux": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/run-in-tmux",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-04T08:53:49Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/run-in-tmux",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-04T08:53:49Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/run-in-tmux",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-04T08:53:49Z"
+        }
+      },
+      "display_name": "run-in-tmux",
+      "description": "Use when the user wants to run commands in a new tmux session with split panes. Triggers on requests like \"run X in tmux\", \"start a dev environment in tmux\", or \"open multiple terminals in tmux\".",
+      "status": "managed",
+      "risk_status": "passed",
+      "managed_dirty": false,
+      "upstream_enabled": true,
+      "report_path": ".skills/reports/run-in-tmux.md",
+      "source_path": ".skills/sources/run-in-tmux.json",
+      "skill_path": "run-in-tmux",
+      "upstream_path": ".skills/upstream/run-in-tmux",
+      "managed_revision": "sha256:f6c1bcd2bb6311f9c0b09d9449056269e03475c48e659ffcd71efdb1fbe2a8f0",
+      "last_updated_at": "2026-04-04T08:53:49Z"
     }
   }
 }
