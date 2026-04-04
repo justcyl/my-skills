@@ -1,0 +1,17 @@
+{
+  "skill_id": "pi-tmux",
+  "display_name": "pi-tmux",
+  "skill_path": "pi-tmux",
+  "source_type": "local-created",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/pi-tmux",
+  "last_imported_at": "2026-04-04T15:27:15Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:6b01da7214906480e69386d5b825a98eeed4bc752492ed5f27561e4c39783a87",
+  "managed_dirty": false
+}
