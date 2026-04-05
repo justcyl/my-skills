@@ -107,9 +107,29 @@ Optional resilience flags:
 
 The script checks for API key in this order:
 1. `--api-key` argument (use if user provided key in chat)
-2. `GEMINI_API_KEY` environment variable
+2. `~/.config/inno-figure-gen/config.env` 中的 `INNO_FIGURE_GEN_API_KEY`
+3. `GEMINI_API_KEY` environment variable
 
 If neither is available, the script exits with an error message.
+
+## 自定义配置文件
+
+支持通过 `~/.config/inno-figure-gen/config.env` 配置自定义 API key、base URL 和默认模型，避免密钥写入 skill 目录或 zshrc：
+
+```env
+# ~/.config/inno-figure-gen/config.env
+INNO_FIGURE_GEN_API_KEY=sk-your-key-here
+INNO_FIGURE_GEN_BASE_URL=https://your-gateway.example.com
+INNO_FIGURE_GEN_DEFAULT_MODEL=gemini-3.1-flash-image-preview
+```
+
+优先级：CLI 参数 > config.env > 环境变量。
+
+可用模型：
+- `gemini-3.1-flash-image-preview`（快速）
+- `gemini-3-pro-image-preview`（高质量）
+
+切换模型只需传 `--model` 参数，无需修改配置文件。
 
 ## Preflight + Common Failures (fast fixes)
 

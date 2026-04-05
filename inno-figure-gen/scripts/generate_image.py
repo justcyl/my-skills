@@ -27,6 +27,24 @@ from io import BytesIO
 from pathlib import Path
 
 
+CONFIG_PATH = Path.home() / ".config" / "inno-figure-gen" / "config.env"
+
+
+def load_config() -> dict[str, str]:
+    """Load key=value pairs from ~/.config/inno-figure-gen/config.env."""
+    cfg: dict[str, str] = {}
+    if not CONFIG_PATH.is_file():
+        return cfg
+    for line in CONFIG_PATH.read_text().splitlines():
+        line = line.strip()
+        if not line or line.startswith("#"):
+            continue
+        if "=" in line:
+            k, v = line.split("=", 1)
+            cfg[k.strip()] = v.strip()
+    return cfg
+
+
 class RetryableRequestError(RuntimeError):
     """Transient upstream error that can be retried."""
 
@@ -50,10 +68,12 @@ def is_retryable_text(text: str) -> bool:
     return any(marker in lowered for marker in markers)
 
 
-def get_api_key(provided_key: str | None) -> str | None:
-    """Get API key from argument first, then environment."""
+def get_api_key(provided_key: str | None, cfg: dict[str, str] | None = None) -> str | None:
+    """Get API key: CLI arg > config.env > GEMINI_API_KEY env var."""
     if provided_key:
         return provided_key
+    if cfg and cfg.get("INNO_FIGURE_GEN_API_KEY"):
+        return cfg["INNO_FIGURE_GEN_API_KEY"]
     return os.environ.get("GEMINI_API_KEY")
 
 
@@ -441,8 +461,19 @@ def main():
 
     args = parser.parse_args()
 
+    # Load config file
+    cfg = load_config()
+
+    # Apply config defaults (CLI args take priority)
+    if not args.api_key and cfg.get("INNO_FIGURE_GEN_API_KEY"):
+        pass  # handled in get_api_key
+    if not args.base_url and cfg.get("INNO_FIGURE_GEN_BASE_URL"):
+        args.base_url = cfg["INNO_FIGURE_GEN_BASE_URL"]
+    if args.model == "gemini-3.1-flash-image-preview" and cfg.get("INNO_FIGURE_GEN_DEFAULT_MODEL"):
+        args.model = cfg["INNO_FIGURE_GEN_DEFAULT_MODEL"]
+
     # Get API key
-    api_key = get_api_key(args.api_key)
+    api_key = get_api_key(args.api_key, cfg)
     if not api_key:
         print("Error: No API key provided.", file=sys.stderr)
         print("Please either:", file=sys.stderr)
