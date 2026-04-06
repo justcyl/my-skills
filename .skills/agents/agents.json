@@ -91,6 +91,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-04T08:17:21Z"
+    },
+    "rhetoric-of-decks": {
+      "source_path": "rhetoric-of-decks",
+      "target_path": "/Users/chenyl/.agents/skills/rhetoric-of-decks",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-04-06T17:42:25Z"
     }
   }
 }
