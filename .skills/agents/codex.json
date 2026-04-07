@@ -98,6 +98,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-07T12:17:06Z"
+    },
+    "paper-format-check": {
+      "source_path": "paper-format-check",
+      "target_path": "/Users/chenyl/.codex/skills/paper-format-check",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-04-07T12:39:54Z"
     }
   }
 }

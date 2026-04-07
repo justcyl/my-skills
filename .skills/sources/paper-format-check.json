@@ -1,0 +1,17 @@
+{
+  "skill_id": "paper-format-check",
+  "display_name": "paper-format-check",
+  "skill_path": "paper-format-check",
+  "source_type": "local-created",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/paper-format-check",
+  "last_imported_at": "2026-04-07T12:39:53Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:38f4c9a811d3161b5e958f77fcb9fd56ebe44cf7bafd1a4bb4585fe843cae1a2",
+  "managed_dirty": false
+}
