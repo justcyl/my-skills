@@ -671,8 +671,44 @@ def cmd_create(project_name: str, template: str, compact: bool):
 # ─── Compile ──────────────────────────────────────────────────────────────────
 
 
-def _compile_project(api: Api, project_id: str) -> dict[str, Any]:
-    """触发项目编译，返回 compile 接口响应 JSON。"""
+def _set_compiler(api: Api, project_id: str, compiler: str) -> None:
+    """通过 Overleaf settings API 设置项目编译器。"""
+    session = api._get_session()
+    request_kwargs = dict(api._request_kwargs)
+    # 从项目页获取 CSRF token（meta 标签格式）
+    resp = session.get(f"https://{api._host}/project/{project_id}", **request_kwargs)
+    import re
+    m = re.search(r'ol-csrfToken.*?content="([^"]+)"', resp.text)
+    if not m:
+        # 回退到 pyoverleaf 内置方法
+        csrf = api._get_csrf_token(project_id)
+    else:
+        csrf = m.group(1)
+    headers = {
+        "Referer": f"https://{api._host}/project/{project_id}",
+        "Content-Type": "application/json",
+        "x-csrf-token": csrf,
+    }
+    request_kwargs["headers"] = headers
+    resp2 = session.post(
+        f"https://{api._host}/project/{project_id}/settings",
+        json={"compiler": compiler},
+        **request_kwargs,
+    )
+    if resp2.status_code not in {200, 204}:
+        print(f"警告：设置编译器为 {compiler} 失败（HTTP {resp2.status_code}）", file=sys.stderr)
+    else:
+        print(f"编译器已设置为 {compiler}", file=sys.stderr)
+
+
+def _compile_project(api: Api, project_id: str, compiler: str | None = None) -> dict[str, Any]:
+    """触发项目编译，返回 compile 接口响应 JSON。
+
+    若指定 compiler（如 xelatex / pdflatex / lualatex），会先通过 settings API 设置编译器。
+    """
+    if compiler:
+        _set_compiler(api, project_id, compiler)
+
     url = f"https://{api._host}/project/{project_id}/compile?enable_pdf_caching=true"
     session = api._get_session()
     request_kwargs = dict(api._request_kwargs)
@@ -710,13 +746,14 @@ def _compile_project(api: Api, project_id: str) -> dict[str, Any]:
 @cli.command("compile")
 @click.argument("project")
 @click.option("--compact", is_flag=True, help="使用紧凑 JSON 输出（默认为带缩进）。")
-def cmd_compile(project: str, compact: bool):
+@click.option("--compiler", "-c", default=None, type=click.Choice(["xelatex", "pdflatex", "lualatex"]), help="编译引擎（默认使用项目已有设置）。")
+def cmd_compile(project: str, compact: bool, compiler: str | None):
     """触发项目 PDF 编译，输出编译结果（状态、PDF 地址、输出文件列表）。"""
     api = _build_api()
     project_id, project_name = _resolve_project(api, project)
 
     print(f"正在编译项目 '{project_name}'...", file=sys.stderr)
-    data = _compile_project(api, project_id)
+    data = _compile_project(api, project_id, compiler=compiler)
 
     status = data.get("status", "unknown")
     output_files = data.get("outputFiles", [])
@@ -747,14 +784,15 @@ def cmd_compile(project: str, compact: bool):
 @cli.command("pdf")
 @click.argument("project")
 @click.option("--output", "-o", default=None, help="输出 PDF 文件路径（默认：<项目名>.pdf）。")
+@click.option("--compiler", "-c", default=None, type=click.Choice(["xelatex", "pdflatex", "lualatex"]), help="编译引擎（默认使用项目已有设置）。")
 @click.option("--compile", "do_compile", is_flag=True, default=True, hidden=True)
-def cmd_pdf(project: str, output: str | None, do_compile: bool):
+def cmd_pdf(project: str, output: str | None, compiler: str | None, do_compile: bool):
     """编译项目并下载 PDF 到本地。"""
     api = _build_api()
     project_id, project_name = _resolve_project(api, project)
 
     print(f"正在编译项目 '{project_name}'...", file=sys.stderr)
-    data = _compile_project(api, project_id)
+    data = _compile_project(api, project_id, compiler=compiler)
 
     status = data.get("status", "unknown")
     if status != "success":

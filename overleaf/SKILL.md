@@ -104,6 +104,9 @@ bash scripts/ol.sh compile "MyProject"
 
 # 紧凑 JSON（便于管道处理）
 bash scripts/ol.sh compile "MyProject" --compact
+
+# 指定编译引擎（xelatex / pdflatex / lualatex）
+bash scripts/ol.sh compile "MyProject" --compiler xelatex
 ```
 
 输出字段：`status`（`success` / `failure` / `error`）、`pdf_url`、`output_files`（含 `.pdf`、`.log`、`.bbl` 等）。
@@ -116,6 +119,9 @@ bash scripts/ol.sh pdf "MyProject"
 
 # 指定输出路径
 bash scripts/ol.sh pdf "MyProject" --output /tmp/paper.pdf
+
+# 指定编译引擎
+bash scripts/ol.sh pdf "MyProject" --compiler xelatex
 ```
 
 ## 典型工作流
