@@ -839,19 +839,19 @@
           "target_path": "/Users/chenyl/.codex/skills/rhetoric-of-decks",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-06T17:42:35Z"
+          "last_synced_at": "2026-04-07T12:16:03Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/rhetoric-of-decks",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-06T17:42:35Z"
+          "last_synced_at": "2026-04-07T12:16:03Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/rhetoric-of-decks",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-06T17:42:35Z"
+          "last_synced_at": "2026-04-07T12:16:03Z"
         }
       },
       "display_name": "rhetoric-of-decks",
@@ -864,8 +864,8 @@
       "source_path": ".skills/sources/rhetoric-of-decks.json",
       "skill_path": "rhetoric-of-decks",
       "upstream_path": ".skills/upstream/rhetoric-of-decks",
-      "managed_revision": "sha256:e03465559bac0d354638495168c2d3543dd705ed0580263e9384231a573db1c2",
-      "last_updated_at": "2026-04-06T17:42:25Z"
+      "managed_revision": "sha256:02b909cd00e200bbe3eab2780ea01554f7eb6ddd3c67d81843de2f9ebda4e69d",
+      "last_updated_at": "2026-04-07T12:16:03Z"
     }
   }
 }

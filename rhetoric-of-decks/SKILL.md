@@ -186,6 +186,85 @@ description: 基于 Rhetoric of Decks 哲学的幻灯片设计与生成指导。
 适合：HTML 交互、嵌入代码输出、在线分享。
 详见 `references/revealjs-template.md`。
 
+## 编译验证环节（硬性要求）
+
+每次编辑 `.tex` 或 `.qmd` 后，必须执行以下验证。不通过则不算完成。
+
+### Step 1: 编译
+
+```bash
+# Beamer（推荐 XeLaTeX 用于中文）
+xelatex -interaction=nonstopmode deck.tex
+# 或通过 Overleaf
+bash ol.sh compile "项目名" --compiler xelatex
+```
+
+### Step 2: 检查致命错误
+
+```bash
+grep "^!" deck.log
+```
+
+有任何输出 → 修复后重新编译。
+
+### Step 3: 零警告（硬性要求）
+
+```bash
+grep -cE "Overfull|Underfull" deck.log
+```
+
+**必须返回 0**。对每个警告：
+
+| 警告 | 修复方法 |
+|------|----------|
+| Overfull hbox | 缩短文字、用 `\adjustbox`、表格加 `@{}` |
+| Underfull hbox | 调整段落换行 |
+| Overfull vbox | 拆分 slide、减少 `\vspace`、压缩内容 |
+| Underfull vbox | 加 `\vfill` 或调整间距 |
+
+即使只溢出 0.5pt 也必须修复。
+
+### Step 4: 检查字体警告
+
+```bash
+grep -i "font" deck.log | grep -i "warning"
+```
+
+### Step 5: TikZ 视觉验证
+
+TikZ 错误不会触发编译警告，必须手动检查。详见 `references/tikz-rules.md`。
+
+按顺序执行四轮 Pass：
+
+1. **Pass 0**: 跨 slide 一致性——相同元素颜色/位置/字号是否一致
+2. **Pass 1**: Bézier 曲线碰撞——计算弯曲深度，检查 label 是否在安全距离外
+3. **Pass 2**: 节点间隙计算——label 宽度是否小于节点间可用空间
+4. **Pass 3**: 箭头 label 定位——每个边 label 是否有 `above`/`below`/`left`/`right`
+
+无 TikZ 内容时跳过。
+
+### Step 6: 打开 PDF 视觉确认
+
+```bash
+open deck.pdf
+```
+
+人工检查或使用模型视觉能力确认：
+- 文字是否溢出 slide 边界
+- 图表 label 是否重叠
+- 颜色/字号是否一致
+- 整体 MB/MC 是否均衡
+
+### 验证循环
+
+```
+编译 → 查错 → 查警告 → 查字体 → 查 TikZ → 看 PDF
+  ↑                                              |
+  └──── 有问题则修复后重新开始 ←──────────────────┘
+```
+
+全部通过后才可交付。
+
 ## 常见失败模式
 
 | 失败 | 修复 |
