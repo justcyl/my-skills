@@ -5,12 +5,6 @@
 
 set -euo pipefail
 
-# 自动加载 Overleaf 认证配置（env 文件优先于 shell 环境变量）
-OVERLEAF_ENV="${OVERLEAF_ENV:-${HOME}/.config/overleaf/env}"
-if [[ -f "$OVERLEAF_ENV" ]]; then
-    source "$OVERLEAF_ENV"
-fi
-
 PYOVERLEAF_PYTHON="${HOME}/.local/share/uv/tools/pyoverleaf/bin/python"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
