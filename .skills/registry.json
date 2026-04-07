@@ -839,33 +839,33 @@
           "target_path": "/Users/chenyl/.codex/skills/rhetoric-of-decks",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-07T12:17:06Z"
+          "last_synced_at": "2026-04-07T16:41:28Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/rhetoric-of-decks",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-07T12:17:06Z"
+          "last_synced_at": "2026-04-07T16:41:28Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/rhetoric-of-decks",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-07T12:17:06Z"
+          "last_synced_at": "2026-04-07T16:41:28Z"
         }
       },
       "display_name": "rhetoric-of-decks",
       "description": "基于 Rhetoric of Decks 哲学的幻灯片设计与生成指导。适用于\"做个汇报\"\"做 slides\"\"做幻灯片\"\"写个 deck\"\"设计演示文稿\"\"把论文做成 slides\"等请求。涵盖 Beamer 与 RevealJS/Quarto 两种格式，提供从叙事结构、视觉设计到认知负荷优化的完整原则体系。",
       "status": "managed",
-      "risk_status": "passed",
+      "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": false,
       "report_path": ".skills/reports/rhetoric-of-decks.md",
       "source_path": ".skills/sources/rhetoric-of-decks.json",
       "skill_path": "rhetoric-of-decks",
       "upstream_path": ".skills/upstream/rhetoric-of-decks",
-      "managed_revision": "sha256:acdd4ae9f34050b8161129b33cd4c5fab81b6d10610750aa6af5d61efe0ec89c",
-      "last_updated_at": "2026-04-07T12:17:06Z"
+      "managed_revision": "sha256:dd0092480ef6218bebaa72ba82caacd2997eb21edea2f4ee31ca2e497f4437c0",
+      "last_updated_at": "2026-04-07T16:41:28Z"
     },
     "paper-format-check": {
       "distribution": {

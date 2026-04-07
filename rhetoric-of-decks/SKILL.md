@@ -248,11 +248,11 @@ TikZ 错误不会触发编译警告，必须手动检查。详见 `references/ti
 在交付用户之前，先将 PDF 转为图片，用模型视觉能力自行检查。
 
 ```bash
-# 将 PDF 每页转为 PNG（使用 pdftoppm 或 magick）
-pdftoppm -png -r 200 deck.pdf /tmp/deck-review/slide
-# 或
-magick -density 200 deck.pdf /tmp/deck-review/slide-%02d.png
+# 将 PDF 每页转为 JPEG（150 DPI + quality 85，平衡清晰度与 token 消耗）
+pdftoppm -jpeg -jpegopt quality=85 -r 150 deck.pdf /tmp/deck-review/slide
 ```
+
+> **为什么是 150 DPI JPEG**：200 DPI PNG 每张约 100KB，150 DPI JPEG q85 每张约 48KB，体积减半，中文和图表仍完全可读。不要用 100 DPI——小字会糊。
 
 然后用 `read` 工具逐张读取图片，检查以下问题：
 

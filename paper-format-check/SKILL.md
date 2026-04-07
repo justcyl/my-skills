@@ -138,10 +138,12 @@ grep -ic "limitation" /tmp/paper-text.txt
 ### Phase 6: 视觉审查（PDF 转图，Agent 逐页读）
 
 ```bash
-# 将 PDF 每页转为 PNG
+# 将 PDF 每页转为 JPEG（150 DPI + quality 85，平衡清晰度与 token 消耗）
 mkdir -p /tmp/paper-review
-pdftoppm -png -r 200 paper.pdf /tmp/paper-review/page
+pdftoppm -jpeg -jpegopt quality=85 -r 150 paper.pdf /tmp/paper-review/page
 ```
+
+> **为什么是 150 DPI JPEG**：200 DPI PNG 每页约 100KB，150 DPI JPEG q85 每页约 50KB，体积减半，token 消耗显著降低，双栏论文的小字仍可读。不要用 100 DPI——双栏论文的脚注和图表标注会糊。
 
 用 `read` 工具逐页读取图片，检查：
 

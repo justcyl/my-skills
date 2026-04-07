@@ -10,8 +10,8 @@
   "bootstrap": true,
   "upstream_enabled": false,
   "upstream_path": ".skills/upstream/rhetoric-of-decks",
-  "last_imported_at": "2026-04-07T12:17:06Z",
+  "last_imported_at": "2026-04-07T16:41:28Z",
   "upstream_revision": "",
-  "managed_revision": "sha256:acdd4ae9f34050b8161129b33cd4c5fab81b6d10610750aa6af5d61efe0ec89c",
+  "managed_revision": "sha256:dd0092480ef6218bebaa72ba82caacd2997eb21edea2f4ee31ca2e497f4437c0",
   "managed_dirty": false
 }
