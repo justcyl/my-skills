@@ -10,8 +10,8 @@
   "bootstrap": true,
   "upstream_enabled": false,
   "upstream_path": ".skills/upstream/paper-format-check",
-  "last_imported_at": "2026-04-07T16:41:40Z",
+  "last_imported_at": "2026-04-07T17:04:38Z",
   "upstream_revision": "",
-  "managed_revision": "sha256:918794e3cf84fa785d1ba1e7dab673582cddcfd5167e2016bdd195d69382e792",
+  "managed_revision": "sha256:78263c369b236d59260504d69d1e3d35e3e6e717a089d7a0ca1d87a7fc61b322",
   "managed_dirty": false
 }
