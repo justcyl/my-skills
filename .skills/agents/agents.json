@@ -105,6 +105,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-07T12:40:04Z"
+    },
+    "research-idea-validator": {
+      "source_path": "research-idea-validator",
+      "target_path": "/Users/chenyl/.agents/skills/research-idea-validator",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-04-07T13:40:22Z"
     }
   }
 }

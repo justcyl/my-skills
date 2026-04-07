@@ -900,6 +900,40 @@
       "upstream_path": ".skills/upstream/paper-format-check",
       "managed_revision": "sha256:38f4c9a811d3161b5e958f77fcb9fd56ebe44cf7bafd1a4bb4585fe843cae1a2",
       "last_updated_at": "2026-04-07T12:39:53Z"
+    },
+    "research-idea-validator": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/research-idea-validator",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-07T13:40:22Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/research-idea-validator",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-07T13:40:22Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/research-idea-validator",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-07T13:40:22Z"
+        }
+      },
+      "display_name": "research-idea-validator",
+      "description": "逼问科研 idea 是否可行。将模糊直觉拆解为可验证的小问题：真实性检验、假设识别、最小实验设计、问题发现能力培养。适用于\"这个 idea 行不行\"\"帮我逼问一下这个想法\"\"validate my research idea\"\"我有个科研想法想讨论\"等场景，尤其是读博初期的 idea 筛选。",
+      "status": "managed",
+      "risk_status": "passed",
+      "managed_dirty": false,
+      "upstream_enabled": false,
+      "report_path": ".skills/reports/research-idea-validator.md",
+      "source_path": ".skills/sources/research-idea-validator.json",
+      "skill_path": "research-idea-validator",
+      "upstream_path": ".skills/upstream/research-idea-validator",
+      "managed_revision": "sha256:908ce935cda0d1b585f994ce191551c3ea2629ea37fdce50cfce88809e0dde3d",
+      "last_updated_at": "2026-04-07T13:40:22Z"
     }
   }
 }

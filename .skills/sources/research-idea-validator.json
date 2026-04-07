@@ -1,0 +1,17 @@
+{
+  "skill_id": "research-idea-validator",
+  "display_name": "research-idea-validator",
+  "skill_path": "research-idea-validator",
+  "source_type": "local-created",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/research-idea-validator",
+  "last_imported_at": "2026-04-07T13:40:22Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:908ce935cda0d1b585f994ce191551c3ea2629ea37fdce50cfce88809e0dde3d",
+  "managed_dirty": false
+}
