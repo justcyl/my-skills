@@ -135,7 +135,11 @@ grep -c "@" references.bib  # 总条目数
 grep -ic "limitation" /tmp/paper-text.txt
 ```
 
-### Phase 6: 视觉审查（PDF 转图，Agent 逐页读）
+### Phase 6: 视觉审查（默认关闭）
+
+> **此步骤默认跳过**，仅在用户明确要求时启用（如「帮我看看视觉效果」「用视觉检查」「开启视觉审查」）。
+
+启用后，PDF 转图由 Agent 逐页读取检查。
 
 ```bash
 # 将 PDF 每页转为 JPEG（150 DPI + quality 85，平衡清晰度与 token 消耗）
