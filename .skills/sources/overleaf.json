@@ -10,8 +10,8 @@
   "bootstrap": true,
   "upstream_enabled": false,
   "upstream_path": ".skills/upstream/overleaf",
-  "last_imported_at": "2026-04-07T17:03:22Z",
+  "last_imported_at": "2026-04-09T16:46:13Z",
   "upstream_revision": "",
-  "managed_revision": "sha256:d5f27af0eefb2c5b15a339f4bd2545a94a975fc6108291b1f38aa7f7dac54100",
+  "managed_revision": "sha256:9eb9daa1f97279e0e7e62e5f3ad897c18ebfc7718e7c2d93bb22bfc78dfa294f",
   "managed_dirty": false
 }
