@@ -1,6 +1,6 @@
 {
   "skill_id": "paper-figure-gen",
-  "display_name": "Paper Figure Generator",
+  "display_name": "paper-figure-gen",
   "skill_path": "paper-figure-gen",
   "source_type": "local-created",
   "source": "",
@@ -10,8 +10,8 @@
   "bootstrap": true,
   "upstream_enabled": false,
   "upstream_path": ".skills/upstream/paper-figure-gen",
-  "last_imported_at": "2026-04-12T15:12:55Z",
+  "last_imported_at": "2026-04-12T15:14:19Z",
   "upstream_revision": "",
-  "managed_revision": "sha256:ac4eaa675be80634f9ad78c5b6f6db8dbce54fd6b75061ce569ffb78ce056a01",
+  "managed_revision": "sha256:88baeb8f3016a0bbc5313ca0a06a51c3a38945cf2f6ed455b4b5f248e0684ff5",
   "managed_dirty": false
 }

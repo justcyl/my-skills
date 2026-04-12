@@ -1,16 +1,16 @@
-# Paper Figure Generator
+# paper-figure-gen
 
 - skill_id: `paper-figure-gen`
-- status: `created`
+- status: `managed`
 - skill_path: `paper-figure-gen`
 - source_type: `local-created`
 - source: ``
 - upstream_enabled: `false`
-- risk_status: `pending`
+- risk_status: `passed`
 
 ## Summary
 
-Generate publication-quality figures for academic papers (architecture diagrams, pipeline overviews, concept illustrations). Uses gemini-image-gen as engine with academic prompt engineering, mandatory inspect-revise loop, and LaTeX snippet output.
+>
 
 ## Risk Findings
 

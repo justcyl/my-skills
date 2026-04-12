@@ -133,6 +133,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-12T15:14:11Z"
+    },
+    "paper-figure-gen": {
+      "source_path": "paper-figure-gen",
+      "target_path": "/Users/chenyl/.agents/skills/paper-figure-gen",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-04-12T15:14:19Z"
     }
   }
 }
