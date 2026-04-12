@@ -1009,19 +1009,19 @@
           "target_path": "/Users/chenyl/.codex/skills/pi-threads",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-12T14:48:11Z"
+          "last_synced_at": "2026-04-12T14:48:24Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/pi-threads",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-12T14:48:11Z"
+          "last_synced_at": "2026-04-12T14:48:24Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/pi-threads",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-12T14:48:11Z"
+          "last_synced_at": "2026-04-12T14:48:24Z"
         }
       },
       "display_name": "pi-threads",
