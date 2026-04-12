@@ -10,7 +10,7 @@
 
 ## Summary
 
-Interview the user relentlessly about a plan or design until reaching shared understanding, resolving each branch of the decision tree. Use when user wants to stress-test a plan, get grilled on their design, or mentions "grill me".
+与用户进行心智对齐——先展示对计划/设计的完整理解，再批量追问不确定之处，最终产出结构化对齐备忘录。适用于"grill me""帮我过一下这个方案""对齐一下想法""stress test my plan""review my design"等场景，尤其是在用户有了初步方案但需要被挑战和补全时。
 
 ## Risk Findings
 

@@ -775,23 +775,23 @@
           "target_path": "/Users/chenyl/.codex/skills/grill-me",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-04T08:17:21Z"
+          "last_synced_at": "2026-04-12T14:30:40Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/grill-me",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-04T08:17:21Z"
+          "last_synced_at": "2026-04-12T14:30:40Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/grill-me",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-04T08:17:21Z"
+          "last_synced_at": "2026-04-12T14:30:40Z"
         }
       },
       "display_name": "grill-me",
-      "description": "Interview the user relentlessly about a plan or design until reaching shared understanding, resolving each branch of the decision tree. Use when user wants to stress-test a plan, get grilled on their design, or mentions \"grill me\".",
+      "description": "与用户进行心智对齐——先展示对计划/设计的完整理解，再批量追问不确定之处，最终产出结构化对齐备忘录。适用于\"grill me\"\"帮我过一下这个方案\"\"对齐一下想法\"\"stress test my plan\"\"review my design\"等场景，尤其是在用户有了初步方案但需要被挑战和补全时。",
       "status": "managed",
       "risk_status": "passed",
       "managed_dirty": false,
@@ -800,8 +800,8 @@
       "source_path": ".skills/sources/grill-me.json",
       "skill_path": "grill-me",
       "upstream_path": ".skills/upstream/grill-me",
-      "managed_revision": "sha256:c1cf50e1f66728ba5c29d50ec90112dfbb1c1de8fad585e588c3bf137f0b34f6",
-      "last_updated_at": "2026-04-04T08:17:21Z"
+      "managed_revision": "sha256:7312c891b87b6cb1730f2f424570ca60f66f610e24ae5ac2fefd1cb4a379d0ad",
+      "last_updated_at": "2026-04-12T14:30:40Z"
     },
     "run-in-tmux": {
       "distribution": {},
