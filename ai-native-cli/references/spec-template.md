@@ -44,7 +44,8 @@
 | `--help` | bool | false | 输出帮助信息（支持 `--output-format json`） |
 | `--version` | bool | false | 输出版本号、构建时间、commit hash |
 | `--human` | bool | false | 启用人类友好模式（短参数、彩色输出） |
-| `--output-format` | enum | json | `json` \| `jsonl` \| `tsv` \| `text` |
+| `--json` | bool | false | 输出 JSON（布尔开关，与 `--output-format json` 等效） |
+| `--output-format` | enum | - | `jsonl` \| `tsv` \| `text`（需要非 JSON 格式时使用） |
 | `--input` | string | - | 输入文件路径，`-` 表示 stdin |
 | `--input-format` | enum | jsonl | `json` \| `jsonl` \| `tsv` \| `plain` |
 | `--config` | path | - | 指定配置文件路径 |
@@ -176,14 +177,61 @@
 
 ---
 
-## 10. Documentation Layers
+## 10. `--help --full` 覆盖范围
 
-| 层级 | 获取方式 | 内容 |
-|------|---------|------|
-| L0 Quick Contract | `<cmd> help --topic <t> --detail level0` | 签名 + 必填参数 + 最小示例 |
-| L1 Operational Spec | `<cmd> help --topic <t> --detail level1` | 全部字段、类型、退出码 |
-| L2 Deep Spec | `<cmd> help --topic <t> --detail level2` | 状态机、重试、并发模型 |
-| L3 Rationale | 外部文档 / `--detail level3` | 设计决策、取舍分析 |
+每个命令必须支持标准 `--help`，同时实现 `--help --full` 提供完整文档：
+
+```bash
+<cmd> <resource> <action> --help       # 标准：synopsis + flags
+<cmd> <resource> <action> --help --full  # 完整：synopsis + flags + examples + output schema + error codes
+<cmd> <resource> <action> --help --full --json  # 机器可读版本
+```
+
+`--help --full` 输出结构：
+
+```
+COMMAND
+  <resource> <action> — <一句话描述>
+
+USAGE
+  <cmd> --json <resource> <action> --<required-flag> <value> [flags]
+
+FLAGS
+  --<flag>   <type>  <default/required>  <说明>
+  ...
+
+OUTPUT SCHEMA
+  { "field": "type — 说明" }
+
+ERROR CODES
+  <ERROR_CODE>  exit <n>  <触发条件>  Run: <修复命令>
+
+EXAMPLES
+  # 示例描述
+  <cmd> --json <resource> <action> --<flag> <value>
+
+  # 管道用法
+  <cmd> --json <resource> <action> ... | jq '...'
+```
+
+`--help --full --json` 输出示例：
+
+```json
+{
+  "command": "<resource> <action>",
+  "synopsis": "...",
+  "flags": [
+    { "name": "--<flag>", "type": "string", "required": true, "description": "..." }
+  ],
+  "output_schema": { "field": "type" },
+  "error_codes": [
+    { "code": "E_...", "exit": 1, "description": "...", "fix": "<cmd> ..." }
+  ],
+  "examples": [
+    { "description": "...", "command": "<cmd> --json ..." }
+  ]
+}
+```
 
 ---
 
