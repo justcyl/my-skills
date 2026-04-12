@@ -191,9 +191,11 @@ pyproject.toml console script
 
 ## Phase 3: Companion Skill
 
-CLI 工作后，触发 `$skills-manager` 创建 companion skill，由 skills-manager 接管完整的创建、注册、分发流程。
+CLI 工作后，为它创建一个 companion skill。
 
-向 skills-manager 提供以下上下文，它会路由到创建流程：
+**skills-manager** 是统一管理 skill 仓库（`~/project/my-skills`）的 skill，负责 skill 的创建、注册、分发全流程。先阅读 skills-manager 的 SKILL.md，再将此任务交给它处理。
+
+创建时提供以下上下文：
 
 - **skill 名称**：`<tool-name>`
 - **description**：一句话描述这个 CLI 做什么、主要消费者是谁
