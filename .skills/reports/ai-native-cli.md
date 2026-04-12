@@ -10,7 +10,7 @@
 
 ## Summary
 
-设计 AI-Native CLI 接口规范——agent-first, human-compatible。命令树、参数、响应信封、错误码、分页、文档分层，全部为 agent 消费优化。
+从零到可用的 Agent-Native CLI：设计 agent-first 接口规范，从 API 文档/OpenAPI/curl 示例/SDK 构建可安装二进制，最后生成 companion skill。覆盖纯规范设计和完整实现两种场景。
 
 ## Risk Findings
 

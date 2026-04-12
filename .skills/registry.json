@@ -477,23 +477,23 @@
           "target_path": "/Users/chenyl/.codex/skills/ai-native-cli",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-24T17:13:12Z"
+          "last_synced_at": "2026-04-12T15:33:51Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/ai-native-cli",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-24T17:13:12Z"
+          "last_synced_at": "2026-04-12T15:33:51Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/ai-native-cli",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-03-24T17:13:12Z"
+          "last_synced_at": "2026-04-12T15:33:51Z"
         }
       },
       "display_name": "ai-native-cli",
-      "description": "设计 AI-Native CLI 接口规范——agent-first, human-compatible。命令树、参数、响应信封、错误码、分页、文档分层，全部为 agent 消费优化。",
+      "description": "从零到可用的 Agent-Native CLI：设计 agent-first 接口规范，从 API 文档/OpenAPI/curl 示例/SDK 构建可安装二进制，最后生成 companion skill。覆盖纯规范设计和完整实现两种场景。",
       "status": "managed",
       "risk_status": "warned",
       "managed_dirty": false,
@@ -502,8 +502,8 @@
       "source_path": ".skills/sources/ai-native-cli.json",
       "skill_path": "ai-native-cli",
       "upstream_path": ".skills/upstream/ai-native-cli",
-      "managed_revision": "sha256:fa3dea01d73789557aa911556a08515b1a8667d0e945d1dafee1a4e6f654ee3c",
-      "last_updated_at": "2026-03-24T17:13:10Z"
+      "managed_revision": "sha256:2ad438fbf0dac6f10b67b3fd3a9393f53112d814ca3484f7fcc66c154d0890e0",
+      "last_updated_at": "2026-04-12T15:33:51Z"
     },
     "research-refine": {
       "distribution": {},

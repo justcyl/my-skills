@@ -182,10 +182,23 @@ package.json bin    # 安装命令
 argparse 或 typer        # 命令解析（子命令复杂时用 typer）
 urllib / requests / httpx # HTTP（用已安装或已有的）
 json, csv, sqlite3, pathlib, subprocess  # 本地操作
-pyproject.toml console script
+pyproject.toml console_scripts  # 入口点
 ```
 
-`make install-local`，文档说明是否依赖 `uv` / virtualenv / system Python。
+默认使用 **`uv tool`** 管理安装：
+
+```bash
+# 开发时（可就地修改即生效）
+uv tool install --editable .
+
+# 发布安装
+uv tool install .
+
+# 卸载
+uv tool uninstall <tool-name>
+```
+
+`uv tool` 自动创建隔离环境并将二进制装到 PATH（默认 `~/.local/bin`），无需手动维护 virtualenv。
 
 ---
 
