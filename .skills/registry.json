@@ -1017,6 +1017,55 @@
       "upstream_path": ".skills/upstream/pi-threads",
       "managed_revision": "sha256:e05153205c35f005e70c9924c13dbb8555341d1dd1280f5e72339d1af2e05f22",
       "last_updated_at": "2026-04-12T14:48:11Z"
+    },
+    "gemini-image-gen": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/gemini-image-gen",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-12T15:14:11Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/gemini-image-gen",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-12T15:14:11Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/gemini-image-gen",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-12T15:14:11Z"
+        }
+      },
+      "display_name": "gemini-image-gen",
+      "description": ">",
+      "status": "managed",
+      "risk_status": "warned",
+      "managed_dirty": false,
+      "upstream_enabled": false,
+      "report_path": ".skills/reports/gemini-image-gen.md",
+      "source_path": ".skills/sources/gemini-image-gen.json",
+      "skill_path": "gemini-image-gen",
+      "upstream_path": ".skills/upstream/gemini-image-gen",
+      "managed_revision": "sha256:5caeccf2c3d0f249425dbe4bdde0571f5e3f565e2fac1b9d084444a51a0f1647",
+      "last_updated_at": "2026-04-12T15:14:11Z"
+    },
+    "paper-figure-gen": {
+      "distribution": {},
+      "display_name": "Paper Figure Generator",
+      "description": "Generate publication-quality figures for academic papers (architecture diagrams, pipeline overviews, concept illustrations). Uses gemini-image-gen as engine with academic prompt engineering, mandatory inspect-revise loop, and LaTeX snippet output.",
+      "status": "created",
+      "risk_status": "pending",
+      "managed_dirty": false,
+      "upstream_enabled": false,
+      "report_path": ".skills/reports/paper-figure-gen.md",
+      "source_path": ".skills/sources/paper-figure-gen.json",
+      "skill_path": "paper-figure-gen",
+      "upstream_path": ".skills/upstream/paper-figure-gen",
+      "managed_revision": "sha256:ac4eaa675be80634f9ad78c5b6f6db8dbce54fd6b75061ce569ffb78ce056a01",
+      "last_updated_at": "2026-04-12T15:12:55Z"
     }
   }
 }

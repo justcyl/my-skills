@@ -126,6 +126,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-12T14:48:24Z"
+    },
+    "gemini-image-gen": {
+      "source_path": "gemini-image-gen",
+      "target_path": "/Users/chenyl/.claude/skills/gemini-image-gen",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-04-12T15:14:11Z"
     }
   }
 }
