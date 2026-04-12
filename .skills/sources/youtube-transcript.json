@@ -1,0 +1,17 @@
+{
+  "skill_id": "youtube-transcript",
+  "display_name": "youtube-transcript",
+  "skill_path": "youtube-transcript",
+  "source_type": "github",
+  "source": "badlogic/pi-skills",
+  "source_url": "https://github.com/badlogic/pi-skills.git",
+  "ref": "",
+  "subpath": "youtube-transcript",
+  "bootstrap": true,
+  "upstream_enabled": true,
+  "upstream_path": ".skills/upstream/youtube-transcript",
+  "last_imported_at": "2026-04-12T13:28:37Z",
+  "upstream_revision": "75d32a382b0c8aafce356d68e17d2dc94c0c953b",
+  "managed_revision": "sha256:9262236d91a9bd8de987c42c8dee19f5da9c22e167f3fbe42181d4b38b54c24e",
+  "managed_dirty": false
+}

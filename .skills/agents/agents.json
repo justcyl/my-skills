@@ -112,6 +112,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-07T13:40:22Z"
+    },
+    "youtube-transcript": {
+      "source_path": "youtube-transcript",
+      "target_path": "/Users/chenyl/.agents/skills/youtube-transcript",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-04-12T13:28:37Z"
     }
   }
 }
