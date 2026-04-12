@@ -78,13 +78,6 @@
       "sync_status": "synced",
       "last_synced_at": "2026-04-04T08:51:35Z"
     },
-    "inno-figure-gen": {
-      "source_path": "inno-figure-gen",
-      "target_path": "/Users/chenyl/.agents/skills/inno-figure-gen",
-      "mode": "symlink",
-      "sync_status": "synced",
-      "last_synced_at": "2026-04-02T07:03:16Z"
-    },
     "grill-me": {
       "source_path": "grill-me",
       "target_path": "/Users/chenyl/.agents/skills/grill-me",
