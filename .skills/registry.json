@@ -423,38 +423,19 @@
       "last_updated_at": "2026-03-24T17:13:10Z"
     },
     "external-repo": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/external-repo",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-03T01:09:27Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/external-repo",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-03T01:09:27Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/external-repo",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-03T01:09:27Z"
-        }
-      },
+      "distribution": {},
       "display_name": "external-repo",
       "description": "研究和探索外部 GitHub 仓库。当需要了解开源项目的架构、API、代码实现或文档时使用。支持 gh CLI、浅克隆两种策略，模型自主选择。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "passed",
       "managed_dirty": false,
       "upstream_enabled": false,
       "report_path": ".skills/reports/external-repo.md",
       "source_path": ".skills/sources/external-repo.json",
-      "skill_path": "external-repo",
+      "skill_path": ".skills/archived-skills/external-repo",
       "upstream_path": ".skills/upstream/external-repo",
       "managed_revision": "sha256:47f4a57a30c822454105c2e0330501c2514f706d1ad3791c5adee567721bf120",
-      "last_updated_at": "2026-04-03T01:09:27Z"
+      "last_updated_at": "2026-04-12T15:25:56Z"
     },
     "ai-avoid": {
       "distribution": {

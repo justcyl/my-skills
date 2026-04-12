@@ -1,7 +1,7 @@
 {
   "skill_id": "external-repo",
   "display_name": "external-repo",
-  "skill_path": "external-repo",
+  "skill_path": ".skills/archived-skills/external-repo",
   "source_type": "local-created",
   "source": "",
   "source_url": "",
@@ -13,5 +13,7 @@
   "last_imported_at": "2026-04-03T01:09:27Z",
   "upstream_revision": "",
   "managed_revision": "sha256:47f4a57a30c822454105c2e0330501c2514f706d1ad3791c5adee567721bf120",
-  "managed_dirty": false
+  "managed_dirty": false,
+  "archived": true,
+  "archived_at": "2026-04-12T15:25:56Z"
 }
