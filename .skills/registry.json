@@ -968,6 +968,40 @@
       "upstream_path": ".skills/upstream/youtube-transcript",
       "managed_revision": "sha256:9262236d91a9bd8de987c42c8dee19f5da9c22e167f3fbe42181d4b38b54c24e",
       "last_updated_at": "2026-04-12T13:28:37Z"
+    },
+    "btca-local": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/btca-local",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-12T14:39:12Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/btca-local",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-12T14:39:12Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/btca-local",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-12T14:39:12Z"
+        }
+      },
+      "display_name": "btca-local",
+      "description": "本地 Git 仓库搜索助手。当用户说\"use btca\"、要求搜索/查阅某个 GitHub 仓库的代码或文档、或需要基于本地已克隆仓库回答技术问题时触发。",
+      "status": "managed",
+      "risk_status": "passed",
+      "managed_dirty": false,
+      "upstream_enabled": true,
+      "report_path": ".skills/reports/btca-local.md",
+      "source_path": ".skills/sources/btca-local.json",
+      "skill_path": "btca-local",
+      "upstream_path": ".skills/upstream/btca-local",
+      "managed_revision": "sha256:29f13272ade645c3201814e535beb55f9e427288f12af2a4ad2775417d28822a",
+      "last_updated_at": "2026-04-12T14:39:12Z"
     }
   }
 }

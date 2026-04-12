@@ -119,6 +119,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-12T13:28:37Z"
+    },
+    "btca-local": {
+      "source_path": "btca-local",
+      "target_path": "/Users/chenyl/.codex/skills/btca-local",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-04-12T14:39:12Z"
     }
   }
 }
