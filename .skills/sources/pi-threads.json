@@ -1,0 +1,17 @@
+{
+  "skill_id": "pi-threads",
+  "display_name": "pi-threads",
+  "skill_path": "pi-threads",
+  "source_type": "local-created",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/pi-threads",
+  "last_imported_at": "2026-04-12T14:48:11Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:e05153205c35f005e70c9924c13dbb8555341d1dd1280f5e72339d1af2e05f22",
+  "managed_dirty": false
+}

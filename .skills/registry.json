@@ -1002,6 +1002,40 @@
       "upstream_path": ".skills/upstream/btca-local",
       "managed_revision": "sha256:29f13272ade645c3201814e535beb55f9e427288f12af2a4ad2775417d28822a",
       "last_updated_at": "2026-04-12T14:39:12Z"
+    },
+    "pi-threads": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/pi-threads",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-12T14:48:11Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/pi-threads",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-12T14:48:11Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/pi-threads",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-12T14:48:11Z"
+        }
+      },
+      "display_name": "pi-threads",
+      "description": "搜索、定位和阅读历史 pi 会话记录。当需要查找之前做得好的对话、提取 pattern 转化为 skill、或回顾过去的决策时使用。",
+      "status": "managed",
+      "risk_status": "passed",
+      "managed_dirty": false,
+      "upstream_enabled": false,
+      "report_path": ".skills/reports/pi-threads.md",
+      "source_path": ".skills/sources/pi-threads.json",
+      "skill_path": "pi-threads",
+      "upstream_path": ".skills/upstream/pi-threads",
+      "managed_revision": "sha256:e05153205c35f005e70c9924c13dbb8555341d1dd1280f5e72339d1af2e05f22",
+      "last_updated_at": "2026-04-12T14:48:11Z"
     }
   }
 }

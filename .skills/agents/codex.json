@@ -126,6 +126,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-12T14:39:12Z"
+    },
+    "pi-threads": {
+      "source_path": "pi-threads",
+      "target_path": "/Users/chenyl/.codex/skills/pi-threads",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-04-12T14:48:11Z"
     }
   }
 }
