@@ -239,3 +239,21 @@ curl -L -b "$OVERLEAF_COOKIE" "<pdf_url>" -o paper.pdf
 - `pyoverleaf`：通过 `uv tool install pyoverleaf` 安装（仅 review 功能需要）
 - Python 解释器路径：`~/.local/share/uv/tools/pyoverleaf/bin/python`
 - `git`：系统 Git 客户端，凭据已配置在 osxkeychain
+
+## 代码风格偏好
+
+扩展或修改本 skill 的脚本时，**优先拆分为多个子模块**，而非将所有逻辑堆入单一文件：
+
+```
+scripts/
+  ol.sh              # 入口：环境准备 + 转发给 ol.py
+  ol.py              # CLI 入口：只做命令解析与调度，不含业务逻辑
+  edge_cookies.py    # 子模块：从 Edge 浏览器提取 Cookie
+  api.py             # 子模块：Overleaf REST/WebSocket API 封装
+  git_utils.py       # 子模块：Git URL 构造与项目列表
+  review.py          # 子模块：review 线程获取与解析
+  compile.py         # 子模块：编译与 PDF 下载
+  ...
+```
+
+每个子模块职责单一，`ol.py` 只做 `import` 和 CLI 注册。新增功能时，新建子模块文件，不要直接往 `ol.py` 追加几百行。
