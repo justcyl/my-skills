@@ -133,13 +133,6 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-12T15:14:19Z"
-    },
-    "paper-dialog-reader": {
-      "source_path": "paper-dialog-reader",
-      "target_path": "/Users/chenyl/.codex/skills/paper-dialog-reader",
-      "mode": "symlink",
-      "sync_status": "synced",
-      "last_synced_at": "2026-04-13T08:29:20Z"
     }
   }
 }
