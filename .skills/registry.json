@@ -1066,6 +1066,40 @@
       "upstream_path": ".skills/upstream/paper-figure-gen",
       "managed_revision": "sha256:88baeb8f3016a0bbc5313ca0a06a51c3a38945cf2f6ed455b4b5f248e0684ff5",
       "last_updated_at": "2026-04-12T15:14:19Z"
+    },
+    "paper-dialog-reader": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/paper-dialog-reader",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-13T08:27:29Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/paper-dialog-reader",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-13T08:27:29Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/paper-dialog-reader",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-13T08:27:29Z"
+        }
+      },
+      "display_name": "paper-dialog-reader",
+      "description": "通过 A/B 双 agent 对话式渐进披露深度解读 arXiv 论文。A 持有全文、给出结构化摘要，B 模拟未读原文的好奇读者、循环追问；用对话桥接作者意图与读者理解的 gap。适用于 '帮我深度读这篇论文'、'对话式阅读 arxiv:xxxx'、'dialog paper reading'、'渐进式论文解读' 等场景。",
+      "status": "managed",
+      "risk_status": "passed",
+      "managed_dirty": false,
+      "upstream_enabled": false,
+      "report_path": ".skills/reports/paper-dialog-reader.md",
+      "source_path": ".skills/sources/paper-dialog-reader.json",
+      "skill_path": "paper-dialog-reader",
+      "upstream_path": ".skills/upstream/paper-dialog-reader",
+      "managed_revision": "sha256:218ac426d11a3a88981e837791b5cfe16d72a80152e7f856f8258e996c507bf6",
+      "last_updated_at": "2026-04-13T08:27:29Z"
     }
   }
 }

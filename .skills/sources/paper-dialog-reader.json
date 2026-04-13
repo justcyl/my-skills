@@ -1,0 +1,17 @@
+{
+  "skill_id": "paper-dialog-reader",
+  "display_name": "paper-dialog-reader",
+  "skill_path": "paper-dialog-reader",
+  "source_type": "local-created",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/paper-dialog-reader",
+  "last_imported_at": "2026-04-13T08:27:29Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:218ac426d11a3a88981e837791b5cfe16d72a80152e7f856f8258e996c507bf6",
+  "managed_dirty": false
+}
