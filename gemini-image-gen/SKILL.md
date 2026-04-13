@@ -88,6 +88,21 @@ INNO_FIGURE_GEN_DEFAULT_MODEL=gemini-3.1-flash-image-preview
 
 格式：`yyyy-mm-dd-hh-mm-ss-descriptive-name.png`
 
+## Post-Generation Figure Check (Optional)
+
+生成图片后，可以选择性地调用 `figure-checker` subagent 做视觉质量检查，获取结构化的 pass/fail 报告：
+
+```text
+spawn agent=figure-checker task="Check the image at: <output-path>
+Scene: general
+Intent: <original prompt summary>"
+```
+
+- **默认关闭**：gemini-image-gen 是通用工具，不强制检查
+- 专用 skill（`paper-figure-gen`、`rhetoric-of-decks`）已内置 figure-check 集成
+- figure-checker 会自动压缩图片再审查，不会撑爆上下文
+- 若报告返回 ❌ REGENERATE，根据 Regeneration Guidance 构造修复 prompt，使用 `--input-image` 重新生成
+
 ## Preflight
 
 ```bash

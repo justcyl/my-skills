@@ -243,20 +243,30 @@ TikZ 错误不会触发编译警告，必须手动检查。详见 `references/ti
 
 无 TikZ 内容时跳过。
 
-### Step 6: Agent 视觉自审（默认关闭）
+### Step 6: Figure-Checker 视觉自审（默认关闭）
 
 > **此步骤默认跳过**，仅在用户明确要求时启用（如「帮我看看视觉效果」「用视觉检查」「开启视觉审查」）。
 
-启用后，将 PDF 转为图片，用模型视觉能力自行检查。
+启用后，先将 PDF 转为图片，再为每一页 slide 分别启动 `figure-checker` 子代理做视觉审查。
 
 ```bash
-# 将 PDF 每页转为 JPEG（150 DPI + quality 85，平衡清晰度与 token 消耗）
+# Convert PDF to slide images
 pdftoppm -jpeg -jpegopt quality=85 -r 150 deck.pdf /tmp/deck-review/slide
+
+# For each slide image, spawn figure-checker
+spawn agent=figure-checker task="Check the image at: /tmp/deck-review/slide-01.jpg
+Scene: slides
+Intent: <slide title or content description>
+
+Additional context:
+- This is slide N of a presentation deck
+- Topic: <deck topic>
+- Check for: text overflow, readability at distance, layout balance, color contrast"
 ```
 
-> **为什么是 150 DPI JPEG**：200 DPI PNG 每张约 100KB，150 DPI JPEG q85 每张约 48KB，体积减半，中文和图表仍完全可读。不要用 100 DPI——小字会糊。
+> **为什么是 150 DPI JPEG**：`figure-checker` 会在内部处理图像压缩与视觉审查输入，150 DPI JPEG 已足够清晰且体积较小，适合直接使用，无需额外转 PNG 或进一步压缩。
 
-然后用 `read` 工具逐张读取图片，检查以下问题：
+`figure-checker` 会自动检查以下问题：
 
 | 检查项 | 具体内容 |
 |--------|----------|
@@ -268,7 +278,7 @@ pdftoppm -jpeg -jpegopt quality=85 -r 150 deck.pdf /tmp/deck-review/slide
 | **可读性** | 后排观众能否读清 |
 | **MB/MC 均衡** | 是否有 slide 明显过载或过空 |
 
-发现问题则修复后重新从 Step 1 开始。全部通过后再交付用户。
+汇总所有 slide 的检查结果：只要任意一页返回 **❌ REGENERATE**，就必须回到 `.tex` 源文件修复问题，并从 Step 1 重新开始完整验证。只有全部 slide 通过后，才可继续交付用户。
 
 ### Step 7: 交付用户检查
 

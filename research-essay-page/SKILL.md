@@ -53,7 +53,7 @@ template.html (全量)     ~2676
 
 如需进一步瘦身：删除对应 HTML 块，然后从 `<style>` 中注释掉对应 CSS 类即可。
 
-## 使用流程
+## 使用流程（5 步）
 
 ### Step 1: 读取模板
 
@@ -89,6 +89,44 @@ html = html.replace("{{AUTHOR_NAME}}", "作者名")
 ### Step 4: 添加章节内容
 
 复制 `section` 块，按需添加/删除章节。
+
+### Step 5: Refine — 运行检查清单
+
+生成初稿后，**必须**运行 `refine_check.py` 进行自动校验，根据失败项修复后重新检查，直到全部通过。
+
+```bash
+python3 ~/.agents/skills/research-essay-page/refine_check.py <output.html>
+```
+
+检查清单涵盖 6 大类、22+ 项检查：
+
+| 类别 | 检查内容 |
+|------|----------|
+| **Structure** | 无残留占位符 `{{}}`、有且仅有 1 个 `<h1>`、≥2 section、lightbox dialog 存在、summary id 正确 |
+| **Images** | 所有 `<img>` 有 alt 文本、CSS 含 `max-width: 100%`、`.with-margin-note` 不溢出 |
+| **Tables** | 每张表列数一致（colspan 已展开计算）、至少有 1 张表 |
+| **CSS Integrity** | 无 `.demo-gallery {` 嵌套 bug、无 `@media` 吞噬 bug、大括号配对平衡 |
+| **Content** | 内联引用 `href="#ref-N"` 有对应 `id="ref-N"` 目标、无占位 URL |
+| **Accessibility** | `<html lang>` 存在、viewport meta、description meta |
+
+**Refine 循环**：
+1. 生成 HTML → 保存文件
+2. 运行 `refine_check.py` → 查看 ❌ FAIL 项
+3. 根据 `→` 提示修复 HTML
+4. 重复 2–3，直到全部 ✅ PASS
+
+---
+
+## 已知模板陷阱（已在模板中修复）
+
+以下是模板中曾存在的 CSS bug，`refine_check.py` 会自动检测它们。如果你从旧模板生成，需要手动修复：
+
+| Bug | 症状 | 修复 |
+|-----|------|------|
+| `.demo-gallery {` 嵌套 | `.summary-block` 样式全部失效（TL;DR 不显示） | 删除 `.demo-gallery {` 这一行 |
+| `@media (prefers-reduced-motion)` 未关闭 | lightbox 样式被吞进 media query，整个弹窗不工作 | 删除该 `@media` 行 |
+| `.with-margin-note` 溢出 | `width: calc(100% + 176px)` 导致右侧内容被裁切 | 改为 `width: 100%; margin-right: 0;` |
+| `<img>` 无 max-width | 远程大图片超出容器右边界 | 给 img 添加 `max-width: 100%; height: auto;` |
 
 ---
 
@@ -248,13 +286,15 @@ html = html.replace("{{AUTHOR_NAME}}", "作者名")
 
 ## 重要约束
 
-1. **lightbox dialog 不要删除**：即使没有可放大图片，也要保留 `<dialog id="image-lightbox">` 结构，JS 初始化会查找它
-2. **`id="summary"` 不能改**：summary-block JS 通过此 id 绑定展开/折叠
-3. **图片路径**：本地图片用相对路径，远程图片用完整 URL；`zoomable-image-link` 的 `href` 指向大图
-4. **无外部依赖**：模板是完全自包含的 HTML，可直接双击打开
+1. **生成后必须运行 `refine_check.py`**：这是 quality gate，不是可选步骤。它能捕获占位符残留、CSS bug、表格列不对齐等常见问题
+2. **lightbox dialog 不要删除**：即使没有可放大图片，也要保留 `<dialog id="image-lightbox">` 结构，JS 初始化会查找它
+3. **`id="summary"` 不能改**：summary-block JS 通过此 id 绑定展开/折叠
+4. **图片路径**：本地图片用相对路径，远程图片用完整 URL；`zoomable-image-link` 的 `href` 指向大图
+5. **无外部依赖**：模板是完全自包含的 HTML，可直接双击打开
 
 ## 参考
 
 - 原始示例：https://metauto.ai/neuralcomputer/index_cn.html
 - 源码仓库：https://github.com/mczhuge/mczhuge.github.io/tree/main/neuralcomputer
 - 模板文件：`template-minimal.html`（推荐）、`template.html`（含视频 demo）
+- 质量检查：`refine_check.py` — 生成后必须运行的自动校验脚本

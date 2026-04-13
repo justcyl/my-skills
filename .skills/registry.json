@@ -1005,19 +1005,19 @@
           "target_path": "/Users/chenyl/.codex/skills/gemini-image-gen",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-12T15:14:11Z"
+          "last_synced_at": "2026-04-13T17:05:04Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/gemini-image-gen",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-12T15:14:11Z"
+          "last_synced_at": "2026-04-13T17:05:04Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/gemini-image-gen",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-12T15:14:11Z"
+          "last_synced_at": "2026-04-13T17:05:04Z"
         }
       },
       "display_name": "gemini-image-gen",
@@ -1030,8 +1030,8 @@
       "source_path": ".skills/sources/gemini-image-gen.json",
       "skill_path": "gemini-image-gen",
       "upstream_path": ".skills/upstream/gemini-image-gen",
-      "managed_revision": "sha256:5caeccf2c3d0f249425dbe4bdde0571f5e3f565e2fac1b9d084444a51a0f1647",
-      "last_updated_at": "2026-04-12T15:14:11Z"
+      "managed_revision": "sha256:54d44e78457129f179e0478cce417ca19041c75bfba55da138c23e7559e607be",
+      "last_updated_at": "2026-04-13T17:05:04Z"
     },
     "paper-figure-gen": {
       "distribution": {
@@ -1088,19 +1088,19 @@
           "target_path": "/Users/chenyl/.codex/skills/research-essay-page",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-13T13:25:09Z"
+          "last_synced_at": "2026-04-13T13:25:23Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/research-essay-page",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-13T13:25:09Z"
+          "last_synced_at": "2026-04-13T13:25:23Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/research-essay-page",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-13T13:25:09Z"
+          "last_synced_at": "2026-04-13T13:25:23Z"
         }
       },
       "display_name": "research-essay-page",

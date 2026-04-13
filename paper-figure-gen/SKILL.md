@@ -112,6 +112,8 @@ Leave clean blank spaces where labels would go. Text will be added in post-proce
 
 ## 工作流
 
+> 本 skill 使用 `figure-checker` subagent 进行自动视觉质量检查。确保该 agent 已配置在 `~/.pi/agent/agents/figure-checker.md`。
+
 ### Step 1: 理解需求
 
 1. 阅读用户提供的论文/方法描述
@@ -144,35 +146,44 @@ uv run $GEMINI_SCRIPT \
 
 ### Step 4: 强制 Inspect-Revise 循环（最多 3 轮）
 
-生成后，**必须** 读取图片文件进行视觉审查。对照以下 checklist：
+生成后，**必须** 调用 `figure-checker` subagent 做自动视觉审查，而不是手工逐项检查。
 
-- [ ] **布局**：模块/步骤的排列是否清晰？数据流方向是否一致？
-- [ ] **文字**：所有标签是否正确拼写、清晰可读？（如果不可读，转阶段 2 无文字模式）
-- [ ] **色彩**：是否为淡色系？有无刺眼的高饱和色、霓虹色？
-- [ ] **背景**：是否纯白？有无渐变、纹理、暗色区域？
-- [ ] **风格**：是否扁平矢量？有无 3D 阴影、光泽效果、写实元素？
-- [ ] **学术感**：放在 NeurIPS/ICML 论文里是否违和？
+调用格式：
 
-**如果任何一项不通过：**
+```text
+spawn agent=figure-checker task="Check the image at: figures/<draft>.png
+Scene: academic
+Intent: <constructed prompt summary - what this figure should show>
 
-使用 `--input-image` 编辑模式修复：
+Additional context:
+- Figure type: <architecture|pipeline|concept|comparison>
+- Required labels: <list of text labels that should appear>"
+```
+
+根据 `figure-checker` 返回报告处理：
+
+- ✅ **PASS** → 直接进入 Step 5
+- ⚠️ **MINOR ISSUES** → 可选地做小修复，然后进入 Step 5
+- ❌ **REGENERATE** → 根据报告中的 **Regeneration Guidance** 构造修复 prompt，使用 `--input-image` 编辑模式修复后再次检查
+
+修复命令：
 
 ```bash
 uv run $GEMINI_SCRIPT \
-  --prompt "<specific fix instruction>" \
+  --prompt "<fix prompt constructed from Regeneration Guidance>" \
   --filename "figures/yyyy-mm-dd-hh-mm-ss-rev1.png" \
   --input-image "figures/<previous-draft>.png" \
   --resolution 1K
 ```
 
-常用修复指令：
+常用修复指令（可作为参考）：
 - `"Make the background pure white. Remove all shadows and gradient effects."`
 - `"Simplify the shapes to flat rectangles. Remove 3D rendering."`
 - `"Fix the text label 'Encoer' — it should be 'Encoder'."`
 - `"Make colors more muted and pastel. Current blue is too saturated."`
 - `"Add clearer arrows between the modules showing data flow direction."`
 
-**最多迭代 3 轮。** 如果 3 轮后仍不满意：
+**最多迭代 3 轮（生成/检查总轮数）。** 如果 3 轮后仍未通过：
 1. 保存当前最佳版本
 2. 告知用户当前结果及具体不足之处
 3. 建议用 draw.io / Figma / TikZ 进行手动微调

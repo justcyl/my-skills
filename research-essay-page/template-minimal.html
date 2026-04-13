@@ -129,6 +129,7 @@
             max-width: var(--content-width);
             position: relative;
             margin: 0 auto;
+            overflow-x: hidden;
         }
 
         .eyebrow-row {
@@ -398,8 +399,8 @@
         }
 
         .with-margin-note {
-            width: calc(100% + 176px);
-            margin-right: -176px;
+            width: 100%;
+            margin-right: 0;
             display: grid;
             grid-template-columns: minmax(0, 1fr) 156px;
             column-gap: 20px;
@@ -719,6 +720,8 @@
             --figure-inner-radius: 12px;
             margin: 18px auto 14px;
             width: 100%;
+            max-width: 100%;
+            overflow: hidden;
         }
 
         .hero-figure {
@@ -740,6 +743,15 @@
             overflow: hidden;
             border-radius: var(--figure-inner-radius);
             background: #fff;
+            max-width: 100%;
+        }
+
+        .plain-figure > img,
+        .plain-figure > .zoomable-image-link img,
+        .comparison-card .zoomable-image-link img,
+        .hero-figure img {
+            max-width: 100%;
+            height: auto;
         }
 
         .plain-figure > img {
@@ -1054,7 +1066,6 @@
             margin: 0;
         }
 
-        .demo-gallery {
         .summary-block {
             margin: 14px 0 18px;
             border: 1px solid rgba(229, 214, 210, 0.72);
@@ -1149,7 +1160,6 @@
             font-weight: inherit;
         }
 
-        @media (prefers-reduced-motion: reduce) {
         .image-lightbox {
             padding: 0;
             border: 0;
