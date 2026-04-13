@@ -1081,6 +1081,40 @@
       "upstream_path": ".skills/upstream/paper-dialog-reader",
       "managed_revision": "sha256:d9c4d98e67a8ff8964570a479d69b3bc3faff6c3e1981ecf455a9a11e1c8258c",
       "last_updated_at": "2026-04-13T09:34:59Z"
+    },
+    "research-essay-page": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/research-essay-page",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-13T13:09:50Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/research-essay-page",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-13T13:09:50Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/research-essay-page",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-13T13:09:50Z"
+        }
+      },
+      "display_name": "Research Essay Page",
+      "description": "生成 metauto.ai/neuralcomputer 风格的单文件学术研究随笔 HTML 页面。支持封面图、多章节、对比表格、内联引用、BibTeX 引用块、可折叠摘要、story-aside callout、图片 lightbox 等组件。适用于：把论文/博客/技术随笔生成为精美 HTML 发布页面。",
+      "status": "managed",
+      "risk_status": "passed",
+      "managed_dirty": false,
+      "upstream_enabled": false,
+      "report_path": ".skills/reports/research-essay-page.md",
+      "source_path": ".skills/sources/research-essay-page.json",
+      "skill_path": "research-essay-page",
+      "upstream_path": ".skills/upstream/research-essay-page",
+      "managed_revision": "sha256:cf2acf75816950133b66aef2e917d11891d28c2ded3e05f4c41a20d3f9aea793",
+      "last_updated_at": "2026-04-13T13:09:50Z"
     }
   }
 }
