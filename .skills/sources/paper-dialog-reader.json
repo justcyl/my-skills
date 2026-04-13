@@ -10,8 +10,8 @@
   "bootstrap": true,
   "upstream_enabled": false,
   "upstream_path": ".skills/upstream/paper-dialog-reader",
-  "last_imported_at": "2026-04-13T08:27:29Z",
+  "last_imported_at": "2026-04-13T08:29:20Z",
   "upstream_revision": "",
-  "managed_revision": "sha256:218ac426d11a3a88981e837791b5cfe16d72a80152e7f856f8258e996c507bf6",
+  "managed_revision": "sha256:d9c4d98e67a8ff8964570a479d69b3bc3faff6c3e1981ecf455a9a11e1c8258c",
   "managed_dirty": false
 }
