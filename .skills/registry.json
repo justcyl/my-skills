@@ -1039,19 +1039,19 @@
           "target_path": "/Users/chenyl/.codex/skills/paper-figure-gen",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-12T15:14:19Z"
+          "last_synced_at": "2026-04-13T17:05:05Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/paper-figure-gen",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-12T15:14:19Z"
+          "last_synced_at": "2026-04-13T17:05:05Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/paper-figure-gen",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-12T15:14:19Z"
+          "last_synced_at": "2026-04-13T17:05:05Z"
         }
       },
       "display_name": "paper-figure-gen",
@@ -1064,8 +1064,8 @@
       "source_path": ".skills/sources/paper-figure-gen.json",
       "skill_path": "paper-figure-gen",
       "upstream_path": ".skills/upstream/paper-figure-gen",
-      "managed_revision": "sha256:88baeb8f3016a0bbc5313ca0a06a51c3a38945cf2f6ed455b4b5f248e0684ff5",
-      "last_updated_at": "2026-04-12T15:14:19Z"
+      "managed_revision": "sha256:10fdba359e05e020d983673a5cab75d9b001071920bec75ffc7a99376ef5881b",
+      "last_updated_at": "2026-04-13T17:05:05Z"
     },
     "paper-dialog-reader": {
       "distribution": {},

@@ -10,8 +10,8 @@
   "bootstrap": true,
   "upstream_enabled": false,
   "upstream_path": ".skills/upstream/paper-figure-gen",
-  "last_imported_at": "2026-04-12T15:14:19Z",
+  "last_imported_at": "2026-04-13T17:05:05Z",
   "upstream_revision": "",
-  "managed_revision": "sha256:88baeb8f3016a0bbc5313ca0a06a51c3a38945cf2f6ed455b4b5f248e0684ff5",
+  "managed_revision": "sha256:10fdba359e05e020d983673a5cab75d9b001071920bec75ffc7a99376ef5881b",
   "managed_dirty": false
 }
