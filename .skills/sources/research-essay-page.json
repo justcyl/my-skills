@@ -1,6 +1,6 @@
 {
   "skill_id": "research-essay-page",
-  "display_name": "Research Essay Page",
+  "display_name": "research-essay-page",
   "skill_path": "research-essay-page",
   "source_type": "local-created",
   "source": "",
@@ -10,8 +10,8 @@
   "bootstrap": true,
   "upstream_enabled": false,
   "upstream_path": ".skills/upstream/research-essay-page",
-  "last_imported_at": "2026-04-13T13:09:50Z",
+  "last_imported_at": "2026-04-13T13:25:09Z",
   "upstream_revision": "",
-  "managed_revision": "sha256:cf2acf75816950133b66aef2e917d11891d28c2ded3e05f4c41a20d3f9aea793",
+  "managed_revision": "sha256:68cc5e97b9da7b368edda64e09f309301e2b19d972921de9877ab1a47fe0d6f6",
   "managed_dirty": false
 }

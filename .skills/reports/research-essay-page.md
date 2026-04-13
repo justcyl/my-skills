@@ -1,4 +1,4 @@
-# Research Essay Page
+# research-essay-page
 
 - skill_id: `research-essay-page`
 - status: `managed`
@@ -6,7 +6,7 @@
 - source_type: `local-created`
 - source: ``
 - upstream_enabled: `false`
-- risk_status: `passed`
+- risk_status: `warned`
 
 ## Summary
 
@@ -14,7 +14,7 @@
 
 ## Risk Findings
 
-- No heuristic findings.
+- mentions secrets, tokens, or private keys
 
 ## Boundaries
 
