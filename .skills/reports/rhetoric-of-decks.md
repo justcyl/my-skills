@@ -6,7 +6,7 @@
 - source_type: `local-created`
 - source: ``
 - upstream_enabled: `false`
-- risk_status: `warned`
+- risk_status: `passed`
 
 ## Summary
 
@@ -14,7 +14,7 @@
 
 ## Risk Findings
 
-- mentions secrets, tokens, or private keys
+- No heuristic findings.
 
 ## Boundaries
 
