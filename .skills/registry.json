@@ -1088,23 +1088,23 @@
           "target_path": "/Users/chenyl/.codex/skills/research-essay-page",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-13T17:05:12Z"
+          "last_synced_at": "2026-04-14T18:53:15Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/research-essay-page",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-13T17:05:12Z"
+          "last_synced_at": "2026-04-14T18:53:15Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/research-essay-page",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-13T17:05:21Z"
+          "last_synced_at": "2026-04-14T18:53:15Z"
         }
       },
       "display_name": "research-essay-page",
-      "description": "生成 metauto.ai/neuralcomputer 风格的单文件学术研究随笔 HTML 页面。支持封面图、多章节、对比表格、内联引用、BibTeX 引用块、可折叠摘要、story-aside callout、图片 lightbox 等组件。适用于：把论文/博客/技术随笔生成为精美 HTML 发布页面。",
+      "description": "生成 metauto.ai/neuralcomputer 风格的学术研究随笔 HTML 页面。多文件架构（CSS/JS 静态不动，agent 只生成内容 HTML）。支持封面图、多章节、对比表格、代码卡片（syntax highlight）、KaTeX 公式（颜色标注）、多类型边注（术语/符号/译注）、内联引用、BibTeX 引用块、可折叠摘要、story-aside callout、图片 lightbox。适用于：把论文/博客/技术随笔生成为精美 HTML 发布页面。",
       "status": "managed",
       "risk_status": "warned",
       "managed_dirty": false,
@@ -1113,8 +1113,8 @@
       "source_path": ".skills/sources/research-essay-page.json",
       "skill_path": "research-essay-page",
       "upstream_path": ".skills/upstream/research-essay-page",
-      "managed_revision": "sha256:68cc5e97b9da7b368edda64e09f309301e2b19d972921de9877ab1a47fe0d6f6",
-      "last_updated_at": "2026-04-13T13:25:09Z"
+      "managed_revision": "sha256:cb11323bf142a78e84e1190178706a578de41698d9f1bc787e37c675c278a596",
+      "last_updated_at": "2026-04-14T18:53:15Z"
     }
   }
 }

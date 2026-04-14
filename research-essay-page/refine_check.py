@@ -76,9 +76,116 @@ def check(name, passed, detail=""):
     return (passed, msg)
 
 
+def _find_math_blocks(html):
+    r"""Return math blocks delimited by $$...$$ or $...$.
+
+    We intentionally keep this lightweight and HTML-oriented rather than fully
+    parsing TeX. Delimiters escaped as \$ are ignored.
+    """
+    blocks = []
+    i = 0
+    n = len(html)
+    while i < n:
+        if html[i] != '$' or (i > 0 and html[i - 1] == '\\'):
+            i += 1
+            continue
+
+        if i + 1 < n and html[i + 1] == '$':
+            delim = '$$'
+            start = i
+            i += 2
+            content_start = i
+            while i + 1 < n:
+                if html[i] == '$' and html[i + 1] == '$' and html[i - 1] != '\\':
+                    blocks.append({
+                        'delim': delim,
+                        'content': html[content_start:i],
+                        'start': start,
+                        'end': i + 2,
+                    })
+                    i += 2
+                    break
+                i += 1
+            else:
+                break
+            continue
+
+        delim = '$'
+        start = i
+        i += 1
+        content_start = i
+        while i < n:
+            if html[i] == '$' and html[i - 1] != '\\':
+                blocks.append({
+                    'delim': delim,
+                    'content': html[content_start:i],
+                    'start': start,
+                    'end': i + 1,
+                })
+                i += 1
+                break
+            i += 1
+        else:
+            break
+    return blocks
+
+
+def _find_raw_angle_brackets_in_math(content):
+    r"""Find suspicious raw < or > inside TeX math.
+
+    Allowed patterns:
+    - \left< / \right< / \big< / friends
+    - \langle / \rangle
+    - already-escaped \lt / \gt
+    """
+    issues = []
+    for m in re.finditer(r'[<>]', content):
+        ch = m.group(0)
+        idx = m.start()
+        prefix = content[max(0, idx - 16):idx]
+        suffix = content[idx:idx + 16]
+
+        if ch == '<':
+            if re.search(r'\\(?:left|right|big|Big|bigl|bigr|Bigl|Bigr|bigm|Bigm)\s*$', prefix):
+                continue
+            if re.search(r'\\langle\s*$', prefix):
+                continue
+            if re.search(r'\\lt\s*$', prefix):
+                continue
+        else:
+            if re.search(r'\\(?:left|right|big|Big|bigl|bigr|Bigl|Bigr|bigm|Bigm)\s*$', prefix):
+                continue
+            if re.search(r'\\rangle\s*$', prefix):
+                continue
+            if re.search(r'\\gt\s*$', prefix):
+                continue
+
+        issues.append({
+            'char': ch,
+            'index': idx,
+            'snippet': (prefix + suffix).replace('\n', ' '),
+        })
+    return issues
+
+
 def run_checks(html_path):
     with open(html_path, 'r', encoding='utf-8') as f:
         html = f.read()
+
+    # Also load linked CSS files for CSS checks
+    html_dir = os.path.dirname(os.path.abspath(html_path))
+    css_content = ''
+    for css_href in re.findall(r'<link[^>]+href="([^"]+\.css)"', html):
+        if css_href.startswith('http'):
+            continue  # skip CDN
+        css_path = os.path.join(html_dir, css_href)
+        if os.path.exists(css_path):
+            with open(css_path, 'r', encoding='utf-8') as cf:
+                css_content += cf.read() + '\n'
+    # Also include inline <style>
+    for m in re.finditer(r'<style>(.*?)</style>', html, re.DOTALL):
+        css_content += m.group(1) + '\n'
+    full_content = html + '\n' + css_content  # combined for CSS checks
 
     parser = TagCounter()
     parser.feed(html)
@@ -137,8 +244,8 @@ def run_checks(html_path):
 
     # Check CSS has img max-width: 100%
     has_img_max_width = bool(re.search(
-        r'(\.plain-figure.*?img|\.hero-figure\s+img|\.comparison-card.*?img|\.figure-block).*?max-width:\s*100%',
-        html, re.DOTALL
+        r'(\.(plain-figure|hero-figure|comparison-card|figure-block).*?img|img).*?max-width:\s*100%',
+        full_content, re.DOTALL
     ))
     results.append(check(
         "CSS: images have max-width: 100%",
@@ -149,7 +256,7 @@ def run_checks(html_path):
     # Check no margin-note overflow
     has_overflow_margin = bool(re.search(
         r'\.with-margin-note\s*\{[^}]*width:\s*calc\(100%\s*\+',
-        html
+        full_content
     ))
     results.append(check(
         "CSS: .with-margin-note does NOT overflow container",
@@ -183,7 +290,7 @@ def run_checks(html_path):
     results.append(("── CSS Integrity ──", None))
 
     # Check for broken .demo-gallery nesting
-    has_demo_gallery_bug = bool(re.search(r'\.demo-gallery\s*\{\s*\n\s*\.summary-block', html))
+    has_demo_gallery_bug = bool(re.search(r'\.demo-gallery\s*\{\s*\n\s*\.summary-block', full_content))
     results.append(check(
         "CSS: no .demo-gallery { nesting bug",
         not has_demo_gallery_bug,
@@ -191,7 +298,7 @@ def run_checks(html_path):
     ))
 
     # Check for broken @media nesting
-    has_media_bug = bool(re.search(r'@media\s*\(prefers-reduced-motion:\s*reduce\)\s*\{\s*\n\s*\.image-lightbox', html))
+    has_media_bug = bool(re.search(r'@media\s*\(prefers-reduced-motion:\s*reduce\)\s*\{\s*\n\s*\.image-lightbox', full_content))
     results.append(check(
         "CSS: no unclosed @media(prefers-reduced-motion) bug",
         not has_media_bug,
@@ -199,16 +306,25 @@ def run_checks(html_path):
     ))
 
     # Count CSS braces balance (rough check)
-    style_match = re.search(r'<style>(.*?)</style>', html, re.DOTALL)
-    if style_match:
-        css = style_match.group(1)
-        opens = css.count('{')
-        closes = css.count('}')
+    if css_content:
+        opens = css_content.count('{')
+        closes = css_content.count('}')
         results.append(check(
             f"CSS brace balance: {opens} open, {closes} close",
             opens == closes,
             f"Mismatch: {opens} {{ vs {closes} }}" if opens != closes else ""
         ))
+    else:
+        style_match = re.search(r'<style>(.*?)</style>', html, re.DOTALL)
+        if style_match:
+            css = style_match.group(1)
+            opens = css.count('{')
+            closes = css.count('}')
+            results.append(check(
+                f"CSS brace balance: {opens} open, {closes} close",
+                opens == closes,
+                f"Mismatch: {opens} {{ vs {closes} }}" if opens != closes else ""
+            ))
 
     # ═══ Category 5: Content Quality ═══
     results.append(("── Content ──", None))
@@ -231,6 +347,26 @@ def run_checks(html_path):
         "No placeholder URLs in links",
         len(placeholder_links) == 0,
         f"Found: {placeholder_links[:3]}" if placeholder_links else ""
+    ))
+
+    math_blocks = _find_math_blocks(html)
+    raw_angle_issues = []
+    for block in math_blocks:
+        issues = _find_raw_angle_brackets_in_math(block['content'])
+        for issue in issues:
+            raw_angle_issues.append({
+                'delim': block['delim'],
+                'snippet': issue['snippet'],
+                'char': issue['char'],
+            })
+    preview = '; '.join(
+        f"{item['delim']} ... {item['snippet']} ... {item['delim']}"
+        for item in raw_angle_issues[:3]
+    )
+    results.append(check(
+        "KaTeX math contains no raw < or > that can break HTML parsing",
+        len(raw_angle_issues) == 0,
+        "Raw angle bracket found inside $...$ / $$...$$. Browser may parse it as an HTML tag and break the DOM. Replace raw '<' / '>' with '\\lt' / '\\gt'. Examples: " + preview if raw_angle_issues else ""
     ))
 
     # ═══ Category 6: Accessibility ═══
