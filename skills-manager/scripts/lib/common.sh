@@ -93,21 +93,53 @@ extract_frontmatter_value() {
   local file_path="$1"
   local key="$2"
 
-  awk -v search_key="${key}" '
-    NR == 1 && $0 == "---" { in_frontmatter = 1; next }
-    in_frontmatter && $0 == "---" { exit }
-    in_frontmatter && index($0, search_key ":") == 1 {
-      value = substr($0, length(search_key) + 2)
-      sub(/^[[:space:]]+/, "", value)
-      sub(/[[:space:]]+$/, "", value)
-      gsub(/^"/, "", value)
-      gsub(/"$/, "", value)
-      gsub(/^'\''/, "", value)
-      gsub(/'\''$/, "", value)
-      print value
-      exit
-    }
-  ' "${file_path}"
+  python3 - "${file_path}" "${key}" <<'PY'
+import sys
+from pathlib import Path
+
+file_path = Path(sys.argv[1])
+key = sys.argv[2]
+text = file_path.read_text(encoding="utf-8", errors="replace")
+lines = text.splitlines()
+
+if not lines or lines[0].strip() != "---":
+    sys.exit(0)
+
+try:
+    end = next(i for i in range(1, len(lines)) if lines[i].strip() == "---")
+except StopIteration:
+    sys.exit(0)
+
+frontmatter = lines[1:end]
+i = 0
+while i < len(frontmatter):
+    line = frontmatter[i]
+    if not line.startswith(f"{key}:"):
+        i += 1
+        continue
+
+    value = line.split(":", 1)[1].strip()
+    if value in {"|", ">", "|-", ">-", "|+", ">+"}:
+        block = []
+        i += 1
+        while i < len(frontmatter):
+            block_line = frontmatter[i]
+            if block_line.startswith(" ") or block_line.startswith("\t"):
+                block.append(block_line.lstrip())
+                i += 1
+            elif block_line.strip() == "":
+                block.append("")
+                i += 1
+            else:
+                break
+        print("\n".join(block).strip())
+        sys.exit(0)
+
+    if (value.startswith('"') and value.endswith('"')) or (value.startswith("'") and value.endswith("'")):
+        value = value[1:-1]
+    print(value)
+    sys.exit(0)
+PY
 }
 
 compute_directory_hash() {
@@ -115,7 +147,7 @@ compute_directory_hash() {
 
   (
     cd "${dir_path}"
-    find . -type f ! -name '.DS_Store' | LC_ALL=C sort | while IFS= read -r file_path; do
+    find . -type f ! -name '.DS_Store' ! -path './.git/*' ! -path '*/.git/*' | LC_ALL=C sort | while IFS= read -r file_path; do
       shasum -a 256 "${file_path}"
     done
   ) | shasum -a 256 | awk '{print "sha256:" $1}'
@@ -186,6 +218,10 @@ scan_pattern() {
   local matched="0"
 
   while IFS= read -r file_path; do
+    if ! LC_ALL=C grep -Iq . "${file_path}" 2>/dev/null; then
+      continue
+    fi
+
     if awk -v regex="${regex}" '
       BEGIN { IGNORECASE = 1 }
       $0 ~ regex && $0 !~ /(scan_pattern|maybe_add_finding)/ { found = 1; exit }
@@ -257,8 +293,10 @@ detect_source() {
   fi
 
   if [[ "${source}" =~ ^https://github\.com/([^/]+)/([^/]+)(\.git)?/?$ ]]; then
+    local repo_name="${BASH_REMATCH[2]}"
+    repo_name="${repo_name%.git}"
     DETECTED_SOURCE_TYPE="github"
-    DETECTED_SOURCE_URL="https://github.com/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}.git"
+    DETECTED_SOURCE_URL="https://github.com/${BASH_REMATCH[1]}/${repo_name}.git"
     return
   fi
 
@@ -288,6 +326,7 @@ stage_source() {
       else
         git clone --depth 1 "${source_url}" "${temp_dir}" >/dev/null 2>&1
       fi
+      rm -rf "${temp_dir}/.git"
       ;;
     *)
       echo "error: source type '${source_type}' is not implemented" >&2

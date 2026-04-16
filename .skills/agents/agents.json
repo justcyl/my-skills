@@ -41,7 +41,7 @@
       "target_path": "/Users/chenyl/.agents/skills/skills-manager",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-04-13T17:05:21Z"
+      "last_synced_at": "2026-04-16T15:30:57Z"
     },
     "tech-blog-writer": {
       "source_path": "tech-blog-writer",
@@ -140,6 +140,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-14T18:53:15Z"
+    },
+    "anyone-to-skill": {
+      "source_path": "anyone-to-skill",
+      "target_path": "/Users/chenyl/.agents/skills/anyone-to-skill",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-04-16T15:30:12Z"
     }
   }
 }
