@@ -898,38 +898,19 @@
       "last_updated_at": "2026-04-07T13:40:22Z"
     },
     "youtube-transcript": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/youtube-transcript",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-13T17:05:12Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/youtube-transcript",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-13T17:05:12Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/youtube-transcript",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-13T17:05:21Z"
-        }
-      },
+      "distribution": {},
       "display_name": "youtube-transcript",
       "description": "获取 YouTube 视频的字幕/转录文本，用于内容总结、分析或引用。支持视频 ID 和完整 URL，输出带时间戳的逐条文本。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "passed",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/youtube-transcript.md",
       "source_path": ".skills/sources/youtube-transcript.json",
-      "skill_path": "youtube-transcript",
+      "skill_path": ".skills/archived-skills/youtube-transcript",
       "upstream_path": ".skills/upstream/youtube-transcript",
       "managed_revision": "sha256:9262236d91a9bd8de987c42c8dee19f5da9c22e167f3fbe42181d4b38b54c24e",
-      "last_updated_at": "2026-04-12T13:28:37Z"
+      "last_updated_at": "2026-04-18T13:58:20Z"
     },
     "btca-local": {
       "distribution": {

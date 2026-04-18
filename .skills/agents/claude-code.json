@@ -99,13 +99,6 @@
       "sync_status": "synced",
       "last_synced_at": "2026-04-13T17:05:12Z"
     },
-    "youtube-transcript": {
-      "source_path": "youtube-transcript",
-      "target_path": "/Users/chenyl/.claude/skills/youtube-transcript",
-      "mode": "symlink",
-      "sync_status": "synced",
-      "last_synced_at": "2026-04-13T17:05:12Z"
-    },
     "btca-local": {
       "source_path": "btca-local",
       "target_path": "/Users/chenyl/.claude/skills/btca-local",
