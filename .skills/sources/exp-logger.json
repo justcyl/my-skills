@@ -10,8 +10,8 @@
   "bootstrap": true,
   "upstream_enabled": false,
   "upstream_path": ".skills/upstream/exp-logger",
-  "last_imported_at": "2026-04-18T18:29:01Z",
+  "last_imported_at": "2026-04-18T18:31:18Z",
   "upstream_revision": "",
-  "managed_revision": "sha256:93ba4ab51fe5387df10b32b5ba073b9663bdc055a0ab025acb82ac3fff393404",
+  "managed_revision": "sha256:ef35ba263fad639aae7c74d24c61328fdc235b19f7fb08947393fd1e4de3d36c",
   "managed_dirty": false
 }

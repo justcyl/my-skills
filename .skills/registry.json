@@ -1171,19 +1171,19 @@
           "target_path": "/Users/chenyl/.codex/skills/exp-logger",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-18T18:29:01Z"
+          "last_synced_at": "2026-04-18T18:31:19Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/exp-logger",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-18T18:29:01Z"
+          "last_synced_at": "2026-04-18T18:31:19Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/exp-logger",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-18T18:29:01Z"
+          "last_synced_at": "2026-04-18T18:31:19Z"
         }
       },
       "display_name": "exp-logger",
@@ -1196,8 +1196,8 @@
       "source_path": ".skills/sources/exp-logger.json",
       "skill_path": "exp-logger",
       "upstream_path": ".skills/upstream/exp-logger",
-      "managed_revision": "sha256:93ba4ab51fe5387df10b32b5ba073b9663bdc055a0ab025acb82ac3fff393404",
-      "last_updated_at": "2026-04-18T18:29:01Z"
+      "managed_revision": "sha256:ef35ba263fad639aae7c74d24c61328fdc235b19f7fb08947393fd1e4de3d36c",
+      "last_updated_at": "2026-04-18T18:31:18Z"
     }
   }
 }
