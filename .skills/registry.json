@@ -1137,19 +1137,19 @@
           "target_path": "/Users/chenyl/.codex/skills/officecli",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-18T15:46:25Z"
+          "last_synced_at": "2026-04-18T15:51:04Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/officecli",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-18T15:46:25Z"
+          "last_synced_at": "2026-04-18T15:51:04Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/officecli",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-18T15:46:25Z"
+          "last_synced_at": "2026-04-18T15:51:04Z"
         }
       },
       "display_name": "officecli",
@@ -1162,8 +1162,8 @@
       "source_path": ".skills/sources/officecli.json",
       "skill_path": "officecli",
       "upstream_path": ".skills/upstream/officecli",
-      "managed_revision": "sha256:ed947f0de093774ae7ca77457f01f23c4d155296240855766957506f69583147",
-      "last_updated_at": "2026-04-18T15:46:22Z"
+      "managed_revision": "sha256:efbe33792c913aee9ab209318c3a57ec0a29910eb7ccc23401271d7777ead837",
+      "last_updated_at": "2026-04-18T15:50:59Z"
     }
   }
 }

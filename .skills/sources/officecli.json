@@ -10,8 +10,8 @@
   "bootstrap": true,
   "upstream_enabled": true,
   "upstream_path": ".skills/upstream/officecli",
-  "last_imported_at": "2026-04-18T15:46:22Z",
+  "last_imported_at": "2026-04-18T15:50:59Z",
   "upstream_revision": "sha256:993809cee787db898668a828fcaf764502903a3b9a8db4613243a26db694fe94",
-  "managed_revision": "sha256:ed947f0de093774ae7ca77457f01f23c4d155296240855766957506f69583147",
+  "managed_revision": "sha256:efbe33792c913aee9ab209318c3a57ec0a29910eb7ccc23401271d7777ead837",
   "managed_dirty": false
 }
