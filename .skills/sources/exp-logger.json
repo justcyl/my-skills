@@ -1,0 +1,17 @@
+{
+  "skill_id": "exp-logger",
+  "display_name": "exp-logger",
+  "skill_path": "exp-logger",
+  "source_type": "local-created",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/exp-logger",
+  "last_imported_at": "2026-04-18T18:29:01Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:93ba4ab51fe5387df10b32b5ba073b9663bdc055a0ab025acb82ac3fff393404",
+  "managed_dirty": false
+}

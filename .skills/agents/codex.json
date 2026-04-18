@@ -147,6 +147,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-18T15:51:04Z"
+    },
+    "exp-logger": {
+      "source_path": "exp-logger",
+      "target_path": "/Users/chenyl/.codex/skills/exp-logger",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-04-18T18:29:01Z"
     }
   }
 }
