@@ -1130,6 +1130,40 @@
       "upstream_path": ".skills/upstream/anyone-to-skill",
       "managed_revision": "sha256:18961f31e9dd282f8579423900a4cbdfce3a3b5b479172acc7efa78c0b2018c0",
       "last_updated_at": "2026-04-16T15:30:11Z"
+    },
+    "officecli": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/officecli",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-18T15:46:25Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/officecli",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-18T15:46:25Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/officecli",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-18T15:46:25Z"
+        }
+      },
+      "display_name": "officecli",
+      "description": "Create, analyze, proofread, and modify Office documents (.docx, .xlsx, .pptx) using the officecli CLI tool. Use when the user wants to create, inspect, check formatting, find issues, add charts, or modify Office documents.",
+      "status": "managed",
+      "risk_status": "blocked",
+      "managed_dirty": false,
+      "upstream_enabled": true,
+      "report_path": ".skills/reports/officecli.md",
+      "source_path": ".skills/sources/officecli.json",
+      "skill_path": "officecli",
+      "upstream_path": ".skills/upstream/officecli",
+      "managed_revision": "sha256:ed947f0de093774ae7ca77457f01f23c4d155296240855766957506f69583147",
+      "last_updated_at": "2026-04-18T15:46:22Z"
     }
   }
 }

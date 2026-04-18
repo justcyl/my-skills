@@ -1,0 +1,17 @@
+{
+  "skill_id": "officecli",
+  "display_name": "officecli",
+  "skill_path": "officecli",
+  "source_type": "github",
+  "source": "iOfficeAI/OfficeCLI",
+  "source_url": "https://github.com/iOfficeAI/OfficeCLI.git",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": true,
+  "upstream_path": ".skills/upstream/officecli",
+  "last_imported_at": "2026-04-18T15:46:22Z",
+  "upstream_revision": "sha256:993809cee787db898668a828fcaf764502903a3b9a8db4613243a26db694fe94",
+  "managed_revision": "sha256:ed947f0de093774ae7ca77457f01f23c4d155296240855766957506f69583147",
+  "managed_dirty": false
+}
