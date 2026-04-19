@@ -1,0 +1,17 @@
+{
+  "skill_id": "figure-checker",
+  "display_name": "figure-checker",
+  "skill_path": "figure-checker",
+  "source_type": "local-created",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/figure-checker",
+  "last_imported_at": "2026-04-19T06:42:27Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:9a9fcaa90625f9c39a553ad7ad369f02ddde0b258cb92b7bb7ad2c6ba166c4c2",
+  "managed_dirty": false
+}
