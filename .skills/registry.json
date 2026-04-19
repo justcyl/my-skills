@@ -1183,7 +1183,7 @@
           "target_path": "/Users/chenyl/.agents/skills/exp-logger",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-18T18:31:19Z"
+          "last_synced_at": "2026-04-19T16:36:40Z"
         }
       },
       "display_name": "exp-logger",
@@ -1205,19 +1205,19 @@
           "target_path": "/Users/chenyl/.codex/skills/alan-pipeline",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-19T06:39:36Z"
+          "last_synced_at": "2026-04-19T16:42:14Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/alan-pipeline",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-19T06:39:36Z"
+          "last_synced_at": "2026-04-19T16:42:14Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/alan-pipeline",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-19T06:39:36Z"
+          "last_synced_at": "2026-04-19T16:42:14Z"
         }
       },
       "display_name": "alan-pipeline",
