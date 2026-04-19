@@ -1198,6 +1198,40 @@
       "upstream_path": ".skills/upstream/exp-logger",
       "managed_revision": "sha256:ef35ba263fad639aae7c74d24c61328fdc235b19f7fb08947393fd1e4de3d36c",
       "last_updated_at": "2026-04-18T18:31:18Z"
+    },
+    "alan-pipeline": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/alan-pipeline",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-19T06:39:36Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/alan-pipeline",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-19T06:39:36Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/alan-pipeline",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-19T06:39:36Z"
+        }
+      },
+      "display_name": "alan-pipeline",
+      "description": "管理研究项目的 card（知识单元）和 run（执行单元）。当用户需要记录实验发现、提出假设、做出决策、创建/执行研究任务时使用。适用于 .pipeline/ 目录存在的项目。",
+      "status": "managed",
+      "risk_status": "warned",
+      "managed_dirty": false,
+      "upstream_enabled": false,
+      "report_path": ".skills/reports/alan-pipeline.md",
+      "source_path": ".skills/sources/alan-pipeline.json",
+      "skill_path": "alan-pipeline",
+      "upstream_path": ".skills/upstream/alan-pipeline",
+      "managed_revision": "sha256:c559065842d20df3d310b7c4121908ae9b8a012a7e7f4d1ac82d463a202d270b",
+      "last_updated_at": "2026-04-19T06:39:36Z"
     }
   }
 }

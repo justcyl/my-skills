@@ -154,6 +154,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-18T18:31:19Z"
+    },
+    "alan-pipeline": {
+      "source_path": "alan-pipeline",
+      "target_path": "/Users/chenyl/.codex/skills/alan-pipeline",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-04-19T06:39:36Z"
     }
   }
 }
