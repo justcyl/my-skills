@@ -130,19 +130,13 @@ class ExpLogger:
             from .backend_tensorboard import TensorBoardBackend
             backends.append(TensorBoardBackend(log_dir=cfg["tensorboard"]))
 
-        # ── TUI vs Console ────────────────────────────────────────────────────
-        tui_setting = cfg.get("tui", "auto")
-        show_tui    = tui_setting is True or (tui_setting == "auto" and sys.stdout.isatty())
-
-        if show_tui:
-            from .tui_dashboard import TUIDashboard
-            backends.append(TUIDashboard(name=name))
-        else:
-            from .backend_console import ConsoleBackend
-            backends.append(ConsoleBackend(
-                verbose=cfg.get("console", "full"),
-                keys=cfg.get("console_keys"),
-            ))
+        # ── Console（默认开启）─────────────────────────────────────────────────
+        # TUI 显示交给外部 watch.py，训练侧只用 Console
+        from .backend_console import ConsoleBackend
+        backends.append(ConsoleBackend(
+            verbose=cfg.get("console", "full"),
+            keys=cfg.get("console_keys"),
+        ))
 
         logger = cls(name=name, backends=backends)
         # expose JSONL path as convenience attribute
