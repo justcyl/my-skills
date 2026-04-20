@@ -1,0 +1,17 @@
+{
+  "skill_id": "fair-experiment-tracker",
+  "display_name": "fair-experiment-tracker",
+  "skill_path": "fair-experiment-tracker",
+  "source_type": "local",
+  "source": "/var/folders/f7/qbcrpmf56n5bf47z0ndz_s_00000gn/T/tmp.9rS3AupK5h/skill/fair-experiment-tracker",
+  "source_url": "/var/folders/f7/qbcrpmf56n5bf47z0ndz_s_00000gn/T/tmp.9rS3AupK5h/skill/fair-experiment-tracker",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": true,
+  "upstream_path": ".skills/upstream/fair-experiment-tracker",
+  "last_imported_at": "2026-04-20T16:47:38Z",
+  "upstream_revision": "sha256:cf8693dc26c4bf5aa06f00af620071b986e93f38478b7adb4b71653b7c15ab9d",
+  "managed_revision": "sha256:a72cb74f3645b4c83e951e78a5dbd5f95c04d8b5e168f178928b66e4e9d0ae8b",
+  "managed_dirty": false
+}

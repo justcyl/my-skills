@@ -49,6 +49,12 @@ bash skills-manager/scripts/find_or_import_skill.sh search <query>
 bash skills-manager/scripts/find_or_import_skill.sh import <source> [--skill-id <id>] [--subpath <path>] [--ref <branch>] [--force] [--dry-run]
 ```
 
+说明：
+
+1. `<source>` 目前支持 repo 简写、GitHub URL、以及本地目录。
+2. 如果用户给的是本地压缩包（如 `.zip` / `.skill`），先解压到临时目录或 `.skills/workspaces/<skill-id>/`，确认其中存在 `SKILL.md`，再对解压后的目录执行 `import`。
+3. 不要直接把压缩包路径传给 `import`，因为脚本按目录/仓库处理来源。
+
 脚本职责：
 
 1. 识别来源（repo 简写 / GitHub URL / 本地路径）

@@ -1371,6 +1371,40 @@
       "upstream_path": ".skills/upstream/latex-lint",
       "managed_revision": "sha256:ea4bb4d9c6f83430dd7dd3dd5dfcd5c3e8cbe2c20b090544f7ec717d010af043",
       "last_updated_at": "2026-04-20T16:17:23Z"
+    },
+    "fair-experiment-tracker": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/fair-experiment-tracker",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-20T16:47:38Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/fair-experiment-tracker",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-20T16:47:38Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/fair-experiment-tracker",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-20T16:47:38Z"
+        }
+      },
+      "display_name": "fair-experiment-tracker",
+      "description": "基于 FAIR / Meta AI 风格实验管理方法论的实验追踪表格生成技能。\n当用户需要设计实验追踪表格、管理机器学习/深度学习实验、记录和对比实验结果、建立对照组、系统化研究 workflow、创建 ablation study 表格，或提出“帮我管理实验”“我想系统化我的研究流程”“做个 research spreadsheet / 实验表格”等需求时，使用此技能。",
+      "status": "managed",
+      "risk_status": "passed",
+      "managed_dirty": false,
+      "upstream_enabled": true,
+      "report_path": ".skills/reports/fair-experiment-tracker.md",
+      "source_path": ".skills/sources/fair-experiment-tracker.json",
+      "skill_path": "fair-experiment-tracker",
+      "upstream_path": ".skills/upstream/fair-experiment-tracker",
+      "managed_revision": "sha256:a72cb74f3645b4c83e951e78a5dbd5f95c04d8b5e168f178928b66e4e9d0ae8b",
+      "last_updated_at": "2026-04-20T16:47:38Z"
     }
   }
 }
