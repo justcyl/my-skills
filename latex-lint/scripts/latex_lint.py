@@ -41,7 +41,7 @@ class Issue:
     rule: str
     message: str
     fix: Optional[str] = None
-    context: Optional[str] = None  # the offending line content
+    context: Optional[str] = None
 
     def to_dict(self):
         d = asdict(self)
@@ -59,25 +59,35 @@ class Issue:
         return "\n".join(parts)
 
 
-# ---------------------------------------------------------------------------
-# Rule definitions
-# ---------------------------------------------------------------------------
+def _strip_comments(line: str) -> str:
+    """Strip LaTeX comments (naive: first unescaped %)."""
+    result = []
+    i = 0
+    while i < len(line):
+        if line[i] == '%' and (i == 0 or line[i-1] != '\\'):
+            break
+        result.append(line[i])
+        i += 1
+    return ''.join(result)
+
+
+# ===================================================================
+# LABEL CHECKS
+# ===================================================================
 
 def check_label_naming(lines: list[str], filepath: str) -> list[Issue]:
     """Check label naming conventions."""
     issues = []
     valid_prefixes = {
         "thm", "lem", "cor", "def", "fac", "sec", "eq", "fig",
-        "tab", "alg", "app", "rem", "prop", "ass", "cla",
+        "tab", "alg", "app", "rem", "prop", "ass", "cla", "clm",
     }
-    # Also allow informal/formal suffixed versions
     label_pat = re.compile(r"\\label\{([^}]+)\}")
 
     for i, line in enumerate(lines, 1):
         for m in label_pat.finditer(line):
             label = m.group(1)
 
-            # Check prefix format
             if ":" not in label:
                 issues.append(Issue(
                     Severity.ERROR, filepath, i, "label-prefix",
@@ -90,26 +100,22 @@ def check_label_naming(lines: list[str], filepath: str) -> list[Issue]:
             prefix = label.split(":")[0]
             name_part = label.split(":", 1)[1]
 
-            # Remove informal/formal suffix for prefix check
-            clean_prefix = prefix
-            if clean_prefix not in valid_prefixes:
+            if prefix.lower() not in valid_prefixes:
                 issues.append(Issue(
                     Severity.WARN, filepath, i, "label-prefix",
-                    f"label 前缀 '{prefix}' 不在常用前缀列表中: \\label{{{label}}}",
+                    f"label 前缀 '{prefix}' 不在常用列表中: \\label{{{label}}}",
                     fix=f"常用前缀: {', '.join(sorted(valid_prefixes))}",
                     context=line,
                 ))
 
-            # Check for hyphens in label name
             if "-" in name_part:
                 issues.append(Issue(
                     Severity.ERROR, filepath, i, "label-hyphen",
-                    f"label 使用了减号（应用下划线分隔）: \\label{{{label}}}",
+                    f"label 使用了减号（应用下划线）: \\label{{{label}}}",
                     fix=f"\\label{{{label.replace('-', '_')}}}",
                     context=line,
                 ))
 
-            # Check for uppercase in label
             if name_part != name_part.lower():
                 issues.append(Issue(
                     Severity.ERROR, filepath, i, "label-case",
@@ -118,12 +124,20 @@ def check_label_naming(lines: list[str], filepath: str) -> list[Issue]:
                     context=line,
                 ))
 
-            # Check for spaces (shouldn't compile, but just in case)
             if " " in label:
                 issues.append(Issue(
                     Severity.ERROR, filepath, i, "label-space",
                     f"label 中不应有空格: \\label{{{label}}}",
                     fix=f"\\label{{{label.replace(' ', '_')}}}",
+                    context=line,
+                ))
+
+            # Detect meaningless numeric-only labels like eq:1, lem:2
+            if re.match(r"^\d+$", name_part):
+                issues.append(Issue(
+                    Severity.WARN, filepath, i, "label-semantic",
+                    f"label 名仅为数字，缺少语义: \\label{{{label}}} — 用英文单词概括内容",
+                    fix=f"如 \\label{{{prefix}:privacy_loss}} 或 \\label{{{prefix}:main_bound}}",
                     context=line,
                 ))
     return issues
@@ -132,13 +146,12 @@ def check_label_naming(lines: list[str], filepath: str) -> list[Issue]:
 def check_label_order(lines: list[str], filepath: str) -> list[Issue]:
     """Check that \\label comes after [display name], not before."""
     issues = []
-    # Pattern: \begin{env}\label{...}[name] — label before display name
     pat = re.compile(r"\\begin\{(\w+\*?)\}\s*\\label\{[^}]+\}\s*\[")
     for i, line in enumerate(lines, 1):
         if pat.search(line):
             issues.append(Issue(
                 Severity.ERROR, filepath, i, "label-order",
-                "\\label 应在 [display name] 之后，而非之前——交换顺序可能产生 bug",
+                "\\label 应在 [display name] 之后——交换顺序可能产生 bug",
                 fix="\\begin{env}[Display Name]\\label{prefix:name}",
                 context=line,
             ))
@@ -152,140 +165,18 @@ def check_label_in_star(lines: list[str], filepath: str) -> list[Issue]:
     star_env_name = ""
 
     for i, line in enumerate(lines, 1):
-        # Track star environments
         begin_star = re.search(r"\\begin\{(\w+)\*\}", line)
         end_star = re.search(r"\\end\{(\w+)\*\}", line)
-
         if begin_star:
             in_star_env = True
             star_env_name = begin_star.group(1)
         if end_star:
             in_star_env = False
-
         if in_star_env and re.search(r"\\label\{", line):
             issues.append(Issue(
                 Severity.ERROR, filepath, i, "label-in-star",
                 f"在 {star_env_name}* 环境中使用了 \\label（star 环境无编号，label 无效）",
                 fix=f"移除 \\label 或改用非 star 环境 {star_env_name}",
-                context=line,
-            ))
-    return issues
-
-
-def check_equation_ref(lines: list[str], filepath: str) -> list[Issue]:
-    """Check equation reference format."""
-    issues = []
-    # Pattern: using \ref{eq:...} instead of \eqref{eq:...}
-    ref_eq_pat = re.compile(r"\\ref\{eq[:\s_]")
-
-    for i, line in enumerate(lines, 1):
-        for m in ref_eq_pat.finditer(line):
-            issues.append(Issue(
-                Severity.WARN, filepath, i, "eq-ref-format",
-                "equation 引用应使用 \\eqref 而非 \\ref（\\eqref 自带括号）",
-                fix="将 \\ref{eq:...} 改为 Eq.~\\eqref{eq:...}",
-                context=line,
-            ))
-
-        # Check for "Equation" spelled out before \eqref
-        if re.search(r"(?i)\bequation\b\s*[~\\]*(\\eqref|\\ref)", line):
-            issues.append(Issue(
-                Severity.INFO, filepath, i, "eq-ref-abbrev",
-                "引用 equation 时建议缩写为 Eq. 而非完整拼写 Equation",
-                fix="Eq.~\\eqref{eq:xxx}",
-                context=line,
-            ))
-
-        # Check for missing tilde before \ref or \eqref
-        ref_no_tilde = re.compile(r"(?<![~])(\\eqref\{|\\ref\{)")
-        for m2 in ref_no_tilde.finditer(line):
-            # Check if there's a word/abbreviation right before
-            pos = m2.start()
-            before = line[:pos].rstrip()
-            if before and before[-1].isalpha() or (before and before[-1] == "."):
-                issues.append(Issue(
-                    Severity.INFO, filepath, i, "ref-tilde",
-                    "引用前建议使用 ~ 产生不换行空格",
-                    fix="Lemma~\\ref{...} 或 Eq.~\\eqref{...}",
-                    context=line,
-                ))
-                break  # one per line is enough
-    return issues
-
-
-def check_nonumber_vs_notag(lines: list[str], filepath: str) -> list[Issue]:
-    """Prefer \\notag over \\nonumber."""
-    issues = []
-    for i, line in enumerate(lines, 1):
-        if "\\nonumber" in line:
-            issues.append(Issue(
-                Severity.INFO, filepath, i, "nonumber-notag",
-                "建议使用 \\notag 代替 \\nonumber（二者等价，统一用 \\notag）",
-                fix="将 \\nonumber 替换为 \\notag",
-                context=line,
-            ))
-    return issues
-
-
-def check_bracket_sizing(lines: list[str], filepath: str) -> list[Issue]:
-    """Detect manual bracket sizing commands."""
-    issues = []
-    sizing_cmds = re.compile(r"\\(big|Big|bigg|Bigg)[lr]?\b")
-
-    for i, line in enumerate(lines, 1):
-        # Skip comments
-        stripped = line.split("%")[0] if "%" in line else line
-        for m in sizing_cmds.finditer(stripped):
-            issues.append(Issue(
-                Severity.WARN, filepath, i, "bracket-sizing",
-                f"检测到手动括号大小调整 \\{m.group(0)}——建议保持默认大小",
-                fix="移除 sizing 命令，使用默认括号大小",
-                context=line,
-            ))
-
-
-    # Also check excessive \left/\right
-    left_right_pat = re.compile(r"\\left[([{|.]|\\right[)\]}|.]")
-    for i, line in enumerate(lines, 1):
-        stripped = line.split("%")[0] if "%" in line else line
-        count = len(left_right_pat.findall(stripped))
-        if count >= 4:  # Multiple pairs on one line
-            issues.append(Issue(
-                Severity.INFO, filepath, i, "left-right-overuse",
-                f"单行中有 {count // 2}+ 对 \\left/\\right——确认是否都必要",
-                context=line,
-            ))
-    return issues
-
-
-def check_definition_symbol(lines: list[str], filepath: str) -> list[Issue]:
-    """Check that definitions use := not \\triangleq or bare =."""
-    issues = []
-    triangleq_pat = re.compile(r"\\triangleq")
-
-    for i, line in enumerate(lines, 1):
-        for m in triangleq_pat.finditer(line):
-            issues.append(Issue(
-                Severity.WARN, filepath, i, "define-coloneq",
-                "定义符号建议用 := 而非 \\triangleq",
-                fix="将 \\triangleq 替换为 :=（或 \\coloneqq）",
-                context=line,
-            ))
-    return issues
-
-
-def check_log_power(lines: list[str], filepath: str) -> list[Issue]:
-    """Detect powers inside \\log."""
-    issues = []
-    # Match \log(x^n) or \log x^n patterns
-    log_power_pat = re.compile(r"\\log\s*[\({]\s*[^)\}]*\^[^)\}]*[\)}]")
-
-    for i, line in enumerate(lines, 1):
-        for m in log_power_pat.finditer(line):
-            issues.append(Issue(
-                Severity.WARN, filepath, i, "log-power",
-                f"\\log 内部包含幂次——应提取到外部: log(a^d) → d·log(a)",
-                fix="将 \\log(x^n) 改为 n \\log(x)",
                 context=line,
             ))
     return issues
@@ -299,11 +190,220 @@ def check_eq_label_prefix(lines: list[str], filepath: str) -> list[Issue]:
             issues.append(Issue(
                 Severity.ERROR, filepath, i, "eq-label-long",
                 "equation label 前缀应用 eq: 而非 equation:",
-                fix="将 \\label{equation:xxx} 改为 \\label{eq:xxx}",
+                fix="\\label{eq:xxx}",
                 context=line,
             ))
     return issues
 
+
+def check_informal_formal_labels(lines: list[str], filepath: str) -> list[Issue]:
+    """Check consistency of informal/formal label suffixes."""
+    issues = []
+    has_informal = any(re.search(r"_informal\b", l) for l in lines)
+    has_formal = any(re.search(r"_formal\b", l) for l in lines)
+    has_appendix = any(re.search(r"\\appendix|\\begin\{appendix\}", l) for l in lines)
+
+    if has_appendix and has_informal and not has_formal:
+        issues.append(Issue(
+            Severity.INFO, filepath, 1, "informal-formal",
+            "检测到 _informal label 但无 _formal — 如果 appendix 有对应 theorem，应添加 _formal 版本",
+        ))
+    if has_formal and not has_informal:
+        issues.append(Issue(
+            Severity.INFO, filepath, 1, "informal-formal",
+            "检测到 _formal label 但无 _informal — 如果 main body 有对应 theorem，应添加 _informal 版本",
+        ))
+    return issues
+
+
+# ===================================================================
+# REFERENCE / CITATION CHECKS
+# ===================================================================
+
+def check_equation_ref(lines: list[str], filepath: str) -> list[Issue]:
+    """Check equation reference format."""
+    issues = []
+
+    for i, line in enumerate(lines, 1):
+        stripped = _strip_comments(line)
+
+        # \ref{eq:...} should be \eqref{eq:...}
+        if re.search(r"\\ref\{eq[:\s_]", stripped):
+            issues.append(Issue(
+                Severity.WARN, filepath, i, "eq-ref-format",
+                "equation 引用应使用 \\eqref 而非 \\ref（\\eqref 自带括号）",
+                fix="Eq.~\\eqref{eq:...}",
+                context=line,
+            ))
+
+        # Spelled-out "Equation" before ref
+        if re.search(r"(?i)\bequation\b\s*[~\\]*(\\eqref|\\ref)", stripped):
+            issues.append(Issue(
+                Severity.INFO, filepath, i, "eq-ref-abbrev",
+                "建议缩写为 Eq. 而非完整拼写 Equation",
+                fix="Eq.~\\eqref{eq:xxx}",
+                context=line,
+            ))
+
+        # Missing ~ before \ref or \eqref (word or abbreviation right before)
+        for m in re.finditer(r"([A-Za-z.])\s+(\\(?:eq)?ref\{)", stripped):
+            issues.append(Issue(
+                Severity.INFO, filepath, i, "ref-tilde",
+                "引用前建议使用 ~ 产生不换行空格",
+                fix="Lemma~\\ref{...} 或 Eq.~\\eqref{...}",
+                context=line,
+            ))
+            break  # one per line
+    return issues
+
+
+def check_nonumber_vs_notag(lines: list[str], filepath: str) -> list[Issue]:
+    """Prefer \\notag over \\nonumber."""
+    issues = []
+    for i, line in enumerate(lines, 1):
+        if "\\nonumber" in _strip_comments(line):
+            issues.append(Issue(
+                Severity.INFO, filepath, i, "nonumber-notag",
+                "建议使用 \\notag 代替 \\nonumber（统一规范）",
+                fix="\\notag",
+                context=line,
+            ))
+    return issues
+
+
+# ===================================================================
+# BRACKET / FRACTION CHECKS
+# ===================================================================
+
+def check_bracket_sizing(lines: list[str], filepath: str) -> list[Issue]:
+    """Detect manual bracket sizing commands."""
+    issues = []
+    sizing_pat = re.compile(r"\\(big|Big|bigg|Bigg)[lr]?\b")
+    seen_lines = set()
+
+    for i, line in enumerate(lines, 1):
+        stripped = _strip_comments(line)
+        for m in sizing_pat.finditer(stripped):
+            if i not in seen_lines:
+                issues.append(Issue(
+                    Severity.WARN, filepath, i, "bracket-sizing",
+                    f"手动括号大小调整 \\{m.group(0)} — 初学者保持默认大小，留给 advisor 调整",
+                    fix="移除 sizing 命令",
+                    context=line,
+                ))
+                seen_lines.add(i)
+
+    # Excessive \left/\right pairs on single line
+    for i, line in enumerate(lines, 1):
+        stripped = _strip_comments(line)
+        left_count = len(re.findall(r"\\left[(\[{|.\\]", stripped))
+        if left_count >= 3:
+            issues.append(Issue(
+                Severity.INFO, filepath, i, "left-right-overuse",
+                f"单行中有 {left_count}+ 个 \\left/\\right — 确认是否都必要",
+                context=line,
+            ))
+    return issues
+
+
+# ===================================================================
+# MATH SYMBOL CHECKS
+# ===================================================================
+
+def check_definition_symbol(lines: list[str], filepath: str) -> list[Issue]:
+    """Check that definitions use := not \\triangleq."""
+    issues = []
+    for i, line in enumerate(lines, 1):
+        if "\\triangleq" in _strip_comments(line):
+            issues.append(Issue(
+                Severity.WARN, filepath, i, "define-coloneq",
+                "定义符号建议用 := 而非 \\triangleq",
+                fix=":= 或 \\coloneqq",
+                context=line,
+            ))
+    return issues
+
+
+def check_transpose(lines: list[str], filepath: str) -> list[Issue]:
+    """Check that transpose uses \\top, not bare ^T."""
+    issues = []
+    # Match ^T or ^{T} where T is transpose (not followed by more letters)
+    # This won't match ^\top because \top starts with backslash
+    pat = re.compile(r"\^(?:\{T\}|T(?![a-zA-Z]))")
+
+    for i, line in enumerate(lines, 1):
+        stripped = _strip_comments(line)
+        if not stripped.strip():
+            continue
+        # Skip lines that are pure text (no $ or math env)
+        if '$' not in stripped and '\\[' not in stripped and '&' not in stripped:
+            continue
+        if pat.search(stripped) and '\\top' not in stripped:
+            issues.append(Issue(
+                Severity.WARN, filepath, i, "transpose-top",
+                "transpose 建议用 ^\\top 而非 ^T — T 常表示 iteration horizon，容易冲突",
+                fix="将 ^T 或 ^{T} 改为 ^\\top 或 ^{\\top}",
+                context=line,
+            ))
+    return issues
+
+
+def check_norm_bars(lines: list[str], filepath: str) -> list[Issue]:
+    """Check that norms use \\| not keyboard ||."""
+    issues = []
+    # Match || that is likely a norm (not \| and not ||= etc)
+    # We look for || followed by content then ||
+    pat = re.compile(r"(?<!\\)\|\|")
+
+    for i, line in enumerate(lines, 1):
+        stripped = _strip_comments(line)
+        matches = list(pat.finditer(stripped))
+        if len(matches) >= 2:  # Need at least open and close
+            issues.append(Issue(
+                Severity.WARN, filepath, i, "norm-bars",
+                "norm 应使用 \\|x\\| 而非键盘 ||x|| — 后者间距不正确",
+                fix="将 ||x|| 改为 \\|x\\|",
+                context=line,
+            ))
+    return issues
+
+
+def check_log_power(lines: list[str], filepath: str) -> list[Issue]:
+    """Detect powers inside \\log."""
+    issues = []
+    pat = re.compile(r"\\log\s*[\({]\s*[^)\}]*\^[^)\}]*[\)}]")
+    for i, line in enumerate(lines, 1):
+        if pat.search(_strip_comments(line)):
+            issues.append(Issue(
+                Severity.WARN, filepath, i, "log-power",
+                "\\log 内部包含幂次 — 应提取: log(a^d) → d·log(a)",
+                fix="n \\log(x)",
+                context=line,
+            ))
+    return issues
+
+
+def check_big_o_constant(lines: list[str], filepath: str) -> list[Issue]:
+    """Detect explicit constants inside O(...)."""
+    issues = []
+    # Match O(NUMBER * ...) or O(NUMBER ...) where NUMBER is like 2, 16, 100
+    pat = re.compile(r"[OΘΩ]\s*\(\s*\d{2,}\s*[a-zA-Z\\]")
+
+    for i, line in enumerate(lines, 1):
+        stripped = _strip_comments(line)
+        if pat.search(stripped):
+            issues.append(Issue(
+                Severity.WARN, filepath, i, "big-o-constant",
+                "big-O 内部有显式常数 — O() 已隐藏常数，不应同时出现 O(16d...)",
+                fix="移除常数或改为精确 bound",
+                context=line,
+            ))
+    return issues
+
+
+# ===================================================================
+# PROOF CHECKS
+# ===================================================================
 
 def check_proof_line_breaks(lines: list[str], filepath: str) -> list[Issue]:
     """Check that proofs have adequate line breaks between steps."""
@@ -322,12 +422,11 @@ def check_proof_line_breaks(lines: list[str], filepath: str) -> list[Issue]:
             if in_proof and consecutive_nonempty > 20:
                 issues.append(Issue(
                     Severity.WARN, filepath, proof_start_line, "proof-linebreak",
-                    f"Proof（第 {proof_start_line}-{i} 行）有 {consecutive_nonempty} 行连续非空——建议在推导步骤间添加空行提高可读性",
+                    f"Proof（第 {proof_start_line}-{i} 行）有 {consecutive_nonempty} 行连续非空 — 在步骤间添加空行",
                 ))
             in_proof = False
             consecutive_nonempty = 0
             continue
-
         if in_proof:
             if line.strip():
                 consecutive_nonempty += 1
@@ -336,77 +435,156 @@ def check_proof_line_breaks(lines: list[str], filepath: str) -> list[Issue]:
     return issues
 
 
+def check_vague_reasons(lines: list[str], filepath: str) -> list[Issue]:
+    """Detect vague proof reasons like 'clearly', 'obviously'."""
+    issues = []
+    vague_words = re.compile(
+        r"\b(clearly|obviously|trivially|it is easy to see|it is straightforward)\b",
+        re.IGNORECASE,
+    )
+    in_proof = False
+
+    for i, line in enumerate(lines, 1):
+        if re.search(r"\\begin\{proof\}", line):
+            in_proof = True
+        if re.search(r"\\end\{proof\}", line):
+            in_proof = False
+        if in_proof:
+            stripped = _strip_comments(line)
+            m = vague_words.search(stripped)
+            if m:
+                issues.append(Issue(
+                    Severity.INFO, filepath, i, "vague-reason",
+                    f"Proof 中使用了 \"{m.group(0)}\" — 如果这一步对读者并不 clear，应给出真实原因",
+                    fix="替换为具体原因: by Lemma~\\ref{...}, by Jensen's inequality 等",
+                    context=line,
+                ))
+    return issues
+
+
+def check_defensive_probability(lines: list[str], filepath: str) -> list[Issue]:
+    """Detect non-round probability denominators that may be hard to maintain."""
+    issues = []
+    # Match \delta/3, \delta/4, \delta/7 etc (not /10, /100, /2)
+    # We flag denominators that aren't powers of 10 or 2
+    pat = re.compile(r"\\delta\s*/\s*(\d+)")
+    ok_denoms = {2, 10, 20, 100, 1000}
+
+    for i, line in enumerate(lines, 1):
+        stripped = _strip_comments(line)
+        for m in pat.finditer(stripped):
+            denom = int(m.group(1))
+            if denom not in ok_denoms and denom > 2:
+                issues.append(Issue(
+                    Severity.INFO, filepath, i, "defensive-prob",
+                    f"δ/{denom} — 防御性写证明建议用十进制分母（δ/10）留余地",
+                    fix=f"改为 δ/10 或 δ/100，避免增加 event 时全文改动",
+                    context=line,
+                ))
+    return issues
+
+
+# ===================================================================
+# ROADMAP CHECKS
+# ===================================================================
+
 def check_roadmap(lines: list[str], filepath: str) -> list[Issue]:
     """Check for presence of roadmap in main body and appendix."""
     issues = []
     content = "\n".join(lines)
 
     has_appendix = bool(re.search(r"\\appendix|\\begin\{appendix\}", content))
-    has_roadmap_main = bool(re.search(
+    roadmap_pat = (
         r"\\paragraph\{[Rr]oadmap|\\paragraph\{[Oo]utline|\\paragraph\{[Oo]rganization|"
         r"\\textbf\{[Rr]oadmap|\\textbf\{[Oo]utline|\\textbf\{[Oo]rganization|"
-        r"[Rr]oadmap\.|[Oo]rganization\.|[Oo]utline\.",
-        content
-    ))
+        r"organized as follows|structure of the paper|structure of this paper|"
+        r"[Rr]oadmap\.|[Oo]rganization\.|[Oo]utline\."
+    )
+    has_roadmap_main = bool(re.search(roadmap_pat, content))
 
-    # Only warn if there are multiple sections (suggesting a full paper)
     section_count = len(re.findall(r"\\section\{", content))
     if section_count >= 3 and not has_roadmap_main:
         issues.append(Issue(
             Severity.INFO, filepath, 1, "roadmap-main",
-            "论文有 3+ 个 section 但未检测到 roadmap 段落",
-            fix="在 intro 末尾或 related work 后添加 \\paragraph{Roadmap.}",
+            "论文有 3+ 个 section 但未检测到 roadmap",
+            fix="在 intro 末尾添加 \\paragraph{Roadmap.}",
         ))
 
     if has_appendix:
-        # Check for roadmap in appendix
         appendix_start = None
         for i, line in enumerate(lines, 1):
             if re.search(r"\\appendix|\\begin\{appendix\}", line):
                 appendix_start = i
                 break
         if appendix_start:
-            appendix_content = "\n".join(lines[appendix_start:appendix_start + 30])
-            if not re.search(r"[Rr]oadmap|[Oo]utline|[Oo]rganization", appendix_content):
+            appendix_head = "\n".join(lines[appendix_start:appendix_start + 40])
+            if not re.search(roadmap_pat, appendix_head):
                 issues.append(Issue(
                     Severity.INFO, filepath, appendix_start, "roadmap-appendix",
                     "Appendix 开头未检测到 roadmap",
-                    fix="在 appendix 开头添加 \\paragraph{Roadmap.} 概述各 section",
+                    fix="在 appendix 开头添加 \\paragraph{Roadmap.}",
                 ))
     return issues
 
 
-def check_informal_formal_labels(lines: list[str], filepath: str) -> list[Issue]:
-    """Check consistency of informal/formal label suffixes."""
+# ===================================================================
+# MACRO / CONSISTENCY CHECKS
+# ===================================================================
+
+def check_probability_expectation(lines: list[str], filepath: str) -> list[Issue]:
+    """Check that probability/expectation notation is consistent."""
     issues = []
-    has_informal = False
-    has_formal = False
-    has_appendix = False
+    # Detect mix of different expectation notations
+    uses_E_macro = False
+    uses_mathbb_E = False
+    uses_bare_E = False
 
-    for line in lines:
-        if re.search(r":informal\b", line):
-            has_informal = True
-        if re.search(r":formal\b", line):
-            has_formal = True
-        if re.search(r"\\appendix|\\begin\{appendix\}", line):
-            has_appendix = True
+    for i, line in enumerate(lines, 1):
+        stripped = _strip_comments(line)
+        if re.search(r"\\E\b(?!\w)", stripped):
+            uses_E_macro = True
+        if re.search(r"\\mathbb\{E\}", stripped):
+            uses_mathbb_E = True
+        # bare E as expectation (heuristic: E[ or E_{)
+        if re.search(r"(?<!\\)(?<!\w)E\s*[\[_{]", stripped):
+            uses_bare_E = True
 
-    if has_appendix and has_informal and not has_formal:
+    style_count = sum([uses_E_macro, uses_mathbb_E, uses_bare_E])
+    if style_count > 1:
         issues.append(Issue(
-            Severity.INFO, filepath, 1, "informal-formal",
-            "检测到 :informal label 但无 :formal label——如果 appendix 有对应 theorem，应添加 :formal 版本",
-        ))
-    if has_formal and not has_informal:
-        issues.append(Issue(
-            Severity.INFO, filepath, 1, "informal-formal",
-            "检测到 :formal label 但无 :informal label——如果 main body 有对应 theorem，应添加 :informal 版本",
+            Severity.WARN, filepath, 1, "expectation-inconsistent",
+            "期望符号不统一 — 检测到多种写法混用（\\E / \\mathbb{E} / bare E）",
+            fix="全文统一使用项目 macro，如 \\E 或 \\mathbb{E}",
         ))
     return issues
 
 
-# ---------------------------------------------------------------------------
-# BibTeX checks
-# ---------------------------------------------------------------------------
+def check_set_separator_consistency(lines: list[str], filepath: str) -> list[Issue]:
+    """Check that set builder notation uses consistent separator."""
+    issues = []
+    uses_colon = False
+    uses_mid = False
+
+    for line in lines:
+        stripped = _strip_comments(line)
+        # \{ ... : ... \} pattern
+        if re.search(r"\\{[^}]*[^:]:[^:][^}]*\\}", stripped):
+            uses_colon = True
+        if re.search(r"\\mid\b", stripped):
+            uses_mid = True
+
+    if uses_colon and uses_mid:
+        issues.append(Issue(
+            Severity.INFO, filepath, 1, "set-separator",
+            "集合条件分隔符不统一 — 同时使用了 : 和 \\mid",
+            fix="全文统一用一种：\\{x \\in X : P(x)\\} 或 \\{x \\in X \\mid P(x)\\}",
+        ))
+    return issues
+
+
+# ===================================================================
+# BIBTEX CHECKS
+# ===================================================================
 
 def check_bibtex(filepath: str) -> list[Issue]:
     """Check BibTeX file for naming conventions."""
@@ -415,61 +593,83 @@ def check_bibtex(filepath: str) -> list[Issue]:
         with open(filepath, "r", encoding="utf-8", errors="replace") as f:
             content = f.read()
     except Exception as e:
-        issues.append(Issue(Severity.ERROR, filepath, 0, "bib-read", f"无法读取文件: {e}"))
+        issues.append(Issue(Severity.ERROR, filepath, 0, "bib-read", f"无法读取: {e}"))
         return issues
 
     entry_pat = re.compile(r"@\w+\{([^,]+),", re.MULTILINE)
+    seen_keys = {}
+
     for m in entry_pat.finditer(content):
         key = m.group(1).strip()
         line = content[:m.start()].count("\n") + 1
 
-        # Check for capitalized key (likely first name or CamelCase)
-        if key[0].isupper() and not re.match(r"^[A-Z]+\d{4}", key):
-            # Could be CamelCase like "HeZhang2016"
-            if re.match(r"[A-Z][a-z]+[A-Z]", key):
-                issues.append(Issue(
-                    Severity.WARN, filepath, line, "bib-key-case",
-                    f"BibTeX key '{key}' 看起来是 CamelCase——应使用全小写 lastname+year 格式",
-                    fix=f"改为如 {key.lower()[:key.index(next(c for c in key[1:] if c.isupper()), len(key))].lower()}" if any(c.isupper() for c in key[1:]) else None,
-                    context=m.group(0),
-                ))
-
-        # Check for year in key
-        if not re.search(r"\d{4}", key):
+        # Duplicate key check
+        if key in seen_keys:
             issues.append(Issue(
-                Severity.INFO, filepath, line, "bib-key-year",
-                f"BibTeX key '{key}' 中未包含年份——建议使用 lastname+year 格式",
+                Severity.ERROR, filepath, line, "bib-key-dup",
+                f"重复 BibTeX key '{key}'（首次出现在第 {seen_keys[key]} 行）",
+                context=m.group(0),
+            ))
+        seen_keys[key] = line
+
+        # CamelCase check
+        if re.match(r"[A-Z][a-z]+[A-Z]", key):
+            issues.append(Issue(
+                Severity.WARN, filepath, line, "bib-key-case",
+                f"BibTeX key '{key}' 是 CamelCase — 应使用全小写 lastname+year",
                 context=m.group(0),
             ))
 
-        # Check for very long keys that might include first names
-        parts = re.findall(r"[a-zA-Z]+", key)
-        if len(parts) >= 3 and not any(c.isdigit() for c in key):
+        # Missing year
+        if not re.search(r"\d{4}", key):
+            issues.append(Issue(
+                Severity.INFO, filepath, line, "bib-key-year",
+                f"BibTeX key '{key}' 中未包含年份 — 建议 lastname+year",
+                context=m.group(0),
+            ))
+
+        # Very long key (might include first names)
+        alpha_parts = re.findall(r"[a-zA-Z]+", key)
+        if len(alpha_parts) >= 3 and not any(c.isdigit() for c in key):
             issues.append(Issue(
                 Severity.INFO, filepath, line, "bib-key-long",
-                f"BibTeX key '{key}' 较长——建议简化为 lastname+year 格式",
+                f"BibTeX key '{key}' 较长 — 建议简化为 lastname+year",
                 context=m.group(0),
             ))
     return issues
 
 
-# ---------------------------------------------------------------------------
-# Main runner
-# ---------------------------------------------------------------------------
+# ===================================================================
+# RUNNER
+# ===================================================================
 
 ALL_TEX_CHECKS = [
+    # Label
     check_label_naming,
     check_label_order,
     check_label_in_star,
+    check_eq_label_prefix,
+    check_informal_formal_labels,
+    # References
     check_equation_ref,
     check_nonumber_vs_notag,
+    # Brackets
     check_bracket_sizing,
+    # Symbols
     check_definition_symbol,
+    check_transpose,
+    check_norm_bars,
     check_log_power,
-    check_eq_label_prefix,
+    check_big_o_constant,
+    # Proof
     check_proof_line_breaks,
+    check_vague_reasons,
+    check_defensive_probability,
+    # Structure
     check_roadmap,
-    check_informal_formal_labels,
+    # Consistency
+    check_probability_expectation,
+    check_set_separator_consistency,
 ]
 
 
@@ -479,7 +679,7 @@ def lint_tex_file(filepath: str) -> list[Issue]:
         with open(filepath, "r", encoding="utf-8", errors="replace") as f:
             lines = f.readlines()
     except Exception as e:
-        return [Issue(Severity.ERROR, filepath, 0, "read-error", f"无法读取文件: {e}")]
+        return [Issue(Severity.ERROR, filepath, 0, "read-error", f"无法读取: {e}")]
 
     issues = []
     for check in ALL_TEX_CHECKS:
@@ -509,7 +709,7 @@ def collect_files(path: str, include_bib: bool) -> tuple[list[str], list[str]]:
 
 def main():
     parser = argparse.ArgumentParser(
-        description="LaTeX 学术写作规范自动检查器",
+        description="LaTeX 学术写作规范自动检查器（基于「打字抄能力」系列）",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog=__doc__,
     )
@@ -519,7 +719,7 @@ def main():
     parser.add_argument("--json", action="store_true", help="输出 JSON 格式")
     parser.add_argument(
         "--severity", choices=["ERROR", "WARN", "INFO"], default="INFO",
-        help="最低显示的严重级别（默认 INFO，即显示所有）",
+        help="最低显示级别（默认 INFO）",
     )
     args = parser.parse_args()
 
@@ -527,7 +727,7 @@ def main():
     tex_files, bib_files = collect_files(args.path, args.bib)
 
     if not tex_files and not bib_files:
-        print(f"未找到 .tex 文件: {args.path}", file=sys.stderr)
+        print(f"未找到 .tex/.bib 文件: {args.path}", file=sys.stderr)
         sys.exit(1)
 
     all_issues: list[Issue] = []
@@ -536,10 +736,7 @@ def main():
     for bf in bib_files:
         all_issues.extend(check_bibtex(bf))
 
-    # Filter by severity
     all_issues = [iss for iss in all_issues if iss.severity <= min_sev]
-
-    # Sort: ERROR first, then WARN, then INFO; within same level by file:line
     all_issues.sort(key=lambda x: (x.severity, x.file, x.line))
 
     if args.json:
@@ -551,19 +748,13 @@ def main():
             counts = {s: 0 for s in Severity}
             for iss in all_issues:
                 counts[iss.severity] += 1
-            summary_parts = []
-            for s in Severity:
-                if counts[s]:
-                    summary_parts.append(f"{counts[s]} {s!s}")
-            print(f"共检测到 {len(all_issues)} 个问题（{', '.join(summary_parts)}）\n")
-
+            parts = [f"{counts[s]} {s!s}" for s in Severity if counts[s]]
+            print(f"共检测到 {len(all_issues)} 个问题（{', '.join(parts)}）\n")
             for iss in all_issues:
                 print(iss.display(fix_preview=args.fix_preview))
                 print()
 
-    # Exit code: 1 if any ERROR, 0 otherwise
-    has_error = any(iss.severity == Severity.ERROR for iss in all_issues)
-    sys.exit(1 if has_error else 0)
+    sys.exit(1 if any(iss.severity == Severity.ERROR for iss in all_issues) else 0)
 
 
 if __name__ == "__main__":
