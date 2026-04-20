@@ -11,7 +11,7 @@ description: >
 
 通用图片生成/编辑工具，基于 Google Gemini 图像生成 API。
 
-> **本 skill 不含任何领域特化逻辑。** 学术论文配图请使用 `paper-figure-gen` skill，它会自动调用本 skill 作为底层引擎。
+> **本 skill 不含任何领域特化逻辑。** 学术论文配图请使用 `academic-paper` skill 的配图子模块，它会调用本 skill 作为底层引擎。
 
 ## Usage
 
@@ -99,7 +99,7 @@ Intent: <original prompt summary>"
 ```
 
 - **默认关闭**：gemini-image-gen 是通用工具，不强制检查
-- 专用 skill（`paper-figure-gen`、`rhetoric-of-decks`）已内置 figure-check 集成
+- 专用 skill（`academic-paper`、`rhetoric-of-decks`）已内置 visual-checker 集成
 - visual-checker 会自动压缩图片再审查，不会撑爆上下文
 - 若报告返回 ❌ REGENERATE，根据 Regeneration Guidance 构造修复 prompt，使用 `--input-image` 重新生成
 
