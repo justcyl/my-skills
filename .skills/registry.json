@@ -1173,38 +1173,19 @@
       "last_updated_at": "2026-04-19T06:42:27Z"
     },
     "py-logger": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/py-logger",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-20T11:37:52Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/py-logger",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-20T11:37:52Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/py-logger",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-20T11:37:52Z"
-        }
-      },
+      "distribution": {},
       "display_name": "exp-logger",
       "description": "为 Python 训练程序提供可组合的实验日志与 TUI 监控组件库。\n当用户需要训练日志、实验可视化、TUI dashboard、TUI 指标回放、\nwandb 或 tensorboard 集成时使用。\n触发语境：「做个训练 logger」「给我写个实验日志系统」「加个 wandb 集成」\n「训练过程可视化」「dashboard 监控训练」「实验回放」「TUI 监控」。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "passed",
       "managed_dirty": false,
       "upstream_enabled": false,
       "report_path": ".skills/reports/py-logger.md",
       "source_path": ".skills/sources/py-logger.json",
-      "skill_path": "py-logger",
+      "skill_path": ".skills/archived-skills/py-logger",
       "upstream_path": ".skills/upstream/py-logger",
       "managed_revision": "sha256:bfe41dfde613eb7182de0959abc2f806665631dc5e9f1163a3379cc1d0318230",
-      "last_updated_at": "2026-04-20T11:37:51Z"
+      "last_updated_at": "2026-04-20T12:29:22Z"
     },
     "visual-checker": {
       "distribution": {

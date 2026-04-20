@@ -1,7 +1,7 @@
 {
   "skill_id": "py-logger",
   "display_name": "exp-logger",
-  "skill_path": "py-logger",
+  "skill_path": ".skills/archived-skills/py-logger",
   "source_type": "local-manual",
   "source": "",
   "source_url": "",
@@ -13,5 +13,7 @@
   "last_imported_at": "2026-04-20T11:37:51Z",
   "upstream_revision": "",
   "managed_revision": "sha256:bfe41dfde613eb7182de0959abc2f806665631dc5e9f1163a3379cc1d0318230",
-  "managed_dirty": false
+  "managed_dirty": false,
+  "archived": true,
+  "archived_at": "2026-04-20T12:29:22Z"
 }
