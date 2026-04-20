@@ -1337,6 +1337,40 @@
       "upstream_path": ".skills/upstream/bilibili-cli",
       "managed_revision": "sha256:70e39be420329dad7bd4dca00fbe825104c3ec5b8cb59d44d38192e63c20acc5",
       "last_updated_at": "2026-04-20T15:36:22Z"
+    },
+    "latex-lint": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/latex-lint",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-20T15:46:01Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/latex-lint",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-20T15:46:01Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/latex-lint",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-20T15:46:01Z"
+        }
+      },
+      "display_name": "latex-lint",
+      "description": "基于「打字抄能力」系列的 LaTeX 学术写作规范检查。当用户请求检查 LaTeX 源码规范、论文排版质量、proof 写作风格时触发。内置 linter 脚本自动检测常见问题（label 命名、引用格式、proof 换行、bracket sizing、BibTeX key 等），并提供修复建议。适用于：\"帮我检查 LaTeX\"\"论文格式检查\"\"lint my tex\"\"proof 写法有没有问题\"\"检查一下 overleaf 项目\"。",
+      "status": "managed",
+      "risk_status": "passed",
+      "managed_dirty": false,
+      "upstream_enabled": false,
+      "report_path": ".skills/reports/latex-lint.md",
+      "source_path": ".skills/sources/latex-lint.json",
+      "skill_path": "latex-lint",
+      "upstream_path": ".skills/upstream/latex-lint",
+      "managed_revision": "sha256:21a98500adec79347fe81a3ed5a86be277f1add0f98471ecf153ccdd167961ff",
+      "last_updated_at": "2026-04-20T15:46:01Z"
     }
   }
 }

@@ -1,0 +1,17 @@
+{
+  "skill_id": "latex-lint",
+  "display_name": "latex-lint",
+  "skill_path": "latex-lint",
+  "source_type": "local-created",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/latex-lint",
+  "last_imported_at": "2026-04-20T15:46:01Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:21a98500adec79347fe81a3ed5a86be277f1add0f98471ecf153ccdd167961ff",
+  "managed_dirty": false
+}

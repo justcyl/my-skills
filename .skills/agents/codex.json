@@ -161,6 +161,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-20T15:36:23Z"
+    },
+    "latex-lint": {
+      "source_path": "latex-lint",
+      "target_path": "/Users/chenyl/.codex/skills/latex-lint",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-04-20T15:46:01Z"
     }
   }
 }
