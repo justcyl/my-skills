@@ -1275,38 +1275,19 @@
       "last_updated_at": "2026-04-20T12:08:29Z"
     },
     "tech-blog": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/tech-blog",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-20T12:08:31Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/tech-blog",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-20T12:08:31Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/tech-blog",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-20T12:08:31Z"
-        }
-      },
+      "distribution": {},
       "display_name": "tech-blog",
       "description": "产出中文技术博客，重点解释工具/库/框架/技术路线背后的设计动机与哲学，而不只是功能说明。适用于“写一篇关于 X 的技术博客”“介绍 X 的设计思想”“解释 X 为什么这样设计”等请求。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "passed",
       "managed_dirty": false,
       "upstream_enabled": false,
       "report_path": ".skills/reports/tech-blog.md",
       "source_path": ".skills/sources/tech-blog.json",
-      "skill_path": "tech-blog",
+      "skill_path": ".skills/archived-skills/tech-blog",
       "upstream_path": ".skills/upstream/tech-blog",
       "managed_revision": "sha256:6efbd12de00b538230f5ac01c965fad5cddd6dbb69be1e6a4b95b19b67be4bfc",
-      "last_updated_at": "2026-04-20T12:08:30Z"
+      "last_updated_at": "2026-04-20T12:17:01Z"
     },
     "academic-paper": {
       "distribution": {

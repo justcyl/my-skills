@@ -148,13 +148,6 @@
       "sync_status": "synced",
       "last_synced_at": "2026-04-20T12:08:30Z"
     },
-    "tech-blog": {
-      "source_path": "tech-blog",
-      "target_path": "/Users/chenyl/.claude/skills/tech-blog",
-      "mode": "symlink",
-      "sync_status": "synced",
-      "last_synced_at": "2026-04-20T12:08:31Z"
-    },
     "cli-creator": {
       "source_path": "cli-creator",
       "target_path": "/Users/chenyl/.claude/skills/cli-creator",
