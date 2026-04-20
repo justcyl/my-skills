@@ -147,6 +147,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-20T11:37:52Z"
+    },
+    "visual-checker": {
+      "source_path": "visual-checker",
+      "target_path": "/Users/chenyl/.codex/skills/visual-checker",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-04-20T12:08:25Z"
     }
   }
 }

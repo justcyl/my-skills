@@ -1,0 +1,17 @@
+{
+  "skill_id": "visual-checker",
+  "display_name": "visual-checker",
+  "skill_path": "visual-checker",
+  "source_type": "local-manual",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/visual-checker",
+  "last_imported_at": "2026-04-20T12:08:24Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:3661b5ecc55f8cb6202179dd352d384f6d8493c47313bdfa232effe7a9a5e588",
+  "managed_dirty": false
+}

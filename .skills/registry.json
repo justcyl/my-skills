@@ -1224,6 +1224,40 @@
       "upstream_path": ".skills/upstream/py-logger",
       "managed_revision": "sha256:bfe41dfde613eb7182de0959abc2f806665631dc5e9f1163a3379cc1d0318230",
       "last_updated_at": "2026-04-20T11:37:51Z"
+    },
+    "visual-checker": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/visual-checker",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-20T12:08:25Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/visual-checker",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-20T12:08:25Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/visual-checker",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-20T12:08:25Z"
+        }
+      },
+      "display_name": "visual-checker",
+      "description": "Visual QA sub-agent for AI-generated images. Spawns a dedicated pi sub-agent via herdr to evaluate image quality, content fidelity, and scene-specific criteria (academic / slides / general). Returns structured pass/fail report with regeneration guidance. Use when you need programmatic visual QA on a generated figure, diagram, or slide.",
+      "status": "managed",
+      "risk_status": "passed",
+      "managed_dirty": false,
+      "upstream_enabled": false,
+      "report_path": ".skills/reports/visual-checker.md",
+      "source_path": ".skills/sources/visual-checker.json",
+      "skill_path": "visual-checker",
+      "upstream_path": ".skills/upstream/visual-checker",
+      "managed_revision": "sha256:3661b5ecc55f8cb6202179dd352d384f6d8493c47313bdfa232effe7a9a5e588",
+      "last_updated_at": "2026-04-20T12:08:24Z"
     }
   }
 }
