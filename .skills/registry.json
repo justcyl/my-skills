@@ -1339,38 +1339,19 @@
       "last_updated_at": "2026-04-20T15:36:22Z"
     },
     "latex-lint": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/latex-lint",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-20T16:17:24Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/latex-lint",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-20T16:17:24Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/latex-lint",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-20T16:17:24Z"
-        }
-      },
+      "distribution": {},
       "display_name": "latex-lint",
       "description": "基于「打字抄能力」系列的 LaTeX 学术写作规范检查。当用户请求检查 LaTeX 源码规范、论文排版质量、proof 写作风格时触发。内置 linter 脚本自动检测常见问题（label 命名、引用格式、bracket sizing、BibTeX key、norm 写法、transpose、常数美学等），并提供修复建议。适用于：\"帮我检查 LaTeX\"\"论文格式检查\"\"lint my tex\"\"proof 写法有没有问题\"\"检查一下 overleaf 项目\"\"notation 有没有问题\"。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "passed",
       "managed_dirty": false,
       "upstream_enabled": false,
       "report_path": ".skills/reports/latex-lint.md",
       "source_path": ".skills/sources/latex-lint.json",
-      "skill_path": "latex-lint",
+      "skill_path": ".skills/archived-skills/latex-lint",
       "upstream_path": ".skills/upstream/latex-lint",
       "managed_revision": "sha256:ea4bb4d9c6f83430dd7dd3dd5dfcd5c3e8cbe2c20b090544f7ec717d010af043",
-      "last_updated_at": "2026-04-20T16:17:23Z"
+      "last_updated_at": "2026-04-20T17:03:55Z"
     },
     "fair-experiment-tracker": {
       "distribution": {

@@ -162,13 +162,6 @@
       "sync_status": "synced",
       "last_synced_at": "2026-04-20T15:36:23Z"
     },
-    "latex-lint": {
-      "source_path": "latex-lint",
-      "target_path": "/Users/chenyl/.codex/skills/latex-lint",
-      "mode": "symlink",
-      "sync_status": "synced",
-      "last_synced_at": "2026-04-20T16:17:24Z"
-    },
     "fair-experiment-tracker": {
       "source_path": "fair-experiment-tracker",
       "target_path": "/Users/chenyl/.codex/skills/fair-experiment-tracker",
