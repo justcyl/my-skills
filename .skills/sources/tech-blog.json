@@ -1,0 +1,17 @@
+{
+  "skill_id": "tech-blog",
+  "display_name": "tech-blog",
+  "skill_path": "tech-blog",
+  "source_type": "local-manual",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/tech-blog",
+  "last_imported_at": "2026-04-20T12:08:30Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:6efbd12de00b538230f5ac01c965fad5cddd6dbb69be1e6a4b95b19b67be4bfc",
+  "managed_dirty": false
+}
