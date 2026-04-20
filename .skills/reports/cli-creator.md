@@ -10,7 +10,7 @@
 
 ## Summary
 
-Spec CLI surface area before implementation - command tree, flags, exit codes, I/O contract. Use when designing or planning a CLI interface.
+从零到可用的 Agent-Native CLI：设计 agent-first 接口规范，从 API 文档/OpenAPI/curl 示例/SDK 构建可安装二进制，最后生成 companion skill。覆盖纯规范设计和完整实现两种场景。
 
 ## Risk Findings
 

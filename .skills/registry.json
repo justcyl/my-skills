@@ -355,19 +355,38 @@
       "last_updated_at": "2026-04-20T12:06:50Z"
     },
     "cli-creator": {
-      "distribution": {},
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/cli-creator",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-20T12:08:32Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/cli-creator",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-20T12:08:32Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/cli-creator",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-20T12:08:32Z"
+        }
+      },
       "display_name": "cli-creator",
-      "description": "Spec CLI surface area before implementation - command tree, flags, exit codes, I/O contract. Use when designing or planning a CLI interface.",
-      "status": "archived",
+      "description": "从零到可用的 Agent-Native CLI：设计 agent-first 接口规范，从 API 文档/OpenAPI/curl 示例/SDK 构建可安装二进制，最后生成 companion skill。覆盖纯规范设计和完整实现两种场景。",
+      "status": "managed",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/cli-creator.md",
       "source_path": ".skills/sources/cli-creator.json",
-      "skill_path": ".skills/archived-skills/cli-creator",
+      "skill_path": "cli-creator",
       "upstream_path": ".skills/upstream/cli-creator",
-      "managed_revision": "sha256:b1c8c65f763b8803608e40c01f2d9b050440f2f2197bb98269f32741d02736a4",
-      "last_updated_at": "2026-03-16T03:51:39Z"
+      "managed_revision": "sha256:4ba29ef548856b70007f4432a3944c3c038a92fbb5cf9ee7d2dce6d719b4dad4",
+      "last_updated_at": "2026-04-20T12:08:31Z"
     },
     "brainstorm-agent": {
       "distribution": {},
