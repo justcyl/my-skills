@@ -1,7 +1,7 @@
 {
   "skill_id": "paper-figure-gen",
   "display_name": "paper-figure-gen",
-  "skill_path": "paper-figure-gen",
+  "skill_path": ".skills/archived-skills/paper-figure-gen",
   "source_type": "local-created",
   "source": "",
   "source_url": "",
@@ -13,5 +13,7 @@
   "last_imported_at": "2026-04-13T17:05:05Z",
   "upstream_revision": "",
   "managed_revision": "sha256:10fdba359e05e020d983673a5cab75d9b001071920bec75ffc7a99376ef5881b",
-  "managed_dirty": false
+  "managed_dirty": false,
+  "archived": true,
+  "archived_at": "2026-04-20T12:11:10Z"
 }

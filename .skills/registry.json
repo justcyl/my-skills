@@ -792,38 +792,19 @@
       "last_updated_at": "2026-04-13T17:05:05Z"
     },
     "paper-format-check": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/paper-format-check",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-13T17:05:12Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/paper-format-check",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-13T17:05:12Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/paper-format-check",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-13T17:05:21Z"
-        }
-      },
+      "distribution": {},
       "display_name": "paper-format-check",
       "description": "AI/NLP 顶会论文格式自动检查。适用于\"检查论文格式\"\"投稿前检查\"\"camera-ready 检查\"\"帮我看看格式对不对\"等请求。覆盖 NeurIPS、ICML、ICLR、ACL/ARR、EMNLP、AAAI 等会议的页数、匿名性、引用、字体嵌入、图表质量等格式要求，含 PDF 转图视觉审查。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": false,
       "report_path": ".skills/reports/paper-format-check.md",
       "source_path": ".skills/sources/paper-format-check.json",
-      "skill_path": "paper-format-check",
+      "skill_path": ".skills/archived-skills/paper-format-check",
       "upstream_path": ".skills/upstream/paper-format-check",
       "managed_revision": "sha256:79894a8b2928246b0ad7d0fedefd7fc0ed4f51eff12acbaea6b39200c13d9f9d",
-      "last_updated_at": "2026-04-13T17:05:06Z"
+      "last_updated_at": "2026-04-20T12:11:10Z"
     },
     "research-idea-validator": {
       "distribution": {
@@ -977,38 +958,19 @@
       "last_updated_at": "2026-04-13T17:05:04Z"
     },
     "paper-figure-gen": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/paper-figure-gen",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-13T17:05:12Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/paper-figure-gen",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-13T17:05:12Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/paper-figure-gen",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-13T17:05:21Z"
-        }
-      },
+      "distribution": {},
       "display_name": "paper-figure-gen",
       "description": ">",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "passed",
       "managed_dirty": false,
       "upstream_enabled": false,
       "report_path": ".skills/reports/paper-figure-gen.md",
       "source_path": ".skills/sources/paper-figure-gen.json",
-      "skill_path": "paper-figure-gen",
+      "skill_path": ".skills/archived-skills/paper-figure-gen",
       "upstream_path": ".skills/upstream/paper-figure-gen",
       "managed_revision": "sha256:10fdba359e05e020d983673a5cab75d9b001071920bec75ffc7a99376ef5881b",
-      "last_updated_at": "2026-04-13T17:05:05Z"
+      "last_updated_at": "2026-04-20T12:11:10Z"
     },
     "paper-dialog-reader": {
       "distribution": {},

@@ -1,7 +1,7 @@
 {
   "skill_id": "paper-format-check",
   "display_name": "paper-format-check",
-  "skill_path": "paper-format-check",
+  "skill_path": ".skills/archived-skills/paper-format-check",
   "source_type": "local-created",
   "source": "",
   "source_url": "",
@@ -13,5 +13,7 @@
   "last_imported_at": "2026-04-13T17:05:06Z",
   "upstream_revision": "",
   "managed_revision": "sha256:79894a8b2928246b0ad7d0fedefd7fc0ed4f51eff12acbaea6b39200c13d9f9d",
-  "managed_dirty": false
+  "managed_dirty": false,
+  "archived": true,
+  "archived_at": "2026-04-20T12:11:10Z"
 }
