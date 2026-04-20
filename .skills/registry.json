@@ -1110,23 +1110,23 @@
           "target_path": "/Users/chenyl/.codex/skills/alan-pipeline",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-20T11:37:55Z"
+          "last_synced_at": "2026-04-20T12:29:15Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/alan-pipeline",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-20T11:37:55Z"
+          "last_synced_at": "2026-04-20T12:29:15Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/alan-pipeline",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-20T11:37:55Z"
+          "last_synced_at": "2026-04-20T12:29:15Z"
         }
       },
       "display_name": "alan-pipeline",
-      "description": "管理研究项目的 card（知识单元）和 run（执行单元）。当用户需要记录实验发现、提出假设、做出决策、创建/执行研究任务时使用。Run 原生支持实验快照（command / seed / config / 源码 / 环境文件），确保 AI 训练实验可复现。适用于 .pipeline/ 目录存在的项目。",
+      "description": "管理研究项目的 card（知识单元）和 run（执行单元）。当用户需要记录实验发现、提出假设、做出决策、创建/执行研究任务时使用。Run 支持实验快照与结构化日志，确保 AI 训练实验可复现。适用于 .pipeline/ 目录存在的项目。",
       "status": "managed",
       "risk_status": "warned",
       "managed_dirty": false,
@@ -1135,8 +1135,8 @@
       "source_path": ".skills/sources/alan-pipeline.json",
       "skill_path": "alan-pipeline",
       "upstream_path": ".skills/upstream/alan-pipeline",
-      "managed_revision": "sha256:3bac355d50a7358d43fc9897ab0cc85d289a8e33a89e3a9156c003ea7c97c8ec",
-      "last_updated_at": "2026-04-20T11:37:55Z"
+      "managed_revision": "sha256:e8c811af8e9c849d4c02ac5706a47f4d4f92b7cc2ac93f1fd7668a333b0d6661",
+      "last_updated_at": "2026-04-20T12:29:15Z"
     },
     "figure-checker": {
       "distribution": {

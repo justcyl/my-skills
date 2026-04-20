@@ -1,6 +1,6 @@
 ---
 name: alan-pipeline
-description: 管理研究项目的 card（知识单元）和 run（执行单元）。当用户需要记录实验发现、提出假设、做出决策、创建/执行研究任务时使用。Run 原生支持实验快照（command / seed / config / 源码 / 环境文件），确保 AI 训练实验可复现。适用于 .pipeline/ 目录存在的项目。
+description: 管理研究项目的 card（知识单元）和 run（执行单元）。当用户需要记录实验发现、提出假设、做出决策、创建/执行研究任务时使用。Run 支持实验快照与结构化日志，确保 AI 训练实验可复现。适用于 .pipeline/ 目录存在的项目。
 ---
 
 # Research Pipeline
@@ -168,126 +168,17 @@ verifier: |
   否则 → loop
 ```
 
-可选字段：`model`（指定模型）、`thinking`（思考等级）、`tags`（标签）、`experiment`（实验快照，见下文）。
+可选字段：`model`（指定模型）、`thinking`（思考等级）、`tags`（标签）、`experiment`（实验快照）。
 
 ### 实验 Run
 
-当 run 的 instruction 是**跑一个 AI 训练/评估实验**时，在 YAML 中加 `experiment:` 字段。Run 执行前必须先建快照。
+当 run 用于跑 AI 训练/评估实验时，在 YAML 中加 `experiment:` 字段。
+执行前必须在 `.pipeline/runs/<slug>.snapshot/` 中完成源码快照、环境文件保存、metadata 填写，
+并在训练代码中配置结构化 JSONL 日志以确保指标可回放。
 
-**run YAML（含 experiment:）示例：**
-
-```yaml
-context: |
-  基础模型：Llama-3-8B
-  数据集：SynthWiki-32k
-
-instruction: |
-  跑 3 seeds (42/43/44) 验证 debiased k=1 能否匹配 k=5 精度。
-  结果记录到 exp card。
-
-verifier: |
-  3 seeds 都跑完？BLEU 记录？exp card 产出？全部完成 → end，否则 → loop
-
-experiment:
-  command: "python train.py --config configs/base.yaml --seed 42"
-  seed: 42
-  src: src/                 # 要快照的源码目录（相对项目根）
-  environment: uv           # uv | pip | conda
-  config:
-    lr: 3e-4
-    batch_size: 32
-    epochs: 100
-    model: transformer-base
-```
-
-**实验前建快照（必须在启动训练前完成）：**
-
-```bash
-SLUG=<slug>
-mkdir -p .pipeline/runs/$SLUG.snapshot/{src,environment,logs}
-
-# 1. 拷贝源码（推荐 git archive，干净无临时文件）
-git archive HEAD | tar -x -C .pipeline/runs/$SLUG.snapshot/src/
-# 或：cp -r src/ .pipeline/runs/$SLUG.snapshot/src/
-
-# 2. 保存环境文件
-cp uv.lock .pipeline/runs/$SLUG.snapshot/environment/          # uv
-# pip freeze > .pipeline/runs/$SLUG.snapshot/environment/requirements.txt
-# conda env export > .pipeline/runs/$SLUG.snapshot/environment/conda-env.yaml
-
-# 3. 检查工作区，建议先 commit 再实验
-git rev-parse HEAD   # → 填入 metadata.yaml git_commit
-git status --short   # 有未提交改动 → git_dirty: true，建议先 commit
-```
-
-> ⚠️ **可复现守则**：工作区有未提交改动时，源码快照比 git commit 更重要。强烈建议实验前先 `git commit`。
-
-**实验前写 `metadata.yaml`：**
-
-```yaml
-# .pipeline/runs/<slug>.snapshot/metadata.yaml
-
-# ── 必填（实验前） ───────────────────────────────────────────
-command: "python train.py --config configs/base.yaml --seed 42"
-seed: 42
-environment:
-  manager: uv            # uv | pip | conda
-  lock_file: environment/uv.lock
-  python: "3.11.9"
-config:
-  lr: 3e-4
-  batch_size: 32
-  epochs: 100
-  model: transformer-base
-
-# ── 推荐（实验前） ───────────────────────────────────────────
-git_commit: ""           # git rev-parse HEAD
-git_dirty: false         # 有未提交改动时置 true
-timestamp_start: ""      # ISO 8601
-hostname: ""             # uname -n
-hardware:
-  gpu: ""                # nvidia-smi --query-gpu=name --format=csv,noheader
-  cpu: ""
-  ram_gb: 0
-
-# ── 必填（实验后） ───────────────────────────────────────────
-status: running          # running | completed | failed | killed
-timestamp_end: ""
-result:
-  primary_metric: ""     # 主要指标名
-  primary_value: null
-  extra: {}              # 其他关键指标
-notes: ""                # 异常观察、调参动机等
-```
-
-**启动实验（重定向日志）：**
-
-```bash
-python train.py ... \
-  2>.pipeline/runs/$SLUG.snapshot/logs/stderr.log \
-  | tee .pipeline/runs/$SLUG.snapshot/logs/stdout.log
-```
-
-**实验后：** 更新 `status / timestamp_end / result / notes`，将关键发现升级为 exp card，card `links:` 引用 `runs/<slug>.snapshot/metadata.yaml`。
-
-**Seed 可复现——代码端：**
-
-```python
-import random, os, numpy as np, torch
-
-def set_seed(seed: int):
-    random.seed(seed)
-    os.environ["PYTHONHASHSEED"] = str(seed)
-    np.random.seed(seed)
-    torch.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed)
-    torch.backends.cudnn.deterministic = True
-    torch.backends.cudnn.benchmark = False  # 牺牲速度换确定性
-
-set_seed(42)  # 在数据加载 / 模型初始化之前调用
-```
-
-`seed` 字段的值必须与代码中实际传入 `set_seed()` 的值一致。
+完整协议、目录结构、metadata 模板、日志接入、watch/replay 用法见
+[references/experiment-run.md](references/experiment-run.md)。
+日志组件 API 见 [references/logger-components.md](references/logger-components.md)。
 
 ### 执行 run
 

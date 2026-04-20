@@ -34,6 +34,7 @@ verifier: |
 | `model` | 每轮 session 使用的模型 | `anthropic/claude-sonnet-4-20250514` |
 | `thinking` | 思考等级 | `medium` |
 | `tags` | 标签，方便查找 | `[autoresearch, lr]` |
+| `experiment` | 实验快照配置 | 见 [experiment-run.md](experiment-run.md) |
 
 ## 一次性 Run vs 循环 Run
 
