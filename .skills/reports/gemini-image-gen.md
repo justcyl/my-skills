@@ -10,7 +10,10 @@
 
 ## Summary
 
->
+Generate/edit images with Gemini image models (default: gemini-3.1-flash-image-preview).
+Use for any image create/modify request. Supports text-to-image + image-to-image editing;
+1K/2K/4K resolution; base-url gateways and provider fallback (gemini-native/openai-chat-compat).
+Use --model to select a different model.
 
 ## Risk Findings
 

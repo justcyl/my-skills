@@ -10,8 +10,8 @@
   "bootstrap": true,
   "upstream_enabled": false,
   "upstream_path": ".skills/upstream/gemini-image-gen",
-  "last_imported_at": "2026-04-13T17:05:04Z",
+  "last_imported_at": "2026-04-20T13:17:10Z",
   "upstream_revision": "",
-  "managed_revision": "sha256:54d44e78457129f179e0478cce417ca19041c75bfba55da138c23e7559e607be",
+  "managed_revision": "sha256:a8912dea9b1f7e1c1b0a19b8fa3c6b57d2a195ea11faa7a992964c84ae3aa4f9",
   "managed_dirty": false
 }
