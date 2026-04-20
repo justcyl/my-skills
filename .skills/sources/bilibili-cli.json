@@ -1,0 +1,17 @@
+{
+  "skill_id": "bilibili-cli",
+  "display_name": "bilibili-cli",
+  "skill_path": "bilibili-cli",
+  "source_type": "github",
+  "source": "https://github.com/public-clis/bilibili-cli",
+  "source_url": "https://github.com/public-clis/bilibili-cli.git",
+  "ref": "",
+  "subpath": ".",
+  "bootstrap": true,
+  "upstream_enabled": true,
+  "upstream_path": ".skills/upstream/bilibili-cli",
+  "last_imported_at": "2026-04-20T15:36:22Z",
+  "upstream_revision": "sha256:70e39be420329dad7bd4dca00fbe825104c3ec5b8cb59d44d38192e63c20acc5",
+  "managed_revision": "sha256:70e39be420329dad7bd4dca00fbe825104c3ec5b8cb59d44d38192e63c20acc5",
+  "managed_dirty": false
+}

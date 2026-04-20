@@ -1303,6 +1303,40 @@
       "upstream_path": ".skills/upstream/academic-paper",
       "managed_revision": "sha256:3f153d3495a9e3adae1109ceb7659f3d8eef3d13341d611251222041682e2e16",
       "last_updated_at": "2026-04-20T13:51:38Z"
+    },
+    "bilibili-cli": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/bilibili-cli",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-20T15:36:23Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/bilibili-cli",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-20T15:36:23Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/bilibili-cli",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-20T15:36:23Z"
+        }
+      },
+      "display_name": "bilibili-cli",
+      "description": "CLI skill for Bilibili (哔哩哔哩, B站) with token-efficient YAML output for AI agents to browse videos, users, search, trending, dynamics, favorites, and interactions from the terminal",
+      "status": "managed",
+      "risk_status": "warned",
+      "managed_dirty": false,
+      "upstream_enabled": true,
+      "report_path": ".skills/reports/bilibili-cli.md",
+      "source_path": ".skills/sources/bilibili-cli.json",
+      "skill_path": "bilibili-cli",
+      "upstream_path": ".skills/upstream/bilibili-cli",
+      "managed_revision": "sha256:70e39be420329dad7bd4dca00fbe825104c3ec5b8cb59d44d38192e63c20acc5",
+      "last_updated_at": "2026-04-20T15:36:22Z"
     }
   }
 }

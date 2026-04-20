@@ -154,6 +154,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-20T13:51:38Z"
+    },
+    "bilibili-cli": {
+      "source_path": "bilibili-cli",
+      "target_path": "/Users/chenyl/.agents/skills/bilibili-cli",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-04-20T15:36:23Z"
     }
   }
 }
