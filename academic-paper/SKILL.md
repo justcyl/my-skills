@@ -274,169 +274,31 @@ Method & BLEU & ROUGE-L \\
 
 ---
 
-## 配图生成（figure-gen 子模块）
+## 配图生成
 
-为学术论文生成 publication-quality 概念图：架构图、pipeline、概念图、对比图。
+详见 [references/figure-gen.md](references/figure-gen.md)。
 
-> 数据驱动图表（bar chart / line plot / heatmap）不属于本模块，用 matplotlib/seaborn 直接绘制。
+底层引擎：gemini-image-gen；视觉审查：visual-checker（scene: `academic`）；最多 3 轮 inspect-revise，确认后升 4K 终稿。
 
-### 配图类型
+> 数据驱动图表（bar chart / line plot / heatmap）用 matplotlib/seaborn 直接绘制，不走本模块。
 
-| 类型 | 用途 | 关键词 |
-|------|------|--------|
-| `architecture` | Method Overview / Figure 1 | 架构图、framework |
-| `pipeline` | 多步骤流程 | pipeline、workflow |
-| `concept` | 动机 / 直觉 / 问题定义 | concept、motivation |
-| `comparison` | A vs B / Before-After | 对比、vs |
+<!-- figure-gen content moved to references/figure-gen.md -->
 
-### Prompt 工程
+## 格式检查
 
-**通用学术约束（每个 prompt 必须追加）：**
+详见 [references/format-check.md](references/format-check.md)。
 
-```
-CRITICAL STYLE REQUIREMENTS:
-- Flat vector illustration style, clean lines, minimalist academic aesthetic
-- Background: pure white (#FFFFFF), absolutely no texture, gradient, or pattern
-- Color palette: muted pastel tones only (soft blue, warm orange, sage green, light gray)
-- NO photorealistic rendering, NO 3D shadows, NO glossy/metallic effects
-- NO decorative elements, NO ornamental borders, NO watermarks
-- Clean geometric shapes: rectangles, rounded rectangles, circles, arrows
-- Professional and restrained — this is for a top-tier academic paper, not a poster
-```
-
-**类型专用前缀：**
-
-- **architecture**: `Create a technical architecture diagram for an academic paper. Layout: clear left-to-right or top-to-bottom data flow. Components: labeled rectangular modules. Connections: clean directional arrows. Group related components with subtle background regions.`
-- **pipeline**: `Create a horizontal step-by-step pipeline diagram. Each stage: rounded rectangle with concise label. Stages connected by clean arrows. Subtle color coding for phases.`
-- **concept**: `Create a minimal conceptual illustration. Simple abstract geometric shapes. Maximum clarity, minimum detail. Focus on the core insight.`
-- **comparison**: `Create a side-by-side comparison diagram. Clear visual separation between panels. Consistent encoding, highlight key differences.`
-
-**文字处理策略：**
-
-1. 先尝试带文字 — 在 prompt 中列出所有标签及位置
-2. 若文字渲染失败（乱码/拼错）→ 切换无文字模式：`Do NOT render any text. Leave blank spaces.` 后期手动叠加
-
-### 配图工作流
-
-使用 gemini-image-gen skill 的 `generate_image.py` 脚本作为生图引擎。
-
-**Step 1 — 1K 草稿生成**
-
-使用 `--resolution 1K` 快速出稿。
-
-**Step 2 — visual-checker 审查（最多 3 轮）**
-
-生成后调用 visual-checker（scene: `academic`）做自动视觉审查：
-
-- ✅ PASS → 进入 Step 3
-- ⚠️ MINOR → 可选修复
-- ❌ REGENERATE → 根据 Regeneration Guidance 用 `--input-image` 编辑修复后再次检查
-
-3 轮未通过 → 保存最佳版本，告知用户具体不足，建议 draw.io / Figma / TikZ 手动微调。
-
-**Step 3 — 4K 终稿**
-
-确认后使用 `--resolution 4K` 生成高分辨率终稿。
-
-### 配图已知限制
-
-- 文字渲染不稳定（复杂标注建议后期叠加）
-- 几何精度有限（对齐、等距难精确）
-- 跨图风格一致性需用 `--input-image` 参考前图
-- 不适用于数据驱动图表
-
----
-
-## 格式检查（format-check 子模块）
-
-投稿前 / camera-ready 的自动化格式检查。
-
-### 需要用户提供
-
-- PDF 文件路径
-- 目标会议 + 年份
-- 论文类型（投稿版 / camera-ready）
-
-### 自动化检查
-
-**元数据检查：**
+硬规则自动检查脚本（纸张尺寸 / 字体嵌入 / 匿名性 / 必需章节 / 编译日志等）：
 
 ```bash
-pdfinfo paper.pdf | grep "Pages"          # 页数
-pdfinfo paper.pdf | grep "Page size"      # 纸张（US Letter: 612 × 792 pts）
-pdffonts paper.pdf | grep -v "yes"        # 字体嵌入（camera-ready 全部 yes）
-pdfinfo paper.pdf | grep -i "Author"      # 双盲不能有作者
+bash ~/.agents/skills/academic-paper/scripts/check_hard_rules.sh \
+  paper.pdf <conference> <submission|camera-ready> [--paper-type long|short] [--log main.log]
 ```
 
-**匿名性检查（双盲投稿版）：**
+脚本失败（exit 1）= 存在 desk-reject 风险的硬规则违反；警告（exit 0）= 需人工复核。
+视觉审查（逐页 visual-checker）默认关闭，用户明确要求时启用。
 
-```bash
-pdftotext paper.pdf /tmp/paper-text.txt
-grep -inE "our (previous|prior|earlier) (work|paper|study)" /tmp/paper-text.txt
-grep -inE "university of|institute of|laboratory" /tmp/paper-text.txt
-grep -inE "funded by|grant|support.*from" /tmp/paper-text.txt
-grep -inE "available at https?://" /tmp/paper-text.txt
-```
-
-**编译日志检查：**
-
-```bash
-grep "^!" *.log                            # 致命错误（必须为 0）
-grep -cE "Overfull|Underfull" *.log        # 溢出警告
-grep "Citation.*undefined" *.log           # 未定义引用（必须为 0）
-grep "multiply defined" *.log              # 重复 label
-```
-
-**结构完整性：**
-
-| 章节 | NeurIPS | ICML | ICLR | ACL/ARR | AAAI |
-|------|---------|------|------|---------|------|
-| Abstract | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Limitations | — | — | — | **必需** | — |
-| Ethics/Impact | 推荐 | **推荐** | — | 推荐 | — |
-| NLP Checklist | — | — | — | **必需** | — |
-
-**引用检查：**
-
-```bash
-grep -c "\[?\]" /tmp/paper-text.txt        # [?] 未解析引用
-```
-
-### 视觉审查（可选，用户要求时启用）
-
-将 PDF 转为页面图片后，逐页使用 visual-checker（scene: `academic`）审查：
-
-```bash
-mkdir -p /tmp/paper-review
-pdftoppm -jpeg -jpegopt quality=85 -r 150 paper.pdf /tmp/paper-review/page
-```
-
-检查项包括：边距溢出、图表可读性、label 重叠、caption 位置、双栏对齐、字号一致性、灰度可辨识、首页作者信息。
-
-### 输出报告
-
-```markdown
-# 格式检查报告
-
-**会议**: [name]  **类型**: [投稿/camera-ready]  **日期**: [date]
-
-| 检查项 | 状态 | 说明 |
-|--------|------|------|
-| 页数 | ✅/❌ | |
-| 纸张尺寸 | ✅/❌ | |
-| 字体嵌入 | ✅/❌ | |
-| 匿名性 | ✅/⚠️/❌ | |
-| 编译警告 | ✅/⚠️ | |
-| 未定义引用 | ✅/❌ | |
-| 必需章节 | ✅/❌ | |
-| 视觉审查 | ✅/⚠️ | |
-
-## ❌ 必须修复（desk reject 风险）
-## ⚠️ 建议修复
-## ✅ 已通过
-```
-
----
+<!-- format-check content moved to references/format-check.md -->
 
 ## 投稿前自查清单
 
