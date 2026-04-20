@@ -1258,6 +1258,40 @@
       "upstream_path": ".skills/upstream/visual-checker",
       "managed_revision": "sha256:3661b5ecc55f8cb6202179dd352d384f6d8493c47313bdfa232effe7a9a5e588",
       "last_updated_at": "2026-04-20T12:08:24Z"
+    },
+    "academic-blog": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/academic-blog",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-20T12:08:30Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/academic-blog",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-20T12:08:30Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/academic-blog",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-20T12:08:30Z"
+        }
+      },
+      "display_name": "academic-blog",
+      "description": "生成 metauto.ai/neuralcomputer 风格的学术研究随笔 HTML 页面。多文件架构（CSS/JS 静态不动，agent 只生成内容 HTML）。支持封面图、多章节、对比表格、代码卡片（syntax highlight）、KaTeX 公式（颜色标注）、多类型边注（术语/符号/译注）、内联引用、BibTeX 引用块、可折叠摘要、story-aside callout、图片 lightbox。适用于：把论文/博客/技术随笔生成为精美 HTML 发布页面。",
+      "status": "managed",
+      "risk_status": "warned",
+      "managed_dirty": false,
+      "upstream_enabled": false,
+      "report_path": ".skills/reports/academic-blog.md",
+      "source_path": ".skills/sources/academic-blog.json",
+      "skill_path": "academic-blog",
+      "upstream_path": ".skills/upstream/academic-blog",
+      "managed_revision": "sha256:eb64796d328256a3e2889f90332e684bad590816730d4ff2c8ed480bad518369",
+      "last_updated_at": "2026-04-20T12:08:29Z"
     }
   }
 }
