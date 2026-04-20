@@ -1193,19 +1193,19 @@
           "target_path": "/Users/chenyl/.codex/skills/visual-checker",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-20T12:08:25Z"
+          "last_synced_at": "2026-04-20T13:17:30Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/visual-checker",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-20T12:08:25Z"
+          "last_synced_at": "2026-04-20T13:17:30Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/visual-checker",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-20T12:08:25Z"
+          "last_synced_at": "2026-04-20T13:17:30Z"
         }
       },
       "display_name": "visual-checker",
@@ -1218,8 +1218,8 @@
       "source_path": ".skills/sources/visual-checker.json",
       "skill_path": "visual-checker",
       "upstream_path": ".skills/upstream/visual-checker",
-      "managed_revision": "sha256:3661b5ecc55f8cb6202179dd352d384f6d8493c47313bdfa232effe7a9a5e588",
-      "last_updated_at": "2026-04-20T12:08:24Z"
+      "managed_revision": "sha256:a0bc0ed6b0bd24cf203f6f00965fbf96b6fa85a6a2486a17ae63188d4b592e68",
+      "last_updated_at": "2026-04-20T13:17:29Z"
     },
     "academic-blog": {
       "distribution": {

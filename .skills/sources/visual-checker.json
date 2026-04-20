@@ -10,8 +10,8 @@
   "bootstrap": true,
   "upstream_enabled": false,
   "upstream_path": ".skills/upstream/visual-checker",
-  "last_imported_at": "2026-04-20T12:08:24Z",
+  "last_imported_at": "2026-04-20T13:17:29Z",
   "upstream_revision": "",
-  "managed_revision": "sha256:3661b5ecc55f8cb6202179dd352d384f6d8493c47313bdfa232effe7a9a5e588",
+  "managed_revision": "sha256:a0bc0ed6b0bd24cf203f6f00965fbf96b6fa85a6a2486a17ae63188d4b592e68",
   "managed_dirty": false
 }
