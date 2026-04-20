@@ -1,0 +1,17 @@
+{
+  "skill_id": "academic-paper",
+  "display_name": "academic-paper",
+  "skill_path": "academic-paper",
+  "source_type": "local-created",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/academic-paper",
+  "last_imported_at": "2026-04-20T12:09:08Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:cc6c1fedfeca82860d56a0fabb26843fd36640bd9f98678e1769ca69c9c2b7d4",
+  "managed_dirty": false
+}

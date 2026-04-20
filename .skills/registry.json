@@ -1345,6 +1345,21 @@
       "upstream_path": ".skills/upstream/tech-blog",
       "managed_revision": "sha256:6efbd12de00b538230f5ac01c965fad5cddd6dbb69be1e6a4b95b19b67be4bfc",
       "last_updated_at": "2026-04-20T12:08:30Z"
+    },
+    "academic-paper": {
+      "distribution": {},
+      "display_name": "academic-paper",
+      "description": "AI 学术论文全周期写作。覆盖选模板、文献调研、结构化写作、配图生成、格式检查、投稿前审查。内置论文配图（figure-gen）与格式检查（format-check）子模块。搭配 overleaf、gemini-image-gen、visual-checker 使用。",
+      "status": "created",
+      "risk_status": "pending",
+      "managed_dirty": false,
+      "upstream_enabled": false,
+      "report_path": ".skills/reports/academic-paper.md",
+      "source_path": ".skills/sources/academic-paper.json",
+      "skill_path": "academic-paper",
+      "upstream_path": ".skills/upstream/academic-paper",
+      "managed_revision": "sha256:cc6c1fedfeca82860d56a0fabb26843fd36640bd9f98678e1769ca69c9c2b7d4",
+      "last_updated_at": "2026-04-20T12:09:08Z"
     }
   }
 }
