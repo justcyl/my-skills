@@ -1,0 +1,17 @@
+{
+  "skill_id": "py-logger",
+  "display_name": "exp-logger",
+  "skill_path": "py-logger",
+  "source_type": "local-manual",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/py-logger",
+  "last_imported_at": "2026-04-20T11:37:51Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:bfe41dfde613eb7182de0959abc2f806665631dc5e9f1163a3379cc1d0318230",
+  "managed_dirty": false
+}
