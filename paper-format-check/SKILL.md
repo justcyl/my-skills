@@ -139,7 +139,7 @@ grep -ic "limitation" /tmp/paper-text.txt
 
 > **此步骤默认跳过**，仅在用户明确要求时启用（如「帮我看看视觉效果」「用视觉检查」「开启视觉审查」）。
 
-启用后，先将 PDF 转为页面图片，再使用 `figure-checker` subagent 逐页审查。
+启用后，先将 PDF 转为页面图片，再使用 `visual-checker` subagent 逐页审查。
 
 ```bash
 # 将 PDF 每页转为 JPEG（150 DPI + quality 85，平衡清晰度与 token 消耗）
@@ -147,12 +147,12 @@ mkdir -p /tmp/paper-review
 pdftoppm -jpeg -jpegopt quality=85 -r 150 paper.pdf /tmp/paper-review/page
 ```
 
-> **为什么是 150 DPI JPEG**：200 DPI PNG 每页约 100KB，150 DPI JPEG q85 每页约 50KB，体积减半，token 消耗显著降低，双栏论文的小字仍可读。figure-checker 内部会进一步压缩，无需额外处理。
+> **为什么是 150 DPI JPEG**：200 DPI PNG 每页约 100KB，150 DPI JPEG q85 每页约 50KB，体积减半，token 消耗显著降低，双栏论文的小字仍可读。visual-checker 内部会进一步压缩，无需额外处理。
 
-为每一页调用 `figure-checker`：
+为每一页调用 `visual-checker`：
 
 ```text
-spawn agent=figure-checker task="Check the image at: /tmp/paper-review/page-01.jpg
+spawn agent=visual-checker task="Check the image at: /tmp/paper-review/page-01.jpg
 Scene: academic
 Intent: Page N of a <conference> paper (<submission|camera-ready>)
 
@@ -161,7 +161,7 @@ Additional context:
 - Check for: margin overflow, figure/table readability, label overlap, caption placement, column alignment, font size consistency, grayscale distinguishability, first-page author visibility"
 ```
 
-汇总所有页面的 figure-checker 报告，将发现的问题纳入 Phase 7 输出报告。figure-checker 自动覆盖以下检查项：
+汇总所有页面的 visual-checker 报告，将发现的问题纳入 Phase 7 输出报告。visual-checker 自动覆盖以下检查项：
 
 | 检查项 | 具体内容 |
 |--------|---------|

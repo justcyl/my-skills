@@ -112,7 +112,7 @@ Leave clean blank spaces where labels would go. Text will be added in post-proce
 
 ## 工作流
 
-> 本 skill 使用 `figure-checker` subagent 进行自动视觉质量检查。确保该 agent 已配置在 `~/.pi/agent/agents/figure-checker.md`。
+> 本 skill 使用 `visual-checker` subagent 进行自动视觉质量检查。确保该 agent 已配置在 `~/.pi/agent/agents/visual-checker.md`。
 
 ### Step 1: 理解需求
 
@@ -146,12 +146,12 @@ uv run $GEMINI_SCRIPT \
 
 ### Step 4: 强制 Inspect-Revise 循环（最多 3 轮）
 
-生成后，**必须** 调用 `figure-checker` subagent 做自动视觉审查，而不是手工逐项检查。
+生成后，**必须** 调用 `visual-checker` subagent 做自动视觉审查，而不是手工逐项检查。
 
 调用格式：
 
 ```text
-spawn agent=figure-checker task="Check the image at: figures/<draft>.png
+spawn agent=visual-checker task="Check the image at: figures/<draft>.png
 Scene: academic
 Intent: <constructed prompt summary - what this figure should show>
 
@@ -160,7 +160,7 @@ Additional context:
 - Required labels: <list of text labels that should appear>"
 ```
 
-根据 `figure-checker` 返回报告处理：
+根据 `visual-checker` 返回报告处理：
 
 - ✅ **PASS** → 直接进入 Step 5
 - ⚠️ **MINOR ISSUES** → 可选地做小修复，然后进入 Step 5

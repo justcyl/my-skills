@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Usage: invoke.sh <image_path> <scene> <intent> [extra_context]
 #
-# Spawns a figure-checker sub-agent using pi --print and prints the QA report.
-# Called by the figure-checker skill via herdr.
+# Spawns a visual-checker sub-agent using pi --print and prints the QA report.
+# Called by the visual-checker skill via herdr.
 
 set -euo pipefail
 
@@ -34,8 +34,8 @@ if [[ -n "$EXTRA" ]]; then
 $EXTRA"
 fi
 
-# Run the figure-checker sub-agent
-# --system-prompt: replaces default coding-assistant prompt with figure-checker instructions
+# Run the visual-checker sub-agent
+# --system-prompt: replaces default coding-assistant prompt with visual-checker instructions
 # --no-skills/--no-context-files/--no-extensions: isolate the sub-agent from host environment
 exec pi --print \
   --model "axonhub/gemini-3.1-pro-preview" \

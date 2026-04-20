@@ -247,14 +247,14 @@ TikZ 错误不会触发编译警告，必须手动检查。详见 `references/ti
 
 > **此步骤默认跳过**，仅在用户明确要求时启用（如「帮我看看视觉效果」「用视觉检查」「开启视觉审查」）。
 
-启用后，先将 PDF 转为图片，再为每一页 slide 分别启动 `figure-checker` 子代理做视觉审查。
+启用后，先将 PDF 转为图片，再为每一页 slide 分别启动 `visual-checker` 子代理做视觉审查。
 
 ```bash
 # Convert PDF to slide images
 pdftoppm -jpeg -jpegopt quality=85 -r 150 deck.pdf /tmp/deck-review/slide
 
-# For each slide image, spawn figure-checker
-spawn agent=figure-checker task="Check the image at: /tmp/deck-review/slide-01.jpg
+# For each slide image, spawn visual-checker
+spawn agent=visual-checker task="Check the image at: /tmp/deck-review/slide-01.jpg
 Scene: slides
 Intent: <slide title or content description>
 
@@ -264,9 +264,9 @@ Additional context:
 - Check for: text overflow, readability at distance, layout balance, color contrast"
 ```
 
-> **为什么是 150 DPI JPEG**：`figure-checker` 会在内部处理图像压缩与视觉审查输入，150 DPI JPEG 已足够清晰且体积较小，适合直接使用，无需额外转 PNG 或进一步压缩。
+> **为什么是 150 DPI JPEG**：`visual-checker` 会在内部处理图像压缩与视觉审查输入，150 DPI JPEG 已足够清晰且体积较小，适合直接使用，无需额外转 PNG 或进一步压缩。
 
-`figure-checker` 会自动检查以下问题：
+`visual-checker` 会自动检查以下问题：
 
 | 检查项 | 具体内容 |
 |--------|----------|

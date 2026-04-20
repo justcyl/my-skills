@@ -1,5 +1,5 @@
 ---
-name: research-essay-page
+name: academic-blog
 description: 生成 metauto.ai/neuralcomputer 风格的学术研究随笔 HTML 页面。多文件架构（CSS/JS 静态不动，agent 只生成内容 HTML）。支持封面图、多章节、对比表格、代码卡片（syntax highlight）、KaTeX 公式（颜色标注）、多类型边注（术语/符号/译注）、内联引用、BibTeX 引用块、可折叠摘要、story-aside callout、图片 lightbox。适用于：把论文/博客/技术随笔生成为精美 HTML 发布页面。
 ---
 
@@ -80,8 +80,8 @@ style.css               ~2015 (多文件推荐)
 
 ```bash
 # 复制 CSS/JS（不需修改）
-cp ~/.agents/skills/research-essay-page/style.css ./style.css
-cp ~/.agents/skills/research-essay-page/script.js ./script.js
+cp ~/.agents/skills/academic-blog/style.css ./style.css
+cp ~/.agents/skills/academic-blog/script.js ./script.js
 ```
 
 ```python
@@ -163,7 +163,7 @@ grep "</html>" index.html       # 确认文件有正确结尾
 生成初稿后，**必须**运行 `refine_check.py` 进行自动校验，根据失败项修复后重新检查，直到全部通过。
 
 ```bash
-python3 ~/.agents/skills/research-essay-page/refine_check.py <output.html>
+python3 ~/.agents/skills/academic-blog/refine_check.py <output.html>
 ```
 
 检查清单涵盖 6 大类、22+ 项检查：

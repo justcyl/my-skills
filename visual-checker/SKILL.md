@@ -1,5 +1,5 @@
 ---
-name: figure-checker
+name: visual-checker
 description: Visual QA sub-agent for AI-generated images. Spawns a dedicated pi sub-agent via herdr to evaluate image quality, content fidelity, and scene-specific criteria (academic / slides / general). Returns structured pass/fail report with regeneration guidance. Use when you need programmatic visual QA on a generated figure, diagram, or slide.
 ---
 
@@ -31,7 +31,7 @@ Prepare three values before invoking:
 
 ## Invocation via herdr
 
-The figure-checker runs as a **separate pi sub-agent** in a herdr pane. Use four steps:
+The visual-checker runs as a **separate pi sub-agent** in a herdr pane. Use four steps:
 
 ### Step 1 — Split a new pane
 
@@ -51,7 +51,7 @@ Use the `invoke.sh` helper to avoid shell escaping issues with multiline content
 {
   "action": "run",
   "pane": "figure-qa",
-  "command": "bash ~/.agents/skills/figure-checker/scripts/invoke.sh '<image_path>' '<scene>' '<intent>'"
+  "command": "bash ~/.agents/skills/visual-checker/scripts/invoke.sh '<image_path>' '<scene>' '<intent>'"
 }
 ```
 
@@ -61,7 +61,7 @@ With optional extra context:
 {
   "action": "run",
   "pane": "figure-qa",
-  "command": "bash ~/.agents/skills/figure-checker/scripts/invoke.sh '/tmp/fig.png' 'academic' 'Pipeline overview of our method' 'This is Figure 1 in the paper'"
+  "command": "bash ~/.agents/skills/visual-checker/scripts/invoke.sh '/tmp/fig.png' 'academic' 'Pipeline overview of our method' 'This is Figure 1 in the paper'"
 }
 ```
 
