@@ -10,8 +10,8 @@
   "bootstrap": true,
   "upstream_enabled": false,
   "upstream_path": ".skills/upstream/academic-paper",
-  "last_imported_at": "2026-04-20T13:17:05Z",
+  "last_imported_at": "2026-04-20T13:51:38Z",
   "upstream_revision": "",
-  "managed_revision": "sha256:4ce6116d71dac1722b98d1e67f357c9beb4d2ae7aa48697833071609c5684cba",
+  "managed_revision": "sha256:3f153d3495a9e3adae1109ceb7659f3d8eef3d13341d611251222041682e2e16",
   "managed_dirty": false
 }
