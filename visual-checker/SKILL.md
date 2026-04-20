@@ -10,7 +10,7 @@ Visual QA sub-agent for AI-generated images. It compresses the image, reads it w
 ## When To Use
 
 - You just generated a figure and need to verify quality before returning it
-- You are running a generation pipeline (e.g., paper-figure-gen, rhetoric-of-decks) and need automatic visual QA
+- You are running a generation pipeline (e.g., academic-paper, rhetoric-of-decks) and need automatic visual QA
 - You want structured, actionable feedback for regeneration
 
 ## Input
