@@ -1,5 +1,5 @@
 ---
-name: exp-logger
+name: py-logger
 description: >
   为 Python 训练程序提供可组合的实验日志与 TUI 监控组件库。
   当用户需要训练日志、实验可视化、TUI dashboard、TUI 指标回放、
