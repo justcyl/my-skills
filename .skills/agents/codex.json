@@ -8,20 +8,6 @@
       "sync_status": "synced",
       "last_synced_at": "2026-04-16T15:30:57Z"
     },
-    "mistake-notebook": {
-      "source_path": "mistake-notebook",
-      "target_path": "/Users/chenyl/.codex/skills/mistake-notebook",
-      "mode": "symlink",
-      "sync_status": "synced",
-      "last_synced_at": "2026-04-13T17:05:12Z"
-    },
-    "brainstorm-agent": {
-      "source_path": "brainstorm-agent",
-      "target_path": "/Users/chenyl/.codex/skills/brainstorm-agent",
-      "mode": "symlink",
-      "sync_status": "synced",
-      "last_synced_at": "2026-04-13T17:05:12Z"
-    },
     "ai-avoid": {
       "source_path": "ai-avoid",
       "target_path": "/Users/chenyl/.codex/skills/ai-avoid",
@@ -53,13 +39,6 @@
     "overleaf": {
       "source_path": "overleaf",
       "target_path": "/Users/chenyl/.codex/skills/overleaf",
-      "mode": "symlink",
-      "sync_status": "synced",
-      "last_synced_at": "2026-04-13T17:05:12Z"
-    },
-    "research-proposal": {
-      "source_path": "research-proposal",
-      "target_path": "/Users/chenyl/.codex/skills/research-proposal",
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-13T17:05:12Z"
@@ -133,13 +112,6 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-14T18:53:15Z"
-    },
-    "anyone-to-skill": {
-      "source_path": "anyone-to-skill",
-      "target_path": "/Users/chenyl/.codex/skills/anyone-to-skill",
-      "mode": "symlink",
-      "sync_status": "synced",
-      "last_synced_at": "2026-04-16T15:30:12Z"
     },
     "officecli": {
       "source_path": "officecli",

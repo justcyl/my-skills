@@ -340,38 +340,19 @@
       "last_updated_at": "2026-03-24T17:13:10Z"
     },
     "mistake-notebook": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/mistake-notebook",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-13T17:05:12Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/mistake-notebook",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-13T17:05:12Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/mistake-notebook",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-13T17:05:21Z"
-        }
-      },
+      "distribution": {},
       "display_name": "mistake-notebook",
       "description": "|",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "passed",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/mistake-notebook.md",
       "source_path": ".skills/sources/mistake-notebook.json",
-      "skill_path": "mistake-notebook",
+      "skill_path": ".skills/archived-skills/mistake-notebook",
       "upstream_path": ".skills/upstream/mistake-notebook",
       "managed_revision": "sha256:b842b1bd6c3966449abc6ff95cd81808e7896d34f028fcc63d76ee094432f782",
-      "last_updated_at": "2026-03-24T17:13:10Z"
+      "last_updated_at": "2026-04-20T12:06:50Z"
     },
     "cli-creator": {
       "distribution": {},
@@ -389,38 +370,19 @@
       "last_updated_at": "2026-03-16T03:51:39Z"
     },
     "brainstorm-agent": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/brainstorm-agent",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-13T17:05:12Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/brainstorm-agent",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-13T17:05:12Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/brainstorm-agent",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-13T17:05:21Z"
-        }
-      },
+      "distribution": {},
       "display_name": "brainstorm-agent",
       "description": "先澄清目标与约束，再把需求拆成按依赖层次排序的可执行任务并输出 tasks.json；只做规划不做实现。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": false,
       "report_path": ".skills/reports/brainstorm-agent.md",
       "source_path": ".skills/sources/brainstorm-agent.json",
-      "skill_path": "brainstorm-agent",
+      "skill_path": ".skills/archived-skills/brainstorm-agent",
       "upstream_path": ".skills/upstream/brainstorm-agent",
       "managed_revision": "sha256:e2db1bf4b5eb88940c854773814a4f04720d077cbac7ae2f76789acc7378e1f2",
-      "last_updated_at": "2026-03-24T17:13:10Z"
+      "last_updated_at": "2026-04-20T12:06:43Z"
     },
     "external-repo": {
       "distribution": {},
@@ -653,38 +615,19 @@
       "last_updated_at": "2026-03-27T02:02:55Z"
     },
     "research-proposal": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/research-proposal",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-13T17:05:12Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/research-proposal",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-13T17:05:12Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/research-proposal",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-13T17:05:21Z"
-        }
-      },
+      "distribution": {},
       "display_name": "research-proposal",
       "description": "将用户的 ML/AI 想法写成结构化研究提案。适用于“proposal / research plan / experiment plan / paper idea / write up my idea”等请求，尤其是在用户提供了假设或方法草图、希望补全相关工作、实验设计与成功判据时。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "passed",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/research-proposal.md",
       "source_path": ".skills/sources/research-proposal.json",
-      "skill_path": "research-proposal",
+      "skill_path": ".skills/archived-skills/research-proposal",
       "upstream_path": ".skills/upstream/research-proposal",
       "managed_revision": "sha256:0574948206ddb20d7af752a6705c9a69dbc5e193385b67e67302baae10672084",
-      "last_updated_at": "2026-03-25T03:35:54Z"
+      "last_updated_at": "2026-04-20T12:06:56Z"
     },
     "ljg-paper": {
       "distribution": {},
@@ -1098,38 +1041,19 @@
       "last_updated_at": "2026-04-14T18:53:15Z"
     },
     "anyone-to-skill": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/anyone-to-skill",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-16T15:30:12Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/anyone-to-skill",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-16T15:30:12Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/anyone-to-skill",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-16T15:30:12Z"
-        }
-      },
+      "distribution": {},
       "display_name": "anyone-to-skill",
       "description": "两种模式：\n① 明确角色扮演：仅当用户明确要求“扮演 / 模拟 / 用某人语气回答”时，切换到对应人物风格。\n如果用户只是问“某人会怎么看”，默认先用普通分析口吻总结其可能观点，不直接进入第一人称扮演。\n② 蒸馏新人物：当用户明确要求“把这些材料做成 skill / 蒸馏某人”时，先确认材料授权、输出目录、是否允许联网与执行命令，再运行蒸馏流水线。\n触发信号：明确角色扮演；明确蒸馏/生成 skill；避免对普通比较分析误触发。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/anyone-to-skill.md",
       "source_path": ".skills/sources/anyone-to-skill.json",
-      "skill_path": "anyone-to-skill",
+      "skill_path": ".skills/archived-skills/anyone-to-skill",
       "upstream_path": ".skills/upstream/anyone-to-skill",
       "managed_revision": "sha256:18961f31e9dd282f8579423900a4cbdfce3a3b5b479172acc7efa78c0b2018c0",
-      "last_updated_at": "2026-04-16T15:30:11Z"
+      "last_updated_at": "2026-04-20T12:06:46Z"
     },
     "officecli": {
       "distribution": {

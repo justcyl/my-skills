@@ -1,7 +1,7 @@
 {
   "skill_id": "research-proposal",
   "display_name": "research-proposal",
-  "skill_path": "research-proposal",
+  "skill_path": ".skills/archived-skills/research-proposal",
   "source_type": "local",
   "source": "/tmp/research-proposal-skill.Fn5Cxr",
   "source_url": "/tmp/research-proposal-skill.Fn5Cxr",
@@ -13,5 +13,7 @@
   "last_imported_at": "2026-03-25T03:35:54Z",
   "upstream_revision": "sha256:c3d97802d263a489c86ad324b9c4f7f982613cf3b517d0bb39dbd14ca660e91e",
   "managed_revision": "sha256:0574948206ddb20d7af752a6705c9a69dbc5e193385b67e67302baae10672084",
-  "managed_dirty": false
+  "managed_dirty": false,
+  "archived": true,
+  "archived_at": "2026-04-20T12:06:56Z"
 }

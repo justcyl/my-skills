@@ -1,7 +1,7 @@
 {
   "skill_id": "anyone-to-skill",
   "display_name": "anyone-to-skill",
-  "skill_path": "anyone-to-skill",
+  "skill_path": ".skills/archived-skills/anyone-to-skill",
   "source_type": "github",
   "source": "https://github.com/OpenDemon/anyone-to-skill.git",
   "source_url": "https://github.com/OpenDemon/anyone-to-skill.git",
@@ -13,5 +13,7 @@
   "last_imported_at": "2026-04-16T15:30:11Z",
   "upstream_revision": "sha256:ff00c87c777c191db8aa01da583a1777eefe3ad349cb2711ecde6d8ada3d200a",
   "managed_revision": "sha256:18961f31e9dd282f8579423900a4cbdfce3a3b5b479172acc7efa78c0b2018c0",
-  "managed_dirty": false
+  "managed_dirty": false,
+  "archived": true,
+  "archived_at": "2026-04-20T12:06:46Z"
 }
