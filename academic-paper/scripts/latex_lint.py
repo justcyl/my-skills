@@ -640,6 +640,111 @@ def check_bibtex(filepath: str) -> list[Issue]:
 
 
 # ===================================================================
+# WRITING QUALITY CHECKS
+# ===================================================================
+
+def check_long_sentences(lines: list[str], filepath: str) -> list[Issue]:
+    """Detect sentences longer than 25 words without terminal punctuation."""
+    issues = []
+
+    skip_pat = re.compile(
+        r'^\s*\\(begin|end|section|subsection|subsubsection|paragraph|label|'
+        r'caption|ref|eqref|cite|includegraphics|usepackage|newcommand|'
+        r'renewcommand|bibliography|footnote|vspace|hspace|centering|'
+        r'noindent\s*$|item|documentclass|author|title|date|maketitle)\b'
+    )
+
+    def strip_markup(text: str) -> str:
+        text = re.sub(r'\$[^$\n]*\$', '', text)  # inline math
+        text = re.sub(r'\\[a-zA-Z]+\*?(?:\[[^\]]*\])?(?:\{[^{}]*\})*', ' ', text)
+        text = re.sub(r'[{}\\]', ' ', text)
+        return text
+
+    para_lines: list[tuple[int, str]] = []
+
+    def flush_paragraph() -> list[Issue]:
+        if not para_lines:
+            return []
+        result = []
+        full_text = ' '.join(t for _, t in para_lines)
+        clean = strip_markup(full_text)
+        # Split on sentence-ending punctuation
+        segments = re.split(r'(?<=[.!?])\s+', clean)
+        start_line = para_lines[0][0]
+        for seg in segments:
+            words = [w for w in seg.split() if re.match(r"[a-zA-Z'\-]{2,}", w)]
+            if len(words) > 25:
+                result.append(Issue(
+                    Severity.INFO, filepath, start_line, "long-sentence",
+                    f"疑似超长句（约 {len(words)} 词）——建议拆分为更短的句子",
+                    fix="在适当位置添加逗号、分号，或拆分为多句",
+                    context=para_lines[0][1],
+                ))
+        return result
+
+    for i, line in enumerate(lines, 1):
+        stripped = _strip_comments(line).strip()
+
+        if not stripped:
+            issues.extend(flush_paragraph())
+            para_lines = []
+            continue
+
+        if skip_pat.match(stripped):
+            continue
+        if stripped.startswith(('\\[', '\\]', '$$', '&')):
+            continue
+
+        para_lines.append((i, stripped))
+
+    issues.extend(flush_paragraph())
+    return issues
+
+
+def check_consecutive_floats(lines: list[str], filepath: str) -> list[Issue]:
+    """Detect consecutive figure/table floats without prose text between them."""
+    issues = []
+    float_begin = re.compile(r'\\begin\{(figure|table)\*?\}')
+    float_end   = re.compile(r'\\end\{(figure|table)\*?\}')
+    text_pat    = re.compile(r'[a-zA-Z]{3,}')  # at least one real word
+
+    last_end_line: int | None = None
+    last_env: str = ''
+    has_text_between = False
+    in_float = False
+
+    for i, line in enumerate(lines, 1):
+        stripped = _strip_comments(line).strip()
+
+        if float_begin.search(stripped):
+            if last_end_line is not None and not has_text_between:
+                issues.append(Issue(
+                    Severity.INFO, filepath, i, "consecutive-floats",
+                    f"连续浮动体：{last_env} 结束后紧接 {float_begin.search(stripped).group(1)}，中间无正文",
+                    fix="在两个图表之间插入说明或过渡文字",
+                    context=line,
+                ))
+            in_float = True
+            last_env = float_begin.search(stripped).group(1)
+            last_end_line = None
+            has_text_between = False
+
+        elif float_end.search(stripped):
+            in_float = False
+            last_end_line = i
+            has_text_between = False
+
+        elif not in_float and last_end_line is not None and stripped:
+            # Count as "text" only if the line contains real words, not just commands
+            cmd_stripped = re.sub(r'\\[a-zA-Z]+\*?(?:\[[^\]]*\])?(?:\{[^{}]*\})*', '', stripped)
+            cmd_stripped = re.sub(r'[{}%]', '', cmd_stripped).strip()
+            if text_pat.search(cmd_stripped):
+                has_text_between = True
+
+    return issues
+
+
+# ===================================================================
 # RUNNER
 # ===================================================================
 
@@ -670,6 +775,9 @@ ALL_TEX_CHECKS = [
     # Consistency
     check_probability_expectation,
     check_set_separator_consistency,
+    # Writing quality
+    check_long_sentences,
+    check_consecutive_floats,
 ]
 
 

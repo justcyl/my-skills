@@ -2,7 +2,7 @@
 # LaTeX 写作偏好（注入用）
 
 写作前注入 agent 的轻量提醒。保持简洁 — 这不是完整规范，是核心偏好的快速备忘。
-完整规范见 `latex-norms.md`；写完后用 linter 和 review checklist 检查。
+写完后用 linter 和 review checklist 检查。
 
 ---
 
@@ -17,6 +17,28 @@
 - 独立公式：`equation` / `align`；不编号：加 `*` 或用 `\notag`
 - **不用** `$$ ... $$`，**不用** `eqnarray`
 - 只给被引用的公式加 `\label{eq:xxx}`
+- 公式是句子一部分时，末尾必须加标点（逗号或句号）：
+  ```latex
+  % ✅ 正确
+  The loss is given by
+  \begin{equation}
+    \mathcal{L} = -\log p(y \mid x),  % 逗号：公式后继续句子
+  \end{equation}
+  where $p$ is the output probability.
+
+  % ✅ 句子结束
+  We minimize the following objective.
+  \begin{equation}
+    \mathcal{L} = -\log p(y \mid x).  % 句号
+  \end{equation}
+  ```
+- display math 后继续正文时用 `\noindent` 避免首行缩进：
+  ```latex
+  \begin{equation}
+    f(x) = x^2.
+  \end{equation}
+  \noindent Here $f$ represents ...   % 不缩进、自然连接
+  ```
 
 ## 数学符号
 

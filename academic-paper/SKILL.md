@@ -82,8 +82,6 @@ LaTeX 相关资源分三类，不同阶段使用：
 | **写完后 lint** | `scripts/latex_lint.py`、`scripts/check_hard_rules.sh` | 源码/PDF 硬规则自动检查 |
 | **写完后 review** | [references/latex-review-checklist.md](references/latex-review-checklist.md) | 人工复查，向用户汇报 |
 
-完整规范参考：[references/latex-norms.md](references/latex-norms.md)（含 [AUTO]/[MANUAL] 标注）。
-
 ```bash
 # Linter
 python3 ~/.agents/skills/academic-paper/scripts/latex_lint.py <file> [--bib] [--fix-preview] [--severity WARN]
