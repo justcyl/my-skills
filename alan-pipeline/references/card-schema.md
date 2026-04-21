@@ -23,6 +23,9 @@ tags: [debiasing, attention]
 links:
   - cards/exp/bleu-baseline
   - runs/verify-debiased-k1
+# exp card 专用可选字段：
+# surprise: true           # 结果是否出乎意料（true / false）
+# insight: ""              # surprise=true 时填写原因分析
 ---
 ```
 
@@ -32,6 +35,8 @@ links:
 | `priority` | `p0`：核心事实，已验证，长期有效。`p1`：中间状态，脆弱或待验证。`p2`：归档，不再纳入上下文 |
 | `tags` | 自由填写的关键词列表，用于检索 |
 | `links` | 指向相关 card（用路径）或 run 的列表 |
+| `surprise` | （exp card 专用，可选）结果是否出乎意料。`true` 的 card 优先分析 |
+| `insight` | （exp card 专用，可选）`surprise: true` 时填写对意外结果的分析 |
 
 ## Body 结构
 

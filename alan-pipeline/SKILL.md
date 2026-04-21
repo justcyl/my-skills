@@ -178,6 +178,7 @@ verifier: |
 
 完整协议、目录结构、metadata 模板、日志接入、watch/replay 用法见
 [references/experiment-run.md](references/experiment-run.md)。
+实验设计哲学（如何构建对照、写预测、标记 surprise）也在同一文件开头。
 日志组件 API 见 [references/logger-components.md](references/logger-components.md)。
 
 ### 执行 run
