@@ -74,17 +74,23 @@ AI 学术论文全周期写作 skill。从获取模板到投稿终审。
 
 本 skill 不限定写作顺序、字数分配或段落结构。论文内容由用户主导，agent 辅助执行。
 
-LaTeX 规范全集见 [references/latex-norms.md](references/latex-norms.md)，覆盖：
-label 命名、引用格式、公式环境、括号规则、数学符号与定义、证明写作、
-表格、图片、算法、BibTeX key、Roadmap、notation 系统设计、人工审阅清单、改稿后检查顺序等。
+LaTeX 相关资源分三类，不同阶段使用：
 
-**Linter 快速检查**（源码规范自动检测，`.tex` / `.bib`）：
+| 类别 | 文件 | 何时使用 |
+|------|------|----------|
+| **写前注入** | [references/latex-writing-prefs.md](references/latex-writing-prefs.md) | 开始写作前读取，轻量偏好提醒 |
+| **写完后 lint** | `scripts/latex_lint.py`、`scripts/check_hard_rules.sh` | 源码/PDF 硬规则自动检查 |
+| **写完后 review** | [references/latex-review-checklist.md](references/latex-review-checklist.md) | 人工复查，向用户汇报 |
+
+完整规范参考：[references/latex-norms.md](references/latex-norms.md)（含 [AUTO]/[MANUAL] 标注）。
 
 ```bash
-python3 ~/.agents/skills/academic-paper/scripts/latex_lint.py <file-or-dir> [--bib] [--fix-preview] [--severity WARN]
-```
+# Linter
+python3 ~/.agents/skills/academic-paper/scripts/latex_lint.py <file> [--bib] [--fix-preview] [--severity WARN]
 
-规范知识库见 [references/latex-norms-kb.md](references/latex-norms-kb.md)。
+# PDF 硬规则
+bash ~/.agents/skills/academic-paper/scripts/check_hard_rules.sh paper.pdf <conf> <submission|camera-ready>
+```
 
 ---
 
