@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# pi-run: Execute a run definition (.pipeline/runs/<slug>.yaml) in a loop.
+# pi-run: Execute a run definition (alan/runs/<slug>.yaml) in a loop.
 #
 # Usage:
 #   pi-run <slug>                         Run (loops until verifier returns "end")
@@ -17,7 +17,7 @@
 #   model:        (optional) Model override
 #   thinking:     (optional) Thinking level
 
-RUNS_DIR=".pipeline/runs"
+RUNS_DIR="alan/runs"
 MODEL=""
 THINKING=""
 DRY_RUN=false

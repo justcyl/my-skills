@@ -5,10 +5,10 @@ Card 是原子化的知识单元，每张只说一件事。
 ## 文件位置
 
 ```
-.pipeline/cards/method/<slug>.md       # 方法论 (p0, p1)
-.pipeline/cards/exp/<slug>.md          # 实验与结果 (p0, p1)
-.pipeline/cards/framing/<slug>.md      # 叙事框架 (p0, p1)
-.pipeline/cards/archived/<slug>.md     # 归档 (p2)
+alan/cards/method/<slug>.md       # 方法论 (p0, p1)
+alan/cards/exp/<slug>.md          # 实验与结果 (p0, p1)
+alan/cards/framing/<slug>.md      # 叙事框架 (p0, p1)
+alan/cards/archived/<slug>.md     # 归档 (p2)
 ```
 
 文件名为描述性短名，kebab-case。如 `debiased-sorting.md`、`bleu-baseline.md`。

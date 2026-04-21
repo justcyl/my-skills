@@ -10,8 +10,8 @@
   "bootstrap": true,
   "upstream_enabled": false,
   "upstream_path": ".skills/upstream/alan-pipeline",
-  "last_imported_at": "2026-04-21T06:09:49Z",
+  "last_imported_at": "2026-04-21T11:58:51Z",
   "upstream_revision": "",
-  "managed_revision": "sha256:a7a6b285405bcca501c45bdc962e5c89e9f49af466ee944b5abd015941bd3d39",
+  "managed_revision": "sha256:26233d3d2811cdfd97c87a70dbe77df9f0ea113e865c3bb51b30f3d812623bcd",
   "managed_dirty": false
 }
