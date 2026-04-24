@@ -1374,19 +1374,19 @@
           "target_path": "/Users/chenyl/.codex/skills/paper-reader",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-24T02:15:49Z"
+          "last_synced_at": "2026-04-24T02:43:14Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/paper-reader",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-24T02:15:49Z"
+          "last_synced_at": "2026-04-24T02:43:14Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/paper-reader",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-24T02:15:49Z"
+          "last_synced_at": "2026-04-24T02:43:14Z"
         }
       },
       "display_name": "paper-reader",
@@ -1399,8 +1399,8 @@
       "source_path": ".skills/sources/paper-reader.json",
       "skill_path": "paper-reader",
       "upstream_path": ".skills/upstream/paper-reader",
-      "managed_revision": "sha256:81b6ff334df180e7aebda904bbada9bf9274b992d4805b890415e8ae30753044",
-      "last_updated_at": "2026-04-24T02:15:49Z"
+      "managed_revision": "sha256:255acdd3c488432bcd90f66f9a59694df84fa1686974b8fb57ec9edf1f5a8b6a",
+      "last_updated_at": "2026-04-24T02:43:13Z"
     }
   }
 }
