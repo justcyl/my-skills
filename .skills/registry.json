@@ -1367,6 +1367,40 @@
       "upstream_path": ".skills/upstream/fair-experiment-tracker",
       "managed_revision": "sha256:a72cb74f3645b4c83e951e78a5dbd5f95c04d8b5e168f178928b66e4e9d0ae8b",
       "last_updated_at": "2026-04-21T06:09:48Z"
+    },
+    "paper-reader": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/paper-reader",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-24T02:15:49Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/paper-reader",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-24T02:15:49Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/paper-reader",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-24T02:15:49Z"
+        }
+      },
+      "display_name": "paper-reader",
+      "description": "辅助精读 AI/NLP 学术论文。逐节分析引言挖坑结构、相关工作踩人写法、图表叙事逻辑、实验设计思路与结论收尾。当用户说「帮我读这篇论文」「分析一下这篇paper的引言」「这个相关工作怎么写的」「帮我看看实验部分」「这篇paper的contribution是什么」「怎么学这篇paper的写法」时触发。",
+      "status": "managed",
+      "risk_status": "passed",
+      "managed_dirty": false,
+      "upstream_enabled": false,
+      "report_path": ".skills/reports/paper-reader.md",
+      "source_path": ".skills/sources/paper-reader.json",
+      "skill_path": "paper-reader",
+      "upstream_path": ".skills/upstream/paper-reader",
+      "managed_revision": "sha256:81b6ff334df180e7aebda904bbada9bf9274b992d4805b890415e8ae30753044",
+      "last_updated_at": "2026-04-24T02:15:49Z"
     }
   }
 }
