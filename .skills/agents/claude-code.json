@@ -168,6 +168,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-24T02:43:14Z"
+    },
+    "guizang-ppt-skill": {
+      "source_path": "guizang-ppt-skill",
+      "target_path": "/Users/chenyl/.claude/skills/guizang-ppt-skill",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-04-25T06:05:33Z"
     }
   }
 }

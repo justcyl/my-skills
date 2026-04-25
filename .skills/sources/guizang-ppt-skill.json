@@ -1,0 +1,17 @@
+{
+  "skill_id": "guizang-ppt-skill",
+  "display_name": "guizang-ppt-skill",
+  "skill_path": "guizang-ppt-skill",
+  "source_type": "github",
+  "source": "https://github.com/op7418/guizang-ppt-skill",
+  "source_url": "https://github.com/op7418/guizang-ppt-skill.git",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": true,
+  "upstream_path": ".skills/upstream/guizang-ppt-skill",
+  "last_imported_at": "2026-04-25T06:05:32Z",
+  "upstream_revision": "sha256:f0d57d04ed815ef25a4b2d44792b6e4b83715cda9f9a7fcf6ce6fe83b8557356",
+  "managed_revision": "sha256:f0d57d04ed815ef25a4b2d44792b6e4b83715cda9f9a7fcf6ce6fe83b8557356",
+  "managed_dirty": false
+}
