@@ -1,7 +1,7 @@
 # lark-wiki
 
 - skill_id: `lark-wiki`
-- status: `imported`
+- status: `managed`
 - skill_path: `lark-wiki`
 - source_type: `github`
 - source: `https://github.com/larksuite/cli`
