@@ -7,10 +7,10 @@
   "source_url": "https://github.com/larksuite/cli.git",
   "ref": "",
   "subpath": "skills/lark-minutes",
-  "bootstrap": false,
+  "bootstrap": true,
   "upstream_enabled": true,
   "upstream_path": ".skills/upstream/lark-minutes",
-  "last_imported_at": "2026-04-26T07:59:01Z",
+  "last_imported_at": "2026-04-26T07:59:58Z",
   "upstream_revision": "sha256:97ed27b9273495ed48bbfecef44d1d927949fc0f1ff844cd38910bf606137b3b",
   "managed_revision": "sha256:97ed27b9273495ed48bbfecef44d1d927949fc0f1ff844cd38910bf606137b3b",
   "managed_dirty": false

@@ -1,7 +1,7 @@
 # lark-minutes
 
 - skill_id: `lark-minutes`
-- status: `imported`
+- status: `managed`
 - skill_path: `lark-minutes`
 - source_type: `github`
 - source: `https://github.com/larksuite/cli`

@@ -1981,10 +1981,29 @@
       "last_updated_at": "2026-04-26T07:59:56Z"
     },
     "lark-minutes": {
-      "distribution": {},
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/lark-minutes",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T07:59:58Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/lark-minutes",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T07:59:58Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/lark-minutes",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T07:59:58Z"
+        }
+      },
       "display_name": "lark-minutes",
       "description": "飞书妙记：妙记相关基本功能。1.查询妙记列表（按关键词/所有者/参与者/时间范围）；2.获取妙记基础信息（标题、封面、时长 等）；3.下载妙记音视频文件；4.获取妙记相关 AI 产物（总结、待办、章节）。飞书妙记 URL 格式: http(s)://<host>/minutes/<minute-token>",
-      "status": "imported",
+      "status": "managed",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": true,
@@ -1993,7 +2012,7 @@
       "skill_path": "lark-minutes",
       "upstream_path": ".skills/upstream/lark-minutes",
       "managed_revision": "sha256:97ed27b9273495ed48bbfecef44d1d927949fc0f1ff844cd38910bf606137b3b",
-      "last_updated_at": "2026-04-26T07:59:01Z"
+      "last_updated_at": "2026-04-26T07:59:58Z"
     },
     "lark-openapi-explorer": {
       "distribution": {},
