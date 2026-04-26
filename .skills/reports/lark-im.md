@@ -1,7 +1,7 @@
 # lark-im
 
 - skill_id: `lark-im`
-- status: `imported`
+- status: `managed`
 - skill_path: `lark-im`
 - source_type: `github`
 - source: `https://github.com/larksuite/cli`
