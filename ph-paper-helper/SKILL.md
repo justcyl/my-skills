@@ -24,10 +24,9 @@ alias ph='uv run --project ~/project/ph2 ph'
 4. **补全 .bib 元数据**：用户的 .bib 中有不完整的 entry
    → 使用 `ph enrich --bib`，参考「BibTeX 补全」
 5. **读取文本内容**：用户想读论文正文
-   → 先看 `plain_text` 是否有值：
-   - 如果已有 `plain_text`：直接用 `ph fetch --include-content` 或 `ph sql` 取就行
-   - 如果无且只需纯文：`ph import --fetch-plain-text`（秒级）
-   - 如果需要全文（图/公式）：使用 `ph fetch --include-content`，参考「慢路径」
+   → 判断需要什么内容：
+   - **纯文字**（arXiv 论文）：`ph sql` 查 `plain_text` 列，若为 null 先 `ph import`（默认自动抓取）
+   - **全文含图/公式/表格，或非 arXiv**：使用 `ph fetch --include-content`，参考「慢路径」
 6. **查询本地库**：用户想了解已收录论文的状态
    → 使用 `ph sql`，参考「本地查询」
 
@@ -274,7 +273,7 @@ ph fetch --paper-id arxiv://1706.03762
 ph fetch --paper-id arxiv://1706.03762 --metadata-only
 
 # 完成后获取全文
-## --include-content 同时返回 MinerU markdown（content 字段）和快速纯文本（plain_text 字段）
+## --include-content 返回 MinerU markdown（content 字段）
 ph fetch --paper-id arxiv://1706.03762 --include-content
 
 # 强制重新处理
@@ -288,10 +287,9 @@ ph fetch --paper-id arxiv://1706.03762 --force
 | 字段 | 仅 --include-content | 含义 |
 |------|------|------|
 | `content` | ✓ | MinerU markdown 内容（fetch_state=done 时有值） |
-| `plain_text` | ✓ | 快速纯文本（arXiv HTML 提取，无需 MinerU） |
 | `fetch_state` | — | MinerU 状态：none/pending/done/failed |
 
-> `--include-content` 是「把所有可用文本内容都带回来」的开关，`content` 和 `plain_text` 行为完全对齐：不加则为 null，加了才有值。判断是否有纯文本：`plain_text != null`。
+> `ph fetch` 只负责 MinerU 流程。读取 `plain_text` 用 `ph sql`。
 
 ---
 
@@ -300,7 +298,7 @@ ph fetch --paper-id arxiv://1706.03762 --force
 ```
 需要论文文字内容
         │
-        ├── arXiv 论文 ──► 已有 plain_text? ──► 是 ──► ph fetch --include-content 或 ph sql
+        ├── arXiv 论文 ──► 已有 plain_text? ──► 是 ──► ph sql --query "SELECT plain_text FROM papers ..."
         │                          │
         │                          └── 否 ──► ph import（默认自动抓取，秒级）
         │
@@ -326,11 +324,7 @@ ph import --input arxiv://1706.03762
 # 不需要纯文本时才关闭
 ph import --input arxiv://1706.03762 --no-fetch-plain-text
 
-# 读取已存入的纯文本
-ph fetch --paper-id arxiv://1706.03762 --include-content
-# plain_text 有值则可直接读取
-
-# 或直接 SQL
+# 读取已存入的纯文本（ph fetch 不暴露 plain_text，直接用 sql）
 ph sql --query "SELECT plain_text FROM papers WHERE paper_id = 'arxiv://1706.03762'"
 
 # 仅当需要图/公式/表格/非 arXiv 时，才调用 MinerU
