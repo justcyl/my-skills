@@ -1,7 +1,7 @@
 # lark-mail
 
 - skill_id: `lark-mail`
-- status: `imported`
+- status: `managed`
 - skill_path: `lark-mail`
 - source_type: `github`
 - source: `https://github.com/larksuite/cli`
