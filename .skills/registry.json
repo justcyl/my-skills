@@ -1607,10 +1607,29 @@
       "last_updated_at": "2026-04-26T07:59:43Z"
     },
     "lark-base": {
-      "distribution": {},
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/lark-base",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T07:59:46Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/lark-base",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T07:59:46Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/lark-base",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T07:59:46Z"
+        }
+      },
       "display_name": "lark-base",
       "description": "当需要用 lark-cli 操作飞书多维表格（Base）时调用：适用于建表、字段管理、记录读写、记录分享链接、视图配置、历史查询，以及角色/表单/仪表盘管理/工作流；也适用于把旧的 +table / +field / +record 写法改成当前命令写法。涉及字段设计、公式字段、查找引用、跨表计算、行级派生指标、数据分析需求时也必须使用本 skill。",
-      "status": "imported",
+      "status": "managed",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": true,
@@ -1619,7 +1638,7 @@
       "skill_path": "lark-base",
       "upstream_path": ".skills/upstream/lark-base",
       "managed_revision": "sha256:94c3b172d9fb95d1233cf0d41c577831663b22916ac9fd2f186c6a31cdd8a0c6",
-      "last_updated_at": "2026-04-26T07:58:17Z"
+      "last_updated_at": "2026-04-26T07:59:44Z"
     },
     "lark-sheets": {
       "distribution": {},

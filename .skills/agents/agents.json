@@ -210,6 +210,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-26T07:59:44Z"
+    },
+    "lark-base": {
+      "source_path": "lark-base",
+      "target_path": "/Users/chenyl/.agents/skills/lark-base",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-04-26T07:59:46Z"
     }
   }
 }
