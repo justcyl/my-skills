@@ -1,7 +1,7 @@
 # lark-calendar
 
 - skill_id: `lark-calendar`
-- status: `imported`
+- status: `managed`
 - skill_path: `lark-calendar`
 - source_type: `github`
 - source: `https://github.com/larksuite/cli`
