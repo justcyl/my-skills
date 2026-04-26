@@ -1,7 +1,7 @@
 {
   "skill_id": "paper-reader",
   "display_name": "paper-reader",
-  "skill_path": "paper-reader",
+  "skill_path": ".skills/archived-skills/paper-reader",
   "source_type": "local-created",
   "source": "",
   "source_url": "",
@@ -13,5 +13,7 @@
   "last_imported_at": "2026-04-24T02:43:13Z",
   "upstream_revision": "",
   "managed_revision": "sha256:255acdd3c488432bcd90f66f9a59694df84fa1686974b8fb57ec9edf1f5a8b6a",
-  "managed_dirty": false
+  "managed_dirty": false,
+  "archived": true,
+  "archived_at": "2026-04-26T13:29:09Z"
 }

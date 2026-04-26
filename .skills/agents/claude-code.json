@@ -162,20 +162,6 @@
       "sync_status": "synced",
       "last_synced_at": "2026-04-26T08:00:09Z"
     },
-    "paper-reader": {
-      "source_path": "paper-reader",
-      "target_path": "/Users/chenyl/.claude/skills/paper-reader",
-      "mode": "symlink",
-      "sync_status": "synced",
-      "last_synced_at": "2026-04-26T08:00:09Z"
-    },
-    "guizang-ppt-skill": {
-      "source_path": "guizang-ppt-skill",
-      "target_path": "/Users/chenyl/.claude/skills/guizang-ppt-skill",
-      "mode": "symlink",
-      "sync_status": "synced",
-      "last_synced_at": "2026-04-26T08:00:09Z"
-    },
     "lark": {
       "source_path": "lark",
       "target_path": "/Users/chenyl/.claude/skills/lark",

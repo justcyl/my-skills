@@ -1369,72 +1369,34 @@
       "last_updated_at": "2026-04-21T06:09:48Z"
     },
     "paper-reader": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/paper-reader",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/paper-reader",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/paper-reader",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:19Z"
-        }
-      },
+      "distribution": {},
       "display_name": "paper-reader",
       "description": "辅助精读 AI/NLP 学术论文。逐节分析引言挖坑结构、相关工作踩人写法、图表叙事逻辑、实验设计思路与结论收尾。当用户说「帮我读这篇论文」「分析一下这篇paper的引言」「这个相关工作怎么写的」「帮我看看实验部分」「这篇paper的contribution是什么」「怎么学这篇paper的写法」时触发。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "passed",
       "managed_dirty": false,
       "upstream_enabled": false,
       "report_path": ".skills/reports/paper-reader.md",
       "source_path": ".skills/sources/paper-reader.json",
-      "skill_path": "paper-reader",
+      "skill_path": ".skills/archived-skills/paper-reader",
       "upstream_path": ".skills/upstream/paper-reader",
       "managed_revision": "sha256:255acdd3c488432bcd90f66f9a59694df84fa1686974b8fb57ec9edf1f5a8b6a",
-      "last_updated_at": "2026-04-24T02:43:13Z"
+      "last_updated_at": "2026-04-26T13:29:09Z"
     },
     "guizang-ppt-skill": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/guizang-ppt-skill",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/guizang-ppt-skill",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/guizang-ppt-skill",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:19Z"
-        }
-      },
+      "distribution": {},
       "display_name": "guizang-ppt-skill",
       "description": "生成\"电子杂志 × 电子墨水\"风格的横向翻页网页 PPT（单 HTML 文件），含 WebGL 流体背景、衬线标题 + 非衬线正文、章节幕封、数据大字报、图片网格等模板。当用户需要制作分享 / 演讲 / 发布会风格的网页 PPT，或提到\"杂志风 PPT\"、\"horizontal swipe deck\"、\"editorial magazine\"、\"e-ink presentation\"时使用。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "passed",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/guizang-ppt-skill.md",
       "source_path": ".skills/sources/guizang-ppt-skill.json",
-      "skill_path": "guizang-ppt-skill",
+      "skill_path": ".skills/archived-skills/guizang-ppt-skill",
       "upstream_path": ".skills/upstream/guizang-ppt-skill",
       "managed_revision": "sha256:f0d57d04ed815ef25a4b2d44792b6e4b83715cda9f9a7fcf6ce6fe83b8557356",
-      "last_updated_at": "2026-04-25T06:05:32Z"
+      "last_updated_at": "2026-04-26T13:29:06Z"
     },
     "lark-shared": {
       "distribution": {},
