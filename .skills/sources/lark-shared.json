@@ -1,0 +1,17 @@
+{
+  "skill_id": "lark-shared",
+  "display_name": "lark-shared",
+  "skill_path": "lark-shared",
+  "source_type": "github",
+  "source": "https://github.com/larksuite/cli",
+  "source_url": "https://github.com/larksuite/cli.git",
+  "ref": "",
+  "subpath": "skills/lark-shared",
+  "bootstrap": true,
+  "upstream_enabled": true,
+  "upstream_path": ".skills/upstream/lark-shared",
+  "last_imported_at": "2026-04-26T07:59:38Z",
+  "upstream_revision": "sha256:5d2d10478ba08611c0c743d2b6cc93392e446117e73f189dee07b64ea53e4a3e",
+  "managed_revision": "sha256:5d2d10478ba08611c0c743d2b6cc93392e446117e73f189dee07b64ea53e4a3e",
+  "managed_dirty": false
+}

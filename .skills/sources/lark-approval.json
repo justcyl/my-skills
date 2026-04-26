@@ -1,0 +1,17 @@
+{
+  "skill_id": "lark-approval",
+  "display_name": "lark-approval",
+  "skill_path": "lark-approval",
+  "source_type": "github",
+  "source": "https://github.com/larksuite/cli",
+  "source_url": "https://github.com/larksuite/cli.git",
+  "ref": "",
+  "subpath": "skills/lark-approval",
+  "bootstrap": false,
+  "upstream_enabled": true,
+  "upstream_path": ".skills/upstream/lark-approval",
+  "last_imported_at": "2026-04-26T07:59:11Z",
+  "upstream_revision": "sha256:f8b6e536a31517f301168360a0726cf851f01394e2e4949fc57a999fdf529e0f",
+  "managed_revision": "sha256:f8b6e536a31517f301168360a0726cf851f01394e2e4949fc57a999fdf529e0f",
+  "managed_dirty": false
+}

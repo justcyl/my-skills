@@ -175,6 +175,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-25T06:05:44Z"
+    },
+    "lark-shared": {
+      "source_path": "lark-shared",
+      "target_path": "/Users/chenyl/.codex/skills/lark-shared",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-04-26T07:59:39Z"
     }
   }
 }

@@ -1,0 +1,17 @@
+{
+  "skill_id": "lark-okr",
+  "display_name": "lark-okr",
+  "skill_path": "lark-okr",
+  "source_type": "github",
+  "source": "https://github.com/larksuite/cli",
+  "source_url": "https://github.com/larksuite/cli.git",
+  "ref": "",
+  "subpath": "skills/lark-okr",
+  "bootstrap": false,
+  "upstream_enabled": true,
+  "upstream_path": ".skills/upstream/lark-okr",
+  "last_imported_at": "2026-04-26T07:58:50Z",
+  "upstream_revision": "sha256:4fc4ff73e8f699144d082812f35a2869ab6d106b237dddd087a13220b79ce6b0",
+  "managed_revision": "sha256:4fc4ff73e8f699144d082812f35a2869ab6d106b237dddd087a13220b79ce6b0",
+  "managed_dirty": false
+}

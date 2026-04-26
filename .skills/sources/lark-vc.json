@@ -1,0 +1,17 @@
+{
+  "skill_id": "lark-vc",
+  "display_name": "lark-vc",
+  "skill_path": "lark-vc",
+  "source_type": "github",
+  "source": "https://github.com/larksuite/cli",
+  "source_url": "https://github.com/larksuite/cli.git",
+  "ref": "",
+  "subpath": "skills/lark-vc",
+  "bootstrap": false,
+  "upstream_enabled": true,
+  "upstream_path": ".skills/upstream/lark-vc",
+  "last_imported_at": "2026-04-26T07:58:42Z",
+  "upstream_revision": "sha256:ba0a78838e48d8a70cb02404ed5a39fad9e84a96283a0c594bd643c17518369a",
+  "managed_revision": "sha256:ba0a78838e48d8a70cb02404ed5a39fad9e84a96283a0c594bd643c17518369a",
+  "managed_dirty": false
+}

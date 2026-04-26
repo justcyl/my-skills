@@ -1,0 +1,17 @@
+{
+  "skill_id": "lark-doc",
+  "display_name": "lark-doc",
+  "skill_path": "lark-doc",
+  "source_type": "github",
+  "source": "https://github.com/larksuite/cli",
+  "source_url": "https://github.com/larksuite/cli.git",
+  "ref": "",
+  "subpath": "skills/lark-doc",
+  "bootstrap": false,
+  "upstream_enabled": true,
+  "upstream_path": ".skills/upstream/lark-doc",
+  "last_imported_at": "2026-04-26T07:58:10Z",
+  "upstream_revision": "sha256:9c69faee5ddcc7ccc9e94b56b142daa111c2d96429f0dce56f5bfcc00e09d103",
+  "managed_revision": "sha256:9c69faee5ddcc7ccc9e94b56b142daa111c2d96429f0dce56f5bfcc00e09d103",
+  "managed_dirty": false
+}

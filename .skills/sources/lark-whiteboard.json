@@ -1,0 +1,17 @@
+{
+  "skill_id": "lark-whiteboard",
+  "display_name": "lark-whiteboard",
+  "skill_path": "lark-whiteboard",
+  "source_type": "github",
+  "source": "https://github.com/larksuite/cli",
+  "source_url": "https://github.com/larksuite/cli.git",
+  "ref": "",
+  "subpath": "skills/lark-whiteboard",
+  "bootstrap": false,
+  "upstream_enabled": true,
+  "upstream_path": ".skills/upstream/lark-whiteboard",
+  "last_imported_at": "2026-04-26T07:58:58Z",
+  "upstream_revision": "sha256:87f756cea8e3649bb005fe67487fb953c1c727b6c0c93a34698b73b7694bab98",
+  "managed_revision": "sha256:87f756cea8e3649bb005fe67487fb953c1c727b6c0c93a34698b73b7694bab98",
+  "managed_dirty": false
+}

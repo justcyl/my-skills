@@ -1,0 +1,17 @@
+{
+  "skill_id": "lark-im",
+  "display_name": "lark-im",
+  "skill_path": "lark-im",
+  "source_type": "github",
+  "source": "https://github.com/larksuite/cli",
+  "source_url": "https://github.com/larksuite/cli.git",
+  "ref": "",
+  "subpath": "skills/lark-im",
+  "bootstrap": false,
+  "upstream_enabled": true,
+  "upstream_path": ".skills/upstream/lark-im",
+  "last_imported_at": "2026-04-26T07:58:04Z",
+  "upstream_revision": "sha256:114fcf539e02f4ea50a184865b4670b2d9d3df085030de43351afa8535bbb8d9",
+  "managed_revision": "sha256:114fcf539e02f4ea50a184865b4670b2d9d3df085030de43351afa8535bbb8d9",
+  "managed_dirty": false
+}

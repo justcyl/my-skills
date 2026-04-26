@@ -1,0 +1,17 @@
+{
+  "skill_id": "lark-mail",
+  "display_name": "lark-mail",
+  "skill_path": "lark-mail",
+  "source_type": "github",
+  "source": "https://github.com/larksuite/cli",
+  "source_url": "https://github.com/larksuite/cli.git",
+  "ref": "",
+  "subpath": "skills/lark-mail",
+  "bootstrap": false,
+  "upstream_enabled": true,
+  "upstream_path": ".skills/upstream/lark-mail",
+  "last_imported_at": "2026-04-26T07:58:33Z",
+  "upstream_revision": "sha256:f1bfd02f02ef27bc255c68da7401b269980e42d8b57695e22d3ccc7d72d46d87",
+  "managed_revision": "sha256:f1bfd02f02ef27bc255c68da7401b269980e42d8b57695e22d3ccc7d72d46d87",
+  "managed_dirty": false
+}
