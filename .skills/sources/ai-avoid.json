@@ -1,7 +1,7 @@
 {
   "skill_id": "ai-avoid",
   "display_name": "ai-avoid",
-  "skill_path": "ai-avoid",
+  "skill_path": ".skills/archived-skills/ai-avoid",
   "source_type": "github",
   "source": "ninehills/skills",
   "source_url": "https://github.com/ninehills/skills.git",
@@ -13,5 +13,7 @@
   "last_imported_at": "2026-03-24T17:13:10Z",
   "upstream_revision": "7836c899676f01d1d88ad926c15e2e2a78bfd7d4",
   "managed_revision": "sha256:9531d6886bd1ea398b2d09d4ace4828d152d5b219fa68f864b117c3ba3104a40",
-  "managed_dirty": false
+  "managed_dirty": false,
+  "archived": true,
+  "archived_at": "2026-04-26T14:00:48Z"
 }

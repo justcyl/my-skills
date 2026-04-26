@@ -1,13 +1,6 @@
 {
   "agent": "agents",
   "skills": {
-    "ai-avoid": {
-      "source_path": "ai-avoid",
-      "target_path": "/Users/chenyl/.agents/skills/ai-avoid",
-      "mode": "symlink",
-      "sync_status": "synced",
-      "last_synced_at": "2026-04-26T13:54:47Z"
-    },
     "ai-native-cli": {
       "source_path": "ai-native-cli",
       "target_path": "/Users/chenyl/.agents/skills/ai-native-cli",
