@@ -1,0 +1,17 @@
+{
+  "skill_id": "pi-subagent",
+  "display_name": "pi-subagent",
+  "skill_path": "pi-subagent",
+  "source_type": "local-created",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/pi-subagent",
+  "last_imported_at": "2026-04-26T13:00:50Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:f18ba56730d5436b32d6c986594b234552b04d6dc0ee52988e78a5122a7c39a9",
+  "managed_dirty": false
+}

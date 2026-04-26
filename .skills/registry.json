@@ -1848,6 +1848,40 @@
       "upstream_path": ".skills/upstream/axonhub",
       "managed_revision": "sha256:64a86f9d31eb5075a45e751afafe2809b2e4b231cfb85b6c1e470c0e735ec1b6",
       "last_updated_at": "2026-04-26T09:19:51Z"
+    },
+    "pi-subagent": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/pi-subagent",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T13:00:51Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/pi-subagent",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T13:00:51Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/pi-subagent",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T13:00:51Z"
+        }
+      },
+      "display_name": "pi-subagent",
+      "description": "通用 pi sub-agent 基础设施。把 pi + herdr 创建 sub-agent 的模式抽象为可复用组件：模型路由表（alias → 实际模型 + 参数）、agent 目录（每种能力一个 system prompt md）、通用 invoke.sh。其他 skill 或 agent 直接引用 invoke.sh 和 agent 目录来调度 sub-agent，无需为每种能力单独维护一套 invoke 脚本。触发场景：'创建 sub-agent'、'用 pi 跑个子任务'、'需要调用 gemini 做 X'、'spawn a sub-agent'。",
+      "status": "managed",
+      "risk_status": "passed",
+      "managed_dirty": false,
+      "upstream_enabled": false,
+      "report_path": ".skills/reports/pi-subagent.md",
+      "source_path": ".skills/sources/pi-subagent.json",
+      "skill_path": "pi-subagent",
+      "upstream_path": ".skills/upstream/pi-subagent",
+      "managed_revision": "sha256:f18ba56730d5436b32d6c986594b234552b04d6dc0ee52988e78a5122a7c39a9",
+      "last_updated_at": "2026-04-26T13:00:50Z"
     }
   }
 }
