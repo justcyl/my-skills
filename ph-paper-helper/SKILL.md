@@ -24,7 +24,7 @@ alias ph='uv run --project ~/project/ph2 ph'
 4. **补全 .bib 元数据**：用户的 .bib 中有不完整的 entry
    → 使用 `ph enrich --bib`，参考「BibTeX 补全」
 5. **读取文本内容**：用户想读论文正文
-   → 先看 `plain_text_available`：
+   → 先看 `plain_text` 是否有值：
    - 如果已有 `plain_text`：直接用 `ph fetch --include-content` 或 `ph sql` 取就行
    - 如果无且只需纯文：`ph import --fetch-plain-text`（秒级）
    - 如果需要全文（图/公式）：使用 `ph fetch --include-content`，参考「慢路径」
@@ -285,14 +285,13 @@ ph fetch --paper-id arxiv://1706.03762 --force
 
 **`ph fetch` 输出字段说明：**
 
-| 字段 | 含义 |
-|------|------|
-| `plain_text_available` | DB 里是否已有快速纯文本（无需 MinerU） |
-| `plain_text` | 纯文本内容（仅 `--include-content` 时返回） |
-| `content` | MinerU markdown 内容（仅 `--include-content` 且 `fetch_state=done` 时返回） |
-| `fetch_state` | MinerU 状态：none/pending/done/failed |
+| 字段 | 仅 --include-content | 含义 |
+|------|------|------|
+| `content` | ✓ | MinerU markdown 内容（fetch_state=done 时有值） |
+| `plain_text` | ✓ | 快速纯文本（arXiv HTML 提取，无需 MinerU） |
+| `fetch_state` | — | MinerU 状态：none/pending/done/failed |
 
-> 调用 `ph fetch` 后可通过 `plain_text_available` 判断是否已有纯文本可用，决定是否需要等待 MinerU。
+> `--include-content` 是「把所有可用文本内容都带回来」的开关，`content` 和 `plain_text` 行为完全对齐：不加则为 null，加了才有值。判断是否有纯文本：`plain_text != null`。
 
 ---
 
@@ -329,7 +328,7 @@ ph import --input arxiv://1706.03762 --no-fetch-plain-text
 
 # 读取已存入的纯文本
 ph fetch --paper-id arxiv://1706.03762 --include-content
-# 返回: plain_text_available=true, plain_text="..."
+# plain_text 有值则可直接读取
 
 # 或直接 SQL
 ph sql --query "SELECT plain_text FROM papers WHERE paper_id = 'arxiv://1706.03762'"
