@@ -1777,10 +1777,29 @@
       "last_updated_at": "2026-04-26T07:59:50Z"
     },
     "lark-contact": {
-      "distribution": {},
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/lark-contact",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T07:59:52Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/lark-contact",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T07:59:52Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/lark-contact",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T07:59:52Z"
+        }
+      },
       "display_name": "lark-contact",
       "description": "飞书通讯录：查询组织架构、人员信息和搜索员工。获取当前用户或指定用户的详细信息、通过关键词搜索员工（姓名/邮箱/手机号）。当用户需要查看个人信息、查找同事 open_id 或联系方式、按姓名搜索员工、查询部门结构时使用。",
-      "status": "imported",
+      "status": "managed",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": true,
@@ -1789,7 +1808,7 @@
       "skill_path": "lark-contact",
       "upstream_path": ".skills/upstream/lark-contact",
       "managed_revision": "sha256:4b0da7ced5b9d91da4354d5151205042afe7ff88a67cf1098047f555ff797d44",
-      "last_updated_at": "2026-04-26T07:58:39Z"
+      "last_updated_at": "2026-04-26T07:59:51Z"
     },
     "lark-vc": {
       "distribution": {},

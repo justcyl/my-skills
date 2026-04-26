@@ -1,7 +1,7 @@
 # lark-contact
 
 - skill_id: `lark-contact`
-- status: `imported`
+- status: `managed`
 - skill_path: `lark-contact`
 - source_type: `github`
 - source: `https://github.com/larksuite/cli`

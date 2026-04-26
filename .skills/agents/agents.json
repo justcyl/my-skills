@@ -245,6 +245,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-26T07:59:51Z"
+    },
+    "lark-contact": {
+      "source_path": "lark-contact",
+      "target_path": "/Users/chenyl/.agents/skills/lark-contact",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-04-26T07:59:52Z"
     }
   }
 }

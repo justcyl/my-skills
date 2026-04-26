@@ -7,10 +7,10 @@
   "source_url": "https://github.com/larksuite/cli.git",
   "ref": "",
   "subpath": "skills/lark-contact",
-  "bootstrap": false,
+  "bootstrap": true,
   "upstream_enabled": true,
   "upstream_path": ".skills/upstream/lark-contact",
-  "last_imported_at": "2026-04-26T07:58:39Z",
+  "last_imported_at": "2026-04-26T07:59:51Z",
   "upstream_revision": "sha256:4b0da7ced5b9d91da4354d5151205042afe7ff88a67cf1098047f555ff797d44",
   "managed_revision": "sha256:4b0da7ced5b9d91da4354d5151205042afe7ff88a67cf1098047f555ff797d44",
   "managed_dirty": false
