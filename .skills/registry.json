@@ -2015,10 +2015,29 @@
       "last_updated_at": "2026-04-26T07:59:58Z"
     },
     "lark-openapi-explorer": {
-      "distribution": {},
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/lark-openapi-explorer",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T07:59:59Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/lark-openapi-explorer",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T07:59:59Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/lark-openapi-explorer",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T07:59:59Z"
+        }
+      },
       "display_name": "lark-openapi-explorer",
       "description": "飞书/Lark 原生 OpenAPI 探索：从官方文档库中挖掘未经 CLI 封装的原生 OpenAPI 接口。当用户的需求无法被现有 lark-* skill 或 lark-cli 已注册命令满足，需要查找并调用原生飞书 OpenAPI 时使用。",
-      "status": "imported",
+      "status": "managed",
       "risk_status": "passed",
       "managed_dirty": false,
       "upstream_enabled": true,
@@ -2027,7 +2046,7 @@
       "skill_path": "lark-openapi-explorer",
       "upstream_path": ".skills/upstream/lark-openapi-explorer",
       "managed_revision": "sha256:d43de3497e8205c21734b489a2a0f6ba16a2cbfeb9a8d6d48f6dfedc6a85b33c",
-      "last_updated_at": "2026-04-26T07:59:04Z"
+      "last_updated_at": "2026-04-26T07:59:59Z"
     },
     "lark-skill-maker": {
       "distribution": {},

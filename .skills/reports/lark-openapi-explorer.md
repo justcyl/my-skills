@@ -1,7 +1,7 @@
 # lark-openapi-explorer
 
 - skill_id: `lark-openapi-explorer`
-- status: `imported`
+- status: `managed`
 - skill_path: `lark-openapi-explorer`
 - source_type: `github`
 - source: `https://github.com/larksuite/cli`
