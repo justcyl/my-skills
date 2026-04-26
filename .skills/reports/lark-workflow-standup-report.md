@@ -1,7 +1,7 @@
 # lark-workflow-standup-report
 
 - skill_id: `lark-workflow-standup-report`
-- status: `imported`
+- status: `managed`
 - skill_path: `lark-workflow-standup-report`
 - source_type: `github`
 - source: `https://github.com/larksuite/cli`

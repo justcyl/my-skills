@@ -7,10 +7,10 @@
   "source_url": "https://github.com/larksuite/cli.git",
   "ref": "",
   "subpath": "skills/lark-workflow-standup-report",
-  "bootstrap": false,
+  "bootstrap": true,
   "upstream_enabled": true,
   "upstream_path": ".skills/upstream/lark-workflow-standup-report",
-  "last_imported_at": "2026-04-26T07:59:16Z",
+  "last_imported_at": "2026-04-26T08:00:03Z",
   "upstream_revision": "sha256:5489a9de59e00c8a6c69ef13c9f2f843607044b6dae2853aadf97694c1c43e37",
   "managed_revision": "sha256:5489a9de59e00c8a6c69ef13c9f2f843607044b6dae2853aadf97694c1c43e37",
   "managed_dirty": false

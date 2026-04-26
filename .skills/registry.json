@@ -2185,10 +2185,29 @@
       "last_updated_at": "2026-04-26T08:00:02Z"
     },
     "lark-workflow-standup-report": {
-      "distribution": {},
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/lark-workflow-standup-report",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T08:00:04Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/lark-workflow-standup-report",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T08:00:04Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/lark-workflow-standup-report",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T08:00:04Z"
+        }
+      },
       "display_name": "lark-workflow-standup-report",
       "description": "日程待办摘要：编排 calendar +agenda 和 task +get-my-tasks，生成指定日期的日程与未完成任务摘要。适用于了解今天/明天/本周的安排。",
-      "status": "imported",
+      "status": "managed",
       "risk_status": "passed",
       "managed_dirty": false,
       "upstream_enabled": true,
@@ -2197,7 +2216,7 @@
       "skill_path": "lark-workflow-standup-report",
       "upstream_path": ".skills/upstream/lark-workflow-standup-report",
       "managed_revision": "sha256:5489a9de59e00c8a6c69ef13c9f2f843607044b6dae2853aadf97694c1c43e37",
-      "last_updated_at": "2026-04-26T07:59:16Z"
+      "last_updated_at": "2026-04-26T08:00:03Z"
     }
   }
 }
