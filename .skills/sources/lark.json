@@ -1,0 +1,17 @@
+{
+  "skill_id": "lark",
+  "display_name": "lark",
+  "skill_path": "lark",
+  "source_type": "local-created",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/lark",
+  "last_imported_at": "2026-04-26T08:12:32Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:5def6c7e2cdb5b6172af39e0e5008fdf69c15c7acf0dc6a8ca7eb135d93b4230",
+  "managed_dirty": false
+}

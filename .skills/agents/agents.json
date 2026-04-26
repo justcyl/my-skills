@@ -336,6 +336,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-26T08:00:19Z"
+    },
+    "lark": {
+      "source_path": "lark",
+      "target_path": "/Users/chenyl/.agents/skills/lark",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-04-26T08:12:36Z"
     }
   }
 }
