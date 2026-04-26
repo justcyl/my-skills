@@ -1,0 +1,17 @@
+{
+  "skill_id": "axonhub",
+  "display_name": "axonhub",
+  "skill_path": "axonhub",
+  "source_type": "local-created",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/axonhub",
+  "last_imported_at": "2026-04-26T09:00:11Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:a7fe0282b45bfb2a00542591d07591862f00562c7d560990bc4de07b118f49f1",
+  "managed_dirty": false
+}

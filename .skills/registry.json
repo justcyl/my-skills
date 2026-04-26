@@ -1814,6 +1814,40 @@
       "upstream_path": ".skills/upstream/lark",
       "managed_revision": "sha256:5def6c7e2cdb5b6172af39e0e5008fdf69c15c7acf0dc6a8ca7eb135d93b4230",
       "last_updated_at": "2026-04-26T08:12:32Z"
+    },
+    "axonhub": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/axonhub",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T09:00:12Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/axonhub",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T09:00:12Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/axonhub",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T09:00:12Z"
+        }
+      },
+      "display_name": "axonhub",
+      "description": "查询 AxonHub AI Gateway 的请求记录、Trace、UsageLog。通过 GraphQL API 认证登录并检索请求体/响应体/延迟/token 用量，支持按 traceID、model、时间范围、状态筛选。当用户需要查看 AxonHub 某个请求详情、排查 LLM 调用、查看 token 消耗、或追踪特定 Trace 下的所有请求时使用。",
+      "status": "managed",
+      "risk_status": "warned",
+      "managed_dirty": false,
+      "upstream_enabled": false,
+      "report_path": ".skills/reports/axonhub.md",
+      "source_path": ".skills/sources/axonhub.json",
+      "skill_path": "axonhub",
+      "upstream_path": ".skills/upstream/axonhub",
+      "managed_revision": "sha256:a7fe0282b45bfb2a00542591d07591862f00562c7d560990bc4de07b118f49f1",
+      "last_updated_at": "2026-04-26T09:00:11Z"
     }
   }
 }

@@ -182,6 +182,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-26T08:12:36Z"
+    },
+    "axonhub": {
+      "source_path": "axonhub",
+      "target_path": "/Users/chenyl/.claude/skills/axonhub",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-04-26T09:00:12Z"
     }
   }
 }
