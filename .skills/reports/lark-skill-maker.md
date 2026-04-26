@@ -1,7 +1,7 @@
 # lark-skill-maker
 
 - skill_id: `lark-skill-maker`
-- status: `imported`
+- status: `managed`
 - skill_path: `lark-skill-maker`
 - source_type: `github`
 - source: `https://github.com/larksuite/cli`
