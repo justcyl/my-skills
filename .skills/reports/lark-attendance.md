@@ -1,7 +1,7 @@
 # lark-attendance
 
 - skill_id: `lark-attendance`
-- status: `imported`
+- status: `managed`
 - skill_path: `lark-attendance`
 - source_type: `github`
 - source: `https://github.com/larksuite/cli`

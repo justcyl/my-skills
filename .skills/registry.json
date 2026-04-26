@@ -2083,10 +2083,29 @@
       "last_updated_at": "2026-04-26T08:00:00Z"
     },
     "lark-attendance": {
-      "distribution": {},
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/lark-attendance",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T08:00:01Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/lark-attendance",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T08:00:01Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/lark-attendance",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T08:00:01Z"
+        }
+      },
       "display_name": "lark-attendance",
       "description": "飞书考勤打卡：查询自己的考勤打卡记录",
-      "status": "imported",
+      "status": "managed",
       "risk_status": "passed",
       "managed_dirty": false,
       "upstream_enabled": true,
@@ -2095,7 +2114,7 @@
       "skill_path": "lark-attendance",
       "upstream_path": ".skills/upstream/lark-attendance",
       "managed_revision": "sha256:9415142e7269b4dd218064b08e7e30821d624ba94207874741ab3876e1f4c4cc",
-      "last_updated_at": "2026-04-26T07:59:09Z"
+      "last_updated_at": "2026-04-26T08:00:00Z"
     },
     "lark-approval": {
       "distribution": {},

@@ -308,6 +308,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-26T08:00:00Z"
+    },
+    "lark-attendance": {
+      "source_path": "lark-attendance",
+      "target_path": "/Users/chenyl/.agents/skills/lark-attendance",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-04-26T08:00:01Z"
     }
   }
 }
