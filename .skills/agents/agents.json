@@ -196,6 +196,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-26T07:59:41Z"
+    },
+    "lark-doc": {
+      "source_path": "lark-doc",
+      "target_path": "/Users/chenyl/.agents/skills/lark-doc",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-04-26T07:59:42Z"
     }
   }
 }

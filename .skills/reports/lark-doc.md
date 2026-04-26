@@ -1,7 +1,7 @@
 # lark-doc
 
 - skill_id: `lark-doc`
-- status: `imported`
+- status: `managed`
 - skill_path: `lark-doc`
 - source_type: `github`
 - source: `https://github.com/larksuite/cli`
