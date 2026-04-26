@@ -1,7 +1,7 @@
 # lark-drive
 
 - skill_id: `lark-drive`
-- status: `imported`
+- status: `managed`
 - skill_path: `lark-drive`
 - source_type: `github`
 - source: `https://github.com/larksuite/cli`
