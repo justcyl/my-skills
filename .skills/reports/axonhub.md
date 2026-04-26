@@ -10,7 +10,7 @@
 
 ## Summary
 
-查询 AxonHub AI Gateway 的请求记录、Trace、UsageLog。通过 GraphQL API 认证登录并检索请求体/响应体/延迟/token 用量，支持按 traceID、model、时间范围、状态筛选。当用户需要查看 AxonHub 某个请求详情、排查 LLM 调用、查看 token 消耗、或追踪特定 Trace 下的所有请求时使用。
+查询 AxonHub AI Gateway 的请求记录、Trace、UsageLog，以及管理渠道、API Key、模型等资源。使用官方 @axonhub/graphql-cli 工具通过 GraphQL API 操作，支持按 traceID、model、时间、状态筛选请求，也可探索 schema、执行任意 mutation。当用户需要查看 AxonHub 请求详情、排查 LLM 调用、查看 token 消耗、追踪 Trace、或通过命令行管理渠道/Key 时使用。
 
 ## Risk Findings
 

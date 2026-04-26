@@ -10,8 +10,8 @@
   "bootstrap": true,
   "upstream_enabled": false,
   "upstream_path": ".skills/upstream/axonhub",
-  "last_imported_at": "2026-04-26T09:00:11Z",
+  "last_imported_at": "2026-04-26T09:19:51Z",
   "upstream_revision": "",
-  "managed_revision": "sha256:a7fe0282b45bfb2a00542591d07591862f00562c7d560990bc4de07b118f49f1",
+  "managed_revision": "sha256:64a86f9d31eb5075a45e751afafe2809b2e4b231cfb85b6c1e470c0e735ec1b6",
   "managed_dirty": false
 }

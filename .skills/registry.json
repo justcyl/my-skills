@@ -1821,23 +1821,23 @@
           "target_path": "/Users/chenyl/.codex/skills/axonhub",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-26T09:00:20Z"
+          "last_synced_at": "2026-04-26T09:19:52Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/axonhub",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-26T09:00:20Z"
+          "last_synced_at": "2026-04-26T09:19:52Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/axonhub",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-26T09:00:20Z"
+          "last_synced_at": "2026-04-26T09:19:52Z"
         }
       },
       "display_name": "axonhub",
-      "description": "查询 AxonHub AI Gateway 的请求记录、Trace、UsageLog。通过 GraphQL API 认证登录并检索请求体/响应体/延迟/token 用量，支持按 traceID、model、时间范围、状态筛选。当用户需要查看 AxonHub 某个请求详情、排查 LLM 调用、查看 token 消耗、或追踪特定 Trace 下的所有请求时使用。",
+      "description": "查询 AxonHub AI Gateway 的请求记录、Trace、UsageLog，以及管理渠道、API Key、模型等资源。使用官方 @axonhub/graphql-cli 工具通过 GraphQL API 操作，支持按 traceID、model、时间、状态筛选请求，也可探索 schema、执行任意 mutation。当用户需要查看 AxonHub 请求详情、排查 LLM 调用、查看 token 消耗、追踪 Trace、或通过命令行管理渠道/Key 时使用。",
       "status": "managed",
       "risk_status": "warned",
       "managed_dirty": false,
@@ -1846,8 +1846,8 @@
       "source_path": ".skills/sources/axonhub.json",
       "skill_path": "axonhub",
       "upstream_path": ".skills/upstream/axonhub",
-      "managed_revision": "sha256:a7fe0282b45bfb2a00542591d07591862f00562c7d560990bc4de07b118f49f1",
-      "last_updated_at": "2026-04-26T09:00:11Z"
+      "managed_revision": "sha256:64a86f9d31eb5075a45e751afafe2809b2e4b231cfb85b6c1e470c0e735ec1b6",
+      "last_updated_at": "2026-04-26T09:19:51Z"
     }
   }
 }
