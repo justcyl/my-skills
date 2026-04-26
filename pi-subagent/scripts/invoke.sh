@@ -55,12 +55,19 @@ if [[ -z "$MSG" ]]; then
   exit 1
 fi
 
-# Locate agent file
+# Locate agent contract file (frontmatter + caller docs)
 AGENT_FILE="$SKILL_DIR/agents/${AGENT}.md"
 if [[ ! -f "$AGENT_FILE" ]]; then
   echo "invoke.sh: agent not found: $AGENT_FILE" >&2
   echo "Available agents:" >&2
-  ls "$SKILL_DIR/agents/" 2>/dev/null | sed 's/\.md$/  /' >&2 || echo "  (none)" >&2
+  ls "$SKILL_DIR/agents/"*.md 2>/dev/null | grep -v '\.prompt\.md$' | sed "s|$SKILL_DIR/agents/||;s|\.md$||" >&2 || echo "  (none)" >&2
+  exit 1
+fi
+
+# Locate system prompt file (<agent>.prompt.md)
+PROMPT_FILE="$SKILL_DIR/agents/${AGENT}.prompt.md"
+if [[ ! -f "$PROMPT_FILE" ]]; then
+  echo "invoke.sh: system prompt not found: $PROMPT_FILE" >&2
   exit 1
 fi
 
@@ -81,13 +88,8 @@ if [[ -n "$FRONTMATTER_TOOLS" ]]; then
   TOOLS="$FRONTMATTER_TOOLS"
 fi
 
-# Extract system prompt: everything after the closing --- of frontmatter
-SYSTEM_PROMPT=$(awk '/^---/{f++; next} f>=2{print}' "$AGENT_FILE")
-
-if [[ -z "$SYSTEM_PROMPT" ]]; then
-  echo "invoke.sh: agent file has no system prompt body after frontmatter: $AGENT_FILE" >&2
-  exit 1
-fi
+# Read system prompt directly from .prompt.md (no parsing needed)
+SYSTEM_PROMPT=$(cat "$PROMPT_FILE")
 
 # Expand \n in message to real newlines
 MSG="$(printf '%b' "$MSG")"

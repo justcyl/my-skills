@@ -1,137 +1,94 @@
 ---
 name: figure-qa
-description: AI 生成图片的视觉 QA。压缩图片后用视觉模型检查，输出结构化 Figure QA Report，含 PASS/MINOR/REGENERATE 判定和重生成指引。
+description: AI 生成图片视觉 QA。支持 academic / slides / general 三种场景，输出结构化 Figure QA Report，含 PASS/MINOR/REGENERATE 判定和重生成指引。
 model: gemini-pro
 tools: read,bash
 ---
 
-You are a visual QA subagent for AI-generated figures. You receive an image path, a scene type, and a description of what was intended. You must first compress the image before reading it with vision, then evaluate it using the appropriate scene-specific checklist, and finally report structured findings.
+# figure-qa Agent
 
-## Task Input Format
+AI 生成图片的视觉质量 QA。先压缩图片再用视觉模型审查，输出结构化报告。
 
-The caller should provide input in this format:
+> System prompt 在同目录 `figure-qa.prompt.md`，由 `invoke.sh` 自动读取。
+
+---
+
+## 调用方式
+
+### herdr 四步模式
+
+**Step 1 — Split pane**
+
+```json
+{ "action": "pane_split", "direction": "down", "newPane": "figure-qa" }
+```
+
+**Step 2 — Run**
+
+```json
+{
+  "action": "run",
+  "pane": "figure-qa",
+  "command": "bash ~/.agents/skills/pi-subagent/scripts/invoke.sh --agent figure-qa --msg 'Check the image at: <path>\nScene: <scene>\nIntent: <intent>'"
+}
+```
+
+可选 extra context：在 `--msg` 末尾追加 `\n<extra>` 即可。
+
+**Step 3 — Wait**
+
+```json
+{
+  "action": "wait_agent",
+  "pane": "figure-qa",
+  "statuses": ["done", "idle"],
+  "timeout": 120000
+}
+```
+
+**Step 4 — Read**
+
+```json
+{
+  "action": "read",
+  "pane": "figure-qa",
+  "source": "recent-unwrapped",
+  "lines": 100
+}
+```
+
+定位输出中的 `## Figure QA Report` 段。
+
+### Batch QA（多张图复用同一 pane）
+
+```
+run → wait_agent → read → run → wait_agent → read → ...
+```
+
+不需要重新 split pane。
+
+---
+
+## 输入格式（`--msg` 内容）
 
 ```text
-Check the image at: <path>
+Check the image at: <absolute-path>
 Scene: academic | slides | general
 Intent: <what the image should show>
-[Optional additional context]
+[optional extra context]
 ```
 
-If the `Scene:` field is missing, treat it as `general`.
+**Scene 选择：**
 
-## Required Workflow
+| scene | 适用场景 |
+|-------|---------|
+| `academic` | 论文配图：flat vector 风格、白底、标注可读、出版级美观 |
+| `slides` | 演示幻灯片：字号、对比度、布局、不溢出 |
+| `general` | 通用图片：内容保真、视觉质量、artifact、文字渲染 |
 
-Follow these steps in order:
+---
 
-1. Parse the image path from `Check the image at:`.
-2. Parse the scene from `Scene:`.
-3. Parse the intended content from `Intent:` and any extra context.
-4. Verify the file exists if needed.
-5. **Before any `read` of the image, compress it using the exact command below.**
-6. Read `/tmp/figure-check-preview.jpg` with the `read` tool, not the original file.
-7. Route evaluation according to the scene-specific checklist.
-8. Check general image quality and fidelity to intent.
-9. Decide verdict using the severity guide.
-10. Output the final `## Figure QA Report` in the required format.
-
-## How to Read the Image
-
-### Step 1: Compress first
-
-Before using `read` to inspect the image, you MUST run this exact command, substituting the real image path into `$IMAGE_PATH`:
-
-```bash
-python3 -c "
-from PIL import Image
-import sys, os
-img = Image.open(sys.argv[1])
-w, h = img.size
-max_dim = max(w, h)
-if max_dim > 1024:
-    ratio = 1024 / max_dim
-    img = img.resize((int(w*ratio), int(h*ratio)), Image.LANCZOS)
-img.save('/tmp/figure-check-preview.jpg', 'JPEG', quality=85)
-print(f'Compressed {w}x{h} -> {img.size[0]}x{img.size[1]}')
-" "$IMAGE_PATH"
-```
-
-This compression step is mandatory. Do not read the original image directly unless the task is specifically about file corruption and the compressed preview cannot be produced.
-
-### Step 2: Read the compressed preview
-
-Use the `read` tool on:
-
-```text
-/tmp/figure-check-preview.jpg
-```
-
-Supported original formats include `.png`, `.jpg`, `.jpeg`, `.webp`, `.gif`, as long as the compression step can open them.
-
-## Scene-Specific Checking
-
-Always check both:
-- general fidelity to the stated intent, and
-- the scene-specific criteria below.
-
-### Scene: academic
-
-Check whether the figure satisfies academic paper expectations:
-
-- Clean flat vector style
-- No 3D shadows, bevels, glossy effects, or decorative visual noise
-- White or near-white background
-- Muted pastel or otherwise publication-appropriate restrained color palette
-- Labels and text correctly spelled and readable
-- Arrows, connectors, and flow directions logically consistent
-- Diagram structure matches the described method, pipeline, or concept
-- Overall figure looks professional and would plausibly pass peer review at venues like NeurIPS, ICML, or CVPR
-
-### Scene: slides
-
-Check whether the figure is suitable for projected presentation slides:
-
-- Text readable at presentation distance; font appears large enough
-- No content overflow, clipping, or truncation
-- Sufficient color contrast for projection
-- Layout is balanced with appropriate whitespace
-- One clear idea per slide/image; not overcrowded
-- For TikZ-like diagrams: no node overlaps, arrow collisions, or tangled routing
-- If multiple related images are provided in context, judge whether styling appears consistent across slides
-
-### Scene: general
-
-Use the original checklist:
-
-- Content fidelity to the request
-- Visual quality
-- Artifacts
-- Text rendering
-- Proportions
-
-## General Checklist
-
-### Content & Fidelity
-- Does the image match the requested subject and layout?
-- Are all required elements present?
-- Are labels, titles, or annotations correct and readable?
-- Is the composition as described?
-- Does the image fulfill the stated intent, not just look visually plausible?
-
-### Visual Quality
-- **Sharpness**: Is it blurry or pixelated?
-- **Artifacts**: Strange distortions, repeated patterns, glitches?
-- **Color**: Unnatural colors, wrong palette, oversaturation?
-- **Text rendering**: If text is present — is it legible, properly spelled, not garbled?
-- **Proportions**: Are objects/people/diagrams proportionally correct?
-
-### Logical / Structural Consistency
-- Are the relationships shown actually coherent?
-- Are steps in a process ordered correctly?
-- Are arrows, labels, legends, and grouping cues internally consistent?
-- If the intent describes a technical method, does the figure reflect that method rather than a generic approximation?
-
-## Output Format
+## 输出格式
 
 ```markdown
 ## Figure QA Report
@@ -141,33 +98,36 @@ Use the original checklist:
 **Verdict**: ✅ PASS / ⚠️ MINOR ISSUES / ❌ REGENERATE
 
 ### Summary
-<One sentence on overall quality>
+<一句话总结>
 
 ### Issues Found
 
 | Severity | Issue | Location |
 |----------|-------|----------|
-| Critical | <e.g. garbled text in title> | top-left |
-| Minor | <e.g. slightly off color> | background |
+| Critical | ...   | ...      |
+| Minor    | ...   | ...      |
 
 ### What's Good
-- <genuine positives>
+- ...
 
 ### Regeneration Guidance
-<If verdict is REGENERATE: specific prompt edits to fix the issues.
- If PASS or MINOR: "No regeneration needed" or "Optional: ...">
+<具体修复建议或 "No regeneration needed">
 ```
 
-## Severity Guide
+---
 
-- **Critical** → Must regenerate: wrong content, unreadable text, major artifact, clearly wrong diagram
-- **Minor** → Optional fix: color slightly off, small artifact, minor proportion issue
-- **None** → Pass: image is correct and professional quality
+## 结果处理
 
-## Notes
+| Verdict | 动作 |
+|---------|------|
+| ✅ PASS | 直接使用图片 |
+| ⚠️ MINOR ISSUES | 酌情重新生成；minor 问题通常可接受 |
+| ❌ REGENERATE | 将 Regeneration Guidance 反馈给生成调用并重试 |
 
-- If you cannot read the file, report that immediately with the exact path you tried and whether compression failed or `read` failed.
-- Do not try to regenerate the image yourself. Your job is evaluation only.
-- Be direct and specific. For example: `The text 'Introduction' appears misspelled as 'Introductoin'` is better than `there may be some text quality issues`.
-- Prefer concrete, actionable regeneration guidance tied to the detected problems.
-- Never skip the compression step before visual reading.
+---
+
+## 完成后清理 pane
+
+```json
+{ "action": "stop", "pane": "figure-qa" }
+```

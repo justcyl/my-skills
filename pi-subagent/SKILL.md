@@ -105,7 +105,9 @@ description: 通用 pi sub-agent 基础设施。把 pi + herdr 创建 sub-agent 
 
 ### 添加新 Agent 类型
 
-在 `agents/` 下新建 `<name>.md`，格式如下：
+在 `agents/` 下新建两个文件：
+
+**`agents/<name>.md`** — Caller Contract（其他 skill 引用这个文件了解如何使用）：
 
 ```markdown
 ---
@@ -115,7 +117,26 @@ model: <alias>          # 来自 routing.md 的模型 alias
 tools: read,bash        # pi 工具列表，逗号分隔，无空格
 ---
 
-<system prompt 正文>
+# <agent-name> Agent
+
+## 调用方式
+...
+
+## 输入格式
+...
+
+## 输出格式
+...
+
+## 结果处理
+...
+```
+
+**`agents/<name>.prompt.md`** — 纯 system prompt（直接传给 `pi --system-prompt`，无需解析）：
+
+```
+You are a <role>...
+[system prompt body, no frontmatter]
 ```
 
 然后用 `invoke.sh --agent <name>` 调用即可。
@@ -157,6 +178,7 @@ bash ~/.agents/skills/pi-subagent/scripts/invoke.sh \
 |------|------|
 | `SKILL.md` | 本文件，主入口 |
 | `routing.md` | 模型路由表 + agent 目录（人可读）|
-| `agents/*.md` | Agent system prompt（frontmatter + 正文）|
+| `agents/<name>.md` | Caller Contract：调用方式、输入格式、输出格式、结果处理 |
+| `agents/<name>.prompt.md` | System prompt 正文（直接传给 `pi --system-prompt`）|
 | `scripts/models.sh` | bash 可 source 的模型解析函数 |
 | `scripts/invoke.sh` | 通用 sub-agent 调用器 |

@@ -90,17 +90,19 @@ INNO_FIGURE_GEN_DEFAULT_MODEL=gemini-3.1-flash-image-preview
 
 ## Post-Generation Figure Check (Optional)
 
-生成图片后，可以选择性地调用 `visual-checker` subagent 做视觉质量检查，获取结构化的 pass/fail 报告：
+生成图片后，可以选择性地调用 `pi-subagent` 的 `figure-qa` agent 做视觉质量检查，获取结构化的 pass/fail 报告：
 
-```text
-spawn agent=visual-checker task="Check the image at: <output-path>
-Scene: general
-Intent: <original prompt summary>"
+```bash
+bash ~/.agents/skills/pi-subagent/scripts/invoke.sh \
+  --agent figure-qa \
+  --msg "Check the image at: <output-path>\nScene: general\nIntent: <original prompt summary>"
 ```
 
+调用方式与输出格式详见 `~/.agents/skills/pi-subagent/agents/figure-qa.md`。
+
 - **默认关闭**：gemini-image-gen 是通用工具，不强制检查
-- 专用 skill（`academic-paper`、`rhetoric-of-decks`）已内置 visual-checker 集成
-- visual-checker 会自动压缩图片再审查，不会撑爆上下文
+- 专用 skill（`academic-paper`、`rhetoric-of-decks`）已内置 figure-qa 集成
+- figure-qa 会自动压缩图片再审查，不会撑爆上下文
 - 若报告返回 ❌ REGENERATE，根据 Regeneration Guidance 构造修复 prompt，使用 `--input-image` 重新生成
 
 ## Preflight

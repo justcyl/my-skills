@@ -1,7 +1,7 @@
 {
   "skill_id": "visual-checker",
   "display_name": "visual-checker",
-  "skill_path": "visual-checker",
+  "skill_path": ".skills/archived-skills/visual-checker",
   "source_type": "local-manual",
   "source": "",
   "source_url": "",
@@ -13,5 +13,7 @@
   "last_imported_at": "2026-04-20T13:17:29Z",
   "upstream_revision": "",
   "managed_revision": "sha256:a0bc0ed6b0bd24cf203f6f00965fbf96b6fa85a6a2486a17ae63188d4b592e68",
-  "managed_dirty": false
+  "managed_dirty": false,
+  "archived": true,
+  "archived_at": "2026-04-26T13:46:47Z"
 }

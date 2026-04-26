@@ -3,7 +3,7 @@ name: academic-paper
 description: >
   AI 学术论文全周期写作。覆盖获取模板、Overleaf 项目创建、结构化写作、配图生成、
   格式检查、投稿前审查。内置论文配图（figure-gen）与格式检查（format-check）子模块。
-  搭配 overleaf、gemini-image-gen、visual-checker、ph-paper-helper 使用。
+  搭配 overleaf、gemini-image-gen、pi-subagent、ph-paper-helper 使用。
   触发语境："写论文""paper writing""投稿前检查""画个架构图""论文配图""格式检查""desk reject"。
 ---
 
@@ -17,7 +17,7 @@ AI 学术论文全周期写作 skill。从获取模板到投稿终审。
 |-------|------|---------|
 | **overleaf** | 创建项目 / git clone-push / 编译 / 下载 PDF / review 评论 | 项目初始化及全程同步 |
 | **gemini-image-gen** | Gemini 图片生成引擎（text-to-image / image-to-image / 多分辨率） | 配图子模块的底层引擎 |
-| **visual-checker** | 视觉 QA 子代理（academic / slides / general scene） | 配图审查、格式视觉审查 |
+| **pi-subagent** | 视觉 QA 子代理（figure-qa agent，academic / slides / general scene） | 配图审查、格式视觉审查 |
 | **ph-paper-helper** | 论文检索 / 导入 / BibTeX 导出与补全（`ph add --bib` / `ph enrich`） | 文献引用处理 |
 
 ---
@@ -96,7 +96,7 @@ bash ~/.agents/skills/academic-paper/scripts/check_hard_rules.sh paper.pdf <conf
 
 详见 [references/figure-gen.md](references/figure-gen.md)。
 
-底层引擎：gemini-image-gen；视觉审查：visual-checker（scene: `academic`）；最多 3 轮 inspect-revise，确认后升 4K 终稿。
+底层引擎：gemini-image-gen；视觉审查：pi-subagent figure-qa（scene: `academic`）；最多 3 轮 inspect-revise，确认后升 4K 终稿。
 
 > 数据驱动图表（bar chart / line plot / heatmap）用 matplotlib/seaborn 直接绘制，不走本模块。
 
@@ -114,7 +114,7 @@ bash ~/.agents/skills/academic-paper/scripts/check_hard_rules.sh \
 ```
 
 脚本失败（exit 1）= 存在 desk-reject 风险的硬规则违反；警告（exit 0）= 需人工复核。
-视觉审查（逐页 visual-checker）默认关闭，用户明确要求时启用。
+视觉审查（逐页 pi-subagent figure-qa）默认关闭，用户明确要求时启用。
 
 <!-- format-check content moved to references/format-check.md -->
 

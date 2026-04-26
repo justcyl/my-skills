@@ -4,7 +4,7 @@
 
 > 数据驱动图表（bar chart / line plot / heatmap）不属于本模块，用 matplotlib/seaborn 直接绘制。
 
-底层引擎：**gemini-image-gen** skill 的 `generate_image.py`。视觉审查：**visual-checker** skill（scene: `academic`）。
+底层引擎：**gemini-image-gen** skill 的 `generate_image.py`。视觉审查：**pi-subagent** skill 的 `figure-qa` agent（scene: `academic`）。
 
 ---
 
@@ -112,15 +112,14 @@ Leave clean blank spaces where labels would go. Text will be added in post-proce
 
 使用 gemini-image-gen，`--resolution 1K` 快速出稿。
 
-### Step 4 — visual-checker 审查（最多 3 轮）
+### Step 4 — figure-qa 审查（最多 3 轮）
 
-通过 herdr 调用 visual-checker 子代理（详见 visual-checker skill）：
+通过 herdr 调用 pi-subagent 的 figure-qa agent（调用方式详见 `~/.agents/skills/pi-subagent/agents/figure-qa.md`）：
 
-```text
-image_path: figures/<draft>.png
-scene:      academic
-intent:     <一句话描述图应该展示什么>
-extra:      Figure type: <type>. Required labels: <list>
+```bash
+bash ~/.agents/skills/pi-subagent/scripts/invoke.sh \
+  --agent figure-qa \
+  --msg "Check the image at: figures/<draft>.png\nScene: academic\nIntent: <一句话描述图应该展示什么>\nFigure type: <type>. Required labels: <list>"
 ```
 
 | 结果 | 处理 |

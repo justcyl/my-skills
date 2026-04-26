@@ -22,7 +22,7 @@
 
 | agent name | 文件 | 默认模型 | 功能描述 |
 |-----------|------|---------|---------|
-| `figure-qa` | `agents/figure-qa.md` | `gemini-pro` | AI 生成图片视觉 QA，输出结构化 Figure QA Report |
+| `figure-qa` | `agents/figure-qa.md` (contract)<br>`agents/figure-qa.prompt.md` (prompt) | `gemini-pro` | AI 生成图片视觉 QA，输出结构化 Figure QA Report |
 
 > **扩展方式**：在 `agents/` 下新建 `<name>.md`（frontmatter + system prompt），然后在上表增加一行说明。
 

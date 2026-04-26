@@ -1188,38 +1188,19 @@
       "last_updated_at": "2026-04-20T12:29:22Z"
     },
     "visual-checker": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/visual-checker",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/visual-checker",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/visual-checker",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:19Z"
-        }
-      },
+      "distribution": {},
       "display_name": "visual-checker",
       "description": "Visual QA sub-agent for AI-generated images. Spawns a dedicated pi sub-agent via herdr to evaluate image quality, content fidelity, and scene-specific criteria (academic / slides / general). Returns structured pass/fail report with regeneration guidance. Use when you need programmatic visual QA on a generated figure, diagram, or slide.",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "passed",
       "managed_dirty": false,
       "upstream_enabled": false,
       "report_path": ".skills/reports/visual-checker.md",
       "source_path": ".skills/sources/visual-checker.json",
-      "skill_path": "visual-checker",
+      "skill_path": ".skills/archived-skills/visual-checker",
       "upstream_path": ".skills/upstream/visual-checker",
       "managed_revision": "sha256:a0bc0ed6b0bd24cf203f6f00965fbf96b6fa85a6a2486a17ae63188d4b592e68",
-      "last_updated_at": "2026-04-20T13:17:29Z"
+      "last_updated_at": "2026-04-26T13:46:47Z"
     },
     "academic-blog": {
       "distribution": {
@@ -1817,19 +1798,19 @@
           "target_path": "/Users/chenyl/.codex/skills/pi-subagent",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-26T13:01:02Z"
+          "last_synced_at": "2026-04-26T13:47:10Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/pi-subagent",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-26T13:01:02Z"
+          "last_synced_at": "2026-04-26T13:47:10Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/pi-subagent",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-26T13:01:02Z"
+          "last_synced_at": "2026-04-26T13:47:10Z"
         }
       },
       "display_name": "pi-subagent",
@@ -1842,8 +1823,8 @@
       "source_path": ".skills/sources/pi-subagent.json",
       "skill_path": "pi-subagent",
       "upstream_path": ".skills/upstream/pi-subagent",
-      "managed_revision": "sha256:f18ba56730d5436b32d6c986594b234552b04d6dc0ee52988e78a5122a7c39a9",
-      "last_updated_at": "2026-04-26T13:00:50Z"
+      "managed_revision": "sha256:60a2f99b0c56060e3962b6626761e529090ad8ca4d166d1064bbcce76e085bcb",
+      "last_updated_at": "2026-04-26T13:47:09Z"
     }
   }
 }
