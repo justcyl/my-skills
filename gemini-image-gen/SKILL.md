@@ -92,7 +92,7 @@ INNO_FIGURE_GEN_DEFAULT_MODEL=gemini-3.1-flash-image-preview
 
 生成图片后，可以选择性地调用 `pi-subagent` 的 `figure-qa` agent 做视觉质量检查。
 
-调用方式详见 [`pi-subagent/agents/figure-qa.md`](~/.agents/skills/pi-subagent/agents/figure-qa.md)，使用以下参数：
+调用方式详见 [`pi-subagent/agents/figure-qa.md`](../pi-subagent/agents/figure-qa.md)，使用以下参数：
 
 ```
 Scene:  general

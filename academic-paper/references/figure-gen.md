@@ -114,7 +114,7 @@ Leave clean blank spaces where labels would go. Text will be added in post-proce
 
 ### Step 4 — figure-qa 审查（最多 3 轮）
 
-调用 `pi-subagent` 的 `figure-qa` agent，调用方式详见 [`pi-subagent/agents/figure-qa.md`](~/.agents/skills/pi-subagent/agents/figure-qa.md)，使用以下参数：
+调用 `pi-subagent` 的 `figure-qa` agent，调用方式详见 [`pi-subagent/agents/figure-qa.md`](../pi-subagent/agents/figure-qa.md)，使用以下参数：
 
 ```
 Scene:  academic

@@ -256,7 +256,7 @@ pdftoppm -jpeg -jpegopt quality=85 -r 150 deck.pdf /tmp/deck-review/slide
 
 > **为什么是 150 DPI JPEG**：figure-qa 会在内部压缩图片，150 DPI JPEG 已足够清晰且体积较小。
 
-调用方式详见 [`pi-subagent/agents/figure-qa.md`](~/.agents/skills/pi-subagent/agents/figure-qa.md)，每页使用以下参数：
+调用方式详见 [`pi-subagent/agents/figure-qa.md`](../pi-subagent/agents/figure-qa.md)，每页使用以下参数：
 
 ```
 Scene:  slides

@@ -105,7 +105,7 @@ pdftoppm -jpeg -jpegopt quality=85 -r 150 paper.pdf /tmp/paper-review/page
 
 > 150 DPI JPEG q85：每页约 50KB，双栏小字仍可读，figure-qa 内部会进一步压缩。
 
-逐页调用 `pi-subagent` 的 `figure-qa` agent，调用方式详见 [`pi-subagent/agents/figure-qa.md`](~/.agents/skills/pi-subagent/agents/figure-qa.md)，每页使用以下参数：
+逐页调用 `pi-subagent` 的 `figure-qa` agent，调用方式详见 [`pi-subagent/agents/figure-qa.md`](../pi-subagent/agents/figure-qa.md)，每页使用以下参数：
 
 ```
 Scene:  academic
