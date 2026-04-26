@@ -114,12 +114,12 @@ Leave clean blank spaces where labels would go. Text will be added in post-proce
 
 ### Step 4 — figure-qa 审查（最多 3 轮）
 
-通过 herdr 调用 pi-subagent 的 figure-qa agent（调用方式详见 `~/.agents/skills/pi-subagent/agents/figure-qa.md`）：
+调用 `pi-subagent` 的 `figure-qa` agent，调用方式详见 [`pi-subagent/agents/figure-qa.md`](~/.agents/skills/pi-subagent/agents/figure-qa.md)，使用以下参数：
 
-```bash
-bash ~/.agents/skills/pi-subagent/scripts/invoke.sh \
-  --agent figure-qa \
-  --msg "Check the image at: figures/<draft>.png\nScene: academic\nIntent: <一句话描述图应该展示什么>\nFigure type: <type>. Required labels: <list>"
+```
+Scene:  academic
+Intent: <一句话描述图应该展示什么>
+Extra:  Figure type: <type>. Required labels: <list>.
 ```
 
 | 结果 | 处理 |

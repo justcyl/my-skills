@@ -247,21 +247,23 @@ TikZ 错误不会触发编译警告，必须手动检查。详见 `references/ti
 
 > **此步骤默认跳过**，仅在用户明确要求时启用（如「帮我看看视觉效果」「用视觉检查」「开启视觉审查」）。
 
-启用后，先将 PDF 转为图片，再为每一页 slide 分别启动 `pi-subagent` 的 `figure-qa` agent 做视觉审查。
+启用后，先将 PDF 转为图片，再为每一页 slide 调用 `pi-subagent` 的 `figure-qa` agent。
 
 ```bash
 # Convert PDF to slide images
 pdftoppm -jpeg -jpegopt quality=85 -r 150 deck.pdf /tmp/deck-review/slide
-
-# For each slide image, invoke figure-qa
-bash ~/.agents/skills/pi-subagent/scripts/invoke.sh \
-  --agent figure-qa \
-  --msg "Check the image at: /tmp/deck-review/slide-01.jpg\nScene: slides\nIntent: <slide title or content description>\nAdditional context:\n- This is slide N of a presentation deck\n- Topic: <deck topic>\n- Check for: text overflow, readability at distance, layout balance, color contrast"
 ```
 
-> **为什么是 150 DPI JPEG**：figure-qa 会在内部处理图像压缩与视觉审查输入，150 DPI JPEG 已足够清晰且体积较小，适合直接使用，无需额外转 PNG 或进一步压缩。
+> **为什么是 150 DPI JPEG**：figure-qa 会在内部压缩图片，150 DPI JPEG 已足够清晰且体积较小。
 
-调用方式与输出格式详见 `~/.agents/skills/pi-subagent/agents/figure-qa.md`。
+调用方式详见 [`pi-subagent/agents/figure-qa.md`](~/.agents/skills/pi-subagent/agents/figure-qa.md)，每页使用以下参数：
+
+```
+Scene:  slides
+Intent: <slide title or content description>
+Extra:  This is slide N of a presentation deck. Topic: <deck topic>.
+        Check for: text overflow, readability at distance, layout balance, color contrast.
+```
 
 `figure-qa` 会自动检查以下问题：
 

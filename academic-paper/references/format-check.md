@@ -96,7 +96,7 @@ bash ~/.agents/skills/academic-paper/scripts/check_hard_rules.sh \
 
 ## 视觉审查（可选）
 
-用户明确要求时（如"帮我看看视觉效果"）才执行。将 PDF 转为页面图片，逐页调用 pi-subagent 的 figure-qa agent（调用方式详见 `~/.agents/skills/pi-subagent/agents/figure-qa.md`）：
+用户明确要求时（如"帮我看看视觉效果"）才执行。将 PDF 转为页面图片：
 
 ```bash
 mkdir -p /tmp/paper-review
@@ -105,12 +105,14 @@ pdftoppm -jpeg -jpegopt quality=85 -r 150 paper.pdf /tmp/paper-review/page
 
 > 150 DPI JPEG q85：每页约 50KB，双栏小字仍可读，figure-qa 内部会进一步压缩。
 
-为每页调用 figure-qa（scene: `academic`）：
+逐页调用 `pi-subagent` 的 `figure-qa` agent，调用方式详见 [`pi-subagent/agents/figure-qa.md`](~/.agents/skills/pi-subagent/agents/figure-qa.md)，每页使用以下参数：
 
-```bash
-bash ~/.agents/skills/pi-subagent/scripts/invoke.sh \
-  --agent figure-qa \
-  --msg "Check the image at: /tmp/paper-review/page-01.jpg\nScene: academic\nIntent: Page N of a <conference> <submission|camera-ready> paper\nCheck for: margin overflow, figure/table readability, label overlap, caption placement (figure=below table=above), column alignment, font size consistency, grayscale distinguishability, author visibility"
+```
+Scene:  academic
+Intent: Page N of a <conference> <submission|camera-ready> paper
+Extra:  Check for: margin overflow, figure/table readability, label overlap,
+        caption placement (figure=below, table=above), column alignment,
+        font size consistency, grayscale distinguishability, author visibility.
 ```
 
 figure-qa 自动覆盖的检查项：
