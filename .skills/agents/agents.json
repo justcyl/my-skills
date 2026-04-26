@@ -266,6 +266,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-26T07:59:54Z"
+    },
+    "lark-event": {
+      "source_path": "lark-event",
+      "target_path": "/Users/chenyl/.agents/skills/lark-event",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-04-26T07:59:55Z"
     }
   }
 }

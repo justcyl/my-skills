@@ -1,7 +1,7 @@
 # lark-event
 
 - skill_id: `lark-event`
-- status: `imported`
+- status: `managed`
 - skill_path: `lark-event`
 - source_type: `github`
 - source: `https://github.com/larksuite/cli`
