@@ -1,7 +1,7 @@
 {
   "skill_id": "lark-minutes",
   "display_name": "lark-minutes",
-  "skill_path": "lark-minutes",
+  "skill_path": ".skills/archived-skills/lark-minutes",
   "source_type": "github",
   "source": "https://github.com/larksuite/cli",
   "source_url": "https://github.com/larksuite/cli.git",
@@ -13,5 +13,7 @@
   "last_imported_at": "2026-04-26T07:59:58Z",
   "upstream_revision": "sha256:97ed27b9273495ed48bbfecef44d1d927949fc0f1ff844cd38910bf606137b3b",
   "managed_revision": "sha256:97ed27b9273495ed48bbfecef44d1d927949fc0f1ff844cd38910bf606137b3b",
-  "managed_dirty": false
+  "managed_dirty": false,
+  "archived": true,
+  "archived_at": "2026-04-26T08:17:07Z"
 }

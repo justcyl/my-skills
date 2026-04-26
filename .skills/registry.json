@@ -1437,786 +1437,349 @@
       "last_updated_at": "2026-04-25T06:05:32Z"
     },
     "lark-shared": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/lark-shared",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/lark-shared",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/lark-shared",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:19Z"
-        }
-      },
+      "distribution": {},
       "display_name": "lark-shared",
       "description": "飞书/Lark CLI 共享基础：应用配置初始化、认证登录（auth login）、身份切换（--as user/bot）、权限与 scope 管理、Permission denied 错误处理、安全规则。当用户需要第一次配置(`lark-cli config init`)、使用登录授权(`lark-cli auth login`)、遇到权限不足、切换 user/bot 身份、配置 scope、或首次使用 lark-cli 时触发。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "passed",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/lark-shared.md",
       "source_path": ".skills/sources/lark-shared.json",
-      "skill_path": "lark-shared",
+      "skill_path": ".skills/archived-skills/lark-shared",
       "upstream_path": ".skills/upstream/lark-shared",
       "managed_revision": "sha256:5d2d10478ba08611c0c743d2b6cc93392e446117e73f189dee07b64ea53e4a3e",
-      "last_updated_at": "2026-04-26T07:59:38Z"
+      "last_updated_at": "2026-04-26T08:17:03Z"
     },
     "lark-im": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/lark-im",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/lark-im",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/lark-im",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:19Z"
-        }
-      },
+      "distribution": {},
       "display_name": "lark-im",
       "description": "飞书即时通讯：收发消息和管理群聊。发送和回复消息、搜索聊天记录、管理群聊成员、上传下载图片和文件（支持大文件分片下载）、管理表情回复。当用户需要发消息、查看或搜索聊天记录、下载聊天中的文件、查看群成员时使用。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/lark-im.md",
       "source_path": ".skills/sources/lark-im.json",
-      "skill_path": "lark-im",
+      "skill_path": ".skills/archived-skills/lark-im",
       "upstream_path": ".skills/upstream/lark-im",
       "managed_revision": "sha256:114fcf539e02f4ea50a184865b4670b2d9d3df085030de43351afa8535bbb8d9",
-      "last_updated_at": "2026-04-26T07:59:40Z"
+      "last_updated_at": "2026-04-26T08:17:03Z"
     },
     "lark-calendar": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/lark-calendar",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/lark-calendar",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/lark-calendar",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:19Z"
-        }
-      },
+      "distribution": {},
       "display_name": "lark-calendar",
       "description": "飞书日历（calendar）：提供日历与日程（会议）的全面管理能力。核心场景包括：查看/搜索日程、创建/更新日程、管理参会人、查询忙闲状态及推荐空闲时段、查询/搜索与预定会议室。注意：涉及【预约日程/会议】或【查询/预定会议室】时，必须先读取 references/lark-calendar-schedule-meeting.md 工作流！高频操作请优先使用 Shortcuts：+agenda（快速概览今日/近期行程）、+create（创建日程并按需邀请参会人及预定会议室）、+freebusy（查询用户主日历的忙闲信息和rsvp的状态）、+rsvp（回复日程邀请）",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "passed",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/lark-calendar.md",
       "source_path": ".skills/sources/lark-calendar.json",
-      "skill_path": "lark-calendar",
+      "skill_path": ".skills/archived-skills/lark-calendar",
       "upstream_path": ".skills/upstream/lark-calendar",
       "managed_revision": "sha256:5d8c217f94452b720c43cd5c3564afb2b3b9fdb46446fbe9bcb624ca45be472b",
-      "last_updated_at": "2026-04-26T07:59:41Z"
+      "last_updated_at": "2026-04-26T08:17:03Z"
     },
     "lark-doc": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/lark-doc",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/lark-doc",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/lark-doc",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:19Z"
-        }
-      },
+      "distribution": {},
       "display_name": "lark-doc",
       "description": "飞书云文档：创建和编辑飞书文档。默认使用 DocxXML 格式（也支持 Markdown）。创建文档、获取文档内容（支持 simple/with-ids/full 三种导出详细度，以及 full/outline/range/keyword/section 五种局部读取模式，可按目录、block id 区间、关键词或标题自动成节只拉部分内容以节省上下文）、更新文档（八种指令：str_replace/block_insert_after/block_copy_insert_after/block_replace/block_delete/block_move_after/overwrite/append）、上传和下载文档中的图片和文件、搜索云空间文档。当用户需要创建或编辑飞书文档、读取文档内容、在文档中插入图片、搜索云空间文档时使用；如果用户是想按名称或关键词先定位电子表格、报表等云空间对象，也优先使用本 skill 的 docs +search 做资源发现。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/lark-doc.md",
       "source_path": ".skills/sources/lark-doc.json",
-      "skill_path": "lark-doc",
+      "skill_path": ".skills/archived-skills/lark-doc",
       "upstream_path": ".skills/upstream/lark-doc",
       "managed_revision": "sha256:9c69faee5ddcc7ccc9e94b56b142daa111c2d96429f0dce56f5bfcc00e09d103",
-      "last_updated_at": "2026-04-26T07:59:42Z"
+      "last_updated_at": "2026-04-26T08:17:04Z"
     },
     "lark-drive": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/lark-drive",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/lark-drive",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/lark-drive",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:19Z"
-        }
-      },
+      "distribution": {},
       "display_name": "lark-drive",
       "description": "飞书云空间：管理云空间中的文件和文件夹。上传和下载文件、创建文件夹、复制/移动/删除文件、查看文件元数据、管理文档评论、管理文档权限、订阅用户评论变更事件、修改文件标题（docx、sheet、bitable、file、folder、wiki）；也负责把本地 Word/Markdown/Excel/CSV 以及 Base 快照（.base）导入为飞书在线云文档（docx、sheet、bitable）。当用户需要上传或下载文件、整理云空间目录、查看文件详情、管理评论、管理文档权限、修改文件标题、订阅用户评论变更事件，或要把本地文件导入成新版文档、电子表格、多维表格/Base 时使用。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/lark-drive.md",
       "source_path": ".skills/sources/lark-drive.json",
-      "skill_path": "lark-drive",
+      "skill_path": ".skills/archived-skills/lark-drive",
       "upstream_path": ".skills/upstream/lark-drive",
       "managed_revision": "sha256:abbc79343adb903261c343b5393013aa78ea3a1590e7323aab614c5d3e6560b2",
-      "last_updated_at": "2026-04-26T07:59:43Z"
+      "last_updated_at": "2026-04-26T08:17:04Z"
     },
     "lark-base": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/lark-base",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/lark-base",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/lark-base",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:19Z"
-        }
-      },
+      "distribution": {},
       "display_name": "lark-base",
       "description": "当需要用 lark-cli 操作飞书多维表格（Base）时调用：适用于建表、字段管理、记录读写、记录分享链接、视图配置、历史查询，以及角色/表单/仪表盘管理/工作流；也适用于把旧的 +table / +field / +record 写法改成当前命令写法。涉及字段设计、公式字段、查找引用、跨表计算、行级派生指标、数据分析需求时也必须使用本 skill。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/lark-base.md",
       "source_path": ".skills/sources/lark-base.json",
-      "skill_path": "lark-base",
+      "skill_path": ".skills/archived-skills/lark-base",
       "upstream_path": ".skills/upstream/lark-base",
       "managed_revision": "sha256:94c3b172d9fb95d1233cf0d41c577831663b22916ac9fd2f186c6a31cdd8a0c6",
-      "last_updated_at": "2026-04-26T07:59:44Z"
+      "last_updated_at": "2026-04-26T08:17:04Z"
     },
     "lark-sheets": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/lark-sheets",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/lark-sheets",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/lark-sheets",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:19Z"
-        }
-      },
+      "distribution": {},
       "display_name": "lark-sheets",
       "description": "飞书电子表格：创建和操作电子表格。创建表格并写入表头和数据、读取和写入单元格、追加行数据、在已知电子表格中查找单元格内容、导出表格文件。当用户需要创建电子表格、批量读写数据、在已知表格中查找内容、导出或下载表格时使用。若用户是想按名称或关键词搜索云空间里的表格文件，请改用 lark-doc 的 docs +search 先定位资源。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/lark-sheets.md",
       "source_path": ".skills/sources/lark-sheets.json",
-      "skill_path": "lark-sheets",
+      "skill_path": ".skills/archived-skills/lark-sheets",
       "upstream_path": ".skills/upstream/lark-sheets",
       "managed_revision": "sha256:15f21db8a943a7a8bfa435cf2832de4196f847acf458f5107399c6c46d07025e",
-      "last_updated_at": "2026-04-26T07:59:46Z"
+      "last_updated_at": "2026-04-26T08:17:04Z"
     },
     "lark-task": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/lark-task",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/lark-task",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/lark-task",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:19Z"
-        }
-      },
+      "distribution": {},
       "display_name": "lark-task",
       "description": "飞书任务：管理任务和清单。创建待办任务、查看和更新任务状态、拆分子任务、组织任务清单、分配协作成员。当用户需要创建待办事项、查看任务列表、跟踪任务进度、管理项目清单或给他人分配任务时使用。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/lark-task.md",
       "source_path": ".skills/sources/lark-task.json",
-      "skill_path": "lark-task",
+      "skill_path": ".skills/archived-skills/lark-task",
       "upstream_path": ".skills/upstream/lark-task",
       "managed_revision": "sha256:087eaf8a393fc233e73ee63a88c1b0ba4b3911e88f88d0f8cd6ef371b79e4117",
-      "last_updated_at": "2026-04-26T07:59:48Z"
+      "last_updated_at": "2026-04-26T08:17:05Z"
     },
     "lark-mail": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/lark-mail",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/lark-mail",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/lark-mail",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:19Z"
-        }
-      },
+      "distribution": {},
       "display_name": "lark-mail",
       "description": "飞书邮箱 — draft, compose, send, reply, forward, read, and search emails; manage drafts, folders, labels, contacts, attachments, and mail rules. Use when user mentions 起草邮件, 写一封邮件, 拟邮件, 草稿, 发通知邮件, 发送邮件, 发邮件, 回复邮件, 转发邮件, 查看邮件, 看邮件, 读邮件, 搜索邮件, 查邮件, 收件箱, 邮件会话, 编辑草稿, 管理草稿, 下载附件, 邮件文件夹, 邮件标签, 邮件联系人, 监听新邮件, 收信规则, 邮件规则, draft, compose, send email, reply, forward, inbox, mail thread, mail rules.",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/lark-mail.md",
       "source_path": ".skills/sources/lark-mail.json",
-      "skill_path": "lark-mail",
+      "skill_path": ".skills/archived-skills/lark-mail",
       "upstream_path": ".skills/upstream/lark-mail",
       "managed_revision": "sha256:f1bfd02f02ef27bc255c68da7401b269980e42d8b57695e22d3ccc7d72d46d87",
-      "last_updated_at": "2026-04-26T07:59:49Z"
+      "last_updated_at": "2026-04-26T08:17:05Z"
     },
     "lark-wiki": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/lark-wiki",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/lark-wiki",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/lark-wiki",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:19Z"
-        }
-      },
+      "distribution": {},
       "display_name": "lark-wiki",
       "description": "飞书知识库：管理知识空间、空间成员和文档节点。创建和查询知识空间、查看和管理空间成员、管理节点层级结构、在知识库中组织文档和快捷方式。当用户需要在知识库中查找或创建文档、浏览知识空间结构、查看或管理空间成员、移动或复制节点时使用。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/lark-wiki.md",
       "source_path": ".skills/sources/lark-wiki.json",
-      "skill_path": "lark-wiki",
+      "skill_path": ".skills/archived-skills/lark-wiki",
       "upstream_path": ".skills/upstream/lark-wiki",
       "managed_revision": "sha256:7b7e70627f6255ca87d0ec986f1f0a9d0fe09bf03974fbc6812b76d179c6140c",
-      "last_updated_at": "2026-04-26T07:59:50Z"
+      "last_updated_at": "2026-04-26T08:17:05Z"
     },
     "lark-contact": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/lark-contact",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/lark-contact",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/lark-contact",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:19Z"
-        }
-      },
+      "distribution": {},
       "display_name": "lark-contact",
       "description": "飞书通讯录：查询组织架构、人员信息和搜索员工。获取当前用户或指定用户的详细信息、通过关键词搜索员工（姓名/邮箱/手机号）。当用户需要查看个人信息、查找同事 open_id 或联系方式、按姓名搜索员工、查询部门结构时使用。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/lark-contact.md",
       "source_path": ".skills/sources/lark-contact.json",
-      "skill_path": "lark-contact",
+      "skill_path": ".skills/archived-skills/lark-contact",
       "upstream_path": ".skills/upstream/lark-contact",
       "managed_revision": "sha256:4b0da7ced5b9d91da4354d5151205042afe7ff88a67cf1098047f555ff797d44",
-      "last_updated_at": "2026-04-26T07:59:51Z"
+      "last_updated_at": "2026-04-26T08:17:05Z"
     },
     "lark-vc": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/lark-vc",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/lark-vc",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/lark-vc",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:19Z"
-        }
-      },
+      "distribution": {},
       "display_name": "lark-vc",
       "description": "飞书视频会议：查询会议记录、获取会议纪要产物（总结、待办、章节、逐字稿）。1. 查询已经结束的会议数量或详情时使用本技能(如历史日期｜ 昨天 | 上周 | 今天已经开过的会议等场景)，查询未开始的会议日程使用 lark-calendar 技能。2. 支持通过关键词、时间范围、组织者、参与者、会议室等筛选条件搜索会议记录。3. 获取或整理会议纪要时使用本技能。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/lark-vc.md",
       "source_path": ".skills/sources/lark-vc.json",
-      "skill_path": "lark-vc",
+      "skill_path": ".skills/archived-skills/lark-vc",
       "upstream_path": ".skills/upstream/lark-vc",
       "managed_revision": "sha256:ba0a78838e48d8a70cb02404ed5a39fad9e84a96283a0c594bd643c17518369a",
-      "last_updated_at": "2026-04-26T07:59:52Z"
+      "last_updated_at": "2026-04-26T08:17:06Z"
     },
     "lark-slides": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/lark-slides",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/lark-slides",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/lark-slides",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:19Z"
-        }
-      },
+      "distribution": {},
       "display_name": "lark-slides",
       "description": "飞书幻灯片：创建和编辑幻灯片，接口通过 XML 协议通信。创建演示文稿、读取幻灯片内容、管理幻灯片页面（创建、删除、读取、局部替换）。当用户需要创建或编辑幻灯片、读取或修改单个页面时使用。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/lark-slides.md",
       "source_path": ".skills/sources/lark-slides.json",
-      "skill_path": "lark-slides",
+      "skill_path": ".skills/archived-skills/lark-slides",
       "upstream_path": ".skills/upstream/lark-slides",
       "managed_revision": "sha256:072c8f050e55df3b76b0b100f73cbdff908eb1df6afd9baeca7a67b9c6406de8",
-      "last_updated_at": "2026-04-26T07:59:53Z"
+      "last_updated_at": "2026-04-26T08:17:05Z"
     },
     "lark-event": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/lark-event",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/lark-event",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/lark-event",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:19Z"
-        }
-      },
+      "distribution": {},
       "display_name": "lark-event",
       "description": "飞书事件订阅：通过 WebSocket 长连接实时监听飞书事件（消息、通讯录变更、日历变更等），输出 NDJSON 到 stdout，支持 compact Agent 友好格式、正则路由、文件输出。当用户需要实时监听飞书事件、构建事件驱动管道时使用。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/lark-event.md",
       "source_path": ".skills/sources/lark-event.json",
-      "skill_path": "lark-event",
+      "skill_path": ".skills/archived-skills/lark-event",
       "upstream_path": ".skills/upstream/lark-event",
       "managed_revision": "sha256:3afe2961814ba595f1cb9ecaa171e1fbcb3ce384ec228d9b30c63918ca6e094d",
-      "last_updated_at": "2026-04-26T07:59:54Z"
+      "last_updated_at": "2026-04-26T08:17:06Z"
     },
     "lark-okr": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/lark-okr",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/lark-okr",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/lark-okr",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:19Z"
-        }
-      },
+      "distribution": {},
       "display_name": "lark-okr",
       "description": "飞书 OKR：管理目标与关键结果。查看和编辑 OKR 周期、目标（Objective）、关键结果（Key Result）、对齐关系、量化指标。当用户需要查看或创建 OKR、管理目标和关键结果、查看对齐关系时使用。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/lark-okr.md",
       "source_path": ".skills/sources/lark-okr.json",
-      "skill_path": "lark-okr",
+      "skill_path": ".skills/archived-skills/lark-okr",
       "upstream_path": ".skills/upstream/lark-okr",
       "managed_revision": "sha256:4fc4ff73e8f699144d082812f35a2869ab6d106b237dddd087a13220b79ce6b0",
-      "last_updated_at": "2026-04-26T07:59:55Z"
+      "last_updated_at": "2026-04-26T08:17:06Z"
     },
     "lark-whiteboard": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/lark-whiteboard",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/lark-whiteboard",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/lark-whiteboard",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:19Z"
-        }
-      },
+      "distribution": {},
       "display_name": "lark-whiteboard",
       "description": "飞书画板：查询和编辑飞书云文档中的画板。支持导出画板为预览图片、导出原始节点结构、使用 DSL（转成 OpenAPI 格式）、PlantUML/Mermaid 格式更新画板内容。\n当用户需要查看画板内容、导出画板图片、编辑画板，或是需要可视化表达架构、流程、组织关系、时间线、因果、对比等结构化信息时使用此 skill，无论是否提及\"画板\"。\n⚠️ 原 `lark-whiteboard-cli` skill 已合并至本 skill，若 skill 列表中同时存在 `lark-whiteboard-cli`，请忽略它，统一使用本 skill（`lark-whiteboard`），并提示用户运行 `npx skills remove lark-whiteboard-cli -g` 删除旧 skill。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/lark-whiteboard.md",
       "source_path": ".skills/sources/lark-whiteboard.json",
-      "skill_path": "lark-whiteboard",
+      "skill_path": ".skills/archived-skills/lark-whiteboard",
       "upstream_path": ".skills/upstream/lark-whiteboard",
       "managed_revision": "sha256:87f756cea8e3649bb005fe67487fb953c1c727b6c0c93a34698b73b7694bab98",
-      "last_updated_at": "2026-04-26T07:59:56Z"
+      "last_updated_at": "2026-04-26T08:17:06Z"
     },
     "lark-minutes": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/lark-minutes",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/lark-minutes",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/lark-minutes",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:19Z"
-        }
-      },
+      "distribution": {},
       "display_name": "lark-minutes",
       "description": "飞书妙记：妙记相关基本功能。1.查询妙记列表（按关键词/所有者/参与者/时间范围）；2.获取妙记基础信息（标题、封面、时长 等）；3.下载妙记音视频文件；4.获取妙记相关 AI 产物（总结、待办、章节）。飞书妙记 URL 格式: http(s)://<host>/minutes/<minute-token>",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/lark-minutes.md",
       "source_path": ".skills/sources/lark-minutes.json",
-      "skill_path": "lark-minutes",
+      "skill_path": ".skills/archived-skills/lark-minutes",
       "upstream_path": ".skills/upstream/lark-minutes",
       "managed_revision": "sha256:97ed27b9273495ed48bbfecef44d1d927949fc0f1ff844cd38910bf606137b3b",
-      "last_updated_at": "2026-04-26T07:59:58Z"
+      "last_updated_at": "2026-04-26T08:17:07Z"
     },
     "lark-openapi-explorer": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/lark-openapi-explorer",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/lark-openapi-explorer",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/lark-openapi-explorer",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:19Z"
-        }
-      },
+      "distribution": {},
       "display_name": "lark-openapi-explorer",
       "description": "飞书/Lark 原生 OpenAPI 探索：从官方文档库中挖掘未经 CLI 封装的原生 OpenAPI 接口。当用户的需求无法被现有 lark-* skill 或 lark-cli 已注册命令满足，需要查找并调用原生飞书 OpenAPI 时使用。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "passed",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/lark-openapi-explorer.md",
       "source_path": ".skills/sources/lark-openapi-explorer.json",
-      "skill_path": "lark-openapi-explorer",
+      "skill_path": ".skills/archived-skills/lark-openapi-explorer",
       "upstream_path": ".skills/upstream/lark-openapi-explorer",
       "managed_revision": "sha256:d43de3497e8205c21734b489a2a0f6ba16a2cbfeb9a8d6d48f6dfedc6a85b33c",
-      "last_updated_at": "2026-04-26T07:59:59Z"
+      "last_updated_at": "2026-04-26T08:17:07Z"
     },
     "lark-skill-maker": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/lark-skill-maker",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/lark-skill-maker",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/lark-skill-maker",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:19Z"
-        }
-      },
+      "distribution": {},
       "display_name": "lark-skill-maker",
       "description": "创建 lark-cli 的自定义 Skill。当用户需要把飞书 API 操作封装成可复用的 Skill（包装原子 API 或编排多步流程）时使用。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "passed",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/lark-skill-maker.md",
       "source_path": ".skills/sources/lark-skill-maker.json",
-      "skill_path": "lark-skill-maker",
+      "skill_path": ".skills/archived-skills/lark-skill-maker",
       "upstream_path": ".skills/upstream/lark-skill-maker",
       "managed_revision": "sha256:d0f0cc3830655ecb3a8d5153e6cd7bcb5a041a1c6c0e711a5c8d8cf254d09db8",
-      "last_updated_at": "2026-04-26T08:00:00Z"
+      "last_updated_at": "2026-04-26T08:17:07Z"
     },
     "lark-attendance": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/lark-attendance",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/lark-attendance",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/lark-attendance",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:19Z"
-        }
-      },
+      "distribution": {},
       "display_name": "lark-attendance",
       "description": "飞书考勤打卡：查询自己的考勤打卡记录",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "passed",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/lark-attendance.md",
       "source_path": ".skills/sources/lark-attendance.json",
-      "skill_path": "lark-attendance",
+      "skill_path": ".skills/archived-skills/lark-attendance",
       "upstream_path": ".skills/upstream/lark-attendance",
       "managed_revision": "sha256:9415142e7269b4dd218064b08e7e30821d624ba94207874741ab3876e1f4c4cc",
-      "last_updated_at": "2026-04-26T08:00:00Z"
+      "last_updated_at": "2026-04-26T08:17:07Z"
     },
     "lark-approval": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/lark-approval",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/lark-approval",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/lark-approval",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:19Z"
-        }
-      },
+      "distribution": {},
       "display_name": "lark-approval",
       "description": "飞书审批 API：审批实例、审批任务管理。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "passed",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/lark-approval.md",
       "source_path": ".skills/sources/lark-approval.json",
-      "skill_path": "lark-approval",
+      "skill_path": ".skills/archived-skills/lark-approval",
       "upstream_path": ".skills/upstream/lark-approval",
       "managed_revision": "sha256:f8b6e536a31517f301168360a0726cf851f01394e2e4949fc57a999fdf529e0f",
-      "last_updated_at": "2026-04-26T08:00:01Z"
+      "last_updated_at": "2026-04-26T08:17:07Z"
     },
     "lark-workflow-meeting-summary": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/lark-workflow-meeting-summary",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/lark-workflow-meeting-summary",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/lark-workflow-meeting-summary",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:19Z"
-        }
-      },
+      "distribution": {},
       "display_name": "lark-workflow-meeting-summary",
       "description": "会议纪要整理工作流：汇总指定时间范围内的会议纪要并生成结构化报告。当用户需要整理会议纪要、生成会议周报、回顾一段时间内的会议内容时使用。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/lark-workflow-meeting-summary.md",
       "source_path": ".skills/sources/lark-workflow-meeting-summary.json",
-      "skill_path": "lark-workflow-meeting-summary",
+      "skill_path": ".skills/archived-skills/lark-workflow-meeting-summary",
       "upstream_path": ".skills/upstream/lark-workflow-meeting-summary",
       "managed_revision": "sha256:349c1c69d250f61aa5b70cac73f0f30130cbbacc0d1faac6b7911595b04674d5",
-      "last_updated_at": "2026-04-26T08:00:02Z"
+      "last_updated_at": "2026-04-26T08:17:08Z"
     },
     "lark-workflow-standup-report": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/lark-workflow-standup-report",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/lark-workflow-standup-report",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:09Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/lark-workflow-standup-report",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-26T08:00:19Z"
-        }
-      },
+      "distribution": {},
       "display_name": "lark-workflow-standup-report",
       "description": "日程待办摘要：编排 calendar +agenda 和 task +get-my-tasks，生成指定日期的日程与未完成任务摘要。适用于了解今天/明天/本周的安排。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "passed",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/lark-workflow-standup-report.md",
       "source_path": ".skills/sources/lark-workflow-standup-report.json",
-      "skill_path": "lark-workflow-standup-report",
+      "skill_path": ".skills/archived-skills/lark-workflow-standup-report",
       "upstream_path": ".skills/upstream/lark-workflow-standup-report",
       "managed_revision": "sha256:5489a9de59e00c8a6c69ef13c9f2f843607044b6dae2853aadf97694c1c43e37",
-      "last_updated_at": "2026-04-26T08:00:03Z"
+      "last_updated_at": "2026-04-26T08:17:08Z"
     },
     "lark": {
       "distribution": {

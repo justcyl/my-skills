@@ -1,7 +1,7 @@
 {
   "skill_id": "lark-wiki",
   "display_name": "lark-wiki",
-  "skill_path": "lark-wiki",
+  "skill_path": ".skills/archived-skills/lark-wiki",
   "source_type": "github",
   "source": "https://github.com/larksuite/cli",
   "source_url": "https://github.com/larksuite/cli.git",
@@ -13,5 +13,7 @@
   "last_imported_at": "2026-04-26T07:59:50Z",
   "upstream_revision": "sha256:7b7e70627f6255ca87d0ec986f1f0a9d0fe09bf03974fbc6812b76d179c6140c",
   "managed_revision": "sha256:7b7e70627f6255ca87d0ec986f1f0a9d0fe09bf03974fbc6812b76d179c6140c",
-  "managed_dirty": false
+  "managed_dirty": false,
+  "archived": true,
+  "archived_at": "2026-04-26T08:17:05Z"
 }

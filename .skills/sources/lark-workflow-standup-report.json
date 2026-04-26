@@ -1,7 +1,7 @@
 {
   "skill_id": "lark-workflow-standup-report",
   "display_name": "lark-workflow-standup-report",
-  "skill_path": "lark-workflow-standup-report",
+  "skill_path": ".skills/archived-skills/lark-workflow-standup-report",
   "source_type": "github",
   "source": "https://github.com/larksuite/cli",
   "source_url": "https://github.com/larksuite/cli.git",
@@ -13,5 +13,7 @@
   "last_imported_at": "2026-04-26T08:00:03Z",
   "upstream_revision": "sha256:5489a9de59e00c8a6c69ef13c9f2f843607044b6dae2853aadf97694c1c43e37",
   "managed_revision": "sha256:5489a9de59e00c8a6c69ef13c9f2f843607044b6dae2853aadf97694c1c43e37",
-  "managed_dirty": false
+  "managed_dirty": false,
+  "archived": true,
+  "archived_at": "2026-04-26T08:17:08Z"
 }

@@ -1,7 +1,7 @@
 {
   "skill_id": "lark-contact",
   "display_name": "lark-contact",
-  "skill_path": "lark-contact",
+  "skill_path": ".skills/archived-skills/lark-contact",
   "source_type": "github",
   "source": "https://github.com/larksuite/cli",
   "source_url": "https://github.com/larksuite/cli.git",
@@ -13,5 +13,7 @@
   "last_imported_at": "2026-04-26T07:59:51Z",
   "upstream_revision": "sha256:4b0da7ced5b9d91da4354d5151205042afe7ff88a67cf1098047f555ff797d44",
   "managed_revision": "sha256:4b0da7ced5b9d91da4354d5151205042afe7ff88a67cf1098047f555ff797d44",
-  "managed_dirty": false
+  "managed_dirty": false,
+  "archived": true,
+  "archived_at": "2026-04-26T08:17:05Z"
 }
