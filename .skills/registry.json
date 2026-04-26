@@ -1913,10 +1913,29 @@
       "last_updated_at": "2026-04-26T07:59:54Z"
     },
     "lark-okr": {
-      "distribution": {},
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/lark-okr",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T07:59:56Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/lark-okr",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T07:59:56Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/lark-okr",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T07:59:56Z"
+        }
+      },
       "display_name": "lark-okr",
       "description": "飞书 OKR：管理目标与关键结果。查看和编辑 OKR 周期、目标（Objective）、关键结果（Key Result）、对齐关系、量化指标。当用户需要查看或创建 OKR、管理目标和关键结果、查看对齐关系时使用。",
-      "status": "imported",
+      "status": "managed",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": true,
@@ -1925,7 +1944,7 @@
       "skill_path": "lark-okr",
       "upstream_path": ".skills/upstream/lark-okr",
       "managed_revision": "sha256:4fc4ff73e8f699144d082812f35a2869ab6d106b237dddd087a13220b79ce6b0",
-      "last_updated_at": "2026-04-26T07:58:50Z"
+      "last_updated_at": "2026-04-26T07:59:55Z"
     },
     "lark-whiteboard": {
       "distribution": {},
