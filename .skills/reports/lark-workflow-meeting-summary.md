@@ -1,7 +1,7 @@
 # lark-workflow-meeting-summary
 
 - skill_id: `lark-workflow-meeting-summary`
-- status: `imported`
+- status: `managed`
 - skill_path: `lark-workflow-meeting-summary`
 - source_type: `github`
 - source: `https://github.com/larksuite/cli`

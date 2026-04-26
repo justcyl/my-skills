@@ -7,10 +7,10 @@
   "source_url": "https://github.com/larksuite/cli.git",
   "ref": "",
   "subpath": "skills/lark-workflow-meeting-summary",
-  "bootstrap": false,
+  "bootstrap": true,
   "upstream_enabled": true,
   "upstream_path": ".skills/upstream/lark-workflow-meeting-summary",
-  "last_imported_at": "2026-04-26T07:59:14Z",
+  "last_imported_at": "2026-04-26T08:00:02Z",
   "upstream_revision": "sha256:349c1c69d250f61aa5b70cac73f0f30130cbbacc0d1faac6b7911595b04674d5",
   "managed_revision": "sha256:349c1c69d250f61aa5b70cac73f0f30130cbbacc0d1faac6b7911595b04674d5",
   "managed_dirty": false

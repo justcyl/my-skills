@@ -2151,10 +2151,29 @@
       "last_updated_at": "2026-04-26T08:00:01Z"
     },
     "lark-workflow-meeting-summary": {
-      "distribution": {},
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/lark-workflow-meeting-summary",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T08:00:03Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/lark-workflow-meeting-summary",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T08:00:03Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/lark-workflow-meeting-summary",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-26T08:00:03Z"
+        }
+      },
       "display_name": "lark-workflow-meeting-summary",
       "description": "会议纪要整理工作流：汇总指定时间范围内的会议纪要并生成结构化报告。当用户需要整理会议纪要、生成会议周报、回顾一段时间内的会议内容时使用。",
-      "status": "imported",
+      "status": "managed",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": true,
@@ -2163,7 +2182,7 @@
       "skill_path": "lark-workflow-meeting-summary",
       "upstream_path": ".skills/upstream/lark-workflow-meeting-summary",
       "managed_revision": "sha256:349c1c69d250f61aa5b70cac73f0f30130cbbacc0d1faac6b7911595b04674d5",
-      "last_updated_at": "2026-04-26T07:59:14Z"
+      "last_updated_at": "2026-04-26T08:00:02Z"
     },
     "lark-workflow-standup-report": {
       "distribution": {},
