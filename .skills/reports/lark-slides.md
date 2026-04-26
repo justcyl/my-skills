@@ -1,7 +1,7 @@
 # lark-slides
 
 - skill_id: `lark-slides`
-- status: `imported`
+- status: `managed`
 - skill_path: `lark-slides`
 - source_type: `github`
 - source: `https://github.com/larksuite/cli`

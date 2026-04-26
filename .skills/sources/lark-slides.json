@@ -7,10 +7,10 @@
   "source_url": "https://github.com/larksuite/cli.git",
   "ref": "",
   "subpath": "skills/lark-slides",
-  "bootstrap": false,
+  "bootstrap": true,
   "upstream_enabled": true,
   "upstream_path": ".skills/upstream/lark-slides",
-  "last_imported_at": "2026-04-26T07:58:44Z",
+  "last_imported_at": "2026-04-26T07:59:53Z",
   "upstream_revision": "sha256:072c8f050e55df3b76b0b100f73cbdff908eb1df6afd9baeca7a67b9c6406de8",
   "managed_revision": "sha256:072c8f050e55df3b76b0b100f73cbdff908eb1df6afd9baeca7a67b9c6406de8",
   "managed_dirty": false
