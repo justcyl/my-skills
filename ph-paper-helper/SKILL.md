@@ -23,8 +23,11 @@ alias ph='uv run --project ~/project/ph2 ph'
    → 使用 `ph add --bib`，参考「BibTeX 写入」
 4. **补全 .bib 元数据**：用户的 .bib 中有不完整的 entry
    → 使用 `ph enrich --bib`，参考「BibTeX 补全」
-5. **精读全文**：用户想深入阅读某篇已导入的论文
-   → 使用 `ph fetch --include-content`，参考「慢路径」
+5. **读取文本内容**：用户想读论文正文
+   → 先看 `plain_text_available`：
+   - 如果已有 `plain_text`：直接用 `ph fetch --include-content` 或 `ph sql` 取就行
+   - 如果无且只需纯文：`ph import --fetch-plain-text`（秒级）
+   - 如果需要全文（图/公式）：使用 `ph fetch --include-content`，参考「慢路径」
 6. **查询本地库**：用户想了解已收录论文的状态
    → 使用 `ph sql`，参考「本地查询」
 
@@ -261,7 +264,7 @@ ph enrich --bib refs.bib
 
 ## 慢路径（fetch）
 
-`fetch` 执行三阶段 bib 补全 + MinerU PDF 全文解析。
+`fetch` 执行三阶段 bib 补全 + MinerU PDF 全文解析。MinerU 解析通常耗时数十秒到数分钟，重复相同命令轮询直到 `fetch_state=done`。
 
 ```bash
 # 触发（自动先 import 再 fetch）
@@ -271,6 +274,7 @@ ph fetch --paper-id arxiv://1706.03762
 ph fetch --paper-id arxiv://1706.03762 --metadata-only
 
 # 完成后获取全文
+## --include-content 同时返回 MinerU markdown（content 字段）和快速纯文本（plain_text 字段）
 ph fetch --paper-id arxiv://1706.03762 --include-content
 
 # 强制重新处理
@@ -279,7 +283,67 @@ ph fetch --paper-id arxiv://1706.03762 --force
 
 状态机：`fetch_state: none → pending → done | failed`
 
-MinerU 解析通常耗时数十秒到数分钟，重复相同命令轮询直到 `fetch_state=done`。
+**`ph fetch` 输出字段说明：**
+
+| 字段 | 含义 |
+|------|------|
+| `plain_text_available` | DB 里是否已有快速纯文本（无需 MinerU） |
+| `plain_text` | 纯文本内容（仅 `--include-content` 时返回） |
+| `content` | MinerU markdown 内容（仅 `--include-content` 且 `fetch_state=done` 时返回） |
+| `fetch_state` | MinerU 状态：none/pending/done/failed |
+
+> 调用 `ph fetch` 后可通过 `plain_text_available` 判断是否已有纯文本可用，决定是否需要等待 MinerU。
+
+---
+
+## 两条读文路径对比
+
+```
+需要论文文字内容
+        │
+        ├── arXiv 论文 ──► 已有 plain_text? ──► 是 ──► ph fetch --include-content 或 ph sql
+        │                          │
+        │                          └── 否 ──► ph import（默认自动抓取，秒级）
+        │
+        ├── 只需文字 ────► 同上（plain_text 路径）
+        │
+        └── 需要图/公式/表格/非 arXiv ──► ph fetch（MinerU）
+```
+
+| | 快速纯文本（默认） | MinerU（ph fetch） |
+|---|---|---|
+| **触发方式** | 默认开启，`--no-fetch-plain-text` 跳过 | 需要手动调用 |
+| **速度** | 秒级 | 数分钟，异步 |
+| **内容** | 正文纯文字，无数学公式/图片 | Markdown with 图/表/公式 LaTeX |
+| **Token** | 无需 | 需要 PH_MINERU_TOKEN |
+| **适用场景** | 论文理解、方法解读、内容摘要、关键词提取 | 需要具体公式、图表内容、算法伪代码 |
+| **支持来源** | 仅 arXiv（非 arXiv 返回 unavailable） | 所有有 PDF 的论文 |
+
+```bash
+# 默认导入（自动抓取纯文本）
+ph import --input arxiv://1706.03762
+# plain_text_state: fetched
+
+# 不需要纯文本时才关闭
+ph import --input arxiv://1706.03762 --no-fetch-plain-text
+
+# 读取已存入的纯文本
+ph fetch --paper-id arxiv://1706.03762 --include-content
+# 返回: plain_text_available=true, plain_text="..."
+
+# 或直接 SQL
+ph sql --query "SELECT plain_text FROM papers WHERE paper_id = 'arxiv://1706.03762'"
+
+# 仅当需要图/公式/表格/非 arXiv 时，才调用 MinerU
+ph fetch --paper-id arxiv://1706.03762
+ph fetch --paper-id arxiv://1706.03762 --include-content  # 轮询到 fetch_state=done
+```
+
+**`plain_text_state` 字段说明：**
+- `fetched` — 新获取并存入 DB
+- `cached` — DB 中已有，未重新获取
+- `unavailable` — 非 arXiv 论文或 arXiv 无 HTML 版本
+- `skipped` — 传了 `--no-fetch-plain-text`
 
 ---
 
