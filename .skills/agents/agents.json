@@ -280,6 +280,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-04-26T07:59:56Z"
+    },
+    "lark-whiteboard": {
+      "source_path": "lark-whiteboard",
+      "target_path": "/Users/chenyl/.agents/skills/lark-whiteboard",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-04-26T07:59:57Z"
     }
   }
 }
