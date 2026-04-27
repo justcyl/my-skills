@@ -600,9 +600,9 @@ function toggleSt(id, target) {
 }
 
 /* Card-level toggle — stops click from bubbling to openModal */
-function cardToggle(e, id, target) {
+function cardToggle(e, btn) {
   e.stopPropagation();
-  toggleSt(id, target);
+  toggleSt(btn.dataset.id, btn.dataset.tgt);
 }
 
 /* ── short model label ── */
@@ -630,6 +630,8 @@ function render() {
     const s  = getSt(item.id);
     const bc = s === 'approved' ? 'badge-approved' : s === 'rejected' ? 'badge-rejected' : 'badge-pending';
     const cc = s === 'approved' ? 'approved'       : s === 'rejected' ? 'rejected'       : '';
+    const aOn = s === 'approved' ? ' ca-on' : '';
+    const rOn = s === 'rejected' ? ' ca-on' : '';
     const fn = item.filename.length > 24 ? item.filename.slice(0,21)+'...' : item.filename;
     return '<div class="card '+cc+'" onclick="openModal('+i+')">' +
       '<div class="card-img">' +
@@ -641,10 +643,8 @@ function render() {
         '<span class="card-model" title="'+item.model+'">'+shortM(item.model)+'</span>' +
       '</div>' +
       '<div class="card-actions">' +
-        '<button class="ca-btn ca-approve'+(s==='approved'?' ca-on':'')
-          +'" onclick="cardToggle(event,\''+item.id+'\',\'approved\')">&#10003; Approve</button>' +
-        '<button class="ca-btn ca-reject' +(s==='rejected'?' ca-on':'')
-          +'" onclick="cardToggle(event,\''+item.id+'\',\'rejected\')">&#10007; Reject</button>' +
+        '<button class="ca-btn ca-approve'+aOn+'" data-id="'+item.id+'" data-tgt="approved" onclick="cardToggle(event,this)">&#10003; Approve</button>' +
+        '<button class="ca-btn ca-reject' +rOn+'" data-id="'+item.id+'" data-tgt="rejected" onclick="cardToggle(event,this)">&#10007; Reject</button>' +
       '</div></div>';
   }).join('');
 }
