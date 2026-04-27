@@ -1843,23 +1843,23 @@
           "target_path": "/Users/chenyl/.codex/skills/image-gen",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-27T08:43:45Z"
+          "last_synced_at": "2026-04-27T08:57:10Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/image-gen",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-27T08:43:45Z"
+          "last_synced_at": "2026-04-27T08:57:10Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/image-gen",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-27T08:43:45Z"
+          "last_synced_at": "2026-04-27T08:57:10Z"
         }
       },
       "display_name": "image-gen",
-      "description": "",
+      "description": "多模型图片生成/编辑工具，通过本地代理统一调用 gemini-3.1-flash-image-preview、gpt-image-2、grok-4.2-image。\n支持 text-to-image、image-to-image 编辑、1K/2K 分辨率切换、以及 Gallery HTML 可视化审批（--gallery）。\n触发语境：\"画一张\"\"生成图片\"\"image generation\"\"edit this image\"\"生成一批图让我 review\"\"图片 gallery\"。",
       "status": "managed",
       "risk_status": "passed",
       "managed_dirty": false,
@@ -1868,8 +1868,8 @@
       "source_path": ".skills/sources/image-gen.json",
       "skill_path": "image-gen",
       "upstream_path": ".skills/upstream/image-gen",
-      "managed_revision": "sha256:05e676cca21aae0005a27d7436a18a39673d9f8b772ad8cc936783ebdf85996e",
-      "last_updated_at": "2026-04-27T08:43:45Z"
+      "managed_revision": "sha256:147d7824cf130db206021da38d5bacc62078b9a79566f88aa5a5022f3de30c4c",
+      "last_updated_at": "2026-04-27T08:57:09Z"
     }
   }
 }
