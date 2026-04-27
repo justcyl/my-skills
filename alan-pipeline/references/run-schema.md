@@ -9,7 +9,7 @@ Run 是行动单元，驱动项目推进。
 ```
 alan/runs/<slug>/
   run.yaml        # Run 定义
-  progress.md     # 执行历史（含人工 Note 列）
+  progress.md     # 执行历史（表格 + 自由内容）
   ...             # 执行过程产生的其他产物（日志、snapshot 等）
 ```
 
@@ -48,21 +48,51 @@ verifier: |
 
 ## progress.md 格式
 
+progress.md 由两部分组成：**表格**（结构化摘要）和**自由 section**（详细内容）。
+
+### 表格
+
 ```markdown
 # Progress
 
-| Round | Verdict | Summary | Note |
-|-------|---------|---------|------|
-| 1     | loop    | 降 lr 到 3e-4，loss 下降 | |
-| 2     | loop    | 加 warmup 200 步 | 用户：试试 cosine decay |
-| 3     | end     | cosine 有效，acc 0.82 | |
+| Round | Verdict | Summary | Insight | Note |
+|-------|---------|---------|---------|------|
+| 1     | loop    | 降 lr 到 3e-4，loss 下降 | lr 对收敛影响显著 | |
+| 2     | loop    | 加 warmup 200 步 | warmup 无明显效果 | 用户：试试 cosine decay |
+| 3     | end     | cosine 有效，acc 0.82 | cosine 比 step decay 稳定 | |
 ```
 
-每轮执行结束追加一行，Note 列由用户在轮间填写。
-ROUND 由数据行数派生，崩溃后重启自动接续。
+| 列 | 谁写 | 内容 |
+|----|------|------|
+| Round | agent | 轮次编号 |
+| Verdict | agent | `loop` 或 `end` |
+| Summary | agent | 本轮做了什么 |
+| Insight | agent | 为什么有效/无效，学到了什么 |
+| Note | 用户 | 下一轮的 hint（轮间填写，留空正常）|
 
-**Note 列使用方式**：想在下一轮注入 hint，直接编辑当前最后一行的 Note 列。
-执行下一轮时 agent 读取完整 progress 历史（含 Note 列），Note 自然进入上下文。
+ROUND 由数据行数派生，崩溃后重启自动接续。
+Note 列：想在下一轮注入 hint，直接编辑当前最后一行的 Note 列，下一轮执行时自然读入上下文。
+
+### 自由 section
+
+表格只记摘要。对于信息量较大的任务，agent 可以在表格之后追加自由内容：
+
+```markdown
+## Round 1
+
+详细发现、中间步骤、关键决策...
+
+## Summary
+
+run 完成后的整体总结、关键结论、后续建议。
+```
+
+**何时使用自由 section**：
+- 单轮任务：一行表格装不下完整信息时，追加 `## Round 1` 详细记录
+- 多轮任务：完成时写 `## Summary` 沉淀关键发现（比表格每行更完整）
+- 任何轮次：有需要保留的中间推理、对比数据、决策过程时
+
+> 持久性知识（对整个项目有意义的发现）应升级为 exp card，不要只存在 progress.md 里。
 
 ## 执行协议
 
@@ -70,15 +100,27 @@ ROUND 由数据行数派生，崩溃后重启自动接续。
 
 1. 读取 `context`、`instruction`、`verifier`，注入完整 progress 历史（含 Note 列）
 2. 执行（方式由 agent 自主决定）
-3. 按 `verifier` 判断：`loop` → 追加 progress 新行（Note 列留空），进入下一轮；`end` → 追加 progress，写 `state: done`
+3. 追加 progress 表格新行（Note 列留空）
+4. 按 `verifier` 判断：`loop` → 进入下一轮；`end` → 写 `state: done`，可追加 `## Summary`
 
-## 多轮 Run 的执行建议
+## 多轮 Run 的子 Agent 模式
 
-> 仅供参考，执行方式由 agent 自主决定。
+> 仅供参考，适用于**轮次多、单轮耗时长**的 run（如 autoresearch）。普通短程任务直接在当前 session 执行即可。
 
-对于循环轮次较多的 run，推荐主 agent 起一个专用 sub-agent 负责执行循环。
-sub-agent 崩溃或 context 溢出时，主 agent 读 `verifier` + `progress.md` 判断是否需要重启。
-`progress.md` 是唯一恢复点——新 sub-agent 从行数派生当前轮次，无需额外传递状态。
+**适用条件**：预计轮次多（> 10 轮）或单轮执行时间长，主 session 在循环期间 context 会爆炸。
+
+**执行方式**：通过 herdr 起一个独立 pi session（参考 pi-subagent skill），**不使用 `--print`**——子 agent 在自己的 session 里完整跑完所有轮次。
+
+```json
+{"action": "pane_split", "direction": "down", "newPane": "run-agent"}
+{"action": "run", "pane": "run-agent", "command": "pi --skill ~/.agents/skills/alan-pipeline/SKILL.md --no-context-files --no-session 'Execute run: alan/runs/<slug>/run.yaml'"}
+{"action": "wait_agent", "pane": "run-agent", "statuses": ["idle", "done"], "timeout": 7200000}
+```
+
+主 agent watch 直到子 agent idle（即子 agent 跑完所有轮、写好 `state: done`、结束对话）。
+之后主 agent 读 `progress.md` 确认结果，决定后续动作。
+
+**恢复点**：子 agent 崩溃时，`progress.md` 行数即已完成轮次，重新起一个子 agent 从下一轮接续。
 
 ## 一次性 vs 循环
 
@@ -90,7 +132,7 @@ sub-agent 崩溃或 context 溢出时，主 agent 读 `verifier` + `progress.md`
 
 ## 示例
 
-### 一次性 Run
+### 一次性 Run（短程）
 
 ```yaml
 state: pending
@@ -107,6 +149,22 @@ instruction: |
 verifier: |
   3 seeds 跑完？BLEU 记录？exp card 产出？
   全部完成 → end，否则 → loop
+```
+
+完成后 progress.md 可能长这样：
+
+```markdown
+# Progress
+
+| Round | Verdict | Summary | Insight | Note |
+|-------|---------|---------|---------|------|
+| 1     | end     | 3 seeds 跑完，k=1 vs k=5 差距 0.3±0.1 | 差距在预测范围内 | |
+
+## Summary
+
+k=1 与 k=5 BLEU 差距 0.3±0.1（mean ± std），符合预测 < 0.5 的范围。
+已产出 exp card: exp/debiased-k1-bleu。
+结论：debiased k=1 可替代 k=5，推理成本降低 5x。
 ```
 
 ### 循环 Run：Autoresearch
