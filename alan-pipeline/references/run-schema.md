@@ -68,6 +68,14 @@ verifier: |
 2. 执行（方式由 agent 自主决定）
 3. 按 `verifier` 判断：`loop` → 追加 progress，进入下一轮；`end` → 追加 progress，写 `state: done`
 
+## 多轮 Run 的执行建议
+
+> 仅供参考，执行方式由 agent 自主决定。
+
+对于循环轮次较多的 run，推荐主 agent 起一个专用 sub-agent 负责执行循环。
+sub-agent 崩溃或 context 溢出时，主 agent 读 `verifier` + `progress.md` 判断是否需要重启。
+`progress.md` 是唯一恢复点——新 sub-agent 从行数派生当前轮次，无需额外传递状态。
+
 ## 一次性 vs 循环
 
 格式完全相同，区别只在 verifier：
