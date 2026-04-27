@@ -1,0 +1,11 @@
+{
+  "eval_id": 2,
+  "eval_name": "api-rate-limiting",
+  "prompt": "review my design：我们要给公开 API 加限流。方案是用 Redis 存 token bucket，key 按 user_id，限制是每分钟 100 次请求。超限返回 429，响应头里带 Retry-After。",
+  "assertions": [
+    "AI 在提问之前先用结构化方式呈现了对该设计的完整理解",
+    "提问是批量给出的，且每批至少包含 3 个问题，每个问题附带推荐答案和影响说明",
+    "AI 指出了设计中有意义的技术风险或决策点（例如 key 设计、冷启动、分布式竞争、burst 场景等）",
+    "with_skill 输出明显比 baseline 更结构化、更系统"
+  ]
+}

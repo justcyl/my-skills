@@ -1,0 +1,75 @@
+## 我的理解
+
+**目标**：做一个 AI 笔记桌面应用，具备某种 AI 增强的笔记能力。
+
+**方案概要**：
+- **前端**：Electron + React，打包为桌面端（macOS / Windows / Linux）
+- **后端**：FastAPI（Python），推测作为 AI 处理层——调用 LLM、做 embedding/搜索等
+
+**推断**（未经确认，等你纠正）：
+- 推断 AI 功能可能包括：笔记摘要、语义搜索、问答（问自己的笔记）
+- 推断后端需要持久化存储（SQLite 或向量数据库）
+- 推断是个人/独立开发项目，非团队协作
+- 推断部署模式：FastAPI 以本地进程运行，或部署到云端
+- 推断目标用户是自己或小范围用户
+
+**我看到的潜在问题**：
+1. **Electron + 独立 FastAPI 后端** 的架构组合意味着两个进程需要通信——如果是本地运行，进程管理（启动/关闭/打包）会是个工程问题
+2. 如果后端跑在云端，桌面端 + 云后端的组合让人质疑：为什么不直接做 Web 应用？
+3. Electron 本身包体积重，如果 AI 功能只是调用外部 API，后端是否真的需要 FastAPI？
+
+---
+
+## Batch 1：核心定位与用户范围
+
+> 这批问题影响架构的根本方向，先把这几个问题对齐。
+
+**Q1. 目标用户是谁？**
+影响：决定是否需要多用户、数据隔离、账号体系。
+- A. 只给自己用（Personal tool）
+- B. 小范围内测，几个朋友用
+- C. 打算正式上线、面向公众
+
+**推荐**：猜你是 A，先做自己的工具。
+
+---
+
+**Q2. 后端打算跑在哪里？**
+影响：如果本地运行，进程打包是大问题；如果云端，桌面端的必要性值得质疑。
+- A. 本地运行（和 Electron 同机器，用户本地起 Python 进程）
+- B. 部署到云服务器（用户联网使用）
+- C. 还没想好
+
+**推荐**：这个问题必须先回答，它直接决定后续所有架构决策。
+
+---
+
+**Q3. AI 的核心功能是什么？**
+影响：决定需要哪些组件（LLM API、embedding、向量库），进而影响后端的必要性。
+- A. 总结 / 润色 / 改写笔记（调 LLM API）
+- B. 问答自己的笔记（RAG / 语义搜索）
+- C. 自动整理、打标签、建立知识图谱
+- D. 以上都要，或者其中几个组合
+
+**推荐**：B（RAG）是目前"AI 笔记"最有差异化的功能，猜你在往这个方向走。
+
+---
+
+**Q4. 笔记数据存在哪？**
+影响：本地文件 vs 数据库，决定是否有离线能力，以及和后端的数据流向。
+- A. 本地文件（Markdown / 纯文本）
+- B. 本地数据库（SQLite）
+- C. 云端数据库
+- D. 两者同步
+
+---
+
+**Q5. 为什么选桌面端而不是 Web 应用？**
+影响：如果只是因为"桌面感觉更专业"，Electron 的成本可能不值得；但如果有本地文件访问、离线能力的需求，Electron 是有理由的。
+- A. 需要访问本地文件系统
+- B. 需要离线能力
+- C. 个人偏好，觉得桌面体验更好
+- D. 还没认真想过这个问题
+
+先回答这批，我根据答案决定下一批问什么。
+Extension error (/Users/chenyl/.pi/agent/git/github.com/justcyl/pi-alert/src/alert.ts): This extension ctx is stale after session replacement or reload. Do not use a captured pi or command ctx after ctx.newSession(), ctx.fork(), ctx.switchSession(), or ctx.reload(). For newSession, fork, and switchSession, move post-replacement work into withSession and use the ctx passed to withSession. For reload, do not use the old ctx after await ctx.reload().

@@ -10,7 +10,7 @@
 
 ## Summary
 
-当用户需要处理 PDF 文件时使用此 skill。包括：读取/提取 PDF 中的文本或表格、合并多个 PDF、拆分 PDF、旋转页面、添加水印、新建 PDF、填写 PDF 表单、加密/解密 PDF、提取图片、对扫描版 PDF 进行 OCR 识别。只要用户提到 .pdf 文件或需要生成 PDF，都应激活此 skill。
+Use this skill whenever the user wants to do anything with PDF files. This includes reading or extracting text/tables from PDFs, combining or merging multiple PDFs into one, splitting PDFs apart, rotating pages, adding watermarks, creating new PDFs, filling PDF forms, encrypting/decrypting PDFs, extracting images, and OCR on scanned PDFs to make them searchable. If the user mentions a .pdf file or asks to produce one, use this skill.
 
 ## Risk Findings
 

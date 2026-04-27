@@ -1,17 +1,14 @@
 ---
 name: pdf
-description: 当用户需要处理 PDF 文件时使用此 skill。包括：读取/提取 PDF 中的文本或表格、合并多个 PDF、拆分 PDF、旋转页面、添加水印、新建 PDF、填写 PDF 表单、加密/解密 PDF、提取图片、对扫描版 PDF 进行 OCR 识别。只要用户提到 .pdf 文件或需要生成 PDF，都应激活此 skill。
+description: Use this skill whenever the user wants to do anything with PDF files. This includes reading or extracting text/tables from PDFs, combining or merging multiple PDFs into one, splitting PDFs apart, rotating pages, adding watermarks, creating new PDFs, filling PDF forms, encrypting/decrypting PDFs, extracting images, and OCR on scanned PDFs to make them searchable. If the user mentions a .pdf file or asks to produce one, use this skill.
 license: Proprietary. LICENSE.txt has complete terms
 ---
 
 # PDF Processing Guide
 
-## 概述
+## Overview
 
-本 skill 涵盖使用 Python 库和命令行工具进行 PDF 处理的核心操作。高级功能、JavaScript 库及详细示例见 `reference.md`；填写 PDF 表单请阅读 `forms.md` 并按其步骤执行。
-
-**典型用途**：提取文本/表格、合并/拆分、旋转/水印、新建 PDF、填写表单、加密解密、OCR 识别
-**主要工具**：pypdf、pdfplumber、reportlab（Python）；qpdf、pdftotext（命令行）；pdf-lib（JavaScript）
+This guide covers essential PDF processing operations using Python libraries and command-line tools. For advanced features, JavaScript libraries, and detailed examples, see REFERENCE.md. If you need to fill out a PDF form, read FORMS.md and follow its instructions.
 
 ## Quick Start
 

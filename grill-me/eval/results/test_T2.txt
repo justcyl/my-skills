@@ -1,0 +1,96 @@
+## 理解呈现
+
+先让我梳理一下我对这个方案的完整理解，再追问缺口。
+
+---
+
+### 🎯 目标
+将现有单体服务逐步拆解为微服务架构，以用户模块作为试点，计划在 Q2 内完成。
+
+### 📐 方案概要（当前已知）
+- **策略**：增量拆分，先易后难，用户模块先行
+- **时间线**：Q2（约 3 个月窗口）
+- **范围**：第一阶段仅覆盖用户模块
+
+### 🔍 我的推断（未确认，需校正）
+- **推断①**：拆分的核心动机可能是团队扩张带来的代码协作冲突，或用户模块本身有独立扩缩容的需求
+- **推断②**：用户模块的核心职责大概是：注册/登录/认证（JWT/session）、用户信息管理、可能含权限/角色
+- **推断③**：单体服务目前有数据库共享问题，拆分后会面临数据库切割决策
+- **推断④**：团队可能没有太多微服务运维经验，所以"先从用户模块"是用来踩坑学经验的
+
+### ⚠️ 我看到的潜在风险
+1. **数据耦合**：用户数据几乎被所有其他模块引用（订单、权限、日志……），拆库难度高
+2. **认证边界**：用户模块承载认证逻辑，拆出后全链路的 token 验签/鉴权中间件需要重新设计，影响面极大
+3. **Q2 时间线很紧**：如果含测试、灰度、回滚方案，3 个月对第一个微服务来说可能不够
+4. **没提到基础设施准备**：服务发现、API Gateway、链路追踪、配置中心——这些是微服务的前提，如果现在没有，Q2 的时间要同时搞这些会很挤
+5. **"先从用户模块"可能是错的选择**：用户模块是被依赖最多的模块，通常是最后拆的，而不是最先拆的
+
+---
+
+## 批量追问（第一批）
+
+以下是我真正不确定、且答案会影响方案设计的问题：
+
+---
+
+**1. 为什么拆？核心驱动力是什么？**
+这个答案决定"拆到什么程度才算成功"。
+- 🔘 A. 团队扩张，不同团队想独立发布
+- 🔘 B. 某个模块有明显的性能/扩缩容瓶颈
+- 🔘 C. 技术债积累，想趁机重构
+- 🔘 D. 上面要求/技术战略对齐
+- 👉 **我的推断**：A 或 D，但如果是 B，用户模块是不是真的那个瓶颈值得怀疑
+
+---
+
+**2. 为什么先拆用户模块？**
+这是我最想挑战的决策。用户模块通常是依赖最重的模块，典型的微服务拆分建议是"先拆依赖少的边缘模块"。
+- 🔘 A. 团队对用户模块最熟悉，风险可控
+- 🔘 B. 用户模块团队独立，希望自主发布
+- 🔘 C. 用户模块有独立扩缩容需求
+- 🔘 D. 其实没太想清楚，先拆个试试
+- 👉 **我的推荐**：如果是 D，强烈建议重新评估。考虑先从一个无状态、低依赖的模块（如通知、搜索）切入
+
+---
+
+**3. 数据库是共享的还是准备拆库？**
+微服务最核心也最痛苦的决策。
+- 🔘 A. 拆服务但先共享数据库（Database-per-service 留到后面）
+- 🔘 B. 同步拆库，用户模块独立 DB
+- 🔘 C. 还没想好
+- 👉 **我的推荐**：A 作为过渡可以接受，但需要明确"什么时候拆库"的时间点，否则容易成为永久的妥协
+
+---
+
+**4. 基础设施现在有什么？**
+这决定 Q2 的工作量到底有多大。
+- API Gateway / 服务网格（有/没有/计划中）
+- 服务注册与发现（Consul/Nacos/K8s Service）
+- 链路追踪（Jaeger/Zipkin/无）
+- 配置中心（有/无）
+- 容器化 / K8s（已有/部分/无）
+- 👉 **如果以上大部分没有**，Q2 只拆一个用户模块是完全合理的——光把这些搭起来就需要时间
+
+---
+
+**5. 拆分后认证怎么处理？**
+用户模块通常是认证的核心，拆出去之后其他服务怎么做鉴权？
+- 🔘 A. 用户服务暴露 `/validate-token` 接口，其他服务每次调用
+- 🔘 B. API Gateway 统一做 JWT 验签，用户服务只管签发
+- 🔘 C. 还没想好
+- 👉 **我的推荐**：B，这是标准做法，但需要 API Gateway 先就位
+
+---
+
+**6. Q2 的 Definition of Done 是什么？**
+"完成"的标准很模糊，会影响优先级和风险判断。
+- 🔘 A. 代码拆出来，独立部署，生产灰度
+- 🔘 B. 完全流量切换，老代码下线
+- 🔘 C. 只是 PoC，验证可行性
+- 👉 **我的推荐**：明确这个，否则 Q2 deadline 到了很容易说"基本完成了"但其实还在灰度
+
+---
+
+回答这 6 个问题，我可以帮你判断这个方案是否稳健，并找出需要调整的地方。
+Extension error (/opt/homebrew/lib/node_modules/pi-alert/src/alert.ts): This extension ctx is stale after session replacement or reload. Do not use a captured pi or command ctx after ctx.newSession(), ctx.fork(), ctx.switchSession(), or ctx.reload(). For newSession, fork, and switchSession, move post-replacement work into withSession and use the ctx passed to withSession. For reload, do not use the old ctx after await ctx.reload().
+Extension error (/Users/chenyl/.pi/agent/git/github.com/justcyl/pi-alert/src/alert.ts): This extension ctx is stale after session replacement or reload. Do not use a captured pi or command ctx after ctx.newSession(), ctx.fork(), ctx.switchSession(), or ctx.reload(). For newSession, fork, and switchSession, move post-replacement work into withSession and use the ctx passed to withSession. For reload, do not use the old ctx after await ctx.reload().

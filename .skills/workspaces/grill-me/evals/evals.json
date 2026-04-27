@@ -1,0 +1,41 @@
+{
+  "skill_id": "grill-me",
+  "iteration": 1,
+  "evals": [
+    {
+      "eval_id": 0,
+      "eval_name": "migrate-to-microservices",
+      "prompt": "我们有一个用 Django 写的单体应用，15 个工程师，日活 10 万用户。计划在 Q3 把核心的用户服务和订单服务拆出来作为独立微服务，用 Kubernetes 部署，服务间通信用 gRPC。数据库目前是单个 PostgreSQL，打算先共库后分库。grill me on this plan。",
+      "assertions": [
+        "AI 在提问之前先用结构化方式呈现了对方案的完整理解（目标、方案概要、约束、推断、风险）",
+        "提问是批量给出的，而不是逐条单独提问，且每批至少包含 3 个问题",
+        "每个问题都附带了推荐答案或推荐方向，以及该决策影响什么",
+        "AI 没有问那些可以从用户提供的信息中直接推断出答案的问题",
+        "with_skill 输出明显比 baseline 更结构化、更系统"
+      ]
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "product-launch-plan",
+      "prompt": "帮我过一下这个方案：我们要在下个月上线一个 B2B SaaS 产品的 MVP。核心功能是团队任务协作，目标客户是 50-200 人的中小企业。计划先做免费版吸量，三个月后推付费版。技术上用 Next.js + Supabase，部署在 Vercel。我们团队就 3 个人，2 个工程师 1 个产品。",
+      "assertions": [
+        "AI 在提问之前先用结构化方式呈现了对方案的完整理解（目标、方案概要、约束、推断、风险）",
+        "提问是批量给出的，而不是逐条单独提问，且每批至少包含 3 个问题",
+        "每个问题都附带了推荐答案或推荐方向，以及该决策影响什么",
+        "AI 表现出对抗性，指出了计划中潜在的风险或挑战（例如资源紧张、免费到付费转化等）",
+        "with_skill 输出明显比 baseline 更结构化、更系统"
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "api-rate-limiting",
+      "prompt": "review my design：我们要给公开 API 加限流。方案是用 Redis 存 token bucket，key 按 user_id，限制是每分钟 100 次请求。超限返回 429，响应头里带 Retry-After。",
+      "assertions": [
+        "AI 在提问之前先用结构化方式呈现了对该设计的完整理解",
+        "提问是批量给出的，且每批至少包含 3 个问题，每个问题附带推荐答案和影响说明",
+        "AI 指出了设计中有意义的技术风险或决策点（例如 key 设计、冷启动、分布式竞争、burst 场景等）",
+        "with_skill 输出明显比 baseline 更结构化、更系统"
+      ]
+    }
+  ]
+}
