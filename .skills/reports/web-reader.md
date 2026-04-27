@@ -10,7 +10,7 @@
 
 ## Summary
 
-|
+将任意网页转为干净的 Markdown 供 LLM 消费。基于 Jina Reader API，适用于网页研究、文档阅读、内容提取等场景。搜索场景请不要使用本 skill。
 
 ## Risk Findings
 
