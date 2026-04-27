@@ -45,18 +45,19 @@ Step 1  ph import + ph fetch --force   ← MinerU 解析 PDF，获取带图 Mark
 Step 2  翻译正文                        ← 中文翻译，写入 /tmp/<arxiv_id>_zh.md
      │   分多次写入避免工具超限
      ▼
-Step 2.5  代码仓库集成（可选）          ← 论文有开源代码时克隆仓库
-     │   将关键实现片段融入译文
-     ▼
 Step 3  lark-cli docs +create          ← 在飞书统一文件夹创建文档
      │   --parent-token <FOLDER_TOKEN>
      ▼
 Step 4  插入图片 + 删除占位符           ← 逐张 docs +media-insert
      │   插入后 block_delete 占位符块
      ▼
-Step 5  添加注释层                      ← 详见 references/annotate.md
+Step 5  添加注释层 + 附录内容前置       ← 详见 references/annotate.md
      │   callout（公式/直觉/引用/代码）
      │   comment（术语/段落摘要）
+     │   附录有助于理解正文时 → 提前为 callout，原位省略
+     ▼
+Step 5.5  代码仓库集成（可选）          ← 论文有开源代码时执行
+     │   克隆仓库 → 阅读核心模块 → 以 callout 内嵌代码块注入文档
      ▼
 Step 6  展开关键参考文献                ← ph fetch 被引论文，inline callout
      │
@@ -105,8 +106,8 @@ ls $PAPER_DIR/images/    # 若为空则说明第一次 fetch 有问题，--force
 
 翻译原则：
 - 核心术语首次出现保留英文（如"Evolving Parameter Isolation (EPI)"翻译为"演化参数隔离（EPI）"）
-- 不压缩信息，逐节完整翻译，不跳过附录
-- 附录若有实验表格、案例对比、算法伪代码，**必须全部翻译包含**
+- 不压缩信息，逐节完整翻译
+- 附录**按需前置**（见 Step 5 § 5d）：若附录某节（实验超参、案例、算法伪代码等）能帮助读者及时理解正文，Step 5 阶段以 callout 形式提前插入正文对应位置，该附录节在原位可保留摘要或省略；不涉及正文理解的附录节仍完整翻译在末尾
 
 存为临时文件，**分多次写入**避免 write 工具超限：
 ```bash
@@ -119,84 +120,6 @@ echo "当前行数：$(wc -l < /tmp/<arxiv_id>_zh.md)"
 ```
 
 > 每块约 80–120 行（约 3000 字），结束后打印当前行数确认写入成功。
-
----
-
-## Step 2.5：代码仓库集成（可选）
-
-若论文摘要或 Introduction 中出现 GitHub 链接，或 abstract 含「code is available」字样，执行本步骤。
-
-### 1. 克隆仓库
-
-```bash
-GITHUB_URL="https://github.com/<org>/<repo>"   # 从论文中提取
-cd /tmp && git clone --depth 1 "$GITHUB_URL" paper_code 2>&1 | tail -3
-find /tmp/paper_code -name "*.py" | grep -v __pycache__ | sort | head -40
-```
-
-### 2. 定位关键实现文件
-
-优先阅读与论文方法章节对应的文件，忽略 trainer/verl/框架胶水代码：
-
-```bash
-# 找核心模块（内存/技能/策略等）
-find /tmp/paper_code -name "*.py" | xargs grep -l "class.*Memory\|class.*Skill\|def.*distill\|def.*evolve" 2>/dev/null
-```
-
-用 `read` 工具逐一阅读关键文件，重点理解：
-- 核心数据结构（技能/记忆的 JSON 格式）
-- 主要算法入口函数（train/update/retrieve）
-- 关键 prompt 模板
-
-### 3. 融入译文
-
-在**翻译文件**（`/tmp/<arxiv_id>_zh.md`）对应方法章节下，追加代码说明块（用 `bash append`）：
-
-```bash
-cat >> /tmp/<arxiv_id>_zh.md << 'CODE_CHUNK'
-
-> **🔧 代码实现（`path/to/file.py`）**
->
-> ```python
-> # 核心函数，精简后保留关键逻辑
-> def key_function(...):
->     ...
-> ```
-
-CODE_CHUNK
-```
-
-上传到飞书后，这些代码块会在飞书中渲染为带语法高亮的代码块。
-
-### 4. 飞书中的代码 callout
-
-上传后，若要把「代码 + 说明」封装成视觉隔离的注释块，使用 **callout 内嵌代码块**语法：
-
-```xml
-<callout emoji="🔧" background-color="light-gray" border-color="gray">
-  <h3>代码：函数名（path/to/file.py）</h3>
-  <p>一句话说明这段代码做什么、对应论文哪个公式/步骤。</p>
-  <pre lang="python"><code>def key_function(args):
-    # 精简后的核心逻辑
-    pass</code></pre>
-  <p>关键设计说明（可选）</p>
-</callout>
-```
-
-> ⚠️ **关键语法**：`<pre lang="python"><code>...</code></pre>` 可以直接放在 `<callout>` 内部，生成带语法高亮的代码块，与描述文字在同一个视觉容器内。
->
-> 若有多段代码，在同一 callout 内放多个 `<pre>` 即可：
-> ```xml
-> <callout emoji="🔧" ...>
->   <h3>代码标题</h3>
->   <p>说明段落1</p>
->   <pre lang="python"><code>第一段代码</code></pre>
->   <p>说明段落2</p>
->   <pre lang="python"><code>第二段代码</code></pre>
-> </callout>
-> ```
->
-> ❌ **不要**把代码放在 `<p><code>...</code></p>` 里——那是行内等宽字体，没有语法高亮和代码框样式。
 
 ---
 
@@ -302,7 +225,7 @@ lark-cli docs +update --api-version v2 --doc "$DOC" \
 | 🔧 | 实现要点 | 算法/伪代码段落之后（含代码块） |
 | ❓ | 读者常见疑问 | 每个主要节末尾 |
 
-**🔧 类型的 callout 可以内嵌代码块**，将说明和代码封装在同一视觉容器（见 Step 2.5 § 飞书中的代码 callout）。
+**🔧 类型的 callout 可以内嵌代码块**，将说明和代码封装在同一视觉容器（具体语法见 Step 5.5 § 3）。
 
 `block_replace` 支持一次替换为多个顶层块，可用来把「旧 callout」替换为「新 callout + 独立 pre 块」，或直接替换为「含 pre 的 callout」：
 
@@ -333,6 +256,78 @@ subprocess.run(["lark-cli", "drive", "+add-comment",
 触发时机：
 - **术语出现**：每个专业术语第一次出现时 → 简短定义
 - **长段**（>3句，无子标题）：段首/段尾 → `【段落摘要】...`
+
+### 5d. 附录内容前置
+
+阅读附录时，判断每个附录节是否**有助于读者在阅读正文时就能更好理解内容**：
+
+| 附录类型 | 建议 | 实例 |
+|----------|------|------|
+| 算法伪代码 / 训练细节 | 前置到方法节末尾 | Prompt 模板、超参表：方法节末 |
+| 案例分析 / 定性结果 | 前置到实验节末尾 | 验证案例：实验分析节末 |
+| 推导细节 / 证明过程 | 前置到对应公式后 | 公式完整推导：公式所在段辺 |
+| 补充实验 / 边界情况 | 前置到实验节末尾（如果正文已深入探讨） | 参数敏感性分析：对应结果表边 |
+| 相关工作详述 / 统计表 | **保留在附录**，正文不需要 | 达到类似结论的相关工作列表 |
+
+**前置格式**：使用淡紫色 callout，标注来源于哪个附录节：
+
+```xml
+<callout emoji="📌" background-color="light-purple" border-color="purple">
+  <h3>【附录 B.1 前置】算法伪代码：XXX 训练全流程</h3>
+  <p>此内容原位于附录 B.1，提前展示以助理解上方公式。</p>
+  <!-- 附录原内容 -->
+</callout>
+```
+
+附录节原位可添加简短说明：「本节内容已前置至正文§X.X 节末」并省略详细内容；与正文理解无关的附录节仍按原样完整翻译。
+
+---
+
+## Step 5.5：代码仓库集成（可选）
+
+若论文摘要或 Introduction 中出现 GitHub 链接，或 abstract 含「code is available」字样，在 Step 5 完成后执行本步骤。
+
+### 1. 克隆仓库
+
+```bash
+GITHUB_URL="https://github.com/<org>/<repo>"   # 从论文中提取
+cd /tmp && git clone --depth 1 "$GITHUB_URL" paper_code 2>&1 | tail -3
+find /tmp/paper_code -name "*.py" | grep -v __pycache__ | sort | head -40
+```
+
+### 2. 定位关键实现文件
+
+优先阅读与论文方法章节对应的文件，忽略 trainer/verl/框架胶水代码：
+
+```bash
+# 找核心模块（内存/技能/策略等）
+find /tmp/paper_code -name "*.py" | xargs grep -l "class.*Memory\|class.*Skill\|def.*distill\|def.*evolve" 2>/dev/null
+```
+
+用 `read` 工具逐一阅读关键文件，重点理解：
+- 核心数据结构（技能/记忆的 JSON 格式）
+- 主要算法入口函数（train/update/retrieve）
+- 关键 prompt 模板
+
+### 3. 在飞书文档中插入代码 callout
+
+对应正文中每个关键方法步骤（公式、算法伪代码），在其后用 `block_insert_after` 或 `block_replace` 插入 **callout 内嵌代码块**：
+
+```xml
+<callout emoji="🔧" background-color="light-gray" border-color="gray">
+  <h3>代码：函数名（path/to/file.py）</h3>
+  <p>一句话说明这段代码对应论文哪个公式/步骤。</p>
+  <pre lang="python"><code>def key_function(args):
+    # 精简后的核心逻辑
+    pass</code></pre>
+  <p>关键设计说明（可选）</p>
+</callout>
+```
+
+若有多段代码，在同一 callout 内放多个 `<pre>` 即可。关键语法：
+
+> ✅ `<pre lang="python"><code>...</code></pre>` 可直接嵌入 `<callout>` 内，生成带语法高亮的代码块。
+> ❌ `<p><code>...</code></p>` 是行内等宽字体，**不要用**。
 
 ---
 
