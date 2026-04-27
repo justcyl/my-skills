@@ -1,191 +1,172 @@
 ---
 name: pi-subagent
-description: 通用 pi sub-agent 基础设施。把 pi + herdr 创建 sub-agent 的模式抽象为可复用组件：模型路由表（alias → 实际模型 + 参数）、agent 目录（每种能力一个 system prompt md）、通用 invoke.sh。其他 skill 或 agent 直接引用 invoke.sh 和 agent 目录来调度 sub-agent，无需为每种能力单独维护一套 invoke 脚本。触发场景：'创建 sub-agent'、'用 pi 跑个子任务'、'需要调用 gemini 做 X'、'spawn a sub-agent'。
+description: >
+  在 herdr pane 中用 pi --print 调度 sub-agent 的基础设施。
+  提供 agent 定义规范（frontmatter + system prompt）和通用调用模板。
+  调用前请先读懂 pi 参数含义，根据具体场景构造合适的命令，而非直接套用脚本。
+  触发语境："spawn a sub-agent""调用子代理""pi --print""figure-qa""视觉审查"。
 ---
 
 # Pi Sub-Agent Infrastructure
 
-本 skill 提供在 herdr 中用 `pi --print` 调度 sub-agent 的完整基础设施：
+在 herdr pane 中用 `pi --print` 运行 sub-agent。
 
-- **模型路由** — `routing.md` + `scripts/models.sh`：alias 映射到实际模型字符串和 flag
-- **Agent 目录** — `agents/*.md`：每个文件是一种能力的 YAML frontmatter + system prompt
-- **通用调用器** — `scripts/invoke.sh`：读 agent 文件 + 解析模型，组装并运行 `pi --print`
-
-## 适用范围
-
-invoke.sh 专为**预定义 system-prompt agent** 设计：它硬编码了 `--no-skills`，适合 figure-qa 等有固定能力的专用 agent。
-
-以下场景不走 invoke.sh，直接调用 `pi --print`：
-
-- **Skill-based run**（需要 `--skill <path>`）：invoke.sh 硬编码了 `--no-skills`，无法加载 skill
-- **外部 agent 文件**（system prompt 在其他 skill 的 `agents/` 目录里）：直接用 `pi --system-prompt <file> --print`，无需把文件复制到 pi-subagent/agents/
+**查看可用模型（唯一事实来源）：**
+```bash
+pi --list-models
+```
 
 ---
 
-## Quick Start
+## Pi 参数速查
 
-在 herdr 中 spawn 一个 sub-agent，分四步：
+调用前必须理解每个参数的作用，根据场景选用，不要盲目套模板：
 
-### Step 1 — Split 新 pane
+| 参数 | 作用 | 常用值 |
+|------|------|--------|
+| `--print` | 非交互模式，处理完即退出 | 必须加 |
+| `--model` | 指定模型 | `axonhub/gemini-3.1-pro-preview`（视觉/推理）<br>`axonhub/gemini-3-flash-preview`（快速/低成本）<br>`axonhub/claude-opus-4-7`（代码/长文本）|
+| `--thinking` | 推理深度 | `off`（默认）/ `low` / `medium` / `high` / `xhigh` |
+| `--tools` | 允许的工具白名单 | `read,bash`（常用）/ `read`（只读）/ 不传则全部可用 |
+| `--system-prompt` | system prompt，可传文字或文件路径 | `"You are ..."` 或 `/path/to/prompt.md` |
+| `--skill` | 加载指定 skill 文件/目录 | `/path/to/skill` |
+| `--no-skills` | 禁用 skill 自动发现（`--skill` 显式路径仍生效）| 隔离 agent 时加 |
+| `--no-context-files` | 禁用 AGENTS.md / CLAUDE.md 自动加载 | 隔离 agent 时加 |
+| `--no-extensions` | 禁用扩展自动发现 | 隔离 agent 时加 |
+| `--no-session` | 不保存会话文件 | 临时 agent 加 |
+| `--append-system-prompt` | 追加内容到 system prompt | 可多次使用 |
 
-```json
-{
-  "action": "pane_split",
-  "direction": "down",
-  "newPane": "subagent"
-}
+---
+
+## 参考调用模板
+
+以下是常见场景的参考命令。**在实际调用前，请先确认每个参数是否适合你的场景，按需增删。**
+
+### 场景 A：有预定义 system prompt，完全隔离
+适合 figure-qa 等无需外部 skill 的审查 agent。
+推荐模型：`axonhub/gemini-3.1-pro-preview`（视觉理解）
+
+```bash
+pi --print \
+  --model axonhub/gemini-3.1-pro-preview \
+  --thinking off \
+  --tools read,bash \
+  --system-prompt /path/to/agent.prompt.md \
+  --no-skills \
+  --no-context-files \
+  --no-extensions \
+  --no-session \
+  "your message"
 ```
 
-### Step 2 — Run sub-agent
+### 场景 B：需要加载某个 skill
+`--no-skills` 禁用自动发现，`--skill` 显式加载仍然生效。
+推荐模型：根据 skill 能力选择（代码/分析用 `axonhub/claude-opus-4-7`，视觉用 gemini）
+
+```bash
+pi --print \
+  --model axonhub/claude-opus-4-7 \
+  --thinking off \
+  --tools read,bash \
+  --skill /path/to/skill \
+  --no-skills \
+  --no-context-files \
+  --no-session \
+  "your message"
+```
+
+### 场景 C：快速单次推理，无工具，低成本
+推荐模型：`axonhub/gemini-3-flash-preview`
+
+```bash
+pi --print \
+  --model axonhub/gemini-3-flash-preview \
+  --no-tools \
+  --no-skills \
+  --no-context-files \
+  --no-session \
+  "your message"
+```
+
+### 场景 D：需要深度推理
+推荐模型：`axonhub/gemini-3.1-pro-preview` + `--thinking high`
+或 `axonhub/claude-opus-4-7` + `--thinking high`
+
+```bash
+pi --print \
+  --model axonhub/gemini-3.1-pro-preview \
+  --thinking high \
+  --tools read,bash \
+  --no-skills \
+  --no-context-files \
+  --no-session \
+  "your message"
+```
+
+---
+
+## herdr 四步流程
+
+```json
+{ "action": "pane_split", "direction": "down", "newPane": "subagent" }
+```
 
 ```json
 {
   "action": "run",
   "pane": "subagent",
-  "command": "bash ~/.agents/skills/pi-subagent/scripts/invoke.sh --agent <agent-name> --msg '<user message>'"
+  "command": "<根据上方模板构造的 pi --print 命令>"
 }
 ```
 
-可选：用 `--model <alias>` 覆盖 agent 默认模型：
-
 ```json
-{
-  "action": "run",
-  "pane": "subagent",
-  "command": "bash ~/.agents/skills/pi-subagent/scripts/invoke.sh --agent figure-qa --model gemini-pro --msg 'Check image at /tmp/fig.png\nScene: academic\nIntent: Pipeline overview'"
-}
+{ "action": "wait_agent", "pane": "subagent", "statuses": ["done", "idle"], "timeout": 120000 }
 ```
 
-### Step 3 — 等待完成
-
 ```json
-{
-  "action": "wait_agent",
-  "pane": "subagent",
-  "statuses": ["done", "idle"],
-  "timeout": 120000
-}
-```
-
-### Step 4 — 读取输出
-
-```json
-{
-  "action": "read",
-  "pane": "subagent",
-  "source": "recent-unwrapped",
-  "lines": 100
-}
+{ "action": "read", "pane": "subagent", "source": "recent-unwrapped", "lines": 100 }
 ```
 
 ---
 
-## 模型路由
+## Agent 定义格式
 
-查看 `routing.md` 获取所有可用 alias 及对应模型字符串。
+`agents/<name>.md` — frontmatter（默认参数）+ 调用文档：
 
-常用 alias：
+```markdown
+---
+name: <agent-name>
+description: 一句话说明
+model: axonhub/gemini-3.1-pro-preview   # pi --list-models 中的完整字符串
+thinking: off                            # off / minimal / low / medium / high / xhigh
+tools: read,bash
+---
 
-| alias | 适用场景 |
-|-------|---------|
-| `gemini-pro` | 视觉理解、综合推理（默认）|
-| `gemini-flash` | 快速、低成本任务 |
-| `gemini-think` | 需要深度推理的任务 |
-| `claude-sonnet` | 代码生成、长文本理解 |
-| `claude-think` | 复杂规划、多步推理 |
+# 调用方式 / 输入格式 / 输出格式 / 结果处理
+```
+
+`agents/<name>.prompt.md` — 纯 system prompt 正文，无 frontmatter。
 
 ---
 
 ## Agent 目录
 
-`agents/` 目录下每个 `.md` 是一种 sub-agent 能力：
-
-| 文件 | 用途 |
-|------|------|
-| `agents/figure-qa.md` | AI 生成图片的视觉 QA |
-
-查看 `routing.md` 获取完整列表和各 agent 的默认模型。
+| agent | 文件 | 功能 |
+|-------|------|------|
+| `figure-qa` | `agents/figure-qa.md` | AI 生成图片视觉 QA，输出结构化 Figure QA Report |
 
 ---
 
-## 扩展指南
+## invoke.sh（参考实现，非推荐路径）
 
-### 添加新 Agent 类型
-
-在 `agents/` 下新建两个文件：
-
-**`agents/<name>.md`** — Caller Contract（其他 skill 引用这个文件了解如何使用）：
-
-```markdown
----
-name: <agent-name>
-description: 一句话说明这个 agent 做什么
-model: <alias>          # 来自 routing.md 的模型 alias
-tools: read,bash        # pi 工具列表，逗号分隔，无空格
----
-
-# <agent-name> Agent
-
-## 调用方式
-...
-
-## 输入格式
-...
-
-## 输出格式
-...
-
-## 结果处理
-...
-```
-
-**`agents/<name>.prompt.md`** — 纯 system prompt（直接传给 `pi --system-prompt`，无需解析）：
-
-```
-You are a <role>...
-[system prompt body, no frontmatter]
-```
-
-然后用 `invoke.sh --agent <name>` 调用即可。
-
-### 添加/修改模型路由
-
-编辑 `routing.md`（文档）和 `scripts/models.sh`（机器可读）中的对应条目，保持两者同步。
-
----
-
-## 在其他 Skill 中引用
-
-**invoke.sh 适用场景**：agent 已在 `agents/` 目录里定义，不需要加载任何 skill：
+`scripts/invoke.sh` 是一个便捷包装：读取 `agents/<name>.md` 的 frontmatter，自动组装 pi 命令。
+适合快速调用预定义 agent，但**隐藏了具体参数**——调用前请先读懂 `agents/<name>.md` 中的说明，确认参数合适再使用。
 
 ```bash
-bash ~/.agents/skills/pi-subagent/scripts/invoke.sh \
-  --agent figure-qa \
-  --msg "Check the image at: $IMAGE_PATH\nScene: $SCENE\nIntent: $INTENT"
+invoke.sh --agent <name> [--model <model_string>] --msg '<message>' [-- <extra_pi_flags>]
 ```
 
-**直接调用 pi 的适用场景**：skill-based run 或使用外部 agent 文件：
-
-```bash
-# Skill-based run（eval with-skill）
-pi --skill <path> --no-context-files --no-session --print "<prompt>"
-
-# 外部 system prompt 文件（如 grader）
-pi --system-prompt <path/to/agent.md> --no-skills --no-context-files --no-session --print "<prompt>"
-```
-
-模型 alias 需要时，可单独引用 `scripts/models.sh` 中的 `resolve_model` 函数获取实际模型字符串。
-
----
-
-## 常见问题
-
-| 问题 | 原因 | 解决 |
-|------|------|------|
-| `invoke.sh: No such file` | skill 未分发 | 运行 `distribute_skills.sh` |
-| `Agent not found` | `agents/<name>.md` 不存在 | 检查 agent 文件名，或新建 agent |
-| `Unknown model alias` | alias 不在 `models.sh` 中 | 查看 `routing.md` 或扩展 `models.sh` |
-| pane 一直不变 `done` | pi 报错或模型不可用 | `herdr read --source recent-unwrapped` 查看错误 |
+`--` 之后的参数透传给 pi（如 `-- --thinking medium`）。
 
 ---
 
@@ -193,9 +174,17 @@ pi --system-prompt <path/to/agent.md> --no-skills --no-context-files --no-sessio
 
 | 文件 | 用途 |
 |------|------|
-| `SKILL.md` | 本文件，主入口 |
-| `routing.md` | 模型路由表 + agent 目录（人可读）|
-| `agents/<name>.md` | Caller Contract：调用方式、输入格式、输出格式、结果处理 |
-| `agents/<name>.prompt.md` | System prompt 正文（直接传给 `pi --system-prompt`）|
-| `scripts/models.sh` | bash 可 source 的模型解析函数 |
-| `scripts/invoke.sh` | 通用 sub-agent 调用器 |
+| `SKILL.md` | 本文件 |
+| `agents/<name>.md` | 调用文档 + frontmatter 默认值 |
+| `agents/<name>.prompt.md` | System prompt 正文 |
+| `scripts/invoke.sh` | 便捷调用器（参考实现） |
+
+---
+
+## 常见问题
+
+| 问题 | 原因 | 解决 |
+|------|------|------|
+| 模型名不对 | 模型已更新 | `pi --list-models` 查最新列表 |
+| pane 一直不变 `done` | pi 报错 | `herdr read --source recent-unwrapped` 查看错误 |
+| 需要 `--skill` 但担心冲突 | `--no-skills` 禁用自动发现，`--skill` 显式路径仍生效 | 两者可以同时用 |
