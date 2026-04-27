@@ -1,0 +1,17 @@
+{
+  "skill_id": "pdf",
+  "display_name": "pdf",
+  "skill_path": "pdf",
+  "source_type": "github",
+  "source": "anthropics/skills",
+  "source_url": "https://github.com/anthropics/skills.git",
+  "ref": "",
+  "subpath": "skills/pdf",
+  "bootstrap": true,
+  "upstream_enabled": true,
+  "upstream_path": ".skills/upstream/pdf",
+  "last_imported_at": "2026-04-27T06:22:37Z",
+  "upstream_revision": "sha256:6008346d698a3a72cddc8ad6683e5c7653b9f76025e54bfdd645bb107c1195d4",
+  "managed_revision": "sha256:c7e36499b836e6f31f4af5252c702e18afded0d2cbfd1202f3ba309d09f4993d",
+  "managed_dirty": false
+}

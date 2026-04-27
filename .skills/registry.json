@@ -1806,6 +1806,40 @@
       "upstream_path": ".skills/upstream/pi-subagent",
       "managed_revision": "sha256:60a2f99b0c56060e3962b6626761e529090ad8ca4d166d1064bbcce76e085bcb",
       "last_updated_at": "2026-04-26T13:47:09Z"
+    },
+    "pdf": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/pdf",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-27T06:22:38Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/pdf",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-27T06:22:38Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/pdf",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-04-27T06:22:38Z"
+        }
+      },
+      "display_name": "pdf",
+      "description": "当用户需要处理 PDF 文件时使用此 skill。包括：读取/提取 PDF 中的文本或表格、合并多个 PDF、拆分 PDF、旋转页面、添加水印、新建 PDF、填写 PDF 表单、加密/解密 PDF、提取图片、对扫描版 PDF 进行 OCR 识别。只要用户提到 .pdf 文件或需要生成 PDF，都应激活此 skill。",
+      "status": "managed",
+      "risk_status": "warned",
+      "managed_dirty": false,
+      "upstream_enabled": true,
+      "report_path": ".skills/reports/pdf.md",
+      "source_path": ".skills/sources/pdf.json",
+      "skill_path": "pdf",
+      "upstream_path": ".skills/upstream/pdf",
+      "managed_revision": "sha256:c7e36499b836e6f31f4af5252c702e18afded0d2cbfd1202f3ba309d09f4993d",
+      "last_updated_at": "2026-04-27T06:22:37Z"
     }
   }
 }
