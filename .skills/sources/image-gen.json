@@ -10,8 +10,8 @@
   "bootstrap": true,
   "upstream_enabled": false,
   "upstream_path": ".skills/upstream/image-gen",
-  "last_imported_at": "2026-04-27T11:23:13Z",
+  "last_imported_at": "2026-04-27T11:26:38Z",
   "upstream_revision": "",
-  "managed_revision": "sha256:3b7822b17c7677a09a9c336c269a138b32f638d5b534be04c62e74a076c4380f",
+  "managed_revision": "sha256:5515c5d3aee1c1e4ea016827a6529135997d06d15ebb33fe64be4ff931dd7ccc",
   "managed_dirty": false
 }

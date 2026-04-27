@@ -1843,19 +1843,19 @@
           "target_path": "/Users/chenyl/.codex/skills/image-gen",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-27T11:23:14Z"
+          "last_synced_at": "2026-04-27T11:26:39Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/image-gen",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-27T11:23:14Z"
+          "last_synced_at": "2026-04-27T11:26:39Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/image-gen",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-27T11:23:14Z"
+          "last_synced_at": "2026-04-27T11:26:39Z"
         }
       },
       "display_name": "image-gen",
@@ -1868,8 +1868,8 @@
       "source_path": ".skills/sources/image-gen.json",
       "skill_path": "image-gen",
       "upstream_path": ".skills/upstream/image-gen",
-      "managed_revision": "sha256:3b7822b17c7677a09a9c336c269a138b32f638d5b534be04c62e74a076c4380f",
-      "last_updated_at": "2026-04-27T11:23:13Z"
+      "managed_revision": "sha256:5515c5d3aee1c1e4ea016827a6529135997d06d15ebb33fe64be4ff931dd7ccc",
+      "last_updated_at": "2026-04-27T11:26:38Z"
     }
   }
 }
