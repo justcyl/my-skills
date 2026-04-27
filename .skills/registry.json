@@ -172,19 +172,19 @@
           "target_path": "/Users/chenyl/.codex/skills/skills-manager",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-27T06:23:49Z"
+          "last_synced_at": "2026-04-27T08:49:05Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/skills-manager",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-27T06:23:49Z"
+          "last_synced_at": "2026-04-27T08:49:05Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/skills-manager",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-27T06:23:49Z"
+          "last_synced_at": "2026-04-27T08:49:05Z"
         }
       },
       "display_name": "skills-manager",
@@ -195,8 +195,8 @@
       "source_path": ".skills/sources/skills-manager.json",
       "skill_path": "skills-manager",
       "upstream_path": ".skills/upstream/skills-manager",
-      "managed_revision": "sha256:007dac6c870ee2f15c25b06fc43cc30660518a766f7591aaa6a5396222b497c8",
-      "last_updated_at": "2026-04-16T15:30:56Z",
+      "managed_revision": "sha256:484e8054ed97196198acb68c95e37f4c40fbae9e190f7700c66a59a66e98264d",
+      "last_updated_at": "2026-04-27T08:49:05Z",
       "risk_status": "warned",
       "upstream_enabled": false
     },
