@@ -357,159 +357,159 @@ _GALLERY_HTML_TEMPLATE = """\
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>🎨 Image Gallery</title>
 <style>
-:root {{
+:root {
   --bg:#0f0f13; --card:#1a1a24; --border:#2a2a3a;
   --text:#e0e0f0; --sub:#70708a; --accent:#7c6af7;
   --approve:#22c55e; --reject:#ef4444; --pending:#f59e0b;
-}}
-*{{box-sizing:border-box;margin:0;padding:0}}
-body{{background:var(--bg);color:var(--text);font-family:system-ui,sans-serif;padding:24px}}
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:system-ui,sans-serif;padding:24px}
 
 /* ── Toolbar ─────────────────────────────────── */
-h1{{font-size:1.35rem;margin-bottom:18px;color:var(--accent);letter-spacing:.03em}}
-.toolbar{{display:flex;gap:10px;align-items:center;margin-bottom:20px;flex-wrap:wrap}}
-.toolbar select,.toolbar input{{
+h1{font-size:1.35rem;margin-bottom:18px;color:var(--accent);letter-spacing:.03em}
+.toolbar{display:flex;gap:10px;align-items:center;margin-bottom:20px;flex-wrap:wrap}
+.toolbar select,.toolbar input{
   background:var(--card);border:1px solid var(--border);color:var(--text);
   padding:6px 11px;border-radius:7px;font-size:.85rem;outline:none
-}}
-.toolbar select:focus,.toolbar input:focus{{border-color:var(--accent)}}
-.stats{{margin-left:auto;font-size:.78rem;color:var(--sub)}}
+}
+.toolbar select:focus,.toolbar input:focus{border-color:var(--accent)}
+.stats{margin-left:auto;font-size:.78rem;color:var(--sub)}
 
 /* ── Grid ────────────────────────────────────── */
-.grid{{
+.grid{
   display:grid;
   grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
   gap:12px
-}}
+}
 
 /* ── Card ────────────────────────────────────── */
-.card{{
+.card{
   background:var(--card);border:1px solid var(--border);border-radius:10px;
   overflow:hidden;cursor:pointer;transition:transform .15s,box-shadow .15s
-}}
-.card:hover{{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.55)}}
-.card.approved{{border-color:var(--approve)}}
-.card.rejected{{border-color:var(--reject);opacity:.45}}
+}
+.card:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(0,0,0,.55)}
+.card.approved{border-color:var(--approve)}
+.card.rejected{border-color:var(--reject);opacity:.45}
 
-.card-img{{position:relative;background:#0d0d11;aspect-ratio:1/1;overflow:hidden}}
-.card-img img{{width:100%;height:100%;object-fit:cover;display:block;transition:transform .2s}}
-.card:hover .card-img img{{transform:scale(1.03)}}
+.card-img{position:relative;background:#0d0d11;aspect-ratio:1/1;overflow:hidden}
+.card-img img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .2s}
+.card:hover .card-img img{transform:scale(1.03)}
 
 /* Badge */
-.badge{{
+.badge{
   position:absolute;top:7px;right:7px;font-size:.6rem;font-weight:700;
   padding:2px 7px;border-radius:20px;text-transform:uppercase;letter-spacing:.07em;pointer-events:none
-}}
-.badge-approved{{background:var(--approve);color:#000}}
-.badge-rejected{{background:var(--reject);color:#fff}}
-.badge-pending{{background:rgba(245,158,11,.12);color:var(--pending);border:1px solid rgba(245,158,11,.35)}}
+}
+.badge-approved{background:var(--approve);color:#000}
+.badge-rejected{background:var(--reject);color:#fff}
+.badge-pending{background:rgba(245,158,11,.12);color:var(--pending);border:1px solid rgba(245,158,11,.35)}
 
 /* Card footer */
-.card-foot{{
+.card-foot{
   padding:8px 10px;display:flex;align-items:center;gap:7px;
   border-top:1px solid var(--border)
-}}
-.card-name{{font-size:.72rem;color:var(--text);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
-.card-model{{
+}
+.card-name{font-size:.72rem;color:var(--text);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card-model{
   font-size:.62rem;background:rgba(124,106,247,.14);border:1px solid rgba(124,106,247,.28);
   color:var(--accent);padding:1px 6px;border-radius:8px;white-space:nowrap;flex-shrink:0
-}}
+}
 
 /* ── Modal overlay ───────────────────────────── */
-#modal{{
+#modal{
   display:none;position:fixed;inset:0;background:rgba(6,6,10,.92);
   z-index:9999;align-items:stretch
-}}
-#modal.open{{display:flex}}
+}
+#modal.open{display:flex}
 
 /* Image pane */
-.m-img-pane{{
+.m-img-pane{
   flex:1;display:flex;align-items:center;justify-content:center;
   background:#080810;position:relative;overflow:hidden;min-width:0
-}}
-.m-img-pane img{{
+}
+.m-img-pane img{
   max-width:100%;max-height:100vh;object-fit:contain;display:block;
   border-radius:2px;user-select:none
-}}
+}
 
 /* Nav arrows */
-.nav{{
+.nav{
   position:absolute;top:50%;transform:translateY(-50%);
   background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.1);
   color:#fff;width:42px;height:42px;border-radius:50%;font-size:1.1rem;
   cursor:pointer;transition:background .15s;display:flex;align-items:center;justify-content:center;
   z-index:2;user-select:none
-}}
-.nav:hover{{background:rgba(255,255,255,.18)}}
-.nav:disabled{{opacity:.18;cursor:default;pointer-events:none}}
-#nav-prev{{left:14px}}
-#nav-next{{right:14px}}
+}
+.nav:hover{background:rgba(255,255,255,.18)}
+.nav:disabled{opacity:.18;cursor:default;pointer-events:none}
+#nav-prev{left:14px}
+#nav-next{right:14px}
 
 /* Info pane */
-.m-info{{
+.m-info{
   width:340px;flex-shrink:0;background:var(--card);
   border-left:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden
-}}
+}
 
-.m-header{{
+.m-header{
   padding:15px 16px 13px;border-bottom:1px solid var(--border);
   display:flex;align-items:center;gap:10px
-}}
-.m-title{{flex:1;font-size:.88rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
-.m-close{{
+}
+.m-title{flex:1;font-size:.88rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.m-close{
   background:none;border:none;color:var(--sub);font-size:1.2rem;cursor:pointer;
   padding:2px 5px;border-radius:5px;flex-shrink:0;transition:color .15s
-}}
-.m-close:hover{{color:var(--text)}}
+}
+.m-close:hover{color:var(--text)}
 
-.m-body{{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:16px}}
-.m-body::-webkit-scrollbar{{width:4px}}
-.m-body::-webkit-scrollbar-thumb{{background:var(--border);border-radius:2px}}
+.m-body{flex:1;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:16px}
+.m-body::-webkit-scrollbar{width:4px}
+.m-body::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
 
 /* Status row */
-.m-status-row{{display:flex;align-items:center;gap:8px}}
-.sdot{{width:8px;height:8px;border-radius:50%;flex-shrink:0}}
-.sdot-approved{{background:var(--approve)}}
-.sdot-rejected{{background:var(--reject)}}
-.sdot-pending{{background:var(--pending)}}
-.stxt{{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em}}
+.m-status-row{display:flex;align-items:center;gap:8px}
+.sdot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.sdot-approved{background:var(--approve)}
+.sdot-rejected{background:var(--reject)}
+.sdot-pending{background:var(--pending)}
+.stxt{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em}
 
 /* Section label */
-.sec-label{{font-size:.67rem;text-transform:uppercase;letter-spacing:.09em;color:var(--sub);margin-bottom:5px}}
+.sec-label{font-size:.67rem;text-transform:uppercase;letter-spacing:.09em;color:var(--sub);margin-bottom:5px}
 
 /* Prompt box */
-.m-prompt{{
+.m-prompt{
   font-size:.84rem;line-height:1.6;color:var(--text);
   background:rgba(255,255,255,.03);border:1px solid var(--border);
   border-radius:8px;padding:10px 12px
-}}
+}
 
 /* Meta table */
-.m-meta{{display:flex;flex-direction:column;gap:6px}}
-.m-row{{display:flex;align-items:baseline;gap:8px}}
-.m-key{{font-size:.7rem;color:var(--sub);width:82px;flex-shrink:0}}
-.m-val{{font-size:.78rem;color:var(--text)}}
-.m-tag{{
+.m-meta{display:flex;flex-direction:column;gap:6px}
+.m-row{display:flex;align-items:baseline;gap:8px}
+.m-key{font-size:.7rem;color:var(--sub);width:82px;flex-shrink:0}
+.m-val{font-size:.78rem;color:var(--text)}
+.m-tag{
   font-size:.7rem;background:rgba(124,106,247,.14);border:1px solid rgba(124,106,247,.28);
   color:var(--accent);padding:1px 7px;border-radius:8px
-}}
+}
 
 /* Action buttons */
-.m-actions{{display:flex;gap:9px}}
-.m-btn{{
+.m-actions{display:flex;gap:9px}
+.m-btn{
   flex:1;padding:9px 0;border-radius:8px;border:none;cursor:pointer;
   font-size:.84rem;font-weight:600;transition:opacity .15s,transform .1s
-}}
-.m-btn:hover{{opacity:.85}}
-.m-btn:active{{transform:scale(.97)}}
-.m-approve{{background:var(--approve);color:#000}}
-.m-approve.active{{box-shadow:0 0 0 2px var(--card),0 0 0 4px var(--approve)}}
-.m-reject{{background:rgba(239,68,68,.13);color:var(--reject);border:1px solid var(--reject)}}
-.m-reject.active{{background:rgba(239,68,68,.3);box-shadow:0 0 0 2px var(--card),0 0 0 4px var(--reject)}}
+}
+.m-btn:hover{opacity:.85}
+.m-btn:active{transform:scale(.97)}
+.m-approve{background:var(--approve);color:#000}
+.m-approve.active{box-shadow:0 0 0 2px var(--card),0 0 0 4px var(--approve)}
+.m-reject{background:rgba(239,68,68,.13);color:var(--reject);border:1px solid var(--reject)}
+.m-reject.active{background:rgba(239,68,68,.3);box-shadow:0 0 0 2px var(--card),0 0 0 4px var(--reject)}
 
 /* Counter + hint */
-.m-counter{{font-size:.72rem;color:var(--sub);text-align:center;padding-top:3px}}
-.m-hint{{font-size:.66rem;color:#44445a;text-align:center}}
+.m-counter{font-size:.72rem;color:var(--sub);text-align:center;padding-top:3px}
+.m-hint{font-size:.66rem;color:#44445a;text-align:center}
 </style>
 </head>
 <body>
@@ -581,34 +581,34 @@ const getSt  = id => localStorage.getItem(stKey(id)) || 'pending';
 const setSt  = (id, s) => localStorage.setItem(stKey(id), s);
 
 /* Toggle: same button → back to pending */
-function toggleSt(id, target) {{
+function toggleSt(id, target) {
   setSt(id, getSt(id) === target ? 'pending' : target);
   render();
   if (midx >= 0) renderModal();
-}}
+}
 
 /* ── short model label ── */
-function shortM(m) {{
+function shortM(m) {
   return m.replace('gemini-3.1-flash-image-preview','gemini-flash')
           .replace('gemini-3-pro-image-preview','gemini-pro')
           .replace('gpt-image-2','gpt-img-2')
           .replace('grok-4.2-image','grok-img');
-}}
+}
 
 /* ── render grid ── */
-function render() {{
+function render() {
   const fm = document.getElementById('filterModel').value;
   const fs = document.getElementById('filterStatus').value;
   const sq = document.getElementById('search').value.toLowerCase();
-  vis = RAW.filter(item => {{
+  vis = RAW.filter(item => {
     if (fm && item.model !== fm) return false;
     const s = getSt(item.id);
     if (fs && s !== fs) return false;
     if (sq && !item.prompt.toLowerCase().includes(sq)) return false;
     return true;
-  }});
+  });
   document.getElementById('stats').textContent = vis.length + ' / ' + RAW.length + ' images';
-  document.getElementById('grid').innerHTML = vis.map((item, i) => {{
+  document.getElementById('grid').innerHTML = vis.map((item, i) => {
     const s  = getSt(item.id);
     const bc = s === 'approved' ? 'badge-approved' : s === 'rejected' ? 'badge-rejected' : 'badge-pending';
     const cc = s === 'approved' ? 'approved'       : s === 'rejected' ? 'rejected'       : '';
@@ -622,17 +622,17 @@ function render() {{
         '<span class="card-name" title="'+item.filename+'">'+fn+'</span>' +
         '<span class="card-model" title="'+item.model+'">'+shortM(item.model)+'</span>' +
       '</div></div>';
-  }}).join('');
-}}
+  }).join('');
+}
 
 /* ── modal ── */
-function openModal(i) {{
+function openModal(i) {
   midx = i;
   renderModal();
   document.getElementById('modal').classList.add('open');
-}}
+}
 
-function renderModal() {{
+function renderModal() {
   const item = vis[midx];
   const s    = getSt(item.id);
   document.getElementById('m-img').src = item.src;
@@ -659,43 +659,43 @@ function renderModal() {{
   document.getElementById('m-counter').textContent = (midx+1) + ' / ' + vis.length;
   document.getElementById('nav-prev').disabled = midx <= 0;
   document.getElementById('nav-next').disabled = midx >= vis.length - 1;
-}}
+}
 
-function row(k, v) {{
+function row(k, v) {
   return '<div class="m-row"><span class="m-key">'+k+'</span><span class="m-val">'+v+'</span></div>';
-}}
+}
 
-function modalToggle(target) {{
+function modalToggle(target) {
   if (midx < 0) return;
   toggleSt(vis[midx].id, target);
-}}
+}
 
-function navModal(d) {{
+function navModal(d) {
   const n = midx + d;
   if (n < 0 || n >= vis.length) return;
   midx = n;
   renderModal();
-}}
+}
 
-function closeModal() {{
+function closeModal() {
   document.getElementById('modal').classList.remove('open');
   midx = -1;
-}}
+}
 
 /* click dark bg to close */
-document.getElementById('m-img-pane').addEventListener('click', e => {{
+document.getElementById('m-img-pane').addEventListener('click', e => {
   if (e.target === document.getElementById('m-img-pane')) closeModal();
-}});
+});
 
 /* keyboard */
-document.addEventListener('keydown', e => {{
+document.addEventListener('keydown', e => {
   if (!document.getElementById('modal').classList.contains('open')) return;
   if (e.key === 'Escape')      closeModal();
   if (e.key === 'ArrowLeft')   navModal(-1);
   if (e.key === 'ArrowRight')  navModal(1);
   if (e.key === 'a' || e.key === 'A') modalToggle('approved');
   if (e.key === 'r' || e.key === 'R') modalToggle('rejected');
-}});
+});
 
 render();
 </script>
