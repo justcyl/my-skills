@@ -14,13 +14,15 @@ metadata:
 
 ## 前置条件
 
-```bash
-lark-cli auth status        # 确认已登录
-alias ph='uv run --project ~/project/ph2 ph'
-ph --version                # 确认 ph 可用
-```
+本 skill 依赖两个已有 skill，**请先确认它们已就绪**：
 
-需要的 lark-cli scope：`docx:document:create`、`drive:file:upload`、`docs:document.media:upload`、`docs:document.comment:create`
+1. **[`lark`](../lark/SKILL.md)**：飞书认证、文档操作、Drive 上传。执行 `lark-cli auth status` 确认已登录，所需 scope 见 lark skill § 0。
+2. **[`ph-paper-helper`](../ph-paper-helper/SKILL.md)**：论文导入与 MinerU 全文解析。`PH_MINERU_TOKEN` 等环境变量配置见 ph-paper-helper skill 的「环境变量」一节。
+
+```bash
+lark-cli auth status   # 确认飞书已登录
+ph --version           # 确认 ph 可用（alias ph='uv run --project ~/project/ph2 ph'）
+```
 
 ## 输入解析
 
@@ -295,26 +297,10 @@ lark-cli drive file.comments patch \
 
 ---
 
-## 配置
+## 前置配置（由各 skill 负责）
 
-### 统一飞书文件夹
-
-在使用前配置论文存放的固定文件夹 token：
-
-```bash
-# 方法1：直接在 SKILL.md 里记录（修改上面的 FOLDER 变量）
-# 方法2：设置环境变量
-export LARK_PAPER_FOLDER="fldcnXXXXXXXXXXXXXXXXX"
-```
-
-获取文件夹 token：在飞书网页端打开目标文件夹，URL 中 `/drive/folder/` 后面的字符串即为 folder_token。
-
-### ph 配置
-
-```bash
-# 检查 MinerU token
-echo $PH_MINERU_TOKEN   # 为空时 ph fetch 不能解析 PDF 图片
-```
+- **飞书认证 & 文件夹**：由 [`lark`](../lark/SKILL.md) 管理。确认已 `lark-cli auth status`，目标文件夹 token 通过飞书网页端 URL 获取（`/drive/folder/<token>`），传入 Step 3 的 `--parent-token`。
+- **MinerU token（`PH_MINERU_TOKEN`）**：由 [`ph-paper-helper`](../ph-paper-helper/SKILL.md) 管理。未配置时 `ph fetch` 无法解析 PDF 图片，降级为纯文本模式。
 
 ---
 
