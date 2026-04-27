@@ -29,8 +29,10 @@ description: >
 uv run <skill-dir>/scripts/generate_image.py \
   --prompt "your image description" \
   --filename "output-name.png" \
+  [--session NAME] [--output-dir DIR] \
   [--resolution 1K|2K|4K] \
-  [--model gemini-3.1-flash-image-preview|gpt-image-2|grok-4.2-image]
+  [--model gemini-3.1-flash-image-preview|gpt-image-2|grok-4.2-image] \
+  [--no-gallery]
 ```
 
 **编辑已有图片：**
@@ -39,24 +41,29 @@ uv run <skill-dir>/scripts/generate_image.py \
   --prompt "editing instructions" \
   --filename "output-name.png" \
   --input-image "path/to/input.png" \
-  [--resolution 1K|2K] [--model MODEL]
-```
-
-**生成并加入 Gallery：**
-```bash
-uv run <skill-dir>/scripts/generate_image.py \
-  --prompt "..." \
-  --filename "img.png" \
-  --model gpt-image-2 \
-  --gallery review.html
+  [--session NAME] [--resolution 1K|2K]
 ```
 
 **仅重建 Gallery HTML（不生成图片）：**
 ```bash
-uv run <skill-dir>/scripts/generate_image.py --gallery review.html
+uv run <skill-dir>/scripts/generate_image.py --session NAME
+# 或指定自定义目录
+# uv run <skill-dir>/scripts/generate_image.py --output-dir ~/my-gallery
 ```
 
-**重要：** 始终在用户的工作目录运行，图片和 gallery 保存在当前目录。
+**重要：** 始终在用户的工作目录运行。
+
+## 输出目录
+
+| 情况 | 图片位置 | Gallery 位置 |
+|------|---------|----------|
+| 什么都不指定 | `~/.local/share/image-gen/apple.png` | `~/.local/share/image-gen/gallery.html` |
+| `--session NAME` | `~/.local/share/image-gen/NAME/apple.png` | `~/.local/share/image-gen/NAME/gallery.html` |
+| `--output-dir DIR` | `DIR/apple.png` | `DIR/gallery.html` |
+| `--filename figures/foo.png`（含路径分隔符） | `<CWD>/figures/foo.png`（直接写入项目） | 不受影响，仍在 output-dir |
+| `--no-gallery` | 同上 | 不创建 |
+
+> **设计原则**：草稿 / 候选图和 gallery 默认不写入工作目录，避免污染项目。确认的终稿手动复制到项目（如 `figures/`）。
 
 ## 分辨率
 
@@ -68,24 +75,36 @@ uv run <skill-dir>/scripts/generate_image.py --gallery review.html
 
 ## Gallery 功能
 
-`--gallery <html文件>` 开启 Gallery 模式：
-- 每次生成成功后，自动将图片追加到 Gallery HTML 文件
-- 同时维护一个 `<gallery-name>.meta.json` 元数据文件（存储模型、prompt、尺寸、时间戳等）
-- 生成的 HTML 是**自包含**的静态文件，用浏览器打开即可
-- 支持按模型、审批状态筛选，支持 prompt 搜索
-- 审批状态（approve / reject）存储在 `localStorage`，刷新后保留
-- 点击图片可放大查看（Lightbox）
+默认每次生成后自动建立/更新 Gallery，位于 output-dir 中，**不污染工作目录**。
 
-**典型批量生成 + 审批工作流：**
+`--session NAME` 常用来隔离不同任务的 gallery：
+
 ```bash
-# 生成一批不同风格/模型的图
-uv run .../generate_image.py --prompt "..." --filename "a.png" --model gemini-3.1-flash-image-preview --gallery review.html
-uv run .../generate_image.py --prompt "..." --filename "b.png" --model gpt-image-2 --resolution 2K  --gallery review.html
-uv run .../generate_image.py --prompt "..." --filename "c.png" --model grok-4.2-image               --gallery review.html
+# 每次生成都属于同一个居名 session
+uv run .../generate_image.py --prompt "..." --filename "a.png" --model gemini-3.1-flash-image-preview --session my-project
+uv run .../generate_image.py --prompt "..." --filename "b.png" --model gpt-image-2 --resolution 2K      --session my-project
+uv run .../generate_image.py --prompt "..." --filename "c.png" --model grok-4.2-image                   --session my-project
 
-# 打开 review.html 在浏览器中审批
-open review.html
+# Gallery 位于：~/.local/share/image-gen/my-project/gallery.html
+open ~/.local/share/image-gen/my-project/gallery.html
 ```
+
+如需在项目内用 `figures/method.png` 这种路径，图片会直接写入项目，而 gallery 仍在 session 目录：
+
+```bash
+uv run .../generate_image.py \
+  --prompt "..." \
+  --filename "figures/method.png" \
+  --session my-paper
+  # 图片 → <CWD>/figures/method.png
+  # gallery → ~/.local/share/image-gen/my-paper/gallery.html
+```
+
+**Gallery HTML 功能：**
+- 按模型、审批状态、prompt 关键词筛选
+- Approve / Reject 按钒（状态存 `localStorage`，刷新后保留）
+- 点击图片可放大（Lightbox）
+- 配套同目录的 `.meta.json` 存储元数据
 
 ## Proxy 配置
 

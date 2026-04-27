@@ -576,6 +576,35 @@ def rebuild_gallery(gallery_path: Path) -> None:
     _save_gallery(gallery_path, items)
 
 
+# ── Output directory resolution ──────────────────────────────────────────────
+_DEFAULT_OUTPUT_DIR = Path.home() / ".local" / "share" / "image-gen"
+
+
+def _resolve_output_dir(output_dir: str | None, session: str | None) -> Path:
+    """Return the effective output directory.
+
+    Priority: --output-dir > --session (under default dir) > default dir.
+    """
+    if output_dir:
+        return Path(output_dir).expanduser()
+    if session:
+        return _DEFAULT_OUTPUT_DIR / session
+    return _DEFAULT_OUTPUT_DIR
+
+
+def _resolve_output_path(filename: str, out_dir: Path) -> Path:
+    """Resolve the output image path.
+
+    If filename is a bare name (no path separator), place it under out_dir.
+    If filename contains path separators, treat as CWD-relative / absolute
+    (lets callers like academic-paper write directly to figures/).
+    """
+    p = Path(filename)
+    if p.parent == Path("."):  # bare filename, no directory component
+        return out_dir / p
+    return p  # caller-specified path, honour as-is
+
+
 # ── Main ──────────────────────────────────────────────────────────────────────
 def main():
     parser = argparse.ArgumentParser(
@@ -583,7 +612,7 @@ def main():
         formatter_class=argparse.RawTextHelpFormatter,
     )
     parser.add_argument("--prompt", "-p", help="Image description / editing instructions")
-    parser.add_argument("--filename", "-f", help="Output PNG filename")
+    parser.add_argument("--filename", "-f", help="Output PNG filename (bare name → output-dir; path → CWD-relative)")
     parser.add_argument("--input-image", "-i", help="Input image path (for editing)")
     parser.add_argument(
         "--resolution", "-r",
@@ -596,23 +625,73 @@ def main():
         choices=sorted(_ALL_KNOWN_MODELS),
         help="Model to use",
     )
-    parser.add_argument(
+    # ── Output location ──────────────────────────────────────────────────────
+    out_group = parser.add_argument_group(
+        "output location",
+        "By default all generated files (images + gallery) go to\n"
+        f"  {_DEFAULT_OUTPUT_DIR}/\n"
+        "Use --session for a named subdirectory, or --output-dir for a custom path.\n"
+        "If --filename contains a path separator (e.g. figures/foo.png) the image\n"
+        "is written there directly (CWD-relative), bypassing output-dir.",
+    )
+    out_group.add_argument(
+        "--session", "-s",
+        metavar="NAME",
+        help=f"Named sub-directory under {_DEFAULT_OUTPUT_DIR}/NAME/",
+    )
+    out_group.add_argument(
+        "--output-dir",
+        metavar="DIR",
+        help="Explicit output directory (overrides --session and default)",
+    )
+    # ── Gallery ──────────────────────────────────────────────────────────────
+    gallery_group = parser.add_argument_group(
+        "gallery",
+        "Gallery HTML is auto-created at <output-dir>/gallery.html unless\n"
+        "overridden with --gallery or disabled with --no-gallery.",
+    )
+    gallery_group.add_argument(
         "--gallery", "-g",
-        metavar="GALLERY.HTML",
+        metavar="PATH",
+        const="AUTO",
+        nargs="?",
         help=(
-            "Path to gallery HTML file.\n"
-            "  If generating an image: add it to the gallery after saving.\n"
-            "  If used alone (no --prompt/--filename): rebuild HTML from metadata."
+            "Gallery HTML path (omit value → <output-dir>/gallery.html).\n"
+            "Without --prompt/--filename: rebuild HTML from existing metadata."
         ),
+    )
+    gallery_group.add_argument(
+        "--no-gallery",
+        action="store_true",
+        help="Disable automatic gallery creation / update.",
     )
     parser.add_argument("--max-retries", type=int, default=3)
     parser.add_argument("--retry-backoff-ms", type=int, default=1200)
     parser.add_argument("--timeout-ms", type=int, default=120000)
     args = parser.parse_args()
 
-    # Gallery-only mode
-    if args.gallery and not args.prompt and not args.filename:
-        rebuild_gallery(Path(args.gallery))
+    # ── Resolve output dir ───────────────────────────────────────────────────
+    out_dir = _resolve_output_dir(args.output_dir, args.session)
+
+    # ── Resolve gallery path ─────────────────────────────────────────────────
+    def _effective_gallery() -> Path | None:
+        if args.no_gallery:
+            return None
+        if args.gallery is None or args.gallery == "AUTO":
+            # Default: auto gallery in output dir
+            return out_dir / "gallery.html"
+        g = Path(args.gallery)
+        if g.parent == Path("."):  # bare filename → put in output dir
+            return out_dir / g
+        return g
+
+    # ── Gallery-only mode (rebuild without generating) ────────────────────────
+    gallery_path = _effective_gallery()
+    if not args.prompt and not args.filename:
+        if gallery_path:
+            rebuild_gallery(gallery_path)
+        else:
+            parser.error("Nothing to do: provide --prompt/--filename or a gallery path.")
         return
 
     if not args.prompt:
@@ -620,21 +699,23 @@ def main():
     if not args.filename:
         parser.error("--filename is required for image generation")
 
-    # Resolve size string
+    # ── Resolve size string ──────────────────────────────────────────────────
     size_str = _RESOLUTION_TO_SIZE.get(args.resolution, "1024x1024")
-    # gpt-image-2 4K is not supported → downgrade to 2K
     if args.model == "gpt-image-2" and args.resolution == "4K":
         print("  gpt-image-2 does not support 4K; using 2K instead.", file=sys.stderr)
         size_str = "2048x2048"
 
-    output_path = Path(args.filename)
+    output_path = _resolve_output_path(args.filename, out_dir)
     timestamp = datetime.now().strftime("%Y-%m-%dT%H:%M:%S")
 
     print(f"Model:      {args.model}")
     print(f"Resolution: {args.resolution} ({size_str})")
+    print(f"Output dir: {out_dir}")
     if args.input_image:
         print(f"Input img:  {args.input_image}")
     print(f"Output:     {output_path}")
+    if gallery_path:
+        print(f"Gallery:    {gallery_path}")
     print()
 
     common_kwargs = dict(
@@ -653,12 +734,11 @@ def main():
         image_data, mime_type = _generate_chat_completions(**common_kwargs)
 
     w, h = _save_png(image_data, output_path)
-    full_path = output_path.resolve()
-    print(f"Saved: {full_path}  ({w}×{h}px, {len(image_data)//1024}KB)")
+    print(f"Saved: {output_path.resolve()}  ({w}\xd7{h}px, {len(image_data)//1024}KB)")
 
-    if args.gallery:
+    if gallery_path:
         add_to_gallery(
-            Path(args.gallery),
+            gallery_path,
             image_path=output_path,
             model=args.model,
             prompt=args.prompt,
