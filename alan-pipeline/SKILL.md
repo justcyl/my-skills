@@ -20,11 +20,9 @@ alan/
   runs/
     <slug>/                # 每个 run 独占一个文件夹
       run.yaml             # Run 定义（含生命周期状态）
-      progress.md          # 执行历史（CLI 追加）
-      notes                # 人工笔记（用户写，下轮注入后清空）
-      round-001.log        # 每轮 pi 原始输出（可选保留）
-      snapshot/            # 实验快照（含 experiment: 字段时建立）
-      ...                  # run 产生的其他产物
+      progress.md          # 执行历史（每轮追加一行）
+      notes                # 人工笔记（可选，轮间注入）
+      ...                  # run 执行过程中产生的其他产物
 ```
 
 ## Card 操作
@@ -127,157 +125,84 @@ mv alan/cards/{category}/{slug}.md alan/cards/archived/{slug}.md
 ### 查找 card
 
 ```bash
-ls alan/cards/method/                                # method cards
-ls alan/cards/exp/                                   # exp cards
-grep -l "priority: p0" alan/cards/method/*.md        # p0 method cards
-grep -l "debiasing" alan/cards/**/*.md               # by tag
-grep -rn "method/debiased-sorting#2" alan/cards/     # who references this section
+ls alan/cards/method/
+ls alan/cards/exp/
+grep -l "priority: p0" alan/cards/method/*.md
+grep -rn "method/debiased-sorting#2" alan/cards/
 ```
 
 ## Run 操作
 
-Run 是纯 YAML 文件，三个字段定义一切。通过 `write` 创建，通过 CLI 执行。
-
-```yaml
-# alan/runs/<slug>/run.yaml
-state:        pending          # pending（默认）| done | archived（CLI 自动写 done；archived 由用户手动标记）
-context:      背景知识（card 引用、实验条件、约束）
-instruction:  做什么（高层意图 + 具体步骤）
-verifier:     怎么判断（评估结果，输出 loop 或 end）
-```
-
-**一次性 run 和循环 run 格式完全相同。** 区别只在 verifier 是否返回 `loop`。
+Run 是一个文件夹，核心是两个文件：`run.yaml`（定义）和 `progress.md`（记录）。
 
 ### 创建 run
 
 ```bash
-write alan/runs/verify-debiased-k1/run.yaml
+write alan/runs/<slug>/run.yaml
 ```
 
 ```yaml
 state: pending
 
 context: |
-  基础模型：Llama-3-8B（见 cards/method/llama3-config）
-  数据集：SynthWiki-32k
-  不调超参，使用论文默认配置。
+  背景知识（card 引用、实验条件、约束）。
 
 instruction: |
-  验证 debiased k=1 能否匹配 k=5 精度。
-  跑 3 seeds (42/43/44) 对比 BLEU。
-  产出 exp card 记录结果。
+  做什么（高层意图 + 具体步骤）。
 
 verifier: |
-  3 seeds 都跑完？BLEU 记录？exp card 产出？
-  全部完成 → end
-  否则 → loop
+  怎么判断完成。输出 verdict: end 或 loop。
 ```
 
-可选字段：`model`（完整模型字符串）、`thinking`（思考等级）、`tags`（标签）、`prediction`（实验前预测，用于事后对比 surprise）、`experiment`（实验快照）。
-
-### 实验 Run
-
-当 run 用于跑 AI 训练/评估实验时，在 run.yaml 中加 `experiment:` 字段。
-执行前必须在 `alan/runs/<slug>/snapshot/` 中完成源码快照、环境文件保存、metadata 填写。
-
-完整协议、目录结构、metadata 模板、实验设计哲学见
-[references/experiment-run.md](references/experiment-run.md)。
+完整字段定义和示例见 [references/run-schema.md](references/run-schema.md)。
 
 ### 执行 run
 
-通过 CLI 执行。agent 创建 run.yaml 后，在 herdr 面板中启动：
+Agent 读取 run.yaml，按 context + instruction 执行，按 verifier 判断，在 progress.md 追加每轮结果。
+执行方式由 agent 自主决定（当前 session / herdr 新面板 / 其他）。
 
-```json
-{"action": "pane_split", "direction": "down", "newPane": "run-exec"}
-{"action": "run", "pane": "run-exec", "command": "bash ~/.agents/skills/alan-pipeline/scripts/run.sh verify-debiased-k1"}
+每轮结束后在 progress.md 追加一行：
+
+```
+| <round> | loop/end | <一句话描述本轮做了什么> |
 ```
 
-或告知用户在另一个终端执行：
+verifier 返回 `end` 时将 `state` 改为 `done`。
 
-```bash
-bash ~/.agents/skills/alan-pipeline/scripts/run.sh verify-debiased-k1
-```
+### 实验 Run
 
-常用参数：
+当 run 用于跑 AI 训练/评估实验时，在 run.yaml 中加 `experiment:` 字段，并在执行前建立
+`alan/runs/<slug>/snapshot/` 快照目录。
 
-| 参数 | 说明 |
-|------|------|
-| `--model <model>` | 覆盖模型（完整模型字符串）|
-| `--thinking <level>` | 覆盖思考等级 |
-| `--window N` | 每轮注入的 progress 历史行数（默认 10）|
-| `--status` | 仅显示当前状态 |
-| `--note "msg"` | 追加笔记供下一轮读取 |
-| `--dry-run` | 预览 prompt，不执行 |
+完整协议见 [references/experiment-run.md](references/experiment-run.md)。
 
-CLI 每轮创建全新 `pi --print` session（`--no-skills --no-context-files`，context 不积累），直到 verifier 返回 `end`。
+### Run 生命周期
 
-### 查看状态
-
-```bash
-bash ~/.agents/skills/alan-pipeline/scripts/run.sh <slug> --status
-cat alan/runs/<slug>/progress.md    # 执行历史
-```
-
-### 注入笔记（Human on the Loop）
-
-```bash
-bash ~/.agents/skills/alan-pipeline/scripts/run.sh <slug> --note "试试 warmup 200 步"
-```
-
-下一轮 session 会自动读到。
-
-### Run 生命周期状态
-
-`state` 字段存在于 run.yaml 本身：
-
-| 状态 | 含义 | 谁设置 |
-|------|------|--------|
-| `pending` | 待执行或执行中（默认）| 用户创建时 |
-| `done` | verifier 返回 end | CLI 自动写入 |
-| `archived` | 已退役，不再执行 | 用户手动设置 |
-
-### 崩溃恢复
-
-所有状态在文件中。ROUND 由 progress.md 行数派生，重新执行同一命令从断点继续。
-
-### 监控（可选）
-
-在 pi 中通过 herdr 启动监控子代理：
-
-**Step 1** — 分割面板
-```json
-{"action": "pane_split", "direction": "down", "newPane": "run-monitor"}
-```
-
-**Step 2** — 启动监控
-```json
-{"action": "run", "pane": "run-monitor", "command": "watch -n 30 'bash ~/.agents/skills/alan-pipeline/scripts/run.sh <slug> --status'"}
-```
-
-Run 完整字段定义和示例见 [references/run-schema.md](references/run-schema.md)。
+| state | 含义 |
+|-------|------|
+| `pending` | 待执行或执行中（默认） |
+| `done` | 已完成（verifier 返回 end） |
+| `archived` | 已退役，不再执行 |
 
 ## Card 与 Run 的关系
 
 ```
-method card ──── 定义方法 ────→ run（验证实验，CLI 执行）
+method card ──── 定义方法 ────→ run（执行验证）
                                   │
-                                  ▼ 产出（progress.md 记录）
+                                  ▼ 产出
                                exp card
                                   │
                                   ▼ 支撑
-framing card ←── 引用 exp card 的结果构建叙事
-      │
-      ▼ 驱动
-   下一个 run
+framing card ←── 引用结果构建叙事
 ```
 
-Run 的 progress.md 是执行日志。如果某轮产出了对项目有持久意义的发现，应升级为 card。
+progress.md 是执行日志。某轮产出了对项目有持久意义的发现 → 升级为 card。
 
 ## 规则
 
 - **一事一卡**：一张 card 只说一件事。有重叠就拆分 + 引用。
 - **不捏造**：数据、引用不编造。不确定就标 TBD。
-- **不重复**：card 之间用路径引用（`见 method/debiased-sorting#2`），不复制内容。
+- **不重复**：card 之间用路径引用，不复制内容。
 - **不删除**：不要的 card 降为 p2 移入 archived/。
 - **Progress 不沉淀知识**：任务级记录留 progress.md；项目级升级为 card。
 - **Active 不过时**：新建/修改 card 时检查关联 cards，过时就降级。
@@ -290,5 +215,3 @@ Run 的 progress.md 是执行日志。如果某轮产出了对项目有持久意
 git add alan/cards/
 git commit -m "pipeline: update cards (<列出变更的 slug>)"
 ```
-
-保持 `alan/cards/` 下没有未提交的变更。

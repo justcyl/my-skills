@@ -1072,19 +1072,19 @@
           "target_path": "/Users/chenyl/.codex/skills/alan-pipeline",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-27T15:52:50Z"
+          "last_synced_at": "2026-04-27T16:01:38Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/alan-pipeline",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-27T15:52:50Z"
+          "last_synced_at": "2026-04-27T16:01:38Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/alan-pipeline",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-27T15:52:50Z"
+          "last_synced_at": "2026-04-27T16:01:38Z"
         }
       },
       "display_name": "alan-pipeline",
@@ -1097,8 +1097,8 @@
       "source_path": ".skills/sources/alan-pipeline.json",
       "skill_path": "alan-pipeline",
       "upstream_path": ".skills/upstream/alan-pipeline",
-      "managed_revision": "sha256:7c65b520430bf0a25e2407693471a06b44b77151e58e7ed284fed70eb550f40c",
-      "last_updated_at": "2026-04-27T15:52:49Z"
+      "managed_revision": "sha256:bd7e400308cff503745ff004ab14bf5dd123049d4a15d265a016fa9e0554075e",
+      "last_updated_at": "2026-04-27T16:01:37Z"
     },
     "figure-checker": {
       "distribution": {
