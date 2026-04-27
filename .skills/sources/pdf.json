@@ -1,7 +1,7 @@
 {
   "skill_id": "pdf",
   "display_name": "pdf",
-  "skill_path": "pdf",
+  "skill_path": ".skills/archived-skills/pdf",
   "source_type": "github",
   "source": "anthropics/skills",
   "source_url": "https://github.com/anthropics/skills.git",
@@ -13,5 +13,7 @@
   "last_imported_at": "2026-04-27T06:24:51Z",
   "upstream_revision": "sha256:6008346d698a3a72cddc8ad6683e5c7653b9f76025e54bfdd645bb107c1195d4",
   "managed_revision": "sha256:6008346d698a3a72cddc8ad6683e5c7653b9f76025e54bfdd645bb107c1195d4",
-  "managed_dirty": false
+  "managed_dirty": false,
+  "archived": true,
+  "archived_at": "2026-04-27T07:44:46Z"
 }

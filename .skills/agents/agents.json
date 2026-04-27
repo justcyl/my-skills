@@ -169,13 +169,6 @@
       "sync_status": "synced",
       "last_synced_at": "2026-04-27T06:23:49Z"
     },
-    "pdf": {
-      "source_path": "pdf",
-      "target_path": "/Users/chenyl/.agents/skills/pdf",
-      "mode": "symlink",
-      "sync_status": "synced",
-      "last_synced_at": "2026-04-27T06:24:52Z"
-    },
     "lark-paper-reader": {
       "source_path": "lark-paper-reader",
       "target_path": "/Users/chenyl/.agents/skills/lark-paper-reader",

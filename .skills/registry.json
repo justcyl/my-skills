@@ -1808,38 +1808,19 @@
       "last_updated_at": "2026-04-26T13:47:09Z"
     },
     "pdf": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/pdf",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-27T06:24:52Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/pdf",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-27T06:24:52Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/pdf",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-27T06:24:52Z"
-        }
-      },
+      "distribution": {},
       "display_name": "pdf",
       "description": "Use this skill whenever the user wants to do anything with PDF files. This includes reading or extracting text/tables from PDFs, combining or merging multiple PDFs into one, splitting PDFs apart, rotating pages, adding watermarks, creating new PDFs, filling PDF forms, encrypting/decrypting PDFs, extracting images, and OCR on scanned PDFs to make them searchable. If the user mentions a .pdf file or asks to produce one, use this skill.",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": true,
       "report_path": ".skills/reports/pdf.md",
       "source_path": ".skills/sources/pdf.json",
-      "skill_path": "pdf",
+      "skill_path": ".skills/archived-skills/pdf",
       "upstream_path": ".skills/upstream/pdf",
       "managed_revision": "sha256:6008346d698a3a72cddc8ad6683e5c7653b9f76025e54bfdd645bb107c1195d4",
-      "last_updated_at": "2026-04-27T06:24:51Z"
+      "last_updated_at": "2026-04-27T07:44:46Z"
     },
     "lark-paper-reader": {
       "distribution": {
