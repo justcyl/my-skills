@@ -32,7 +32,7 @@ skill 出现在模型的 `available_skills` 列表中，模型根据 name + desc
 
 ## Review With User
 
-读 `assets/eval_review.html` 模板，替换占位符：
+读 `skills-manager/assets/eval_review.html` 模板，替换占位符：
 
 - `__EVAL_DATA_PLACEHOLDER__` → JSON 数组
 - `__SKILL_NAME_PLACEHOLDER__` → skill 名
@@ -47,7 +47,7 @@ skill 出现在模型的 `available_skills` 列表中，模型根据 name + desc
 告知用户这需要一些时间：
 
 ```bash
-python skills-manager/creator/scripts/run_loop.py \
+python skills-manager/eval-scripts/run_loop.py \
   --eval-set <path-to-trigger-eval.json> \
   --skill-path <path-to-skill> \
   --model <model-id-powering-this-session> \

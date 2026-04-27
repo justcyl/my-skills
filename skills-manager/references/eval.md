@@ -2,6 +2,8 @@
 
 当任务是"验证、迭代、benchmark、viewer 审阅或盲评"时读取本文件。
 
+子代理通过 **pi-subagent** skill 调度，参见 `pi-subagent/SKILL.md` 了解 pane_split / invoke / wait_agent 调用方式。
+
 ## Workspace
 
 统一使用：`~/project/my-skills/.skills/workspaces/<skill-id>/`
@@ -19,35 +21,42 @@
 1. 设计 2-3 个真实测试 prompt
    如果被测 skill 是路由型（包含多条路由分支），测试集必须覆盖每条路由分支，并包含至少一个跨分支的歧义 case
 2. 在 workspace 下写 `evals/evals.json`
-3. 对每个 case 跑 with-skill 与 baseline
+3. 对每个 case 同时跑 with-skill 与 baseline（同一轮）
 4. 补 assertions 与 grading
 5. 聚合 benchmark
-6. 用 viewer 给用户审阅
+6. 生成 viewer 让用户审阅——先给用户看，不要自己先评估
 7. 根据反馈修改根目录 `<skill-id>/`
 8. 每轮迭代改完后，执行 `bash skills-manager/scripts/sync_skill_state.sh --skill-id <id> --push`
 9. 继续下一轮，直到满意为止
 
 ## Step 1: Run With Skill And Baseline
 
-对每个测试 prompt 同时启动两个 subagent：
+**关键：所有 pane 必须在同一轮中 split 并启动。** 不要等 with-skill 跑完再启动 baseline——两组并行，同时开始，一起等待完成。
 
-**with-skill run：**
+通过 pi-subagent 为每个 test case 各 split 两个 pane（with-skill / baseline），在同一轮全部 run，然后 wait_agent 等待全部完成。
+
+**with-skill run prompt：**
 
 ```
 Execute this task:
 - Skill path: <path-to-skill>
 - Task: <eval prompt>
 - Input files: <eval files or "none">
-- Save outputs to: <workspace>/iteration-<N>/eval-<ID>/with_skill/outputs/
+- Save outputs to: <workspace>/iteration-<N>/<eval-name>/with_skill/outputs/
 - Outputs to save: <what user cares about>
 ```
 
 **baseline run：**
 
-- 新建 skill：不使用任何 skill
-- 改进已有 skill：使用旧版本 snapshot（保存在 `<workspace>/skill-snapshot/`）
+- 新建 skill：不使用任何 skill，同样 prompt，输出到 `without_skill/outputs/`
+- 改进已有 skill：使用旧版本 snapshot（`cp -r <skill-path> <workspace>/skill-snapshot/`），输出到 `old_skill/outputs/`
 
-同时为每个 test case 创建 `eval_metadata.json`：
+**Baseline 选择原则：**
+新建 skill 始终用 `without_skill` 作为 baseline，跨所有迭代保持不变。改进已有 skill 时，以用户最初带来的版本作为固定 baseline，而不是切换为上一迭代。
+
+**目录命名：** eval 目录用描述性名称，不要用 `eval-0`。根据测试内容命名（如 `import-github-url`、`create-from-trace`），目录名与 `eval_name` 保持一致。
+
+为每个 test case 创建 `eval_metadata.json`：
 
 ```json
 {
@@ -58,8 +67,6 @@ Execute this task:
 }
 ```
 
-如果是在改进已有 skill，先为旧版本保留 snapshot，再拿它作为 baseline。
-
 ## Step 2: Draft Assertions
 
 在 runs 执行时，不要空等，补上断言。
@@ -67,7 +74,7 @@ Execute this task:
 好的断言应该：
 
 1. 客观可验证
-2. 命名清楚（在 benchmark viewer 中可读）
+2. 命名清楚（在 benchmark viewer 中可读，让人一眼理解在验证什么）
 3. 有区分度——如果 with_skill 和 baseline 都一定通过，这条断言没意义
 
 对于主观性强的 skill，跳过硬性断言。
@@ -90,12 +97,12 @@ Execute this task:
 
 **Grade 每个 run：**
 
-读 `agents/grader.md`，启动 grader subagent。输出保存到 `grading.json`，字段必须包含 `text`、`passed`、`evidence`。对于可编程验证的断言，写脚本而不是目测。
+读 `agents/grader.md` 了解评分规则，通过 pi-subagent 启动 grader subagent，或在上下文足够时直接内联评分。输出保存到 `grading.json`，字段必须精确使用 `text`、`passed`、`evidence`（不是 `name`/`met`/`details`），viewer 依赖这些字段名。对于可编程验证的断言，写脚本而不是目测——脚本更快、更可靠，可以跨迭代复用。
 
 **Aggregate：**
 
 ```bash
-python skills-manager/creator/scripts/aggregate_benchmark.py <workspace>/iteration-N --skill-name <name>
+python skills-manager/eval-scripts/aggregate_benchmark.py <workspace>/iteration-N --skill-name <name>
 ```
 
 输出 `benchmark.json` 和 `benchmark.md`，包含 pass_rate、时间、token 用量的均值 ± 标准差和 delta。with_skill 放在 baseline 前面。
@@ -104,10 +111,12 @@ python skills-manager/creator/scripts/aggregate_benchmark.py <workspace>/iterati
 
 读 `agents/analyzer.md`，对聚合结果做模式分析——找出无区分度的断言、高方差 eval、时间/token 权衡。
 
-**Launch viewer：**
+**Launch viewer（先给用户看，不要自己先评估）：**
+
+生成 viewer 并等待用户审阅，不要在用户看到结果之前自己先判断输出好坏——用户的第一手反馈是改进的起点。
 
 ```bash
-nohup python skills-manager/creator/eval-viewer/generate_review.py \
+nohup python skills-manager/eval-viewer/generate_review.py \
   <workspace>/iteration-N \
   --skill-name "my-skill" \
   --benchmark <workspace>/iteration-N/benchmark.json \
@@ -144,9 +153,9 @@ VIEWER_PID=$!
 ### How To Think About Improvements
 
 1. **从反馈中抽象共性**：skill 需要在大量场景下工作，不要过拟合到测试样例。避免过度约束。如果卡住了，换个隐喻或解释角度
-2. **保持 prompt 精炼**：删除没有贡献的内容。读执行记录——如果 skill 让模型浪费时间在无效操作上，删掉导致这些操作的部分
-3. **解释原因**：今天的模型有很好的心智理论。解释为什么比死板的结构更有效
-4. **沉淀重复劳动**：如果所有测试 case 都独立写了类似的辅助脚本，把这个脚本放进 `scripts/` 一次性解决
+2. **保持 prompt 精炼**：删除没有贡献的内容。读执行轨迹，不只是最终输出——如果 skill 让模型浪费时间在无效操作上，删掉导致这些操作的部分
+3. **解释原因**：今天的模型有很好的心智理论。解释为什么比死板的结构更有效。如果发现自己在写 ALWAYS 或 NEVER，这是黄色警告——用解释代替口号
+4. **沉淀重复劳动**：如果所有测试 case 里的 subagent 都独立写了类似的辅助脚本，把这个脚本放进 `scripts/` 一次性解决
 
 ### The Iteration Loop
 
@@ -161,7 +170,7 @@ VIEWER_PID=$!
 
 当需要严格对比两个 skill 版本时，读 `agents/comparator.md` 和 `agents/analyzer.md`。
 
-做法：把两个版本的输出匿名交给独立 agent，不透露哪个是新版哪个是旧版，让它独立判断。然后用 analyzer 分析赢家赢在哪里。
+做法：把两个版本的输出匿名交给独立 agent（通过 pi-subagent），不透露哪个是新版哪个是旧版，让它独立判断。然后用 analyzer 分析赢家赢在哪里。
 
 这是可选的高级功能，大多数场景不需要。
 
