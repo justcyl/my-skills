@@ -11,7 +11,14 @@ description: 通用 pi sub-agent 基础设施。把 pi + herdr 创建 sub-agent 
 - **Agent 目录** — `agents/*.md`：每个文件是一种能力的 YAML frontmatter + system prompt
 - **通用调用器** — `scripts/invoke.sh`：读 agent 文件 + 解析模型，组装并运行 `pi --print`
 
-其他 skill 要 spawn sub-agent，只需引用这里的 `invoke.sh` 和 `agents/` 目录，无需复制 invoke 逻辑。
+## 适用范围
+
+invoke.sh 专为**预定义 system-prompt agent** 设计：它硬编码了 `--no-skills`，适合 figure-qa 等有固定能力的专用 agent。
+
+以下场景不走 invoke.sh，直接调用 `pi --print`：
+
+- **Skill-based run**（需要 `--skill <path>`）：invoke.sh 硬编码了 `--no-skills`，无法加载 skill
+- **外部 agent 文件**（system prompt 在其他 skill 的 `agents/` 目录里）：直接用 `pi --system-prompt <file> --print`，无需把文件复制到 pi-subagent/agents/
 
 ---
 
@@ -59,6 +66,19 @@ description: 通用 pi sub-agent 基础设施。把 pi + herdr 创建 sub-agent 
   "timeout": 120000
 }
 ```
+
+> 可靠性说明：`wait_agent` + `idle` 有时会在 pi 进程真正完成前提前返回。对要求确定完成的场景，用 `watch` 匹配完成信号更可靠：
+> ```json
+> {
+>   "action": "watch",
+>   "pane": "subagent",
+>   "match": "^EXIT:[0-9]",
+>   "regex": true,
+>   "source": "recent-unwrapped",
+>   "timeout": 120000
+> }
+> ```
+> 并在调用命令末尾加 `; echo "EXIT:$?"`。
 
 ### Step 4 — 读取输出
 
@@ -149,7 +169,7 @@ You are a <role>...
 
 ## 在其他 Skill 中引用
 
-如果你的 skill 需要 spawn sub-agent，在 `invoke.sh` 中直接调用：
+**invoke.sh 适用场景**：agent 已在 `agents/` 目录里定义，不需要加载任何 skill：
 
 ```bash
 bash ~/.agents/skills/pi-subagent/scripts/invoke.sh \
@@ -157,7 +177,17 @@ bash ~/.agents/skills/pi-subagent/scripts/invoke.sh \
   --msg "Check the image at: $IMAGE_PATH\nScene: $SCENE\nIntent: $INTENT"
 ```
 
-不需要在你的 skill 里维护 `pi --print` 调用逻辑。
+**直接调用 pi 的适用场景**：skill-based run 或使用外部 agent 文件：
+
+```bash
+# Skill-based run（eval with-skill）
+pi --skill <path> --no-context-files --no-session --print "<prompt>"
+
+# 外部 system prompt 文件（如 grader）
+pi --system-prompt <path/to/agent.md> --no-skills --no-context-files --no-session --print "<prompt>"
+```
+
+模型 alias 需要时，可单独引用 `scripts/models.sh` 中的 `resolve_model` 函数获取实际模型字符串。
 
 ---
 

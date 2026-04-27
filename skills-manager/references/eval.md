@@ -107,7 +107,15 @@ Execute this task:
 
 **Grade 每个 run：**
 
-读 `agents/grader.md` 了解评分规则，通过 pi-subagent 启动 grader subagent，或在上下文足够时直接内联评分。输出保存到 `grading.json`，字段必须精确使用 `text`、`passed`、`evidence`（不是 `name`/`met`/`details`），viewer 依赖这些字段名。对于可编程验证的断言，写脚本而不是目测——脚本更快、更可靠，可以跨迭代复用。
+读 `agents/grader.md` 了解评分规则。直接调用 pi 启动 grader（grader.md 同时充当 system prompt）：
+
+```bash
+pi --system-prompt ~/project/my-skills/skills-manager/agents/grader.md \
+   --no-skills --no-context-files --no-session --print \
+   "<grading task>"
+```
+
+输出保存到 `grading.json`，字段必须精确使用 `text`、`passed`、`evidence`（不是 `name`/`met`/`details`），viewer 依赖这些字段名。对于可编程验证的断言，写脚本而不是目测——脚本更快、更可靠，可以跨迭代复用。
 
 **Aggregate：**
 
@@ -119,7 +127,15 @@ python skills-manager/eval-scripts/aggregate_benchmark.py <workspace>/iteration-
 
 **Analyst pass：**
 
-读 `agents/analyzer.md`，对聚合结果做模式分析——找出无区分度的断言、高方差 eval、时间/token 权衡。
+同样直接调用 pi：
+
+```bash
+pi --system-prompt ~/project/my-skills/skills-manager/agents/analyzer.md \
+   --no-skills --no-context-files --no-session --print \
+   "<benchmark summary>"
+```
+
+对聚合结果做模式分析——找出无区分度的断言、高方差 eval、时间/token 权衡。
 
 **Launch viewer（先给用户看，不要自己先评估）：**
 
@@ -180,7 +196,7 @@ VIEWER_PID=$!
 
 当需要严格对比两个 skill 版本时，读 `agents/comparator.md` 和 `agents/analyzer.md`。
 
-做法：把两个版本的输出匿名交给独立 agent（通过 pi-subagent），不透露哪个是新版哪个是旧版，让它独立判断。然后用 analyzer 分析赢家赢在哪里。
+做法：把两个版本的输出匿名交给独立 agent，不透露哪个是新版哪个是旧版，让它独立判断。然后用 analyzer 分析赢家赢在哪里。两者都通过 `pi --system-prompt` 直接调用（见 Step 4 的模式）。
 
 这是可选的高级功能，大多数场景不需要。
 
