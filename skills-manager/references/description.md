@@ -67,4 +67,7 @@ python skills-manager/creator/scripts/run_loop.py \
 2. 更新根目录 `<skill-id>/SKILL.md` frontmatter
 3. 向用户展示前后对比和分数
 4. 如果需要，再跑一轮 eval 确认结果
-5. 完成后交回 manager finalize
+5. 完成后交回 manager finalize：
+   ```bash
+   bash skills-manager/scripts/sync_skill_state.sh --skill-id <id> --push
+   ```
