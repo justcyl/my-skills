@@ -9,8 +9,7 @@ Run 是行动单元，驱动项目推进。
 ```
 alan/runs/<slug>/
   run.yaml        # Run 定义
-  progress.md     # 执行历史
-  notes           # 人工笔记（可选）
+  progress.md     # 执行历史（含人工 Note 列）
   ...             # 执行过程产生的其他产物（日志、snapshot 等）
 ```
 
@@ -52,21 +51,26 @@ verifier: |
 ```markdown
 # Progress
 
-| Round | Verdict | Summary |
-|-------|---------|---------|
-| 1     | loop    | 做了 X，发现 Y |
-| 2     | end     | 完成，产出 exp card |
+| Round | Verdict | Summary | Note |
+|-------|---------|---------|------|
+| 1     | loop    | 降 lr 到 3e-4，loss 下降 | |
+| 2     | loop    | 加 warmup 200 步 | 用户：试试 cosine decay |
+| 3     | end     | cosine 有效，acc 0.82 | |
 ```
 
-每轮执行结束追加一行。ROUND 由行数派生，崩溃后重启自动接续。
+每轮执行结束追加一行，Note 列由用户在轮间填写。
+ROUND 由数据行数派生，崩溃后重启自动接续。
+
+**Note 列使用方式**：想在下一轮注入 hint，直接编辑当前最后一行的 Note 列。
+执行下一轮时 agent 读取完整 progress 历史（含 Note 列），Note 自然进入上下文。
 
 ## 执行协议
 
 每轮循环：
 
-1. 读取 `context`、`instruction`、`verifier`，注入 progress 历史和 notes
+1. 读取 `context`、`instruction`、`verifier`，注入完整 progress 历史（含 Note 列）
 2. 执行（方式由 agent 自主决定）
-3. 按 `verifier` 判断：`loop` → 追加 progress，进入下一轮；`end` → 追加 progress，写 `state: done`
+3. 按 `verifier` 判断：`loop` → 追加 progress 新行（Note 列留空），进入下一轮；`end` → 追加 progress，写 `state: done`
 
 ## 多轮 Run 的执行建议
 
