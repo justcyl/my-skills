@@ -67,19 +67,6 @@ invoke.sh 专为**预定义 system-prompt agent** 设计：它硬编码了 `--no
 }
 ```
 
-> 可靠性说明：`wait_agent` + `idle` 有时会在 pi 进程真正完成前提前返回。对要求确定完成的场景，用 `watch` 匹配完成信号更可靠：
-> ```json
-> {
->   "action": "watch",
->   "pane": "subagent",
->   "match": "^EXIT:[0-9]",
->   "regex": true,
->   "source": "recent-unwrapped",
->   "timeout": 120000
-> }
-> ```
-> 并在调用命令末尾加 `; echo "EXIT:$?"`。
-
 ### Step 4 — 读取输出
 
 ```json

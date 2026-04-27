@@ -1,5 +1,7 @@
 # Description Flow
 
+> **按需执行**：本流程仅在用户明确要求优化 description 触发效果时才启动。
+
 当任务是"优化 SKILL.md frontmatter 中的 description 触发效果"时读取本文件。
 
 当 skill 主体已经稳定后再做这一步——不要太早优化 description。

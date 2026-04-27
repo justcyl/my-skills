@@ -1,5 +1,7 @@
 # Eval Flow
 
+> **按需执行**：本流程仅在用户明确要求评测时才启动，不是创建 skill 的默认步骤。
+
 当任务是"验证、迭代、benchmark、viewer 审阅或盲评"时读取本文件。
 
 子代理通过 **pi-subagent** skill 调度，参见 `pi-subagent/SKILL.md` 了解 pane_split / invoke / wait_agent 调用方式。
