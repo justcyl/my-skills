@@ -12,7 +12,7 @@
 
 AI 学术论文全周期写作。覆盖获取模板、Overleaf 项目创建、结构化写作、配图生成、
 格式检查、投稿前审查。内置论文配图（figure-gen）与格式检查（format-check）子模块。
-搭配 overleaf、gemini-image-gen、visual-checker、ph-paper-helper 使用。
+搭配 overleaf、image-gen、pi-subagent、ph-paper-helper 使用。
 触发语境："写论文""paper writing""投稿前检查""画个架构图""论文配图""格式检查""desk reject"。
 
 ## Risk Findings

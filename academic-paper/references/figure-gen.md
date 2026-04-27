@@ -4,7 +4,19 @@
 
 > 数据驱动图表（bar chart / line plot / heatmap）不属于本模块，用 matplotlib/seaborn 直接绘制。
 
-底层引擎：**gemini-image-gen** skill 的 `generate_image.py`。视觉审查：**pi-subagent** skill 的 `figure-qa` agent（scene: `academic`）。
+底层引擎：**image-gen** skill 的 `generate_image.py`（支持 gemini-3.1-flash-image-preview / gpt-image-2 / grok-4.2-image）。视觉审查：**pi-subagent** skill 的 `figure-qa` agent（scene: `academic`）。
+
+---
+
+## 模型选择
+
+| 模型 | 适用场景 | 分辨率支持 |
+|------|---------|----------|
+| `gemini-3.1-flash-image-preview` | **默认**，快速草稿，概念图 / pipeline | 自动 (~1K) |
+| `gpt-image-2` | 高质量终稿，layout 精细时首选 | ✅ 1K / 2K |
+| `grok-4.2-image` | 风格多样性探索 | 固定 ~2K |
+
+> 推荐策略：草稿阶段用 `gemini-3.1-flash-image-preview`（速度快，迭代成本低）；通过 figure-qa 后，终稿用 `gpt-image-2 --resolution 2K` 提升精度。
 
 ---
 
@@ -110,7 +122,18 @@ Leave clean blank spaces where labels would go. Text will be added in post-proce
 
 ### Step 3 — 1K 草稿生成
 
-使用 gemini-image-gen，`--resolution 1K` 快速出稿。
+使用 image-gen，`--resolution 1K` 快速出稿，同时开启 gallery 追踪：
+
+```bash
+uv run <image-gen-dir>/scripts/generate_image.py \
+  --prompt "<完整 prompt>" \
+  --filename "figures/<name>-draft.png" \
+  --model gemini-3.1-flash-image-preview \
+  --resolution 1K \
+  --gallery figures-gallery.html
+```
+
+> `--gallery figures-gallery.html` 会在当前工作目录创建/更新 gallery。**每一次生成（草稿、修复轮次、终稿）都带上此参数**，所有候选版本自动积累到 gallery 中，供用户事后对比。
 
 ### Step 4 — figure-qa 审查（最多 3 轮）
 
@@ -130,11 +153,37 @@ Extra:  Figure type: <type>. Required labels: <list>.
 
 **3 轮未通过** → 保存当前最佳版本，告知用户具体不足，建议 draw.io / Figma / TikZ 手动微调。
 
-### Step 5 — 4K 终稿
+### Step 5 — 2K 终稿
 
-草稿确认后，用相同 prompt 加 `--resolution 4K` 生成高分辨率终稿。
+草稿确认后，用相同 prompt 切换 `gpt-image-2 --resolution 2K` 生成高分辨率终稿（同样追加到 gallery）：
 
-### Step 6 — LaTeX Snippet
+```bash
+uv run <image-gen-dir>/scripts/generate_image.py \
+  --prompt "<完整 prompt>" \
+  --filename "figures/<name>-final.png" \
+  --model gpt-image-2 \
+  --resolution 2K \
+  --gallery figures-gallery.html
+```
+
+> 若 gpt-image-2 风格与草稿偏差过大，可继续用 `gemini-3.1-flash-image-preview --input-image <draft>` 迭代。
+
+### Step 6 — 插入 LaTeX + 输出 Gallery
+
+将终稿插入 LaTeX（`figures/<name>-final.png`），**不等用户审批，直接完成插入**。全部图片生成完毕后，向用户汇报：
+
+```
+✅ 所有配图已生成并插入 LaTeX。
+
+📁 备选 gallery：figures-gallery.html
+   共 N 张候选图（包含所有草稿和终稿）。
+   用浏览器打开即可逐图 Approve / Reject，如需替换某张图，
+   将对应候选文件复制到 figures/<name>-final.png 并重新编译即可。
+```
+
+> **Gallery 不阻塞流程**。论文已处于可编译状态，gallery 只是备用审查工具。
+
+### Step 7 — LaTeX Snippet
 
 **双栏图（architecture / pipeline）：**
 

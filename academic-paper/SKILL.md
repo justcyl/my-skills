@@ -3,7 +3,7 @@ name: academic-paper
 description: >
   AI 学术论文全周期写作。覆盖获取模板、Overleaf 项目创建、结构化写作、配图生成、
   格式检查、投稿前审查。内置论文配图（figure-gen）与格式检查（format-check）子模块。
-  搭配 overleaf、gemini-image-gen、pi-subagent、ph-paper-helper 使用。
+  搭配 overleaf、image-gen、pi-subagent、ph-paper-helper 使用。
   触发语境："写论文""paper writing""投稿前检查""画个架构图""论文配图""格式检查""desk reject"。
 ---
 
@@ -16,7 +16,7 @@ AI 学术论文全周期写作 skill。从获取模板到投稿终审。
 | Skill | 用途 | 何时调用 |
 |-------|------|---------|
 | **overleaf** | 创建项目 / git clone-push / 编译 / 下载 PDF / review 评论 | 项目初始化及全程同步 |
-| **gemini-image-gen** | Gemini 图片生成引擎（text-to-image / image-to-image / 多分辨率） | 配图子模块的底层引擎 |
+| **image-gen** | 多模型图片生成引擎（gemini / gpt-image-2 / grok，text-to-image / image-to-image / 多分辨率 / gallery） | 配图子模块的底层引擎 |
 | **pi-subagent** | 视觉 QA 子代理（figure-qa agent，academic / slides / general scene） | 配图审查、格式视觉审查 |
 | **ph-paper-helper** | 论文检索 / 导入 / BibTeX 导出与补全（`ph add --bib` / `ph enrich`） | 文献引用处理 |
 
@@ -96,7 +96,7 @@ bash ~/.agents/skills/academic-paper/scripts/check_hard_rules.sh paper.pdf <conf
 
 详见 [references/figure-gen.md](references/figure-gen.md)。
 
-底层引擎：gemini-image-gen；视觉审查：pi-subagent figure-qa（scene: `academic`）；最多 3 轮 inspect-revise，确认后升 4K 终稿。
+底层引擎：image-gen（默认 gemini-3.1-flash-image-preview，高质量可选 gpt-image-2）；视觉审查：pi-subagent figure-qa（scene: `academic`）；最多 3 轮 inspect-revise，确认后升 4K 终稿。全程自动完成并插入 LaTeX，同时输出 gallery.html 供用户事后对比/换图。
 
 > 数据驱动图表（bar chart / line plot / heatmap）用 matplotlib/seaborn 直接绘制，不走本模块。
 

@@ -8,7 +8,7 @@
 
 ## 适用范围
 
-本流程适用于**函数型 skill**：给定输入，产出可保存的文件或文本产物（HTML、图片、文档、报告、代码等），执行本身没有破坏性副作用。典型例子：academic-blog、gemini-image-gen、officecli、cli-creator。
+本流程适用于**函数型 skill**：给定输入，产出可保存的文件或文本产物（HTML、图片、文档、报告、代码等），执行本身没有破坏性副作用。典型例子：academic-blog、image-gen、officecli、cli-creator。
 
 **不适用以下两类 skill，不要对它们启动本流程：**
 

@@ -1219,23 +1219,23 @@
           "target_path": "/Users/chenyl/.codex/skills/academic-paper",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-27T06:23:49Z"
+          "last_synced_at": "2026-04-27T08:49:02Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/academic-paper",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-27T06:23:49Z"
+          "last_synced_at": "2026-04-27T08:49:02Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/academic-paper",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-27T06:23:49Z"
+          "last_synced_at": "2026-04-27T08:49:02Z"
         }
       },
       "display_name": "academic-paper",
-      "description": "AI 学术论文全周期写作。覆盖获取模板、Overleaf 项目创建、结构化写作、配图生成、\n格式检查、投稿前审查。内置论文配图（figure-gen）与格式检查（format-check）子模块。\n搭配 overleaf、gemini-image-gen、visual-checker、ph-paper-helper 使用。\n触发语境：\"写论文\"\"paper writing\"\"投稿前检查\"\"画个架构图\"\"论文配图\"\"格式检查\"\"desk reject\"。",
+      "description": "AI 学术论文全周期写作。覆盖获取模板、Overleaf 项目创建、结构化写作、配图生成、\n格式检查、投稿前审查。内置论文配图（figure-gen）与格式检查（format-check）子模块。\n搭配 overleaf、image-gen、pi-subagent、ph-paper-helper 使用。\n触发语境：\"写论文\"\"paper writing\"\"投稿前检查\"\"画个架构图\"\"论文配图\"\"格式检查\"\"desk reject\"。",
       "status": "managed",
       "risk_status": "passed",
       "managed_dirty": false,
@@ -1244,8 +1244,8 @@
       "source_path": ".skills/sources/academic-paper.json",
       "skill_path": "academic-paper",
       "upstream_path": ".skills/upstream/academic-paper",
-      "managed_revision": "sha256:3e13938bd3473daf1e19e16149fb78729a1977d5dc4960ae0bd79eb91f501e21",
-      "last_updated_at": "2026-04-21T07:23:53Z"
+      "managed_revision": "sha256:306016f2edfac3e387dd1e709206d3957b5a3b60b80e330ed71db62afa5dc1de",
+      "last_updated_at": "2026-04-27T08:49:01Z"
     },
     "bilibili-cli": {
       "distribution": {
