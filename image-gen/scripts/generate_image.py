@@ -414,6 +414,18 @@ h1{font-size:1.35rem;margin-bottom:18px;color:var(--accent);letter-spacing:.03em
   font-size:.62rem;background:rgba(124,106,247,.14);border:1px solid rgba(124,106,247,.28);
   color:var(--accent);padding:1px 6px;border-radius:8px;white-space:nowrap;flex-shrink:0
 }
+.card-actions{
+  display:flex;gap:5px;padding:6px 8px 8px;border-top:1px solid var(--border)
+}
+.ca-btn{
+  flex:1;padding:5px 0;border-radius:6px;border:1px solid transparent;
+  cursor:pointer;font-size:.75rem;font-weight:600;transition:opacity .12s,background .12s
+}
+.ca-btn:hover{opacity:.8}
+.ca-approve{background:rgba(34,197,94,.1);color:var(--approve);border-color:rgba(34,197,94,.25)}
+.ca-approve.ca-on{background:var(--approve);color:#000;border-color:var(--approve)}
+.ca-reject{background:rgba(239,68,68,.08);color:var(--reject);border-color:rgba(239,68,68,.22)}
+.ca-reject.ca-on{background:var(--reject);color:#fff;border-color:var(--reject)}
 
 /* ── Modal overlay ───────────────────────────── */
 #modal{
@@ -587,6 +599,12 @@ function toggleSt(id, target) {
   if (midx >= 0) renderModal();
 }
 
+/* Card-level toggle — stops click from bubbling to openModal */
+function cardToggle(e, id, target) {
+  e.stopPropagation();
+  toggleSt(id, target);
+}
+
 /* ── short model label ── */
 function shortM(m) {
   return m.replace('gemini-3.1-flash-image-preview','gemini-flash')
@@ -621,6 +639,12 @@ function render() {
       '<div class="card-foot">' +
         '<span class="card-name" title="'+item.filename+'">'+fn+'</span>' +
         '<span class="card-model" title="'+item.model+'">'+shortM(item.model)+'</span>' +
+      '</div>' +
+      '<div class="card-actions">' +
+        '<button class="ca-btn ca-approve'+(s==='approved'?' ca-on':'')
+          +'" onclick="cardToggle(event,\''+item.id+'\',\'approved\')">&#10003; Approve</button>' +
+        '<button class="ca-btn ca-reject' +(s==='rejected'?' ca-on':'')
+          +'" onclick="cardToggle(event,\''+item.id+'\',\'rejected\')">&#10007; Reject</button>' +
       '</div></div>';
   }).join('');
 }
