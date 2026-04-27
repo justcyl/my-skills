@@ -1,20 +1,18 @@
 # Eval Flow
 
-当任务是“验证、迭代、benchmark、viewer 审阅或盲评”时读取本文件。
+当任务是"验证、迭代、benchmark、viewer 审阅或盲评"时读取本文件。
 
 ## Workspace
 
-统一使用：
-
-`~/project/my-skills/.skills/workspaces/<skill-id>/`
+统一使用：`~/project/my-skills/.skills/workspaces/<skill-id>/`
 
 推荐结构：
 
-1. `.skills/workspaces/<skill-id>/evals/evals.json`
-2. `.skills/workspaces/<skill-id>/iteration-1/`
-3. `.skills/workspaces/<skill-id>/iteration-2/`
-4. `.skills/workspaces/<skill-id>/skill-snapshot/`
-5. `.skills/workspaces/<skill-id>/logs/`
+1. `evals/evals.json`
+2. `iteration-1/`
+3. `iteration-2/`
+4. `skill-snapshot/`
+5. `logs/`
 
 ## Default Eval Loop
 
@@ -26,26 +24,148 @@
 5. 聚合 benchmark
 6. 用 viewer 给用户审阅
 7. 根据反馈修改根目录 `<skill-id>/`
-8. 每轮迭代改完后，回到 manager 执行 `bash skills-manager/scripts/sync_skill_state.sh --skill-id <id> --push` 完成提交推送
+8. 每轮迭代改完后，执行 `bash skills-manager/scripts/sync_skill_state.sh --skill-id <id> --push`
 9. 继续下一轮，直到满意为止
 
-## Tools
+## Step 1: Run With Skill And Baseline
 
-从仓库根目录直接调用：
+对每个测试 prompt 同时启动两个 subagent：
+
+**with-skill run：**
+
+```
+Execute this task:
+- Skill path: <path-to-skill>
+- Task: <eval prompt>
+- Input files: <eval files or "none">
+- Save outputs to: <workspace>/iteration-<N>/eval-<ID>/with_skill/outputs/
+- Outputs to save: <what user cares about>
+```
+
+**baseline run：**
+
+- 新建 skill：不使用任何 skill
+- 改进已有 skill：使用旧版本 snapshot（保存在 `<workspace>/skill-snapshot/`）
+
+同时为每个 test case 创建 `eval_metadata.json`：
+
+```json
+{
+  "eval_id": 0,
+  "eval_name": "descriptive-name-here",
+  "prompt": "The user's task prompt",
+  "assertions": []
+}
+```
+
+如果是在改进已有 skill，先为旧版本保留 snapshot，再拿它作为 baseline。
+
+## Step 2: Draft Assertions
+
+在 runs 执行时，不要空等，补上断言。
+
+好的断言应该：
+
+1. 客观可验证
+2. 命名清楚（在 benchmark viewer 中可读）
+3. 有区分度——如果 with_skill 和 baseline 都一定通过，这条断言没意义
+
+对于主观性强的 skill，跳过硬性断言。
+
+更新 `eval_metadata.json` 和 `evals/evals.json` 中的 assertions，然后向用户解释他们将会看到什么。
+
+## Step 3: Capture Timing
+
+每个 subagent 任务完成后，通知中会包含 `total_tokens` 和 `duration_ms`。立即保存到 `timing.json`——这些数据不会被持久化到其他地方，事后无法恢复。
+
+```json
+{
+  "total_tokens": 84852,
+  "duration_ms": 23332,
+  "total_duration_seconds": 23.3
+}
+```
+
+## Step 4: Grade, Aggregate, Launch Viewer
+
+**Grade 每个 run：**
+
+读 `agents/grader.md`，启动 grader subagent。输出保存到 `grading.json`，字段必须包含 `text`、`passed`、`evidence`。对于可编程验证的断言，写脚本而不是目测。
+
+**Aggregate：**
 
 ```bash
 python skills-manager/creator/scripts/aggregate_benchmark.py <workspace>/iteration-N --skill-name <name>
-python skills-manager/creator/eval-viewer/generate_review.py <workspace>/iteration-N --skill-name <name>
 ```
 
-如果需要正式 grading、分析或盲评，按需读取：
+输出 `benchmark.json` 和 `benchmark.md`，包含 pass_rate、时间、token 用量的均值 ± 标准差和 delta。with_skill 放在 baseline 前面。
 
-1. `agents/grader.md`
-2. `agents/analyzer.md`
-3. `agents/comparator.md`
+**Analyst pass：**
+
+读 `agents/analyzer.md`，对聚合结果做模式分析——找出无区分度的断言、高方差 eval、时间/token 权衡。
+
+**Launch viewer：**
+
+```bash
+nohup python skills-manager/creator/eval-viewer/generate_review.py \
+  <workspace>/iteration-N \
+  --skill-name "my-skill" \
+  --benchmark <workspace>/iteration-N/benchmark.json \
+  > /dev/null 2>&1 &
+VIEWER_PID=$!
+```
+
+迭代 2+ 时加 `--previous-workspace <workspace>/iteration-<N-1>`。
+
+无浏览器环境下使用 `--static <output_path>` 生成独立 HTML。
+
+告诉用户："结果已在浏览器中打开。'Outputs' 标签展示每个 test case 的输出供你反馈；'Benchmark' 标签展示定量对比。看完后告诉我。"
+
+## Step 5: Read Feedback
+
+用户完成 viewer 审阅后，读取 `<workspace>/feedback.json`：
+
+```json
+{
+  "reviews": [
+    {"run_id": "eval-0-with_skill", "feedback": "the chart is missing axis labels", "timestamp": "..."},
+    {"run_id": "eval-1-with_skill", "feedback": "", "timestamp": "..."}
+  ],
+  "status": "complete"
+}
+```
+
+空反馈通常表示该 case 可以接受；重点修复用户明确指出的问题。
+
+完成审阅后关闭 viewer：`kill $VIEWER_PID 2>/dev/null`
+
+## Improving The Skill
+
+### How To Think About Improvements
+
+1. **从反馈中抽象共性**：skill 需要在大量场景下工作，不要过拟合到测试样例。避免过度约束。如果卡住了，换个隐喻或解释角度
+2. **保持 prompt 精炼**：删除没有贡献的内容。读执行记录——如果 skill 让模型浪费时间在无效操作上，删掉导致这些操作的部分
+3. **解释原因**：今天的模型有很好的心智理论。解释为什么比死板的结构更有效
+4. **沉淀重复劳动**：如果所有测试 case 都独立写了类似的辅助脚本，把这个脚本放进 `scripts/` 一次性解决
+
+### The Iteration Loop
+
+1. 修改根目录 `<skill-id>/`
+2. 运行下一轮 `iteration-N+1`（所有 test case，包含 baseline）
+3. 用 viewer 审阅（加 `--previous-workspace` 对比上轮）
+4. 读反馈，继续修订
+5. 每轮迭代改完后，执行 `bash skills-manager/scripts/sync_skill_state.sh --skill-id <id> --push`
+6. 继续循环，直到：用户满意、所有反馈为空、或没有实质进展
+
+## Advanced: Blind Comparison
+
+当需要严格对比两个 skill 版本时，读 `agents/comparator.md` 和 `agents/analyzer.md`。
+
+做法：把两个版本的输出匿名交给独立 agent，不透露哪个是新版哪个是旧版，让它独立判断。然后用 analyzer 分析赢家赢在哪里。
+
+这是可选的高级功能，大多数场景不需要。
 
 ## Notes
 
-1. 根目录 `<skill-id>/` 是唯一真源
-2. workspace 只存评测过程与中间结果
-3. 每轮修改结束后，执行 `bash skills-manager/scripts/sync_skill_state.sh --skill-id <id> --push` 提交推送
+1. 根目录 `<skill-id>/` 是唯一真源，workspace 只存评测过程与中间结果
+2. 每轮修改结束后，执行 `bash skills-manager/scripts/sync_skill_state.sh --skill-id <id> --push` 提交推送
