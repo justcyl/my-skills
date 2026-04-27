@@ -168,7 +168,7 @@ verifier: |
   否则 → loop
 ```
 
-可选字段：`model`（指定模型）、`thinking`（思考等级）、`tags`（标签）、`experiment`（实验快照）。
+可选字段：`model`（指定模型，支持 pi-subagent alias 如 `claude-sonnet`、`gemini-pro`，见 [pi-subagent routing](~/.agents/skills/pi-subagent/routing.md)）、`thinking`（思考等级）、`tags`（标签）、`prediction`（实验前预测，用于事后对比 surprise）、`experiment`（实验快照）。
 
 ### 实验 Run
 
@@ -196,7 +196,18 @@ verifier: |
 bash ~/.agents/skills/alan-pipeline/scripts/run.sh verify-debiased-k1
 ```
 
-CLI 每轮创建全新 `pi --print` session（context 不积累），直到 verifier 返回 `end`。
+常用参数：
+
+| 参数 | 说明 |
+|------|------|
+| `--model <alias>` | 覆盖模型（支持 pi-subagent alias）|
+| `--thinking <level>` | 覆盖思考等级 |
+| `--window N` | 每轮注入的 progress 历史行数（默认 5）|
+| `--status` | 仅显示当前状态 |
+| `--note "msg"` | 追加笔记供下一轮读取 |
+| `--dry-run` | 预览 prompt，不执行 |
+
+CLI 每轮创建全新 `pi --print` session（`--no-skills --no-context-files`，context 不积累），直到 verifier 返回 `end`。
 
 ### 查看状态
 

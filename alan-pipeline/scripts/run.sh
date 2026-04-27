@@ -156,6 +156,21 @@ resolve_model_args() {
   local t="$THINKING"
   [[ -z "$m" ]] && m="$(yq_field model)"
   [[ -z "$t" ]] && t="$(yq_field thinking)"
+
+  # If model looks like an alias (no "/"), resolve via pi-subagent's models.sh
+  if [[ -n "$m" && "$m" != */* ]]; then
+    local models_sh="$HOME/.agents/skills/pi-subagent/scripts/models.sh"
+    if [[ -f "$models_sh" ]]; then
+      # shellcheck source=/dev/null
+      source "$models_sh"
+      local resolved_m resolved_t
+      read -r resolved_m resolved_t _ <<< "$(resolve_model "$m")"
+      [[ -n "$resolved_m" ]] && m="$resolved_m"
+      # Only inherit thinking from alias if not explicitly set in YAML/CLI
+      [[ -z "$t" && "$resolved_t" == "on" ]] && t="on"
+    fi
+  fi
+
   [[ -n "$m" ]] && args+=(--model "$m")
   [[ -n "$t" ]] && args+=(--thinking "$t")
   printf '%s\n' "${args[@]}"
@@ -233,6 +248,7 @@ while true; do
   # Run fresh pi session; capture output in log file
   pi --print \
     --no-session \
+    --no-skills \
     --no-context-files \
     "${extra_args[@]}" \
     "$prompt" > "$round_log" 2>&1

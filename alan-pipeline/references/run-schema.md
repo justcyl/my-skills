@@ -31,7 +31,7 @@ verifier: |
 
 | 字段 | 用途 | 示例 |
 |------|------|------|
-| `model` | 每轮 session 使用的模型 | `anthropic/claude-sonnet-4-20250514` |
+| `model` | 每轮 session 使用的模型；支持 pi-subagent alias（如 `claude-sonnet`、`gemini-pro`）或完整模型字符串 | `claude-sonnet` |
 | `thinking` | 思考等级 | `medium` |
 | `tags` | 标签，方便查找 | `[autoresearch, lr]` |
 | `prediction` | 实验前的预期结果，用于事后对比和 surprise 判断 | `"预计 acc 提升 ~1.5%"` |
@@ -54,7 +54,7 @@ verifier: |
 bash ~/.agents/skills/alan-pipeline/scripts/run.sh <slug>
 
 # 指定模型
-bash ~/.agents/skills/alan-pipeline/scripts/run.sh <slug> --model anthropic/claude-sonnet-4-20250514
+bash ~/.agents/skills/alan-pipeline/scripts/run.sh <slug> --model claude-sonnet
 
 # 查看状态
 bash ~/.agents/skills/alan-pipeline/scripts/run.sh <slug> --status
@@ -119,7 +119,7 @@ verifier: |
 ### 循环 Run：Autoresearch
 
 ```yaml
-model: anthropic/claude-sonnet-4-20250514
+model: claude-sonnet
 thinking: medium
 
 context: |
