@@ -69,6 +69,21 @@ def _is_retryable(text: str) -> bool:
     return any(m in text.lower() for m in markers)
 
 
+# Per-model timeout floor (ms).  gpt-image-2 2K can take >2 min.
+_MODEL_TIMEOUT_FLOOR_MS: dict[str, int] = {
+    "gpt-image-2": 300_000,          # 5 min
+    "grok-4.2-image": 180_000,       # 3 min
+    "gemini-3.1-flash-image-preview": 120_000,  # 2 min
+}
+_DEFAULT_TIMEOUT_MS = 300_000  # conservative global default
+
+
+def _effective_timeout_ms(requested_ms: int, model: str) -> int:
+    """Return max(requested, model floor) so callers can't accidentally set too low."""
+    floor = _MODEL_TIMEOUT_FLOOR_MS.get(model, _DEFAULT_TIMEOUT_MS)
+    return max(requested_ms, floor)
+
+
 def _post_json(url: str, payload: dict, timeout_ms: int) -> dict:
     req = urllib.request.Request(
         url=url,
@@ -88,6 +103,13 @@ def _post_json(url: str, payload: dict, timeout_ms: int) -> dict:
     except urllib.error.HTTPError as exc:
         body = exc.read().decode("utf-8", errors="replace")
         status = exc.code
+    except (TimeoutError, OSError) as exc:
+        # TimeoutError is a subclass of OSError, NOT urllib.error.URLError.
+        # Without this explicit branch it propagates uncaught and skips retry.
+        msg = str(exc)
+        if isinstance(exc, TimeoutError) or _is_retryable(msg):
+            raise RetryableError(f"Request timed out after {timeout_ms/1000:.0f}s") from exc
+        raise RuntimeError(f"OS/network error: {msg}") from exc
     except urllib.error.URLError as exc:
         msg = str(exc)
         if _is_retryable(msg):
@@ -335,72 +357,72 @@ _GALLERY_HTML_TEMPLATE = """\
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Image Gallery</title>
 <style>
-  :root {{
+  :root {
     --bg: #0f0f13; --card: #1a1a24; --border: #2e2e42;
     --text: #e0e0f0; --sub: #8080a0; --accent: #7c6af7;
     --approve: #22c55e; --reject: #ef4444; --pending: #f59e0b;
-  }}
-  * {{ box-sizing: border-box; margin: 0; padding: 0; }}
-  body {{ background: var(--bg); color: var(--text); font-family: system-ui, sans-serif; padding: 24px; }}
-  h1 {{ font-size: 1.4rem; margin-bottom: 20px; color: var(--accent); letter-spacing: .03em; }}
-  .toolbar {{ display: flex; gap: 12px; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }}
-  .toolbar select, .toolbar input {{
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: system-ui, sans-serif; padding: 24px; }
+  h1 { font-size: 1.4rem; margin-bottom: 20px; color: var(--accent); letter-spacing: .03em; }
+  .toolbar { display: flex; gap: 12px; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
+  .toolbar select, .toolbar input {
     background: var(--card); border: 1px solid var(--border); color: var(--text);
     padding: 6px 12px; border-radius: 6px; font-size: .875rem;
-  }}
-  .stats {{ margin-left: auto; font-size: .8rem; color: var(--sub); }}
-  .grid {{
+  }
+  .stats { margin-left: auto; font-size: .8rem; color: var(--sub); }
+  .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 16px;
-  }}
-  .card {{
+  }
+  .card {
     background: var(--card); border: 1px solid var(--border); border-radius: 12px;
     overflow: hidden; transition: transform .15s, box-shadow .15s;
     display: flex; flex-direction: column;
-  }}
-  .card:hover {{ transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.4); }}
-  .card.approved {{ border-color: var(--approve); }}
-  .card.rejected {{ border-color: var(--reject); opacity: .55; }}
-  .img-wrap {{
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.4); }
+  .card.approved { border-color: var(--approve); }
+  .card.rejected { border-color: var(--reject); opacity: .55; }
+  .img-wrap {
     position: relative; cursor: zoom-in; background: #111;
     aspect-ratio: 1 / 1; overflow: hidden;
-  }}
-  .img-wrap img {{ width: 100%; height: 100%; object-fit: contain; display: block; }}
-  .status-badge {{
+  }
+  .img-wrap img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  .status-badge {
     position: absolute; top: 8px; right: 8px;
     font-size: .7rem; font-weight: 700; padding: 3px 8px; border-radius: 20px;
     text-transform: uppercase; letter-spacing: .05em;
-  }}
-  .badge-approved {{ background: var(--approve); color: #000; }}
-  .badge-rejected {{ background: var(--reject); color: #fff; }}
-  .badge-pending {{ background: var(--pending); color: #000; }}
-  .info {{ padding: 12px 14px; flex: 1; display: flex; flex-direction: column; gap: 6px; }}
-  .prompt {{ font-size: .85rem; line-height: 1.45; color: var(--text); }}
-  .prompt.clamped {{ display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }}
-  .meta {{ font-size: .75rem; color: var(--sub); display: flex; flex-wrap: wrap; gap: 6px; }}
-  .tag {{
+  }
+  .badge-approved { background: var(--approve); color: #000; }
+  .badge-rejected { background: var(--reject); color: #fff; }
+  .badge-pending { background: var(--pending); color: #000; }
+  .info { padding: 12px 14px; flex: 1; display: flex; flex-direction: column; gap: 6px; }
+  .prompt { font-size: .85rem; line-height: 1.45; color: var(--text); }
+  .prompt.clamped { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .meta { font-size: .75rem; color: var(--sub); display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
     background: rgba(124,106,247,.15); border: 1px solid rgba(124,106,247,.3);
     padding: 2px 7px; border-radius: 10px; font-size: .7rem;
-  }}
-  .actions {{ padding: 10px 14px; display: flex; gap: 8px; border-top: 1px solid var(--border); }}
-  .btn {{
+  }
+  .actions { padding: 10px 14px; display: flex; gap: 8px; border-top: 1px solid var(--border); }
+  .btn {
     flex: 1; padding: 7px 0; border-radius: 7px; border: none; cursor: pointer;
     font-size: .8rem; font-weight: 600; transition: opacity .15s;
-  }}
-  .btn:hover {{ opacity: .85; }}
-  .btn-approve {{ background: var(--approve); color: #000; }}
-  .btn-reject {{ background: #2a1515; color: var(--reject); border: 1px solid var(--reject); }}
-  .btn-expand {{ background: var(--border); color: var(--text); font-size: .72rem; }}
+  }
+  .btn:hover { opacity: .85; }
+  .btn-approve { background: var(--approve); color: #000; }
+  .btn-reject { background: #2a1515; color: var(--reject); border: 1px solid var(--reject); }
+  .btn-expand { background: var(--border); color: var(--text); font-size: .72rem; }
   /* Lightbox */
-  #lb {{ display:none; position:fixed; inset:0; background:rgba(0,0,0,.9);
-    z-index:9999; align-items:center; justify-content:center; }}
-  #lb.open {{ display:flex; }}
-  #lb img {{ max-width:90vw; max-height:90vh; border-radius:8px; }}
-  #lb-close {{
+  #lb { display:none; position:fixed; inset:0; background:rgba(0,0,0,.9);
+    z-index:9999; align-items:center; justify-content:center; }
+  #lb.open { display:flex; }
+  #lb img { max-width:90vw; max-height:90vh; border-radius:8px; }
+  #lb-close {
     position:absolute; top:16px; right:24px; font-size:2rem; cursor:pointer;
     color:#fff; background:none; border:none;
-  }}
+  }
 </style>
 </head>
 <body>
@@ -425,72 +447,72 @@ _GALLERY_HTML_TEMPLATE = """\
 <script>
 const RAW = JSONDATA;
 
-function getStatus(id) {{
+function getStatus(id) {
   return localStorage.getItem('img-status-' + id) || 'pending';
-}}
-function setStatus(id, s) {{
+}
+function setStatus(id, s) {
   localStorage.setItem('img-status-' + id, s);
   render();
-}}
+}
 
-function render() {{
+function render() {
   const filterModel  = document.getElementById('filterModel').value;
   const filterStatus = document.getElementById('filterStatus').value;
   const search       = document.getElementById('search').value.toLowerCase();
   const grid = document.getElementById('grid');
-  const items = RAW.filter(item => {{
+  const items = RAW.filter(item => {
     if (filterModel && item.model !== filterModel) return false;
     const st = getStatus(item.id);
     if (filterStatus && st !== filterStatus) return false;
     if (search && !item.prompt.toLowerCase().includes(search)) return false;
     return true;
-  }});
+  });
   document.getElementById('stats').textContent =
-    `${{items.length}} / ${{RAW.length}} images`;
-  grid.innerHTML = items.map(item => {{
+    `${items.length} / ${RAW.length} images`;
+  grid.innerHTML = items.map(item => {
     const st = getStatus(item.id);
     const badgeCls = st === 'approved' ? 'badge-approved' : st === 'rejected' ? 'badge-rejected' : 'badge-pending';
     const cardCls  = st === 'approved' ? 'approved' : st === 'rejected' ? 'rejected' : '';
     return `
-<div class="card ${{cardCls}}" id="card-${{item.id}}">
-  <div class="img-wrap" onclick="openLb('${{item.src}}')">
-    <img src="${{item.src}}" alt="${{item.filename}}" loading="lazy">
-    <span class="status-badge ${{badgeCls}}">${{st}}</span>
+<div class="card ${cardCls}" id="card-${item.id}">
+  <div class="img-wrap" onclick="openLb('${item.src}')">
+    <img src="${item.src}" alt="${item.filename}" loading="lazy">
+    <span class="status-badge ${badgeCls}">${st}</span>
   </div>
   <div class="info">
-    <div class="prompt clamped" id="p-${{item.id}}">${{item.prompt}}</div>
+    <div class="prompt clamped" id="p-${item.id}">${item.prompt}</div>
     <div class="meta">
-      <span class="tag">${{item.model}}</span>
-      <span class="tag">${{item.resolution}}</span>
-      <span class="tag">${{item.actual_size}}</span>
-      <span title="${{item.timestamp}}">${{item.timestamp.slice(0,16).replace('T',' ')}}</span>
+      <span class="tag">${item.model}</span>
+      <span class="tag">${item.resolution}</span>
+      <span class="tag">${item.actual_size}</span>
+      <span title="${item.timestamp}">${item.timestamp.slice(0,16).replace('T',' ')}</span>
     </div>
-    <div class="meta" style="margin-top:2px;color:#606080;font-size:.7rem">${{item.filename}}</div>
+    <div class="meta" style="margin-top:2px;color:#606080;font-size:.7rem">${item.filename}</div>
   </div>
   <div class="actions">
-    <button class="btn btn-approve" onclick="setStatus('${{item.id}}','approved')">✓ Approve</button>
-    <button class="btn btn-reject"  onclick="setStatus('${{item.id}}','rejected')">✗ Reject</button>
-    <button class="btn btn-expand"  onclick="toggleExpand('${{item.id}}')">···</button>
+    <button class="btn btn-approve" onclick="setStatus('${item.id}','approved')">✓ Approve</button>
+    <button class="btn btn-reject"  onclick="setStatus('${item.id}','rejected')">✗ Reject</button>
+    <button class="btn btn-expand"  onclick="toggleExpand('${item.id}')">···</button>
   </div>
 </div>`;
-  }}).join('');
-}}
+  }).join('');
+}
 
-function toggleExpand(id) {{
+function toggleExpand(id) {
   const el = document.getElementById('p-' + id);
   el.classList.toggle('clamped');
-}}
+}
 
-function openLb(src) {{
+function openLb(src) {
   document.getElementById('lb-img').src = src;
   document.getElementById('lb').classList.add('open');
-}}
-function closeLb() {{
+}
+function closeLb() {
   document.getElementById('lb').classList.remove('open');
-}}
-document.getElementById('lb').addEventListener('click', e => {{
+}
+document.getElementById('lb').addEventListener('click', e => {
   if (e.target === document.getElementById('lb')) closeLb();
-}});
+});
 
 render();
 </script>
@@ -667,7 +689,14 @@ def main():
     )
     parser.add_argument("--max-retries", type=int, default=3)
     parser.add_argument("--retry-backoff-ms", type=int, default=1200)
-    parser.add_argument("--timeout-ms", type=int, default=120000)
+    parser.add_argument(
+        "--timeout-ms", type=int, default=_DEFAULT_TIMEOUT_MS,
+        help=(
+            f"HTTP timeout in ms (default: {_DEFAULT_TIMEOUT_MS}).\n"
+            "Per-model floors are enforced even if this value is lower:\n"
+            + "\n".join(f"  {m}: {v}ms" for m, v in _MODEL_TIMEOUT_FLOOR_MS.items())
+        ),
+    )
     args = parser.parse_args()
 
     # ── Resolve output dir ───────────────────────────────────────────────────
@@ -725,7 +754,7 @@ def main():
         input_image_path=args.input_image,
         max_retries=args.max_retries,
         backoff_ms=args.retry_backoff_ms,
-        timeout_ms=args.timeout_ms,
+        timeout_ms=_effective_timeout_ms(args.timeout_ms, args.model),
     )
 
     if args.model in _IMAGES_GENERATIONS_MODELS:
