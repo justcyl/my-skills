@@ -127,13 +127,13 @@ Leave clean blank spaces where labels would go. Text will be added in post-proce
 ```bash
 uv run <image-gen-dir>/scripts/generate_image.py \
   --prompt "<完整 prompt>" \
-  --filename "figures/<name>-draft.png" \
+  --filename "<name>-draft.png" \
   --model gemini-3.1-flash-image-preview \
   --resolution 1K \
-  --gallery figures-gallery.html
+  --session "<paper-name>"
 ```
 
-> `--gallery figures-gallery.html` 会在当前工作目录创建/更新 gallery。**每一次生成（草稿、修复轮次、终稿）都带上此参数**，所有候选版本自动积累到 gallery 中，供用户事后对比。
+> `--session <paper-name>` 将所有候选图和 gallery 统一放到 `~/.local/share/image-gen/<paper-name>/`，**不污染工作区**。**每一次生成（草稿、修复轮次、终稿）都使用同一个 session**，所有版本自动积累到 gallery 中供事后对比。
 
 ### Step 4 — figure-qa 审查（最多 3 轮）
 
@@ -160,25 +160,32 @@ Extra:  Figure type: <type>. Required labels: <list>.
 ```bash
 uv run <image-gen-dir>/scripts/generate_image.py \
   --prompt "<完整 prompt>" \
-  --filename "figures/<name>-final.png" \
+  --filename "<name>-final.png" \
   --model gpt-image-2 \
   --resolution 2K \
-  --gallery figures-gallery.html
+  --session "<paper-name>"
 ```
 
-> 若 gpt-image-2 风格与草稿偏差过大，可继续用 `gemini-3.1-flash-image-preview --input-image <draft>` 迭代。
+> 若 gpt-image-2 风格与草稿偏差过大，可继续用 `gemini-3.1-flash-image-preview --input-image` 迭代。
 
 ### Step 6 — 插入 LaTeX + 输出 Gallery
 
-将终稿插入 LaTeX（`figures/<name>-final.png`），**不等用户审批，直接完成插入**。全部图片生成完毕后，向用户汇报：
+将确认的终稿复制到 LaTeX 项目：
+
+```bash
+cp ~/.local/share/image-gen/<paper-name>/<name>-final.png figures/<name>.png
+```
+
+然后插入 LaTeX，**不等用户审批，直接完成插入**。全部图片完成后向用户汇报：
 
 ```
 ✅ 所有配图已生成并插入 LaTeX。
 
-📁 备选 gallery：figures-gallery.html
+📁 备选 gallery：~/.local/share/image-gen/<paper-name>/gallery.html
    共 N 张候选图（包含所有草稿和终稿）。
-   用浏览器打开即可逐图 Approve / Reject，如需替换某张图，
-   将对应候选文件复制到 figures/<name>-final.png 并重新编译即可。
+   用浏览器打开即可逐图 Approve / Reject，如需替换某张图：
+   cp ~/.local/share/image-gen/<paper-name>/<候选文件> figures/<name>.png
+   然后重新编译即可。
 ```
 
 > **Gallery 不阻塞流程**。论文已处于可编译状态，gallery 只是备用审查工具。

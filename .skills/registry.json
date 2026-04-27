@@ -1843,19 +1843,19 @@
           "target_path": "/Users/chenyl/.codex/skills/image-gen",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-27T09:12:07Z"
+          "last_synced_at": "2026-04-27T09:12:55Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/image-gen",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-27T09:12:07Z"
+          "last_synced_at": "2026-04-27T09:12:55Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/image-gen",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-27T09:12:07Z"
+          "last_synced_at": "2026-04-27T09:12:55Z"
         }
       },
       "display_name": "image-gen",
@@ -1869,7 +1869,7 @@
       "skill_path": "image-gen",
       "upstream_path": ".skills/upstream/image-gen",
       "managed_revision": "sha256:fab39dee84f4ae4453174f7efc51f6aedc8f2f0ebc74507293837f1bf6e45c5b",
-      "last_updated_at": "2026-04-27T09:12:06Z"
+      "last_updated_at": "2026-04-27T09:12:55Z"
     }
   }
 }
