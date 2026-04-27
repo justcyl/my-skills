@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
-# pi-run: Execute a run definition (alan/runs/<slug>.yaml) in a loop.
+# alan-run: Execute a run definition (alan/runs/<slug>/run.yaml) in a loop.
 #
 # Usage:
-#   pi-run <slug>                         Run (loops until verifier returns "end")
-#   pi-run <slug> --model <model>         Override model
-#   pi-run <slug> --thinking <level>      Override thinking level
-#   pi-run <slug> --dry-run               Print filled prompt, don't execute
-#   pi-run <slug> --status                Show current state and exit
-#   pi-run <slug> --note "message"        Add note for next round, then exit
-#   pi-run <slug> --window N              Progress lines injected per round (default 5)
+#   alan-run <slug>                        Run (loops until verifier returns "end")
+#   alan-run <slug> --model <model>        Override model
+#   alan-run <slug> --thinking <level>     Override thinking level
+#   alan-run <slug> --dry-run              Print filled prompt, don't execute
+#   alan-run <slug> --status               Show current state and exit
+#   alan-run <slug> --note "message"       Add note for next round, then exit
+#   alan-run <slug> --window N             Progress lines injected per round (default 10)
 #
 # Run YAML fields:
 #   state:        pending (default) | done | archived
@@ -24,59 +24,52 @@ THINKING=""
 DRY_RUN=false
 STATUS_ONLY=false
 NOTE_MSG=""
-PROGRESS_WINDOW=5
+PROGRESS_WINDOW=10
 SLUG=""
 
 # Parse args
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    --model)      MODEL="$2";          shift 2 ;;
-    --thinking)   THINKING="$2";       shift 2 ;;
-    --dry-run)    DRY_RUN=true;        shift   ;;
-    --status)     STATUS_ONLY=true;    shift   ;;
-    --note)       NOTE_MSG="$2";       shift 2 ;;
-    --window)     PROGRESS_WINDOW="$2";shift 2 ;;
-    --help|-h)    sed -n '2,15p' "$0" | sed 's/^# \?//'; exit 0 ;;
+    --model)      MODEL="$2";           shift 2 ;;
+    --thinking)   THINKING="$2";        shift 2 ;;
+    --dry-run)    DRY_RUN=true;         shift   ;;
+    --status)     STATUS_ONLY=true;     shift   ;;
+    --note)       NOTE_MSG="$2";        shift 2 ;;
+    --window)     PROGRESS_WINDOW="$2"; shift 2 ;;
+    --help|-h)    sed -n '2,18p' "$0" | sed 's/^# \?//'; exit 0 ;;
     -*)           echo "Unknown flag: $1" >&2; exit 1 ;;
     *)            SLUG="$1"; shift ;;
   esac
 done
 
 if [[ -z "$SLUG" ]]; then
-  echo "Usage: pi-run <slug> [options]" >&2
+  echo "Usage: alan-run <slug> [options]" >&2
   exit 1
 fi
 
-RUN_FILE="${RUNS_DIR}/${SLUG}.yaml"
-PROGRESS_FILE="${RUNS_DIR}/${SLUG}.progress.md"
-NOTES_FILE="${RUNS_DIR}/${SLUG}.notes"
-STATE_FILE="${RUNS_DIR}/${SLUG}.state"
+RUN_DIR="${RUNS_DIR}/${SLUG}"
+RUN_FILE="${RUN_DIR}/run.yaml"
+PROGRESS_FILE="${RUN_DIR}/progress.md"
+NOTES_FILE="${RUN_DIR}/notes"
 
 # ── Helpers ──────────────────────────────────────────────────────────
 
 die() { echo "ERROR: $*" >&2; exit 1; }
 
 ensure_run_exists() {
-  [[ -f "$RUN_FILE" ]] || die "Run file not found: $RUN_FILE"
+  [[ -f "$RUN_FILE" ]] || die "Run not found: $RUN_FILE"
 }
 
 yq_field() {
   yq -r ".$1 // \"\"" "$RUN_FILE"
 }
 
-# State vars (loaded via source)
-ROUND=0; BEST=""; BEST_ROUND=0; STATUS="active"
-
-load_state() {
-  if [[ -f "$STATE_FILE" ]]; then
-    # shellcheck disable=SC1090
-    source "$STATE_FILE"
-  fi
-}
-
-save_state() {
-  printf 'ROUND=%s\nBEST=%s\nBEST_ROUND=%s\nSTATUS=%s\n' \
-    "$ROUND" "$BEST" "$BEST_ROUND" "$STATUS" > "$STATE_FILE"
+# Derive current round from rows already in progress.md
+get_round() {
+  if [[ ! -f "$PROGRESS_FILE" ]]; then echo 0; return; fi
+  local count
+  count=$(grep -c '^| [0-9]' "$PROGRESS_FILE" 2>/dev/null) || count=0
+  echo "$count"
 }
 
 init_progress() {
@@ -167,20 +160,19 @@ resolve_model_args() {
 # --note
 if [[ -n "$NOTE_MSG" ]]; then
   ensure_run_exists
-  mkdir -p "$RUNS_DIR"
   printf -- '- %s\n' "$NOTE_MSG" >> "$NOTES_FILE"
-  echo "Note added."
+  echo "Note added to $RUN_DIR/notes"
   exit 0
 fi
 
 # --status
 if [[ "$STATUS_ONLY" == true ]]; then
   ensure_run_exists
-  load_state
   run_state="$(yq_field state)"
+  round="$(get_round)"
   echo "Run:    $SLUG"
   echo "State:  ${run_state:-pending}"
-  echo "Round:  $ROUND"
+  echo "Round:  $round"
   echo ""
   progress_tail
   echo ""
@@ -193,33 +185,29 @@ fi
 # ── Main loop ─────────────────────────────────────────────────────────
 
 ensure_run_exists
-load_state
+mkdir -p "$RUN_DIR"
 init_progress
 
-# Refuse to run archived runs
+# Check lifecycle state
 run_state="$(yq_field state)"
 if [[ "$run_state" == "archived" ]]; then
   echo "Run '$SLUG' is archived. Set state: pending in $RUN_FILE to reactivate."
   exit 1
 fi
-
-# Refuse to re-run completed runs
 if [[ "$run_state" == "done" ]]; then
   echo "Run '$SLUG' is already done. Set state: pending in $RUN_FILE to re-run."
   exit 0
 fi
 
-STATUS="active"
-save_state
+ROUND=$(get_round)
 
-printf '\n%s\n  pi-run: %s\n%s\n\n' \
+printf '\n%s\n  alan-run: %s\n%s\n\n' \
   "═══════════════════════════════════════════" \
   "$SLUG" \
   "═══════════════════════════════════════════"
 
 while true; do
   ROUND=$((ROUND + 1))
-  save_state
 
   printf '── Round %s ──────────────────────────\n' "$ROUND"
 
@@ -228,18 +216,15 @@ while true; do
   # Dry run
   if [[ "$DRY_RUN" == true ]]; then
     printf '%s\n' "$prompt"
-    ROUND=$((ROUND - 1)); save_state
     exit 0
   fi
 
-  round_log="${RUNS_DIR}/${SLUG}.round-$(printf '%03d' "$ROUND").log"
+  round_log="${RUN_DIR}/round-$(printf '%03d' "$ROUND").log"
   echo "  Running session..."
   echo "  Log -> ${round_log}"
 
-  # Resolve extra model/thinking args
   mapfile -t extra_args < <(resolve_model_args)
 
-  # Run fresh pi session; capture output in log file
   pi --print \
     --no-session \
     --no-skills \
@@ -251,11 +236,9 @@ while true; do
   output=""
   [[ -f "$round_log" ]] && output="$(cat "$round_log")"
 
-  # On hard failure with no output at all, skip round
   if [[ $pi_exit -ne 0 && -z "$output" ]]; then
     echo "  ! Session error (exit $pi_exit), skipping round"
     append_progress "$ROUND" "error" "session failed exit=$pi_exit"
-    save_state
     continue
   fi
 
@@ -270,14 +253,12 @@ while true; do
 
   append_progress "$ROUND" "$verdict" "$summary"
   clear_notes
-  save_state
 
   echo "  Verdict: $verdict"
   echo "  Summary: $summary"
   echo ""
 
   if [[ "$verdict" == "end" ]]; then
-    STATUS="completed"; save_state
     yq -i '.state = "done"' "$RUN_FILE"
     printf '%s\n  Completed after %s rounds.\n%s\n\n' \
       "═══════════════════════════════════════════" \

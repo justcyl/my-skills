@@ -2,14 +2,22 @@
 
 Run 是行动单元，驱动项目推进。三个字段定义一个 run，CLI 负责执行和循环。
 
-## 文件位置
+## 目录结构
+
+每个 run 独占一个文件夹：
 
 ```
-alan/runs/<slug>.yaml          定义（不可变）
-alan/runs/<slug>.progress.md   执行历史（CLI 追加）
-alan/runs/<slug>.notes         用户笔记（agent 写，CLI 消费）
-alan/runs/<slug>.state         机器状态（CLI 管理）
+alan/runs/<slug>/
+  run.yaml          # Run 定义（含生命周期状态）
+  progress.md       # 每轮执行历史（CLI 追加）
+  notes             # 人工笔记（用户写，下轮注入后清空）
+  round-001.log     # 第 1 轮 pi 原始输出（CLI 写，可选保留）
+  round-002.log
+  snapshot/         # 实验快照（含 experiment: 字段时建立，见 experiment-run.md）
+  ...               # run 执行过程中产生的其他产物
 ```
+
+`run.yaml` 和 `progress.md` 是核心文件。其余文件由 run 执行过程按需产生。
 
 ## 字段定义
 
@@ -28,21 +36,21 @@ verifier: |
   输出 verdict: end（完成）或 loop（继续下一轮）。
 ```
 
-`state` 是生命周期字段：
+`state` 生命周期：
 
-| 值 | 含义 | 谁设置 |
-|----|------|--------|
+| 值 | 含义 | 谁写 |
+|----|------|------|
 | `pending` | 待执行或执行中（默认，可省略）| 用户创建时 |
 | `done` | verifier 返回 end，执行完毕 | CLI 自动写入 |
 | `archived` | 已退役，不再执行 | 用户手动设置 |
 
 CLI 行为：`archived` → 拒绝执行；`done` → 提示已完成；`pending` → 正常执行，结束时自动改为 `done`。
 
-其他必填字段：`context`、`instruction`、`verifier`。可选字段：
+可选字段：
 
 | 字段 | 用途 | 示例 |
 |------|------|------|
-| `model` | 每轮 session 使用的模型（完整模型字符串）| `anthropic/claude-opus-4` |
+| `model` | 每轮 session 使用的模型（完整字符串）| `anthropic/claude-opus-4` |
 | `thinking` | 思考等级 | `medium` |
 | `tags` | 标签，方便查找 | `[autoresearch, lr]` |
 | `prediction` | 实验前的预期结果，用于事后对比和 surprise 判断 | `"预计 acc 提升 ~1.5%"` |
@@ -80,11 +88,11 @@ bash ~/.agents/skills/alan-pipeline/scripts/run.sh <slug> --dry-run
 每轮执行流程：
 
 ```
-CLI 读取 yaml → 填模板（context + instruction + progress + notes + verifier）
-  → pi --print（全新 session）
+CLI 读取 run.yaml → 填模板（context + instruction + progress tail + notes + verifier）
+  → pi --print（全新 session，--no-skills --no-context-files）
   → 解析 verdict
   → 追加 progress.md
-  → verdict == end → 结束
+  → verdict == end → 写 state: done → 结束
   → verdict == loop → 下一轮
 ```
 
@@ -101,11 +109,22 @@ summary: <一句话描述本轮做了什么>
 
 CLI 解析此块决定循环或结束。
 
+## 崩溃恢复
+
+所有状态在文件中，ROUND 由 progress.md 行数派生。重新执行同一命令即从断点继续：
+
+```bash
+bash ~/.agents/skills/alan-pipeline/scripts/run.sh <slug>
+# → 读 progress.md 行数得到已完成轮次，从下一轮继续
+```
+
 ## 示例
 
 ### 一次性 Run：跑实验
 
 ```yaml
+state: pending
+
 context: |
   基础模型：Llama-3-8B（见 cards/method/llama3-config）
   数据集：SynthWiki-32k
@@ -163,6 +182,8 @@ verifier: |
 ### 循环 Run：论文写作迭代
 
 ```yaml
+state: pending
+
 context: |
   论文草稿在 drafts/paper.tex
   目标：ACL 2026 投稿
@@ -182,31 +203,21 @@ verifier: |
 
 ## 监控
 
-在 pi session 中，通过 herdr 启动监控子代理：
-
-```
-1. herdr pane_split direction=down newPane=run-monitor
-2. herdr run pane=run-monitor command="bash ~/.agents/skills/alan-pipeline/scripts/run.sh <slug> --status"
-```
-
-或者直接读取状态文件：
+查看状态：
 
 ```bash
-read alan/runs/<slug>.state
-read alan/runs/<slug>.progress.md
+bash ~/.agents/skills/alan-pipeline/scripts/run.sh <slug> --status
+```
+
+或直接读取文件：
+
+```bash
+cat alan/runs/<slug>/run.yaml      # 查看 state 和定义
+cat alan/runs/<slug>/progress.md   # 查看执行历史
 ```
 
 注入笔记：
 
 ```bash
-bash -c 'echo "- 试试 warmup 200 步" >> alan/runs/<slug>.notes'
-```
-
-## 崩溃恢复
-
-所有状态在文件中。重新执行同一命令即从断点继续：
-
-```bash
-bash ~/.agents/skills/alan-pipeline/scripts/run.sh <slug>
-# → 读 state 文件，从 round N+1 继续
+bash ~/.agents/skills/alan-pipeline/scripts/run.sh <slug> --note "试试 warmup 200 步"
 ```
