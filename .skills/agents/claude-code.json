@@ -78,13 +78,6 @@
       "sync_status": "synced",
       "last_synced_at": "2026-04-27T06:23:49Z"
     },
-    "gemini-image-gen": {
-      "source_path": "gemini-image-gen",
-      "target_path": "/Users/chenyl/.claude/skills/gemini-image-gen",
-      "mode": "symlink",
-      "sync_status": "synced",
-      "last_synced_at": "2026-04-27T06:23:49Z"
-    },
     "research-essay-page": {
       "source_path": "research-essay-page",
       "target_path": "/Users/chenyl/.claude/skills/research-essay-page",

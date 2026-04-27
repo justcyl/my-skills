@@ -1,7 +1,7 @@
 {
   "skill_id": "gemini-image-gen",
   "display_name": "gemini-image-gen",
-  "skill_path": "gemini-image-gen",
+  "skill_path": ".skills/archived-skills/gemini-image-gen",
   "source_type": "local-created",
   "source": "",
   "source_url": "",
@@ -13,5 +13,7 @@
   "last_imported_at": "2026-04-20T13:17:10Z",
   "upstream_revision": "",
   "managed_revision": "sha256:a8912dea9b1f7e1c1b0a19b8fa3c6b57d2a195ea11faa7a992964c84ae3aa4f9",
-  "managed_dirty": false
+  "managed_dirty": false,
+  "archived": true,
+  "archived_at": "2026-04-27T08:43:25Z"
 }

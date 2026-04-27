@@ -905,38 +905,19 @@
       "last_updated_at": "2026-04-12T14:48:11Z"
     },
     "gemini-image-gen": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/gemini-image-gen",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-27T06:23:49Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/gemini-image-gen",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-27T06:23:49Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/gemini-image-gen",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-27T06:23:49Z"
-        }
-      },
+      "distribution": {},
       "display_name": "gemini-image-gen",
       "description": "Generate/edit images with Gemini image models (default: gemini-3.1-flash-image-preview).\nUse for any image create/modify request. Supports text-to-image + image-to-image editing;\n1K/2K/4K resolution; base-url gateways and provider fallback (gemini-native/openai-chat-compat).\nUse --model to select a different model.",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": false,
       "report_path": ".skills/reports/gemini-image-gen.md",
       "source_path": ".skills/sources/gemini-image-gen.json",
-      "skill_path": "gemini-image-gen",
+      "skill_path": ".skills/archived-skills/gemini-image-gen",
       "upstream_path": ".skills/upstream/gemini-image-gen",
       "managed_revision": "sha256:a8912dea9b1f7e1c1b0a19b8fa3c6b57d2a195ea11faa7a992964c84ae3aa4f9",
-      "last_updated_at": "2026-04-20T13:17:10Z"
+      "last_updated_at": "2026-04-27T08:43:25Z"
     },
     "paper-figure-gen": {
       "distribution": {},
