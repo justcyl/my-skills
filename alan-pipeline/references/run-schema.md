@@ -14,6 +14,7 @@ alan/runs/<slug>.state         机器状态（CLI 管理）
 ## 字段定义
 
 ```yaml
+state: pending             # pending（默认）| done | archived
 context: |
   背景知识。引用 card 路径、实验条件、约束。
   提供 session 理解任务所需的一切信息。
@@ -27,11 +28,21 @@ verifier: |
   输出 verdict: end（完成）或 loop（继续下一轮）。
 ```
 
-仅三个必填字段。可选字段：
+`state` 是生命周期字段：
+
+| 值 | 含义 | 谁设置 |
+|----|------|--------|
+| `pending` | 待执行或执行中（默认，可省略）| 用户创建时 |
+| `done` | verifier 返回 end，执行完毕 | CLI 自动写入 |
+| `archived` | 已退役，不再执行 | 用户手动设置 |
+
+CLI 行为：`archived` → 拒绝执行；`done` → 提示已完成；`pending` → 正常执行，结束时自动改为 `done`。
+
+其他必填字段：`context`、`instruction`、`verifier`。可选字段：
 
 | 字段 | 用途 | 示例 |
 |------|------|------|
-| `model` | 每轮 session 使用的模型；支持 pi-subagent alias（如 `claude-sonnet`、`gemini-pro`）或完整模型字符串 | `claude-sonnet` |
+| `model` | 每轮 session 使用的模型（完整模型字符串）| `anthropic/claude-opus-4` |
 | `thinking` | 思考等级 | `medium` |
 | `tags` | 标签，方便查找 | `[autoresearch, lr]` |
 | `prediction` | 实验前的预期结果，用于事后对比和 surprise 判断 | `"预计 acc 提升 ~1.5%"` |
@@ -54,7 +65,7 @@ verifier: |
 bash ~/.agents/skills/alan-pipeline/scripts/run.sh <slug>
 
 # 指定模型
-bash ~/.agents/skills/alan-pipeline/scripts/run.sh <slug> --model claude-sonnet
+bash ~/.agents/skills/alan-pipeline/scripts/run.sh <slug> --model anthropic/claude-opus-4
 
 # 查看状态
 bash ~/.agents/skills/alan-pipeline/scripts/run.sh <slug> --status
@@ -119,7 +130,8 @@ verifier: |
 ### 循环 Run：Autoresearch
 
 ```yaml
-model: claude-sonnet
+state: pending
+model: anthropic/claude-opus-4
 thinking: medium
 
 context: |

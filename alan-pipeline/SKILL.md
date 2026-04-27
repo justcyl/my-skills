@@ -137,7 +137,8 @@ grep -rn "method/debiased-sorting#2" alan/cards/     # who references this secti
 Run 是纯 YAML 文件，三个字段定义一切。通过 `write` 创建，通过 CLI 执行。
 
 ```yaml
-# alan/runs/<slug>.yaml — 三个核心字段
+# alan/runs/<slug>.yaml
+state:        pending          # pending | done | archived（CLI 自动写 done；archived 由用户手动标记）
 context:      背景知识（card 引用、实验条件、约束）
 instruction:  做什么（高层意图 + 具体步骤）
 verifier:     怎么判断（评估结果，输出 loop 或 end）
@@ -152,6 +153,7 @@ write alan/runs/verify-debiased-k1.yaml
 ```
 
 ```yaml
+state: pending
 context: |
   基础模型：Llama-3-8B（见 cards/method/llama3-config）
   数据集：SynthWiki-32k
@@ -168,7 +170,7 @@ verifier: |
   否则 → loop
 ```
 
-可选字段：`model`（指定模型，支持 pi-subagent alias 如 `claude-sonnet`、`gemini-pro`，见 [pi-subagent routing](~/.agents/skills/pi-subagent/routing.md)）、`thinking`（思考等级）、`tags`（标签）、`prediction`（实验前预测，用于事后对比 surprise）、`experiment`（实验快照）。
+可选字段：`model`（完整模型字符串）、`thinking`（思考等级）、`tags`（标签）、`prediction`（实验前预测，用于事后对比 surprise）、`experiment`（实验快照）。
 
 ### 实验 Run
 
@@ -200,7 +202,7 @@ bash ~/.agents/skills/alan-pipeline/scripts/run.sh verify-debiased-k1
 
 | 参数 | 说明 |
 |------|------|
-| `--model <alias>` | 覆盖模型（支持 pi-subagent alias）|
+| `--model <model>` | 覆盖模型（完整模型字符串）|
 | `--thinking <level>` | 覆盖思考等级 |
 | `--window N` | 每轮注入的 progress 历史行数（默认 5）|
 | `--status` | 仅显示当前状态 |
@@ -224,13 +226,15 @@ bash -c 'echo "- 试试 warmup 200 步" >> alan/runs/<slug>.notes'
 
 下一轮 session 会自动读到。
 
-### Run 状态
+### Run 生命周期状态
 
-| 状态 | 含义 |
-|------|------|
-| `active` | CLI 正在执行 |
-| `completed` | verifier 返回 end |
-| `stopped` | 用户终止 |
+`state` 字段存在于 run YAML 本身：
+
+| 状态 | 含义 | 谁设置 |
+|------|------|---------|
+| `pending` | 待执行或执行中（默认）| 用户创建时 |
+| `done` | verifier 返回 end | CLI 自动写入 |
+| `archived` | 已退役，不再执行 | 用户手动设置 |
 
 ### 崩溃恢复
 

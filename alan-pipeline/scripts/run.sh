@@ -11,10 +11,11 @@
 #   pi-run <slug> --window N              Progress lines injected per round (default 5)
 #
 # Run YAML fields:
+#   state:        pending (default) | done | archived
 #   context:      Background knowledge injected into every session
 #   instruction:  What to do each round
 #   verifier:     Evaluation criteria; session must output "verdict: loop|end"
-#   model:        (optional) Model override
+#   model:        (optional) Full model string, e.g. anthropic/claude-opus-4
 #   thinking:     (optional) Thinking level
 
 RUNS_DIR="alan/runs"
@@ -156,21 +157,6 @@ resolve_model_args() {
   local t="$THINKING"
   [[ -z "$m" ]] && m="$(yq_field model)"
   [[ -z "$t" ]] && t="$(yq_field thinking)"
-
-  # If model looks like an alias (no "/"), resolve via pi-subagent's models.sh
-  if [[ -n "$m" && "$m" != */* ]]; then
-    local models_sh="$HOME/.agents/skills/pi-subagent/scripts/models.sh"
-    if [[ -f "$models_sh" ]]; then
-      # shellcheck source=/dev/null
-      source "$models_sh"
-      local resolved_m resolved_t
-      read -r resolved_m resolved_t _ <<< "$(resolve_model "$m")"
-      [[ -n "$resolved_m" ]] && m="$resolved_m"
-      # Only inherit thinking from alias if not explicitly set in YAML/CLI
-      [[ -z "$t" && "$resolved_t" == "on" ]] && t="on"
-    fi
-  fi
-
   [[ -n "$m" ]] && args+=(--model "$m")
   [[ -n "$t" ]] && args+=(--thinking "$t")
   printf '%s\n' "${args[@]}"
@@ -191,10 +177,10 @@ fi
 if [[ "$STATUS_ONLY" == true ]]; then
   ensure_run_exists
   load_state
+  run_state="$(yq_field state)"
   echo "Run:    $SLUG"
-  echo "Status: $STATUS"
+  echo "State:  ${run_state:-pending}"
   echo "Round:  $ROUND"
-  [[ -n "$BEST" ]] && echo "Best:   $BEST (round $BEST_ROUND)"
   echo ""
   progress_tail
   echo ""
@@ -210,8 +196,16 @@ ensure_run_exists
 load_state
 init_progress
 
-if [[ "$STATUS" == "completed" || "$STATUS" == "stopped" ]]; then
-  echo "Run '$SLUG' already $STATUS. Remove $STATE_FILE to re-run."
+# Refuse to run archived runs
+run_state="$(yq_field state)"
+if [[ "$run_state" == "archived" ]]; then
+  echo "Run '$SLUG' is archived. Set state: pending in $RUN_FILE to reactivate."
+  exit 1
+fi
+
+# Refuse to re-run completed runs
+if [[ "$run_state" == "done" ]]; then
+  echo "Run '$SLUG' is already done. Set state: pending in $RUN_FILE to re-run."
   exit 0
 fi
 
@@ -284,6 +278,7 @@ while true; do
 
   if [[ "$verdict" == "end" ]]; then
     STATUS="completed"; save_state
+    yq -i '.state = "done"' "$RUN_FILE"
     printf '%s\n  Completed after %s rounds.\n%s\n\n' \
       "═══════════════════════════════════════════" \
       "$ROUND" \
