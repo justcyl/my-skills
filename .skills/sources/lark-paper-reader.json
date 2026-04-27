@@ -1,0 +1,17 @@
+{
+  "skill_id": "lark-paper-reader",
+  "display_name": "lark-paper-reader",
+  "skill_path": "lark-paper-reader",
+  "source_type": "local-created",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/lark-paper-reader",
+  "last_imported_at": "2026-04-27T07:28:18Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:fc272ecfcdaca9b7e2febdbd4d7a9ab138a3b29d17a7ce33957f26bc56c68f9c",
+  "managed_dirty": false
+}
