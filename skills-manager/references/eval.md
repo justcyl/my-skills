@@ -4,6 +4,16 @@
 
 子代理通过 **pi-subagent** skill 调度，参见 `pi-subagent/SKILL.md` 了解 pane_split / invoke / wait_agent 调用方式。
 
+## 适用范围
+
+本流程适用于**函数型 skill**：给定输入，产出可保存的文件或文本产物（HTML、图片、文档、报告、代码等），执行本身没有破坏性副作用。典型例子：academic-blog、gemini-image-gen、officecli、cli-creator。
+
+**不适用以下两类 skill，不要对它们启动本流程：**
+
+1. **过程型 / 编排型 skill**：执行即副作用，成功标志是操作序列而非产物文件。例如 skills-manager（修改仓库状态）、lark（发消息/写文档）、overleaf（推送到远端）、pi-subagent（管理 pane）、alan-pipeline（写 card/run）。强行跑 eval 会触发真实操作，cleanup 代价高，且 with-skill vs baseline 的产出文本区分度极低。
+
+2. **依赖外部写操作的 API wrapper**：调用会产生不可回滚的写操作（发帖、发邮件、创建记录）。只读 API（web-reader、bilibili-cli、axonhub 查询）可以接受，但断言应针对结构而非内容（“返回了 JSON 且包含 title 字段”而非“标题是 X”）。
+
 ## Workspace
 
 统一使用：`~/project/my-skills/.skills/workspaces/<skill-id>/`
