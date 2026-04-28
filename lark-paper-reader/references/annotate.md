@@ -14,34 +14,34 @@
 | 每个抽象方法步骤/阶段描述 | 🌉 callout（具象化玩具示例） | 该步骤已有伪代码且流程清晰 |
 | 每个专业术语首次出现 | comment（术语定义，1-2句） | 上文刚展开过同一术语的缩写 |
 | 每段 >3 句的纯文字段落 | comment（段落摘要） | 段落自带小标题或已有列表分层 |
-| 每个 §实验 / §消融 / §分析 节的末尾 | ❓ callout（读者常见疑问） | 整节仅1张表无结论文字 |
+| 语义密度高、读者可能困惑、或作者有言外之意的任意位置 | ❓ callout（读者常见疑问） | 无 |
 | 每个被正文引用 ≥2 次或作为对比 baseline 的文献 | 📖 callout（引用背景） | 引用仅在 related work 泛列中出现 |
 | 每个算法框 / 伪代码块 | 🔧 callout（含代码解读）| — |
 
 **执行方式（Step 5 必须遵守）**：
 
 ```bash
-# Step 5 开始前，先 fetch 文档 XML，建立待处理列表
+# Step 5 开始前，先将 fetch 输出存文件，再处理（避免 pipe+heredoc stdin 冲突）
 lark-cli docs +fetch --api-version v2 --doc "$DOC" --detail full --doc-format xml --as user \
-  | python3 - << 'EOF'
-import json, sys, re
-from collections import defaultdict
+  > /tmp/lark_annotate_scan.json
 
-content = json.loads(sys.stdin.read())['data']['document']['content']
+python3 << 'EOF'
+import json, re
 
-# 提取所有公式块（MathML / LaTeX 环境）
-formulas = re.findall(r'id="(doxcn[^"]+)"[^>]*>[^<]*\\\[.*?\\\]', content, re.DOTALL)
-# 提取所有长段落（粗略：>80字的 <p> 内容）
-long_paras = [(m.group(1), m.group(2)[:40]) for m in re.finditer(
-    r'<p[^>]*id="(doxcn[^"]+)"[^>]*>(.{80,}?)</p>', content)]
+with open('/tmp/lark_annotate_scan.json') as f:
+    content = json.load(f)['data']['document']['content']
+
 # 提取 h2/h3 节边界
 sections = re.findall(r'<h[23][^>]*id="(doxcn[^"]+)"[^>]*>([^<]+)<', content)
-
-print(f"公式块: {len(formulas)}")
-print(f"长段落: {len(long_paras)}")
 print(f"章节: {len(sections)}")
 for s in sections:
     print(f"  节 [{s[0]}]: {s[1]}")
+
+# 提取长段落（>80字）
+long_paras = re.findall(r'<p[^>]*id="(doxcn[^"]+)"[^>]*>(.{80,}?)</p>', content, re.DOTALL)
+print(f"\n长段落: {len(long_paras)} 个（需逐一加 comment）")
+for bid, text in long_paras[:5]:
+    print(f"  [{bid}] {text[:50].strip()}...")
 EOF
 ```
 
@@ -162,16 +162,23 @@ EOF
 
 ### ❓ 读者常见疑问
 
-**触发时机**：每个 §实验 / §消融 / §分析 节的末尾（见上表）
+**触发时机**：不限位置，以下任意情况都应插入：
 
-内容来自：读这篇论文时，读者最可能在这里卡住的 2-3 个问题。
-聚焦实验设计的合理性、超参选择的动机、与其他方法对比的公平性。
+| 情形 | 典型例子 |
+|------|---------|
+| 方法设计决策未给出理由 | "我们选择 K=10"——为什么是 10？ |
+| 语义密度高、一句话包含多个跳跃 | "通过引入正则项，我们同时实现了…" |
+| 作者有言外之意（隐含假设/限制） | 实验只在某一 benchmark 上验证时 |
+| 读者看到结论可能产生"为什么"的自然反应 | 某方法在某任务上反而更差 |
+| 方法对比不够公平或实验设置有争议 | 对比方法未使用相同的数据增强 |
+
+内容来自：站在第一次读这篇论文的人的角度，提出 2-3 个最可能卡住的问题。
 
 ```xml
 <callout emoji="❓" background-color="light-purple" border-color="purple">
-<h3>读者常见疑问：<节名></h3>
+<h3>读者疑问：<描述疑问的短语></h3>
 <p><b>Q：问题1</b></p>
-<p>A：回答...</p>
+<p>A：回答（基于论文内容或合理推断）...</p>
 <p><b>Q：问题2</b></p>
 <p>A：回答...</p>
 </callout>

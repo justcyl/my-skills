@@ -111,7 +111,7 @@ ls "$PAPER_DIR/images/"   # 若为空则说明第一次 fetch 有问题，--forc
 翻译原则：
 - 核心术语首次出现保留英文（如"Evolving Parameter Isolation (EPI)"翻译为"演化参数隔离（EPI）"）
 - 不压缩信息，逐节完整翻译
-- 附录**按需前置**（见 Step 5 § 5d）：若附录某节（实验超参、案例、算法伪代码等）能帮助读者及时理解正文，Step 5 阶段以 callout 形式提前插入正文对应位置，该附录节在原位可保留摘要或省略；不涉及正文理解的附录节仍完整翻译在末尾
+- 附录完整翻译在末尾，不做前置处理
 
 存为临时文件，**分多次写入**避免 write 工具超限：
 ```bash
@@ -127,7 +127,31 @@ echo "当前行数：$(wc -l < /tmp/<arxiv_id>_zh.md)"
 
 ---
 
-## Step 3：创建飞书文档
+## Step 2.5：启动段落摘要子代理（异步）
+
+翻译写入完毕后，**立即**在后台 pane 启动子代理处理长段落摘要。子代理与主流程的 Step 3、4 并行运行，Step 5 前同步结果。
+
+### 异步启动
+
+用 herdr 工具依次执行：
+
+```json
+{ "action": "pane_split", "direction": "down", "newPane": "para-summarizer" }
+```
+
+```json
+{
+  "action": "run",
+  "pane": "para-summarizer",
+  "command": "pi --print --model axonhub/gpt-5.4 --thinking off --tools read,bash --system-prompt ~/.agents/skills/lark-paper-reader/agents/paragraph-summarizer.prompt.md --no-skills --no-context-files --no-extensions --no-session 'ZH_MD=/tmp/<arxiv_id>_zh.md OUTPUT=/tmp/<arxiv_id>_summaries.json'"
+}
+```
+
+**不等待**，立即继续执行 Step 3。
+
+> 子代理定义详见 [`agents/paragraph-summarizer.md`](agents/paragraph-summarizer.md)。
+
+---
 
 统一存放在固定文件夹（`PAPER_FOLDER_TOKEN`）：
 
@@ -290,8 +314,54 @@ lark-cli docs +update --api-version v2 --doc "$DOC" \
 
 ### 5c. Comment（边注，不打断阅读）
 
+**Step 5 开始前：等待子代理完成**（Step 2.5 启动的 `para-summarizer` pane）：
+
+```json
+{ "action": "wait_agent", "pane": "para-summarizer", "statuses": ["done", "idle"], "timeout": 300000 }
+```
+
+检查子代理输出：
+
+```bash
+if [ -f /tmp/<arxiv_id>_summaries.json ]; then
+  python3 -c "import json; d=json.load(open('/tmp/<arxiv_id>_summaries.json')); print(f'子代理完成，共 {len(d)} 条段落摘要')"
+else
+  echo '子代理未产出结果，将手动处理段落摘要'
+fi
+```
+
+#### 段落摘要（优先使用子代理预计算结果）
+
 ```python
-# content 必须是 JSON
+import subprocess, json
+
+DOC = "<document_id>"
+summaries_path = "/tmp/<arxiv_id>_summaries.json"
+
+with open(summaries_path) as f:
+    summaries = json.load(f)
+
+for item in summaries:
+    content_json = json.dumps(
+        [{"type": "text", "text": item["comment"]}],
+        ensure_ascii=False
+    )
+    result = subprocess.run(
+        ["lark-cli", "drive", "+add-comment",
+         "--doc", DOC, "--type", "docx",
+         "--selection-with-ellipsis", item["para_start"],
+         "--content", content_json, "--as", "user"],
+        capture_output=True, text=True
+    )
+    status = "✓" if result.returncode == 0 else "✗"
+    print(f"{status} {item['para_start'][:30]}")
+```
+
+如果子代理未产出结果（JSON 不存在或为空），回退到手动逐段添加。
+
+#### 术语注释（手动处理，子代理不负责）
+
+```python
 content_json = json.dumps([{"type": "text", "text": "注释内容"}], ensure_ascii=False)
 subprocess.run(["lark-cli", "drive", "+add-comment",
     "--doc", DOC, "--type", "docx",
@@ -299,33 +369,7 @@ subprocess.run(["lark-cli", "drive", "+add-comment",
     "--content", content_json, "--as", "user"])
 ```
 
-触发时机：
-- **术语出现**：每个专业术语第一次出现时 → 简短定义
-- **长段**（>3句，无子标题）：段首/段尾 → `【段落摘要】...`
-
-### 5d. 附录内容前置
-
-阅读附录时，判断每个附录节是否**有助于读者在阅读正文时就能更好理解内容**：
-
-| 附录类型 | 建议 | 实例 |
-|----------|------|------|
-| 算法伪代码 / 训练细节 | 前置到方法节末尾 | Prompt 模板、超参表：方法节末 |
-| 案例分析 / 定性结果 | 前置到实验节末尾 | 验证案例：实验分析节末 |
-| 推导细节 / 证明过程 | 前置到对应公式后 | 公式完整推导：公式所在段辺 |
-| 补充实验 / 边界情况 | 前置到实验节末尾（如果正文已深入探讨） | 参数敏感性分析：对应结果表边 |
-| 相关工作详述 / 统计表 | **保留在附录**，正文不需要 | 达到类似结论的相关工作列表 |
-
-**前置格式**：使用淡紫色 callout，标注来源于哪个附录节：
-
-```xml
-<callout emoji="📌" background-color="light-purple" border-color="purple">
-  <h3>【附录 B.1 前置】算法伪代码：XXX 训练全流程</h3>
-  <p>此内容原位于附录 B.1，提前展示以助理解上方公式。</p>
-  <!-- 附录原内容 -->
-</callout>
-```
-
-附录节原位可添加简短说明：「本节内容已前置至正文§X.X 节末」并省略详细内容；与正文理解无关的附录节仍按原样完整翻译。
+触发时机：每个专业术语第一次出现时 → 简短定义（1-2 句）
 
 ---
 
