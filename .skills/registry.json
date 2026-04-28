@@ -522,19 +522,19 @@
           "target_path": "/Users/chenyl/.codex/skills/ph-paper-helper",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-28T08:56:06Z"
+          "last_synced_at": "2026-04-28T08:56:19Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/ph-paper-helper",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-28T08:56:06Z"
+          "last_synced_at": "2026-04-28T08:56:19Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/ph-paper-helper",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-28T08:56:06Z"
+          "last_synced_at": "2026-04-28T08:56:19Z"
         }
       },
       "display_name": "ph-paper-helper",
@@ -548,7 +548,7 @@
       "skill_path": "ph-paper-helper",
       "upstream_path": ".skills/upstream/ph-paper-helper",
       "managed_revision": "sha256:101fef0b445598a518fb1784021865eab8869ff435b90e897e8a5a9df877d39c",
-      "last_updated_at": "2026-04-28T08:56:05Z"
+      "last_updated_at": "2026-04-28T08:56:18Z"
     },
     "paper-sense-making": {
       "distribution": {},
