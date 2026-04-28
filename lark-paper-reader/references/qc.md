@@ -24,7 +24,7 @@ issues = []
 
 # ── 1. 图片检查 ──
 print("1. 检查图片...")
-out = run(["lark-cli","docs","+fetch","--api-version","v2","--doc",DOC,
+out = run(["lark-cli","docs","+fetch","--doc",DOC,
            "--detail","full","--doc-format","xml","--as","user"])
 try:
     c = json.loads(out)["data"]["document"]["content"]
@@ -106,7 +106,7 @@ except:
 
 # ── 5. 章节完整性 ──
 print("5. 检查章节完整性...")
-out3 = run(["lark-cli","docs","+fetch","--api-version","v2","--doc",DOC,
+out3 = run(["lark-cli","docs","+fetch","--doc",DOC,
             "--doc-format","markdown","--as","user"])
 try:
     md_c = json.loads(out3)["data"]["document"]["content"]

@@ -37,9 +37,9 @@ print(f"章节: {len(sections)}")
 for s in sections:
     print(f"  节 [{s[0]}]: {s[1]}")
 
-# 提取长段落（>80字）
+# 提取长段落（>80字，参考用——段落摘要已由子代理批量处理）
 long_paras = re.findall(r'<p[^>]*id="(doxcn[^"]+)"[^>]*>(.{80,}?)</p>', content, re.DOTALL)
-print(f"\n长段落: {len(long_paras)} 个（需逐一加 comment）")
+print(f"\n长段落: {len(long_paras)} 个（段落摘要由子代理预计算，此处确认覆盖情况）")
 for bid, text in long_paras[:5]:
     print(f"  [{bid}] {text[:50].strip()}...")
 EOF
