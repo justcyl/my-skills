@@ -46,7 +46,7 @@ for nm in dup_names:
     issues.append({"type":"dup_image","name":nm,"blocks":dup_blocks})
     print(f"   !! 重复图片: {nm} ({len(dup_blocks)} 个 block)")
     print(f"      block_ids: {dup_blocks}")
-    print(f"      修复: lark-cli docs +update --api-version v2 --doc {DOC} --command block_delete --block-id {dup_blocks[-1]} --as user")
+    print(f"      修复: lark-cli docs +update --doc {DOC} --command block_delete --block-id {dup_blocks[-1]} --as user")
 
 # ── 2. H3 标题重复检查 ──
 print("2. 检查重复标题...")
@@ -136,7 +136,7 @@ else:
 DOC="<document_id>"
 
 # 删除重复图片 block
-lark-cli docs +update --api-version v2 --doc $DOC \
+lark-cli docs +update --doc $DOC \
   --command block_delete --block-id <dup_block_id> --as user
 
 # 关闭重复评论
@@ -145,7 +145,7 @@ lark-cli drive file.comments patch \
   --data '{"is_solved":true}' --as user
 
 # 删除重复 callout block（先用 with-ids fetch 找 block_id）
-lark-cli docs +fetch --api-version v2 --doc $DOC \
+lark-cli docs +fetch --doc $DOC \
   --detail with-ids --scope keyword --keyword "<callout标题>" \
   --doc-format xml --as user
 # 然后 block_delete

@@ -22,7 +22,7 @@
 
 ```bash
 # Step 5 开始前，先将 fetch 输出存文件，再处理（避免 pipe+heredoc stdin 冲突）
-lark-cli docs +fetch --api-version v2 --doc "$DOC" --detail full --doc-format xml --as user \
+lark-cli docs +fetch --doc "$DOC" --detail full --doc-format xml --as user \
   > /tmp/lark_annotate_scan.json
 
 python3 << 'EOF'

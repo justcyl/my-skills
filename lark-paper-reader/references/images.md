@@ -94,7 +94,7 @@ for fig in figures:
 
 ```bash
 # Step 1: 用 keyword scope 找目标 block 的 ID
-lark-cli docs +fetch --api-version v2 --doc $DOC \
+lark-cli docs +fetch --doc $DOC \
   --detail with-ids --scope keyword --keyword "<部分定位文字>" \
   --doc-format xml --as user \
   | python3 -c "
@@ -107,7 +107,7 @@ for bid,txt in zip(ids,texts):
 "
 
 # Step 2: 用 block_insert_after 精确定位
-lark-cli docs +update --api-version v2 --doc $DOC \
+lark-cli docs +update --doc $DOC \
   --command block_insert_after \
   --block-id <target_block_id> \
   --content '<img...>' \    # 注意：+media-insert 有4步编排，直接用 update 需手动上传
@@ -119,7 +119,7 @@ lark-cli docs +update --api-version v2 --doc $DOC \
 ## 验证插入结果
 
 ```bash
-lark-cli docs +fetch --api-version v2 --doc $DOC \
+lark-cli docs +fetch --doc $DOC \
   --detail full --doc-format xml --as user \
   | python3 -c "
 import json,sys,re

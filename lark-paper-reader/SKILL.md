@@ -136,7 +136,7 @@ echo "当前行数：$(wc -l < /tmp/<arxiv_id>_zh.md)"
 用 herdr 工具依次执行：
 
 ```json
-{ "action": "pane_split", "direction": "down", "newPane": "para-summarizer" }
+{ "action": "pane_split", "pane": "current", "direction": "down", "newPane": "para-summarizer" }
 ```
 
 ```json
@@ -175,11 +175,11 @@ cd /tmp && lark-cli docs +create \
 #   --as user
 ```
 
+> `--api-version v2` **仅在 `docs +create` 时需要**（启用 Markdown 建文档）。其他所有命令（fetch、update、block 操作）使用默认 v1，不要加此 flag，否则可能触发 EOF 错误。
+
 ---
 
-## Step 4：插入图片
-
-**只插入 `full.md` 中实际引用的图片**，`images/` 目录中未被引用的文件（MinerU 中间裁切图、附录图等）一律不插。
+## Step 4：插入图片 `full.md` 中实际引用的图片**，`images/` 目录中未被引用的文件（MinerU 中间裁切图、附录图等）一律不插。
 
 ```bash
 PAPER_DIR=<从 Step 1 得到的目录>
@@ -212,7 +212,7 @@ lark-cli docs +media-insert \
 DOC=<document_id>
 
 # 一次性找出所有占位符 block 并删除
-lark-cli docs +fetch --api-version v2 --doc "$DOC" --detail full --doc-format xml --as user \
+lark-cli docs +fetch --doc "$DOC" --detail full --doc-format xml --as user \
   > /tmp/lark_placeholders.json
 
 python3 -c "
@@ -224,7 +224,7 @@ for bid, text in matches:
     print(f'{bid}  {text}')
 "
 # 对每个返回的 block_id 执行：
-lark-cli docs +update --api-version v2 --doc "$DOC" \
+lark-cli docs +update --doc "$DOC" \
   --command block_delete --block-id <placeholder_block_id> --as user
 ```
 
@@ -242,7 +242,7 @@ Step 5 正式开始前，fetch 文档 XML，提取所有需要标注的元素，
 DOC=<document_id>
 
 # 先将输出存文件，再用 python3 heredoc 处理（pipe + heredoc 会导致 stdin 冲突）
-lark-cli docs +fetch --api-version v2 --doc "$DOC" --detail full --doc-format xml --as user \
+lark-cli docs +fetch --doc "$DOC" --detail full --doc-format xml --as user \
   > /tmp/lark_doc_scan.json
 
 python3 << 'EOF'
@@ -301,7 +301,7 @@ EOF
 
 ```bash
 # 将 OLD_CALLOUT_ID 替换为：新 callout（含嵌入代码块）
-lark-cli docs +update --api-version v2 --doc "$DOC" \
+lark-cli docs +update --doc "$DOC" \
   --command block_replace \
   --block-id "OLD_CALLOUT_ID" \
   --content '<callout emoji="🔧" background-color="light-gray" border-color="gray">
@@ -473,7 +473,7 @@ ph fetch --paper-id <paper_id> --include-content
 DOC=<document_id>
 
 # 0. 覆盖率检查（先存文件再处理，避免 pipe+heredoc stdin 冲突）
-lark-cli docs +fetch --api-version v2 --doc $DOC --detail full --doc-format xml --as user \
+lark-cli docs +fetch --doc $DOC --detail full --doc-format xml --as user \
   > /tmp/lark_qc.json
 
 python3 << 'EOF'
@@ -499,7 +499,7 @@ if callout_emojis.count('❓') == 0:
 EOF
 
 # 1. 获取 XML 全文，统计图片和重复
-lark-cli docs +fetch --api-version v2 --doc $DOC --detail full --doc-format xml --as user \
+lark-cli docs +fetch --doc $DOC --detail full --doc-format xml --as user \
   > /tmp/lark_qc.json
 
 python3 -c "
@@ -547,7 +547,7 @@ for t, n in dups:
 **修复重复**：
 ```bash
 # 删除重复图片 block
-lark-cli docs +update --api-version v2 --doc $DOC \
+lark-cli docs +update --doc $DOC \
   --command block_delete --block-id <dup_block_id> --as user
 
 # 将重复评论标记为 resolved
