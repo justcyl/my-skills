@@ -239,11 +239,10 @@ python train.py --config configs/base.yaml --seed 42
 
 | # | 检查项 | 存储位置 |
 |---|--------|----------|
-| 1 | run 专属源码已就位（`src/` 内修改完成） | `alan/runs/<slug>/src/` |
-| 2 | 源码已快照 | `snapshot/src/` |
-| 3 | 环境文件已保存 | `snapshot/environment/` |
-| 4 | command 已记录 | `snapshot/metadata.yaml` |
-| 5 | seed 已记录且代码一致 | `snapshot/metadata.yaml` + `set_seed()` |
-| 6 | config 超参数已记录 | `snapshot/metadata.yaml` |
-| 7 | git_commit 已填写（外部组件库版本） | `snapshot/metadata.yaml` |
-| 8 | 数据集路径已记录且可访问 | `snapshot/metadata.yaml` config 字段 |
+| 1 | `snapshot/src/` 已初始化并完成本次实验修改 | `alan/runs/<slug>/snapshot/src/` |
+| 2 | 环境文件已保存 | `snapshot/environment/` |
+| 3 | command 已记录 | `snapshot/metadata.yaml` |
+| 4 | seed 已记录且代码一致 | `snapshot/metadata.yaml` + `set_seed()` |
+| 5 | config 超参数已记录 | `snapshot/metadata.yaml` |
+| 6 | git_commit 已填写（外部组件库版本） | `snapshot/metadata.yaml` |
+| 7 | 数据集路径已记录且可访问 | `snapshot/metadata.yaml` config 字段 |
