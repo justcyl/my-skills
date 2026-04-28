@@ -3,25 +3,31 @@
 ## 准备工作
 
 在翻译文档中，需要为每张图片确定：
-1. **文件路径**：`~/.local/share/ph/papers/arxiv_<ID>/images/<hash>.jpg`
+1. **文件名**：`<hash>.jpg`（相对于 `$PAPER_DIR/images/`）
 2. **中文 caption**：翻译论文图注（"Figure X: ..."）
 3. **定位锚点**：图片前后的唯一文字，用于 `--selection-with-ellipsis`
+
+> ⚠️ `lark-cli docs +media-insert --file` 只接受**相对于当前目录的路径**，绝对路径会报 `unsafe file path` 错误。
+> 正确做法：先 `cd "$PAPER_DIR/images"`，再用文件名。
 
 ## 逐张插入
 
 ```python
-import subprocess, json
+import subprocess, json, os
 
 DOC = "<document_id>"
-PAPER_DIR = "/Users/chenyl/.local/share/ph/papers/arxiv_<ID>"
+PAPER_DIR = "<从 ph fetch full_text_path 推导，见 fetch.md>"
 
-# 按论文顺序定义图片列表
+# 切换到 images 目录，之后 --file 只需文件名
+os.chdir(f"{PAPER_DIR}/images")
+
+# 按 full.md 引用顺序定义图片列表（不要插入 full.md 未引用的图片）
 figures = [
     {
-        "file": f"{PAPER_DIR}/images/<hash1>.jpg",
+        "file": "<hash1>.jpg",       # 相对路径，无需目录前缀
         "caption": "图1：<中文图注>",
         "selection": "<图片前的唯一段落文字，20-40字>",
-        "before": False,  # True = 插在 selection 之前
+        "before": False,
     },
     # ...
 ]
@@ -38,15 +44,22 @@ for fig in figures:
         + (["--before"] if fig.get("before") else []),
         capture_output=True, text=True
     )
-    out = result.stdout + result.stderr
-    try:
-        d = json.loads(out)
-        if d.get("ok"):
-            print(f"✓ {fig['caption'][:30]} -> block {d['data']['block_id']}")
-        else:
-            print(f"✗ {fig['caption'][:30]}: {d.get('error',{}).get('message','')[:60]}")
-    except:
-        print(f"? {fig['caption'][:30]}: {out[:60]}")
+    # +media-insert 输出混有日志行，不能直接 json.loads 整体输出
+    # 优先用 returncode 判断成功，再从输出中提取 JSON
+    if result.returncode == 0:
+        block_id = "?"
+        for line in (result.stdout + result.stderr).strip().split("\n"):
+            line = line.strip()
+            if line.startswith("{"):
+                try:
+                    d = json.loads(line)
+                    block_id = d.get("data", {}).get("block_id", "?")
+                    break
+                except json.JSONDecodeError:
+                    pass
+        print(f"✓ {fig['caption'][:30]} -> block {block_id}")
+    else:
+        print(f"✗ {fig['caption'][:30]}: {(result.stdout + result.stderr)[:120]}")
 ```
 
 ## 定位锚点选择
