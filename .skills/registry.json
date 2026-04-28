@@ -1809,23 +1809,23 @@
           "target_path": "/Users/chenyl/.codex/skills/lark-paper-reader",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-27T11:51:40Z"
+          "last_synced_at": "2026-04-28T07:04:30Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/lark-paper-reader",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-27T11:51:40Z"
+          "last_synced_at": "2026-04-28T07:04:30Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/lark-paper-reader",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-27T11:51:40Z"
+          "last_synced_at": "2026-04-28T07:04:30Z"
         }
       },
       "display_name": "lark-paper-reader",
-      "description": "将学术论文（arXiv/DOI）全自动处理为飞书注释文档：ph+MinerU获取带图全文 → 中文翻译 → 创建飞书文档（统一文件夹）→ 插入原始图片 → 添加公式推导callout/段落摘要comment/术语注释 → 展开关键参考文献 → 自动质量检查（去重复图片/评论）。触发语境：'帮我读/翻译这篇论文'、'上传到飞书'、'arxiv://xxx 注释'、'给这篇paper做笔记'。",
+      "description": "将学术论文（arXiv/DOI）全自动处理为飞书注释文档。触发语境：'帮我读/翻译这篇论文'、'上传到飞书'、'arxiv://xxx 注释'、'给这篇paper做笔记'。",
       "status": "managed",
       "risk_status": "warned",
       "managed_dirty": false,
@@ -1834,8 +1834,8 @@
       "source_path": ".skills/sources/lark-paper-reader.json",
       "skill_path": "lark-paper-reader",
       "upstream_path": ".skills/upstream/lark-paper-reader",
-      "managed_revision": "sha256:4f7f33a462b87737da4182ffa35f821f08268951ae8016698f197eca6ba0f3be",
-      "last_updated_at": "2026-04-27T11:51:40Z"
+      "managed_revision": "sha256:74ac316c2c7bfa5a3a041a4335eeb5140f13f0256222434671e12b7aa6cee1d5",
+      "last_updated_at": "2026-04-28T07:04:29Z"
     },
     "image-gen": {
       "distribution": {
