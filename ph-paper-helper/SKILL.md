@@ -309,7 +309,7 @@ ph fetch --paper-id arxiv://1706.03762 --force
 
 | | 快速纯文本（默认） | MinerU（ph fetch） |
 |---|---|---|
-| **触发方式** | 默认开启，`--no-fetch-plain-text` 跳过 | 需要手动调用 |
+| **触发方式** | 默认开启，无需任何 flag | 需要手动调用 |
 | **速度** | 秒级 | 数分钟，异步 |
 | **内容** | 正文纯文字，无数学公式/图片 | Markdown with 图/表/公式 LaTeX |
 | **Token** | 无需 | 需要 PH_MINERU_TOKEN |
@@ -320,9 +320,6 @@ ph fetch --paper-id arxiv://1706.03762 --force
 # 默认导入（自动抓取纯文本）
 ph import --input arxiv://1706.03762
 # plain_text_state: fetched
-
-# 不需要纯文本时才关闭
-ph import --input arxiv://1706.03762 --no-fetch-plain-text
 
 # 读取已存入的纯文本（ph fetch 不暴露 plain_text，直接用 sql）
 ph sql --query "SELECT plain_text FROM papers WHERE paper_id = 'arxiv://1706.03762'"
@@ -336,7 +333,7 @@ ph fetch --paper-id arxiv://1706.03762 --include-content  # 轮询到 fetch_stat
 - `fetched` — 新获取并存入 DB
 - `cached` — DB 中已有，未重新获取
 - `unavailable` — 非 arXiv 论文或 arXiv 无 HTML 版本
-- `skipped` — 传了 `--no-fetch-plain-text`
+- `skipped` — （已移除，plain_text 现在无条件尝试）
 
 ---
 
