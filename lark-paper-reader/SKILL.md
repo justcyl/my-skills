@@ -50,6 +50,9 @@ Step 2.5  启动段落摘要子代理（异步）    ← herdr pane_split，gpt-
 Step 3  lark-cli docs +create          ← 在飞书个人文档库创建文档（默认 my_library）
      │
      ▼
+Step 3.5  公式渲染替换                  ← 扫描 $$...$$ / $...$ → <equation> XML 块
+     │   详见 references/formulas.md
+     ▼
 Step 4  插入图片 + 删除占位符           ← 逐张 docs +media-insert
      │   插入后 block_delete 占位符块
      ▼
@@ -114,6 +117,7 @@ ls "$PAPER_DIR/images/"   # 若为空则说明第一次 fetch 有问题，--forc
 - 核心术语首次出现保留英文（如"Evolving Parameter Isolation (EPI)"翻译为"演化参数隔离（EPI）"）
 - 不压缩信息，逐节完整翻译
 - 附录完整翻译在末尾，不做前置处理
+- **公式必须保留 LaTeX 原文**：独立公式写为独立行 `$$...$$`（前后空行），行内公式写为 `$...$`。**严禁**将 LaTeX 转为 Unicode 符号（如把 `$\sum$` 写成 `∑`，把 `$\pi_	heta$` 写成 `π_θ`）——Unicode 符号无法被 Step 3.5 识别，公式将永久以纯文字形式残留在文档里
 
 存为临时文件，**分多次写入**避免 write 工具超限：
 ```bash
@@ -180,6 +184,27 @@ cd /tmp && lark-cli docs +create \
 ```
 
 > `--api-version v2` **仅在 `docs +create` 时需要**（启用 Markdown 建文档）。其他所有命令（fetch、update、block 操作）使用默认 v1，不要加此 flag，否则可能触发 EOF 错误。
+
+---
+
+## Step 3.5：公式渲染替换
+
+飞书 markdown 上传**不渲染 LaTeX**——`$$...$$` 和 `$...$` 以字面字符串写入文档。本步骤将它们替换为飞书原生 `<equation>` XML 块。
+
+详细语法和完整脚本见 [references/formulas.md](references/formulas.md)。
+
+```bash
+DOC=<document_id>
+
+# 先 fetch 最新 XML
+lark-cli docs +fetch --doc "$DOC" --detail full --doc-format xml --as user   > /tmp/lark_formula_pass.json
+
+# 运行公式替换（独立公式 + 行内公式）
+python3 ~/.agents/skills/lark-paper-reader/references/formulas.md
+# ↑ 实际执行时把脚本内容粘贴到 python3 -c 或单独 .py 文件中运行
+```
+
+> 如果 zh.md 里公式已被写成 Unicode（`∑`、`π_θ` 等），本步骤无法恢复——需回到 Step 2 重新翻译该部分，保留 LaTeX 格式后重建文档。
 
 ---
 
@@ -575,6 +600,9 @@ lark-cli drive file.comments patch \
 
 | 场景 | 正确做法 |
 |------|----------|
+| 独立公式块 | `<equation>LaTeX</equation>` 顶层块 ✅ |
+| 行内公式 | `<p><text>前文</text><equation inline="true">LaTeX</equation><text>后文</text></p>` ✅ |
+| LaTeX 中含 `<` `>` `&` | 先 `html.escape(latex)` 转义再放入 `<equation>` |
 | callout 内嵌代码块 | `<pre lang="python"><code>...</code></pre>` 放在 `<callout>` 内 ✅ |
 | 多行代码块 | `<pre lang="..."><code>...</code></pre>`，**不要**用 `<p><code>` |
 | 一次替换为多块 | `block_replace` 的 `--content` 可包含多个顶层 XML 块 ✅ |
