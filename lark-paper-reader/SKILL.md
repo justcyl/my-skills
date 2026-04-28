@@ -41,7 +41,11 @@ uv run --project ~/project/ph2 ph --version           # 确认 ph 可用（alias
 Step 1  ph import + ph fetch --force   ← MinerU 解析 PDF，获取带图 Markdown
      │   等待 fetch_state=done
      ▼
+Step 1.5  建立术语表                    ← 扫描 full.md，分类术语，写入 glossary.md
+     │   A类（有共识）直接译，B类（专有）用「中文（英文）」格式
+     ▼
 Step 2  翻译正文                        ← 中文翻译，写入 /tmp/<arxiv_id>_zh.md
+     │   全文遵循术语表，同一术语只有一种译法
      │   分多次写入避免工具超限
      ▼
 Step 2.5  启动段落摘要子代理（异步）    ← herdr pane_split，gpt-5.4 处理语义载荷段落
@@ -106,6 +110,55 @@ ls "$PAPER_DIR/images/"   # 若为空则说明第一次 fetch 有问题，--forc
 
 ---
 
+## Step 1.5：建立术语表
+
+**翻译开始前必须先完成此步骤**，确保全文术语一致。
+
+### 扫描步骤
+
+读取 `full.md`，提取所有：
+- 论文自创的方法名/模块名（如 Evolving Parameter Isolation、Skill Library）
+- 无固定中文译名的新兴概念（如 agent swarm、continual pre-training）
+- 论文中反复出现的缩写（EPI、PEFT、SFT、LoRA 等）
+- 数据集和模型名（通常保留英文，确认即可）
+
+### 术语分类规则
+
+| 类别 | 判断标准 | 翻译格式 |
+|------|---------|---------|
+| **A类（有共识）** | 中文学界已有约定译名（如"注意力机制"、"灾难性遗忘"、"微调"） | 直接使用中文，不注英文 |
+| **B类（论文专有/无共识）** | 作者自创术语，或中文有多种译法且未形成共识 | 首次出现用「**中文（英文全称）**」，后续只写中文 |
+| **C类（保留英文）** | 专有名词、模型名、数据集名（GPT-4、MMLU、LoRA） | 直接使用英文，不强行翻译 |
+
+### 输出格式
+
+写入 `/tmp/<arxiv_id>_glossary.md`：
+
+```markdown
+# 术语表 | <论文标题>
+
+## A类：有共识，直接译（不注原文）
+| 英文 | 中文译名 |
+|------|---------|
+| catastrophic forgetting | 灾难性遗忘 |
+| fine-tuning | 微调 |
+| attention mechanism | 注意力机制 |
+
+## B类：无共识/论文专有（首次出现格式：中文（英文全称））
+| 英文 | 中文译名 | 首次出现格式 |
+|------|---------|-------------|
+| Evolving Parameter Isolation | 演化参数隔离 | 演化参数隔离（Evolving Parameter Isolation，EPI） |
+| skill library | 技能库 | 技能库（skill library） |
+| agent swarm | 代理群 | 代理群（agent swarm） |
+
+## C类：保留英文
+- GPT-4、LLaMA-3、LoRA、DoRA、MMLU、HellaSwag
+```
+
+> **B类首次出现后**：后续段落只写中文译名，不重复注英文。缩写（EPI）在首次展开后可单独使用。
+
+---
+
 ## Step 2：翻译
 
 逐节翻译，保留：
@@ -114,7 +167,10 @@ ls "$PAPER_DIR/images/"   # 若为空则说明第一次 fetch 有问题，--forc
 - 节标题层级
 
 翻译原则：
-- 核心术语首次出现保留英文（如"Evolving Parameter Isolation (EPI)"翻译为"演化参数隔离（EPI）"）
+- **严格遵循术语表**（Step 1.5 生成的 `/tmp/<arxiv_id>_glossary.md`）：同一术语全文只使用一种译法，不可一处用 A 一处用 B
+- **B类术语格式**：首次出现用「中文（英文全称，缩写）」完整格式，后续只写中文
+- **A类术语**：直接使用中文，不需要注英文
+- **C类（专有名词/模型名）**：保留英文，不强行翻译
 - 不压缩信息，逐节完整翻译
 - 附录完整翻译在末尾，不做前置处理
 - **公式必须保留 LaTeX 原文**：独立公式写为独立行 `$$...$$`（前后空行），行内公式写为 `$...$`。**严禁**将 LaTeX 转为 Unicode 符号（如把 `$\sum$` 写成 `∑`，把 `$\pi_	heta$` 写成 `π_θ`）——Unicode 符号无法被 Step 3.5 识别，公式将永久以纯文字形式残留在文档里
