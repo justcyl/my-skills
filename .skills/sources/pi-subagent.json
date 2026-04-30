@@ -10,8 +10,8 @@
   "bootstrap": true,
   "upstream_enabled": false,
   "upstream_path": ".skills/upstream/pi-subagent",
-  "last_imported_at": "2026-04-30T12:06:53Z",
+  "last_imported_at": "2026-04-30T12:09:29Z",
   "upstream_revision": "",
-  "managed_revision": "sha256:18dc1a3acf73ef222f13f326809d3b9d8fb61176038532d729bcc0664c20e238",
+  "managed_revision": "sha256:2eb8f2567fdfe1453b438d93aa37a651d5daabe9b8b71ac5a95b539aee962ed0",
   "managed_dirty": false
 }
