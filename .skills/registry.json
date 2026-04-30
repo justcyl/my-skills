@@ -1741,19 +1741,19 @@
           "target_path": "/Users/chenyl/.codex/skills/pi-subagent",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-30T19:30:20Z"
+          "last_synced_at": "2026-04-30T19:40:00Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/pi-subagent",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-30T19:30:20Z"
+          "last_synced_at": "2026-04-30T19:40:00Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/pi-subagent",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-30T19:30:20Z"
+          "last_synced_at": "2026-04-30T19:40:00Z"
         }
       },
       "display_name": "pi-subagent",
@@ -1766,8 +1766,8 @@
       "source_path": ".skills/sources/pi-subagent.json",
       "skill_path": "pi-subagent",
       "upstream_path": ".skills/upstream/pi-subagent",
-      "managed_revision": "sha256:2f9c48c52e719e9a849f69950c257053c6bc1e387c8bbabecbe9b85bc1e88164",
-      "last_updated_at": "2026-04-30T19:30:19Z"
+      "managed_revision": "sha256:c49cb59d9bb527083fa9c6812a5ab919d72c4a50e380bd072bb6c28cce15a6a0",
+      "last_updated_at": "2026-04-30T19:39:59Z"
     },
     "pdf": {
       "distribution": {},

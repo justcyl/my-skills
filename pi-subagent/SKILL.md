@@ -149,6 +149,11 @@ pi --print \
 { "action": "wait_agent", "pane": "subagent", "statuses": ["done", "idle"], "timeout": 120000 }
 ```
 
+> **为什么用 `wait_agent` 而不用 `watch`？**
+> herdr 能感知 pane 内 pi 进程的 agent 状态（`idle` / `done`），无需匹配文本。
+> `watch` 依赖输出中出现特定字符串才能触发，而 pi `--print` 运行期间的输出无规律、内容不可预知，匹配往往不能触发导致超时。
+> **监控 pi sub-agent 完成状态永远使用 `wait_agent`，禁用 `watch`。**
+
 **Step 4 — 读取最终文本**（从轨迹文件提取）
 
 ```json
