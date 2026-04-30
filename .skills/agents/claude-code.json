@@ -113,13 +113,6 @@
       "sync_status": "synced",
       "last_synced_at": "2026-04-19T06:42:49Z"
     },
-    "academic-blog": {
-      "source_path": "academic-blog",
-      "target_path": "/Users/chenyl/.claude/skills/academic-blog",
-      "mode": "symlink",
-      "sync_status": "synced",
-      "last_synced_at": "2026-04-27T06:23:49Z"
-    },
     "cli-creator": {
       "source_path": "cli-creator",
       "target_path": "/Users/chenyl/.claude/skills/cli-creator",
@@ -160,7 +153,7 @@
       "target_path": "/Users/chenyl/.claude/skills/pi-subagent",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-04-30T12:09:29Z"
+      "last_synced_at": "2026-04-30T19:30:20Z"
     },
     "lark-paper-reader": {
       "source_path": "lark-paper-reader",

@@ -1165,38 +1165,19 @@
       "last_updated_at": "2026-04-26T13:46:47Z"
     },
     "academic-blog": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/academic-blog",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-27T06:23:49Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/academic-blog",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-27T06:23:49Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/academic-blog",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-27T06:23:49Z"
-        }
-      },
+      "distribution": {},
       "display_name": "academic-blog",
       "description": "生成 metauto.ai/neuralcomputer 风格的学术研究随笔 HTML 页面。多文件架构（CSS/JS 静态不动，agent 只生成内容 HTML）。支持封面图、多章节、对比表格、代码卡片（syntax highlight）、KaTeX 公式（颜色标注）、多类型边注（术语/符号/译注）、内联引用、BibTeX 引用块、可折叠摘要、story-aside callout、图片 lightbox。适用于：把论文/博客/技术随笔生成为精美 HTML 发布页面。",
-      "status": "managed",
+      "status": "archived",
       "risk_status": "warned",
       "managed_dirty": false,
       "upstream_enabled": false,
       "report_path": ".skills/reports/academic-blog.md",
       "source_path": ".skills/sources/academic-blog.json",
-      "skill_path": "academic-blog",
+      "skill_path": ".skills/archived-skills/academic-blog",
       "upstream_path": ".skills/upstream/academic-blog",
       "managed_revision": "sha256:eb64796d328256a3e2889f90332e684bad590816730d4ff2c8ed480bad518369",
-      "last_updated_at": "2026-04-20T12:08:29Z"
+      "last_updated_at": "2026-04-30T19:29:59Z"
     },
     "tech-blog": {
       "distribution": {},
@@ -1760,19 +1741,19 @@
           "target_path": "/Users/chenyl/.codex/skills/pi-subagent",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-30T12:09:29Z"
+          "last_synced_at": "2026-04-30T19:30:20Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/pi-subagent",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-30T12:09:29Z"
+          "last_synced_at": "2026-04-30T19:30:20Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/pi-subagent",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-04-30T12:09:29Z"
+          "last_synced_at": "2026-04-30T19:30:20Z"
         }
       },
       "display_name": "pi-subagent",
@@ -1785,8 +1766,8 @@
       "source_path": ".skills/sources/pi-subagent.json",
       "skill_path": "pi-subagent",
       "upstream_path": ".skills/upstream/pi-subagent",
-      "managed_revision": "sha256:2eb8f2567fdfe1453b438d93aa37a651d5daabe9b8b71ac5a95b539aee962ed0",
-      "last_updated_at": "2026-04-30T12:09:29Z"
+      "managed_revision": "sha256:2f9c48c52e719e9a849f69950c257053c6bc1e387c8bbabecbe9b85bc1e88164",
+      "last_updated_at": "2026-04-30T19:30:19Z"
     },
     "pdf": {
       "distribution": {},

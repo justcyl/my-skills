@@ -124,9 +124,16 @@ pi --print \
 
 ## herdr 五步流程
 
+> **规则：`pane_split` 时必须传 `newPane` 起别名。**
+> 后续所有 `run` / `wait_agent` / `read` / `watch` / `send` / `stop` 均通过别名引用，不得使用数字 pane id。
+
+**Step 1 — 创建 pane 并命名别名**
+
 ```json
 { "action": "pane_split", "direction": "down", "newPane": "subagent" }
 ```
+
+**Step 2 — 启动 sub-agent**
 
 ```json
 {
@@ -135,6 +142,8 @@ pi --print \
   "command": "<根据上方模板构造的 pi --print 命令，重定向到 /tmp/pi-subagent-<name>-last.jsonl>"
 }
 ```
+
+**Step 3 — 等待完成**
 
 ```json
 { "action": "wait_agent", "pane": "subagent", "statuses": ["done", "idle"], "timeout": 120000 }

@@ -1,7 +1,7 @@
 {
   "skill_id": "academic-blog",
   "display_name": "academic-blog",
-  "skill_path": "academic-blog",
+  "skill_path": ".skills/archived-skills/academic-blog",
   "source_type": "local-manual",
   "source": "",
   "source_url": "",
@@ -13,5 +13,7 @@
   "last_imported_at": "2026-04-20T12:08:29Z",
   "upstream_revision": "",
   "managed_revision": "sha256:eb64796d328256a3e2889f90332e684bad590816730d4ff2c8ed480bad518369",
-  "managed_dirty": false
+  "managed_dirty": false,
+  "archived": true,
+  "archived_at": "2026-04-30T19:29:59Z"
 }
