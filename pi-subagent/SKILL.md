@@ -25,6 +25,7 @@ pi --list-models
 | 参数 | 作用 | 常用值 |
 |------|------|--------|
 | `--print` | 非交互模式，处理完即退出 | 必须加 |
+| `--mode json` | 以 JSON Lines 输出所有事件（工具调用/结果/LLM 输出）| 轨迹审计时加 |
 | `--model` | 指定模型 | `axonhub/gemini-3.1-pro-preview`（视觉/推理）<br>`axonhub/gemini-3-flash-preview`（快速/低成本）<br>`axonhub/claude-opus-4-7`（代码/长文本）|
 | `--thinking` | 推理深度 | `off`（默认）/ `low` / `medium` / `high` / `xhigh` |
 | `--tools` | 允许的工具白名单 | `read,bash`（常用）/ `read`（只读）/ 不传则全部可用 |
@@ -35,6 +36,68 @@ pi --list-models
 | `--no-extensions` | 禁用扩展自动发现 | 隔离 agent 时加 |
 | `--no-session` | 不保存会话文件 | 临时 agent 加 |
 | `--append-system-prompt` | 追加内容到 system prompt | 可多次使用 |
+
+---
+
+## 轨迹审计（主 Agent 审计子 Agent）
+
+使用 `--mode json` 让子 Agent 将**完整轨迹**（每步工具调用、参数、结果、LLM 输出）以 JSON Lines 输出，
+供主 Agent 事后审核，判断子 Agent 是否按预期执行。
+
+### invoke.sh `--audit <file>`（推荐）
+
+```bash
+# 轨迹写入文件，stdout 仍输出最终文本
+invoke.sh --agent figure-qa \
+  --audit /tmp/subagent-traj.jsonl \
+  --msg $'Check image at /tmp/fig.png\nScene: academic\nIntent: pipeline diagram'
+```
+
+完成后主 Agent 用 `read` 工具读取轨迹文件，或用以下命令提取关键信息：
+
+```bash
+# 最终回答文本（通常就是 stdout 已打印的内容，此处可交叉验证）
+python3 -c "
+import json, sys
+for line in open(sys.argv[1]):
+    try:
+        e = json.loads(line)
+        if e.get('type')=='agent_end':
+            for c in (e['messages'][-1].get('content') or []):
+                if isinstance(c,dict) and c.get('type')=='text': print(c['text'])
+    except: pass
+" /tmp/subagent-traj.jsonl
+
+# 所有工具调用序列（需要安装 jq）
+jq -c 'select(.type=="tool_execution_start") | {tool:.toolName, args:.args}' /tmp/subagent-traj.jsonl
+
+# 有无工具报错
+jq -c 'select(.type=="tool_execution_end" and .isError==true)' /tmp/subagent-traj.jsonl
+
+# 共几轮 LLM turn
+jq 'select(.type=="turn_end")' /tmp/subagent-traj.jsonl | wc -l
+```
+
+### 手动构造（不用 invoke.sh）
+
+```bash
+pi --print \
+  --model axonhub/gemini-3.1-pro-preview \
+  --mode json \
+  --tools read,bash \
+  --system-prompt /path/to/agent.prompt.md \
+  --no-skills --no-context-files --no-extensions --no-session \
+  "message" > /tmp/subagent-traj.jsonl
+```
+
+### 常用 jq 查询速查
+
+| 目的 | 命令 |
+|------|------|
+| 最终回答 | `jq -r 'select(.type=="agent_end") \| .messages[-1].content[] \| select(.type=="text") \| .text'` |
+| 工具调用序列 | `jq -c 'select(.type=="tool_execution_start") \| {tool:.toolName,args:.args}'` |
+| 工具报错 | `jq -c 'select(.type=="tool_execution_end" and .isError==true)'` |
+| turn 数 | `jq 'select(.type=="turn_end")' \| wc -l` |
 
 ---
 
@@ -126,6 +189,9 @@ pi --print \
 ```json
 { "action": "read", "pane": "subagent", "source": "recent-unwrapped", "lines": 100 }
 ```
+
+> **轨迹审计变体**：Step 2 的命令改用 `invoke.sh --audit /tmp/subagent-traj.jsonl ...`（或手动加 `--mode json > /tmp/traj.jsonl`），
+> Step 4 之后额外用 `read` 工具读取 `/tmp/subagent-traj.jsonl` 获取完整轨迹。
 
 ---
 

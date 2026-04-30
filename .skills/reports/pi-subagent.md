@@ -10,7 +10,10 @@
 
 ## Summary
 
-通用 pi sub-agent 基础设施。把 pi + herdr 创建 sub-agent 的模式抽象为可复用组件：模型路由表（alias → 实际模型 + 参数）、agent 目录（每种能力一个 system prompt md）、通用 invoke.sh。其他 skill 或 agent 直接引用 invoke.sh 和 agent 目录来调度 sub-agent，无需为每种能力单独维护一套 invoke 脚本。触发场景：'创建 sub-agent'、'用 pi 跑个子任务'、'需要调用 gemini 做 X'、'spawn a sub-agent'。
+在 herdr pane 中用 pi --print 调度 sub-agent 的基础设施。
+提供 agent 定义规范（frontmatter + system prompt）和通用调用模板。
+调用前请先读懂 pi 参数含义，根据具体场景构造合适的命令，而非直接套用脚本。
+触发语境："spawn a sub-agent""调用子代理""pi --print""figure-qa""视觉审查"。
 
 ## Risk Findings
 
