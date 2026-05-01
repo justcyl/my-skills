@@ -71,7 +71,10 @@ Step 6  展开关键参考文献                ← ph fetch 被引论文，inli
      │
      ▼
 Step 7  质量检查                        ← 详见 references/qc.md
-         检测重复图片/评论/callout
+     │   检测重复图片/评论/callout
+     ▼
+Step 8  视觉验证（可选但推荐）          ← 导出 PDF → pdftoppm 转图 → 视觉模型逐页审查
+         发现公式未渲染、XML 裸标签、排版异常等脚本检测不到的问题
 ```
 
 ---
@@ -645,6 +648,156 @@ lark-cli drive file.comments patch \
 
 ---
 
+## Step 8：视觉验证（可选但推荐）
+
+Step 7 的脚本检查只能发现 XML 层面的结构问题（重复 block、占位符残留等）。**视觉验证**通过视觉模型逐页阅读 PDF，能发现脚本盲区：公式渲染失败、callout 内 `$...$` 未渲染、XML 标签裸露、图片缺失/乱序、字符转义异常等。
+
+### 8-1. 导出 PDF
+
+```bash
+DOC=<document_id>
+
+# 导出（在目标目录执行，lark-cli 要求相对路径）
+cd /tmp && lark-cli drive +export \
+  --token "$DOC" \
+  --doc-type docx \
+  --file-extension pdf \
+  --output-dir . \
+  --overwrite \
+  --as user
+# 若提示 unsafe path，先确认 cd 到了目标目录
+```
+
+若 export 因路径问题失败并返回 `file_token`，用 `+export-download` 单独下载：
+
+```bash
+cd /tmp && lark-cli drive +export-download \
+  --file-token "<export_file_token>" \
+  --file-name "output.pdf" \
+  --output-dir "." \
+  --overwrite --as user
+```
+
+### 8-2. PDF 转图片
+
+```bash
+PDF_PATH="/tmp/output.pdf"
+OUT_DIR="/tmp/doc_pages"
+mkdir -p "$OUT_DIR"
+
+# 用 pdftoppm（推荐，poppler-utils）
+pdftoppm -r 150 -png "$PDF_PATH" "$OUT_DIR/page"
+
+# 或用 pymupdf（Python）
+# python3 -c "import fitz; doc=fitz.open('$PDF_PATH'); [doc[i].get_pixmap(dpi=150).save('$OUT_DIR/page-%02d.png'%(i+1)) for i in range(len(doc))]"
+
+ls "$OUT_DIR/" | wc -l   # 确认页数
+```
+
+### 8-3. 视觉模型逐页审查
+
+在 herdr 子 pane 中调用视觉模型（支持图片的模型，如 `gemini-3.1-pro-preview`）：
+
+```json
+{ "action": "pane_split", "pane": "current", "direction": "down", "newPane": "doc-reviewer" }
+```
+
+```json
+{
+  "action": "run",
+  "pane": "doc-reviewer",
+  "command": "pi --print --model axonhub/gemini-3.1-pro-preview --thinking off --tools read,bash --no-skills --no-context-files --no-extensions --no-session '你是飞书文档质检员。请逐页阅读 /tmp/doc_pages/ 下的所有 PNG，检查以下问题并输出报告：1.公式渲染：是否有「无效公式」红色标记、或公式显示为 LaTeX 字符串（如 \\mathcal{J}）2.图片：是否正常显示、是否有乱序或缺失 3.Callout：📍💡🌉❓📖🔧 是否正常渲染为彩色方块 4.排版：段落间距、标题层级是否正常 5.其他视觉异常：乱码、重复内容、XML 标签裸露等。每页一行简短描述，最后给出需要修复的问题列表（优先级：高/中/低）。'"
+}
+```
+
+等待子代理完成：
+
+```json
+{ "action": "wait_agent", "pane": "doc-reviewer", "statuses": ["done", "idle"], "timeout": 300000 }
+```
+
+然后读取报告：
+
+```json
+{ "action": "read", "pane": "doc-reviewer", "lines": 100, "source": "recent-unwrapped" }
+```
+
+### 8-4. 常见视觉问题修复
+
+**公式渲染失败（「无效公式」红标）**
+
+通常是 `<latex>` 块内含双重转义的 HTML 实体（`&amp;lt;` 应为 `&lt;`）：
+
+```python
+# fetch XML → 找所有 <latex> 内含 &amp;lt;/&amp;gt; 的块 → 修复
+import json, re, subprocess, html as html_mod
+
+DOC = "<document_id>"
+with open('/tmp/lark_qc.json') as f:
+    c = json.load(f)['data']['document']['content']
+
+for m in re.finditer(r'<p[^>]*id="(doxcn[^"]+)"[^>]*>(.*?)</p>', c, re.DOTALL):
+    bid, inner = m.group(1), m.group(2)
+    if '&amp;lt;' not in inner and '&amp;gt;' not in inner:
+        continue
+    def fix_latex(lm):
+        return '<latex>' + lm.group(1).replace('&amp;lt;','&lt;').replace('&amp;gt;','&gt;') + '</latex>'
+    fixed = re.sub(r'<latex>(.*?)</latex>', fix_latex, inner, flags=re.DOTALL)
+    subprocess.run(['lark-cli','docs','+update','--doc',DOC,
+        '--command','block_replace','--block-id',bid,
+        '--content',f'<p>{fixed}</p>','--doc-format','xml','--as','user'],
+        capture_output=True)
+    print(f'✓ fixed [{bid}]')
+```
+
+**Callout 内公式显示为字符串（`$...$` 未渲染）**
+
+Callout XML 内的公式必须用 `<latex>` 标签，不能用 `$...$`。修复：
+
+```python
+# 找所有含 $...$ 的段落（在 callout 内）→ 转为 <latex> 标签
+for m in re.finditer(r'<p[^>]*id="(doxcn[^"]+)"[^>]*>(.*?)</p>', c, re.DOTALL):
+    bid, inner = m.group(1), m.group(2)
+    if '$' not in inner:
+        continue
+    # 按 XML 标签拆分，只对纯文字部分做替换
+    parts = re.split(r'(<[^>]+>)', inner)
+    new_inner = ''
+    for part in parts:
+        if part.startswith('<'):
+            new_inner += part
+        else:
+            new_inner += re.sub(r'\$([^$<]+?)\$',
+                lambda lm: f'<latex>{html_mod.escape(lm.group(1))}</latex>', part)
+    if new_inner != inner:
+        subprocess.run(['lark-cli','docs','+update','--doc',DOC,
+            '--command','block_replace','--block-id',bid,
+            '--content',f'<p>{new_inner}</p>','--doc-format','xml','--as','user'],
+            capture_output=True)
+        print(f'✓ fixed $ [{bid}]')
+```
+
+**XML 标签裸露（`<text>`、`</equation>` 出现在文档正文中）**
+
+原因：`block_replace` 时提交了 `<p><text>...</text><equation>...</equation></p>` 格式，lark-cli 不识别 `<text>` 子元素，把 XML 当字面字符串写入。修复：找出含 `&lt;text&gt;` 的段落，解码后用 `<latex>` 重建：
+
+```python
+broken = re.findall(r'id="(doxcn[^"]+)"[^>]*>((?:[^<]|<(?!/?p[> ]))*&lt;(?:text|equation)[^<]*)', c, re.DOTALL)
+for bid, raw in broken:
+    decoded = html_mod.unescape(raw)
+    # <text>X</text> → X，<equation inline="true">X</equation> → <latex>X</latex>
+    fixed = re.sub(r'</?text[^>]*>', '', decoded)
+    fixed = re.sub(r'<equation\s+inline="true">(.*?)</equation>',
+        lambda lm: f'<latex>{html_mod.escape(lm.group(1))}</latex>', fixed, flags=re.DOTALL)
+    subprocess.run(['lark-cli','docs','+update','--doc',DOC,
+        '--command','block_replace','--block-id',bid,
+        '--content',f'<p>{fixed}</p>','--doc-format','xml','--as','user'],
+        capture_output=True)
+    print(f'✓ fixed bare-tag [{bid}]')
+```
+
+---
+
 ## 前置配置（由各 skill 负责）
 
 - **飞书认证 & 文件夹**：由 [`lark`](../lark/SKILL.md) 管理。确认已 `lark-cli auth status`。Step 3 默认使用 `--parent-position my_library`；如需指定文件夹，通过飞书网页 URL `/drive/folder/<token>` 获取 token，替换 `--parent-position` 为 `--parent-token <token>`。
@@ -657,8 +810,12 @@ lark-cli drive file.comments patch \
 | 场景 | 正确做法 |
 |------|----------|
 | 独立公式块 | `<equation>LaTeX</equation>` 顶层块 ✅ |
-| 行内公式 | `<p><text>前文</text><equation inline="true">LaTeX</equation><text>后文</text></p>` ✅ |
-| LaTeX 中含 `<` `>` `&` | 先 `html.escape(latex)` 转义再放入 `<equation>` |
+| 行内公式（lark-cli 写入时） | `<p>文字<latex>LaTeX</latex>文字</p>`，**直接用 `<latex>` 标签** ✅ |
+| 行内公式（飞书 XML 返回格式） | `<p>文字<latex>LaTeX</latex>文字</p>`，读取与写入格式一致 |
+| lark-cli 上传 markdown 的公式 | `$...$` 和 `$$...$$` 会被**自动转为 `<latex>` 标签**，无需手动转换 |
+| callout 内的公式 | 必须用 `<latex>LaTeX</latex>`，**不能用 `$...$`**（markdown 公式在 callout XML 里不渲染） |
+| `<p>` 内的 `<text>` 子元素 | `block_replace` 时**不要**在 `<p>` 内加 `<text>` 包裹——lark-cli 不识别此结构，会把整段 XML 当字面字符串写入 |
+| LaTeX 中含 `<` `>` `&` | 在 XML 中用 `&lt;` `&gt;` `&amp;` 转义一次；**不要** `html.escape()` 已经转义的内容（否则 `&lt;` → `&amp;lt;` 双重转义，渲染失败） |
 | callout 内嵌代码块 | `<pre lang="python"><code>...</code></pre>` 放在 `<callout>` 内 ✅ |
 | 多行代码块 | `<pre lang="..."><code>...</code></pre>`，**不要**用 `<p><code>` |
 | 一次替换为多块 | `block_replace` 的 `--content` 可包含多个顶层 XML 块 ✅ |
@@ -676,3 +833,7 @@ lark-cli drive file.comments patch \
 | 图片重复 | `+media-insert` 执行了两次 | `docs +update block_delete` 删除多余 block |
 | `--content` JSON 报错 | shell 引号问题 | 用 `python3` 生成 JSON 再传给 subprocess |
 | 占位符残留 | 忘记 Step 4 收尾 | fetch XML 找 `[图\d+位置]` block_id 后 block_delete |
+| 公式「无效公式」红标 | `<latex>` 内含 `&amp;lt;` 双重转义 | 见 Step 8-4 修复脚本 |
+| Callout 公式显示为 `$...$` 字符串 | callout XML 内误用 markdown `$` 语法 | 见 Step 8-4 修复脚本 |
+| XML 标签（`<text>`）裸露在正文 | `block_replace` 时提交了含 `<text>` 子元素的 `<p>` | 见 Step 8-4 修复脚本 |
+| `drive +export` 报 unsafe path | lark-cli 要求相对路径 | 先 `cd` 到目标目录再执行 |
