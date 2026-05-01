@@ -52,6 +52,10 @@ Step 2.5  启动段落摘要子代理（异步）    ← herdr pane_split，gpt-
      │   与 Step 3/4 并行，Step 5 前同步
      ▼
 Step 3  lark-cli docs +create          ← 在飞书个人文档库创建文档（默认 my_library）
+     │   ⚠️ 文档标题由 --title 参数设定，不是正文里的 # 一级标题
+     │
+     ▼
+Step 3-meta  写入论文元信息块             ← 在文档最前端插入原文地址/创建时间/元数据 callout
      │
      ▼
 Step 3.5  公式渲染替换                  ← 扫描 $$...$$ / $...$ → <equation> XML 块
@@ -73,7 +77,7 @@ Step 6  展开关键参考文献                ← ph fetch 被引论文，inli
 Step 7  质量检查                        ← 详见 references/qc.md
      │   检测重复图片/评论/callout
      ▼
-Step 8  视觉验证（可选但推荐）          ← 导出 PDF → pdftoppm 转图 → 视觉模型逐页审查
+Step 8  视觉验证（必须）                ← 导出 PDF → pdftoppm 转图 → 视觉模型逐页审查
          发现公式未渲染、XML 裸标签、排版异常等脚本检测不到的问题
 ```
 
@@ -222,6 +226,8 @@ echo "当前行数：$(wc -l < /tmp/<arxiv_id>_zh.md)"
 
 统一存放在固定文件夹（`PAPER_FOLDER_TOKEN`）：
 
+> **标题设置警告：** 飞书文档的标题由 `--title` 参数设定，**不是** Markdown 正文里的 `# 一级标题`。zh.md 里的一级标题上传后展示为正文第一个条目，不会自动变成标题栏。请始终通过 `--title` 传入题目。
+
 ```bash
 # 首选：存到个人文档库，之后可在飞书里手动移动到目标文件夹
 cd /tmp && lark-cli docs +create \
@@ -243,6 +249,68 @@ cd /tmp && lark-cli docs +create \
 ```
 
 > `--api-version v2` **仅在 `docs +create` 时需要**（启用 Markdown 建文档）。其他所有命令（fetch、update、block 操作）使用默认 v1，不要加此 flag，否则可能触发 EOF 错误。
+
+---
+
+## Step 3-meta：写入论文元信息块
+
+文档创建完成后，立即在文档最前端（封面标题块之后）插入一个包含论文元信息的 callout。这是读者进入文档第一眼看到的路标。
+
+```bash
+DOC=<document_id>
+ARXIV_ID=<arxiv_id>  # 例: 2604.24827
+
+# 获取论文元数据（已在 Step 1 import 时入库）
+META=$(uv run --project ~/project/ph2 ph fetch \
+  --paper-id arxiv://$ARXIV_ID 2>&1)
+
+TITLE=$(echo "$META" | python3 -c \
+  'import json,sys; d=json.load(sys.stdin); print(d["result"][0]["title"])')
+AUTHORS=$(echo "$META" | python3 -c \
+  'import json,sys; d=json.load(sys.stdin); print(d["result"][0]["authors"])')
+YEAR=$(echo "$META" | python3 -c \
+  'import json,sys; d=json.load(sys.stdin); print(d["result"][0].get("year",""))')
+
+# 当前时间（精确到分钟）
+CREATED=$(date '+%Y-%m-%d %H:%M')
+```
+
+然后用 `block_insert_after` 将元信息 callout 插入到封面标题块之后：
+
+```bash
+# 先 fetch XML 找到标题块 id
+lark-cli docs +fetch --doc "$DOC" --detail full --doc-format xml --as user \
+  > /tmp/lark_meta_tmp.json
+
+TITLE_BLOCK=$(python3 -c "
+import json, re
+with open('/tmp/lark_meta_tmp.json') as f:
+    c = json.load(f)['data']['document']['content']
+# 飞书文档第一个块通常是 page title´
+first = re.search(r'<page[^>]*id=\"(doxcn[^\"]+)\"', c)
+if first: print(first.group(1))
+else:
+    # 退而求其次：找文档第一个 h1
+    h1 = re.search(r'<h1[^>]*id=\"(doxcn[^\"]+)\"', c)
+    if h1: print(h1.group(1))
+")
+
+lark-cli docs +update --doc "$DOC" \
+  --command block_insert_after \
+  --block-id "$TITLE_BLOCK" \
+  --content "<callout emoji=\"📄\" background-color=\"light-gray\" border-color=\"gray\">
+<p><b>论文标题</b>：$TITLE</p>
+<p><b>作者</b>：$AUTHORS</p>
+<p><b>年份</b>：$YEAR</p>
+<p><b>原文地址</b>：https://arxiv.org/abs/$ARXIV_ID</p>
+<p><b>论文 PDF</b>：https://arxiv.org/pdf/$ARXIV_ID</p>
+<p><b>本文档创建时间</b>：$CREATED</p>
+</callout>" \
+  --doc-format xml \
+  --as user
+```
+
+> **注意**：若飞书文档没有 `<page>` 块，就用文档第一个 h1 块的 block-id 作为插入点。元信息 callout 应位于导读 callout（Step 5a）之前。
 
 ---
 
@@ -648,9 +716,9 @@ lark-cli drive file.comments patch \
 
 ---
 
-## Step 8：视觉验证（可选但推荐）
+## Step 8：视觉验证（必须）
 
-Step 7 的脚本检查只能发现 XML 层面的结构问题（重复 block、占位符残留等）。**视觉验证**通过视觉模型逐页阅读 PDF，能发现脚本盲区：公式渲染失败、callout 内 `$...$` 未渲染、XML 标签裸露、图片缺失/乱序、字符转义异常等。
+Step 7 的脚本检查只能发现 XML 层面的结构问题（重复 block、占位符残留等）。**视觉验证**通过视觉模型逐页阅读 PDF，能发现脚本盲区：公式渲染失败、callout 内 `$...$` 未渲染、XML 标签裸露、图片缺失/乱序、字符转义异常等。**本步骤为必须步骤，不可跳过。**
 
 ### 8-1. 导出 PDF
 
