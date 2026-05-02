@@ -52,7 +52,10 @@ Step 2.5  启动段落摘要子代理（异步）    ← herdr pane_split，gpt-
      │   与 Step 3/4 并行，Step 5 前同步
      ▼
 Step 3  lark-cli docs +create          ← 在飞书个人文档库创建文档（默认 my_library）
-     │   ⚠️ 文档标题由 --title 参数设定，不是正文里的 # 一级标题
+     │   --title 只设 Drive 文件名；内部 page title block 默认为 Untitled
+     │
+     ▼
+Step 3-title  修复文档内部标题          ← block_replace 覆盖 page title block
      │
      ▼
 Step 3-meta  写入论文元信息块             ← 在文档最前端插入原文地址/创建时间/元数据 callout
@@ -226,7 +229,8 @@ echo "当前行数：$(wc -l < /tmp/<arxiv_id>_zh.md)"
 
 统一存放在固定文件夹（`PAPER_FOLDER_TOKEN`）：
 
-> **标题设置警告：** 飞书文档的标题由 `--title` 参数设定，**不是** Markdown 正文里的 `# 一级标题`。zh.md 里的一级标题上传后展示为正文第一个条目，不会自动变成标题栏。请始终通过 `--title` 传入题目。
+> **标题说明（重要）：** `--api-version v2 --doc-format markdown` 走的是飞书 Drive 导入 API。`--title` 只设置 **Drive 文件名**（文件列表里显示的名字），**不更新**文档内部的 page title block（文档顶部那个大标题，默认显示为 "Untitled"）。文档创建后须执行下方 **Step 3-title** 修复内部标题。
+
 
 ```bash
 # 首选：存到个人文档库，之后可在飞书里手动移动到目标文件夹
@@ -249,6 +253,48 @@ cd /tmp && lark-cli docs +create \
 ```
 
 > `--api-version v2` **仅在 `docs +create` 时需要**（启用 Markdown 建文档）。其他所有命令（fetch、update、block 操作）使用默认 v1，不要加此 flag，否则可能触发 EOF 错误。
+
+---
+
+## Step 3-title：修复文档内部标题（必须）
+
+`--api-version v2 --doc-format markdown` 创建的文档，内部 page title block 默认为 "Untitled"。需在切少取得 `DOC_ID` 后立即修复：
+
+```bash
+DOC=<document_id>
+PAPER_TITLE="《译文》<论文标题> | arXiv <ID>"
+
+# 1. 获取 XML
+lark-cli docs +fetch --doc "$DOC" --detail full --doc-format xml --as user \
+  > /tmp/lark_title_fix.json
+
+# 2. 找 page title block id
+PAGE_BLOCK=$(python3 -c "
+import json, re
+with open('/tmp/lark_title_fix.json') as f:
+    c = json.load(f)['data']['document']['content']
+# page block 是文档第一个顶层块
+m = re.search(r'<page[^>]*id=\"(doxcn[^\"]+)\"', c)
+if m:
+    print(m.group(1))
+else:
+    # v2 导入分支：找内容里第一个 id（最前面的块）
+    m = re.search(r'id=\"(doxcn[^\"]+)\"', c)
+    if m: print(m.group(1))
+")
+
+# 3. 执行修复
+if [ -n "$PAGE_BLOCK" ]; then
+  lark-cli docs +update --doc "$DOC" \
+    --command block_replace \
+    --block-id "$PAGE_BLOCK" \
+    --content "<page>$PAPER_TITLE</page>" \
+    --doc-format xml --as user \
+    && echo "✓ 内部标题已修复"
+fi
+```
+
+> **如果 block_replace 失败**（返回错误或 page block 未找到）：直接在飞书 UI 内点击顶部 "Untitled" 手动输入标题，不影响后续流程。
 
 ---
 
@@ -877,6 +923,7 @@ for bid, raw in broken:
 
 | 场景 | 正确做法 |
 |------|----------|
+| `docs +create --api-version v2` 的 `--title` | 只设 Drive 文件名，不更新内部 page title（默认 Untitled） | 创建后执行 **Step 3-title** 修复 |
 | 独立公式块 | `<equation>LaTeX</equation>` 顶层块 ✅ |
 | 行内公式（lark-cli 写入时） | `<p>文字<latex>LaTeX</latex>文字</p>`，**直接用 `<latex>` 标签** ✅ |
 | 行内公式（飞书 XML 返回格式） | `<p>文字<latex>LaTeX</latex>文字</p>`，读取与写入格式一致 |
