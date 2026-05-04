@@ -10,8 +10,8 @@
   "bootstrap": true,
   "upstream_enabled": false,
   "upstream_path": ".skills/upstream/lark-paper-reader",
-  "last_imported_at": "2026-05-03T17:55:11Z",
+  "last_imported_at": "2026-05-04T17:26:55Z",
   "upstream_revision": "",
-  "managed_revision": "sha256:6951e11a888fdbe23c2f25792284f0eae6d2c72071d5f29acbe2f43fec5a07e0",
+  "managed_revision": "sha256:79de476e8311bf7837d7fd86e5da8d095b75d9ed2b4efa4a9e7b556890d87fe2",
   "managed_dirty": false
 }

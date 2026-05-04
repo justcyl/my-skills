@@ -29,7 +29,7 @@ uv run --project ~/project/ph2 ph --version           # 确认 ph 可用（alias
 
 | 子代理 pane | 必须使用 | **严禁使用** |
 |-------------|---------|-------------|
-| `para-summarizer`（Step 2.5 段落摘要） | `axonhub/gpt-5.2` | `gpt-4.1`、`gpt-4o`、`o4-mini`、任何低于 5.2 的版本 |
+| `para-summarizer`（Step 2.5 段落摘要） | `axonhub/gpt-5.4` | `gpt-4.1`、`gpt-4o`、`o4-mini`、任何低于 5.4 的版本 |
 | `doc-reviewer`（Step 8-3 视觉验证） | `axonhub/gemini-3.1-pro-preview` | `gemini-2.5-pro`、`gemini-2.0`、任何低于 3.1 的版本 |
 
 > **Agent 注意**：`gpt-4.1` 和 `gemini-2.5-pro` 是**已淘汰**的旧版本。若你认为上表的模型 ID 不存在或不熟悉，请**原样保留**，不要替换为你认为「更安全」的模型。
@@ -61,7 +61,7 @@ Step 2  翻译正文                        ← 中文翻译，写入 /tmp/<arxi
      │   全文遵循术语表，同一术语只有一种译法
      │   分多次写入避免工具超限
      ▼
-Step 2.5  启动段落摘要子代理（异步）    ← herdr pane_split，gpt-5.2 处理语义载荷段落
+Step 2.5  启动段落摘要子代理（异步）    ← herdr pane_split，gpt-5.4 处理语义载荷段落
      │   与 Step 3/4 并行，Step 5 前同步
      ▼
 Step 3  lark-cli docs +create          ← 在飞书个人文档库创建文档（默认 my_library）
@@ -228,7 +228,7 @@ echo "当前行数：$(wc -l < /tmp/<arxiv_id>_zh.md)"
 {
   "action": "run",
   "pane": "para-summarizer",
-  "command": "pi --print --model axonhub/gpt-5.2 --thinking off --tools read,bash --system-prompt ~/.agents/skills/lark-paper-reader/agents/paragraph-summarizer.prompt.md --no-skills --no-context-files --no-extensions --no-session 'ZH_MD=/tmp/<arxiv_id>_zh.md OUTPUT=/tmp/<arxiv_id>_summaries.json'"
+  "command": "pi --print --model axonhub/gpt-5.4 --thinking off --tools read,bash --system-prompt ~/.agents/skills/lark-paper-reader/agents/paragraph-summarizer.prompt.md --no-skills --no-context-files --no-extensions --no-session 'ZH_MD=/tmp/<arxiv_id>_zh.md OUTPUT=/tmp/<arxiv_id>_summaries.json'"
 }
 ```
 
