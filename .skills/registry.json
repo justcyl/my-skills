@@ -1790,19 +1790,19 @@
           "target_path": "/Users/chenyl/.codex/skills/lark-paper-reader",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-05-04T17:26:55Z"
+          "last_synced_at": "2026-05-05T14:00:36Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/lark-paper-reader",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-05-04T17:26:55Z"
+          "last_synced_at": "2026-05-05T14:00:36Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/lark-paper-reader",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-05-04T17:26:55Z"
+          "last_synced_at": "2026-05-05T14:00:36Z"
         }
       },
       "display_name": "lark-paper-reader",
@@ -1815,8 +1815,8 @@
       "source_path": ".skills/sources/lark-paper-reader.json",
       "skill_path": "lark-paper-reader",
       "upstream_path": ".skills/upstream/lark-paper-reader",
-      "managed_revision": "sha256:79de476e8311bf7837d7fd86e5da8d095b75d9ed2b4efa4a9e7b556890d87fe2",
-      "last_updated_at": "2026-05-04T17:26:55Z"
+      "managed_revision": "sha256:c18bebad82673a91b3d288ca0993218ae9eb0681bf5e98ab497acccecb818d09",
+      "last_updated_at": "2026-05-05T14:00:35Z"
     },
     "image-gen": {
       "distribution": {
