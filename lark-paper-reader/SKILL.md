@@ -300,7 +300,7 @@ echo "当前行数：$(wc -l < /tmp/<arxiv_id>_zh.md)"
 # 首选：存到个人文档库，之后可在飞书里手动移动到目标文件夹
 cd /tmp && lark-cli docs +create \
   --api-version v2 \
-  --title "【译文】<论文标题> | arXiv <ID>" \
+  --title "<论文标题> | arXiv <ID>" \
   --doc-format markdown \
   --content @<arxiv_id>_zh.md \
   --parent-position my_library \
@@ -309,7 +309,7 @@ cd /tmp && lark-cli docs +create \
 # 如果有固定文件夹 token（从飞书网页 URL /drive/folder/<token> 获取）：
 # cd /tmp && lark-cli docs +create \
 #   --api-version v2 \
-#   --title "【译文】<论文标题> | arXiv <ID>" \
+#   --title "<论文标题> | arXiv <ID>" \
 #   --doc-format markdown \
 #   --content @<arxiv_id>_zh.md \
 #   --parent-token "<FOLDER_TOKEN>" \
@@ -326,7 +326,7 @@ cd /tmp && lark-cli docs +create \
 
 ```bash
 DOC=<document_id>
-PAPER_TITLE="《译文》<论文标题> | arXiv <ID>"
+PAPER_TITLE="<论文标题> | arXiv <ID>"
 
 lark-cli drive files patch \
   --params "{\"file_token\":\"$DOC\",\"type\":\"docx\"}" \
