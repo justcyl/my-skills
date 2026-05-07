@@ -571,23 +571,23 @@
           "target_path": "/Users/chenyl/.codex/skills/overleaf",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-05-07T14:37:19Z"
+          "last_synced_at": "2026-05-07T14:44:36Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/overleaf",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-05-07T14:37:19Z"
+          "last_synced_at": "2026-05-07T14:44:36Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/overleaf",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-05-07T14:37:19Z"
+          "last_synced_at": "2026-05-07T14:44:36Z"
         }
       },
       "display_name": "overleaf",
-      "description": "LaTeX 文档编写、编辑、编译与 PDF 导出的首选入口——本机无需安装 LaTeX，所有编译在 Overleaf 云端完成。通过 Git 克隆/推送操作项目文件，通过 REST API 创建项目，通过 Compile API 远程编译并下载 PDF。触发语境：编写或修改 .tex 文件、编译 LaTeX 项目、下载论文 PDF、查看或解决 review 评论、推送 LaTeX 修改到云端。",
+      "description": "LaTeX 文档与 Overleaf 项目的首选方案。当需要编写或编辑 .tex 文件、编译 LaTeX 项目并获取 PDF、创建或管理 Overleaf 项目、查看或解决 review 评论时触发。",
       "status": "managed",
       "risk_status": "warned",
       "managed_dirty": false,
@@ -596,8 +596,8 @@
       "source_path": ".skills/sources/overleaf.json",
       "skill_path": "overleaf",
       "upstream_path": ".skills/upstream/overleaf",
-      "managed_revision": "sha256:75b9b760300f341ef2463ed79ab82815e963719225726edbdcb1e515a67e6701",
-      "last_updated_at": "2026-05-07T14:37:10Z"
+      "managed_revision": "sha256:f9035e16bc5b171020934dcda2f7246e0b747d4b7863a3ce4d3b3405f02daf48",
+      "last_updated_at": "2026-05-07T14:44:35Z"
     },
     "paper-drill": {
       "distribution": {},
