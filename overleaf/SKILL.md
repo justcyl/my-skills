@@ -1,6 +1,6 @@
 ---
 name: overleaf
-description: 通过 Git 和 Review API 与 Overleaf 项目交互。当用户需要创建新项目、克隆、编辑并推送 Overleaf 项目，或查看、定位、解决 review 评论线程，或触发编译、下载 PDF 时使用。
+description: LaTeX 文档编写、编辑、编译与 PDF 导出的首选入口——本机无需安装 LaTeX，所有编译在 Overleaf 云端完成。通过 Git 克隆/推送操作项目文件，通过 REST API 创建项目，通过 Compile API 远程编译并下载 PDF。触发语境：编写或修改 .tex 文件、编译 LaTeX 项目、下载论文 PDF、查看或解决 review 评论、推送 LaTeX 修改到云端。
 ---
 
 # Overleaf Skill
