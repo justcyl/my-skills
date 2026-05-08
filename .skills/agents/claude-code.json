@@ -6,7 +6,7 @@
       "target_path": "/Users/chenyl/.claude/skills/skills-manager",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-08T07:26:32Z"
+      "last_synced_at": "2026-05-08T07:26:34Z"
     },
     "tech-blog-writer": {
       "source_path": "tech-blog-writer",
@@ -27,56 +27,56 @@
       "target_path": "/Users/chenyl/.claude/skills/web-reader",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-08T07:26:32Z"
+      "last_synced_at": "2026-05-08T07:26:34Z"
     },
     "overleaf": {
       "source_path": "overleaf",
       "target_path": "/Users/chenyl/.claude/skills/overleaf",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-08T07:26:32Z"
+      "last_synced_at": "2026-05-08T07:26:34Z"
     },
     "ph-paper-helper": {
       "source_path": "ph-paper-helper",
       "target_path": "/Users/chenyl/.claude/skills/ph-paper-helper",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-08T07:26:32Z"
+      "last_synced_at": "2026-05-08T07:26:34Z"
     },
     "grill-me": {
       "source_path": "grill-me",
       "target_path": "/Users/chenyl/.claude/skills/grill-me",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-08T07:26:32Z"
+      "last_synced_at": "2026-05-08T07:26:34Z"
     },
     "rhetoric-of-decks": {
       "source_path": "rhetoric-of-decks",
       "target_path": "/Users/chenyl/.claude/skills/rhetoric-of-decks",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-08T07:26:32Z"
+      "last_synced_at": "2026-05-08T07:26:34Z"
     },
     "research-idea-validator": {
       "source_path": "research-idea-validator",
       "target_path": "/Users/chenyl/.claude/skills/research-idea-validator",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-08T07:26:32Z"
+      "last_synced_at": "2026-05-08T07:26:34Z"
     },
     "btca-local": {
       "source_path": "btca-local",
       "target_path": "/Users/chenyl/.claude/skills/btca-local",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-08T07:26:32Z"
+      "last_synced_at": "2026-05-08T07:26:34Z"
     },
     "pi-threads": {
       "source_path": "pi-threads",
       "target_path": "/Users/chenyl/.claude/skills/pi-threads",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-08T07:26:32Z"
+      "last_synced_at": "2026-05-08T07:26:34Z"
     },
     "research-essay-page": {
       "source_path": "research-essay-page",
@@ -90,7 +90,7 @@
       "target_path": "/Users/chenyl/.claude/skills/officecli",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-08T07:26:32Z"
+      "last_synced_at": "2026-05-08T07:26:34Z"
     },
     "exp-logger": {
       "source_path": "exp-logger",
@@ -104,7 +104,7 @@
       "target_path": "/Users/chenyl/.claude/skills/alan-pipeline",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-08T07:26:32Z"
+      "last_synced_at": "2026-05-08T07:26:34Z"
     },
     "figure-checker": {
       "source_path": "figure-checker",
@@ -118,56 +118,56 @@
       "target_path": "/Users/chenyl/.claude/skills/cli-creator",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-08T07:26:32Z"
+      "last_synced_at": "2026-05-08T07:26:34Z"
     },
     "academic-paper": {
       "source_path": "academic-paper",
       "target_path": "/Users/chenyl/.claude/skills/academic-paper",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-08T07:26:32Z"
+      "last_synced_at": "2026-05-08T07:26:34Z"
     },
     "bilibili-cli": {
       "source_path": "bilibili-cli",
       "target_path": "/Users/chenyl/.claude/skills/bilibili-cli",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-08T07:26:32Z"
+      "last_synced_at": "2026-05-08T07:26:34Z"
     },
     "lark": {
       "source_path": "lark",
       "target_path": "/Users/chenyl/.claude/skills/lark",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-08T07:26:32Z"
+      "last_synced_at": "2026-05-08T07:26:34Z"
     },
     "axonhub": {
       "source_path": "axonhub",
       "target_path": "/Users/chenyl/.claude/skills/axonhub",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-08T07:26:32Z"
+      "last_synced_at": "2026-05-08T07:26:34Z"
     },
     "pi-subagent": {
       "source_path": "pi-subagent",
       "target_path": "/Users/chenyl/.claude/skills/pi-subagent",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-08T07:26:32Z"
+      "last_synced_at": "2026-05-08T07:26:34Z"
     },
     "lark-paper-reader": {
       "source_path": "lark-paper-reader",
       "target_path": "/Users/chenyl/.claude/skills/lark-paper-reader",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-08T07:26:32Z"
+      "last_synced_at": "2026-05-08T07:26:34Z"
     },
     "image-gen": {
       "source_path": "image-gen",
       "target_path": "/Users/chenyl/.claude/skills/image-gen",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-08T07:26:32Z"
+      "last_synced_at": "2026-05-08T07:26:34Z"
     }
   }
 }
