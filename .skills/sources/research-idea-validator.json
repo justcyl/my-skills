@@ -10,8 +10,8 @@
   "bootstrap": true,
   "upstream_enabled": false,
   "upstream_path": ".skills/upstream/research-idea-validator",
-  "last_imported_at": "2026-04-07T13:40:22Z",
+  "last_imported_at": "2026-05-08T07:26:18Z",
   "upstream_revision": "",
-  "managed_revision": "sha256:908ce935cda0d1b585f994ce191551c3ea2629ea37fdce50cfce88809e0dde3d",
+  "managed_revision": "sha256:d1f6883387d66de2134d7941103e01ed31b2758531c62750e25f3fa9cf11411b",
   "managed_dirty": false
 }

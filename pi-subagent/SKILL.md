@@ -1,10 +1,6 @@
 ---
 name: pi-subagent
-description: >
-  在 herdr pane 中用 pi --print 调度 sub-agent 的基础设施。
-  提供 agent 定义规范（frontmatter + system prompt）和通用调用模板。
-  调用前请先读懂 pi 参数含义，根据具体场景构造合适的命令，而非直接套用脚本。
-  触发语境："spawn a sub-agent""调用子代理""pi --print""figure-qa""视觉审查"。
+description: 当需要启动子代理并行处理任务、或进行视觉审查时触发。触发词："spawn a sub-agent""调用子代理""pi --print""figure-qa""视觉审查"。
 ---
 
 # Pi Sub-Agent Infrastructure

@@ -1,6 +1,6 @@
 ---
 name: lark-paper-reader
-description: "将学术论文（arXiv/DOI）全自动处理为飞书注释文档。触发语境：'帮我读/翻译这篇论文'、'上传到飞书'、'arxiv://xxx 注释'、'给这篇paper做笔记'。"
+description: 将学术论文整理为飞书注释文档。触发语境："帮我读/翻译这篇论文""上传到飞书""arxiv://xxx 注释""给这篇 paper 做笔记"。
 metadata:
   requires:
     bins: ["lark-cli"]

@@ -1,6 +1,6 @@
 ---
 name: rhetoric-of-decks
-description: 基于 Rhetoric of Decks 哲学的幻灯片设计与生成指导。适用于"做个汇报""做 slides""做幻灯片""写个 deck""设计演示文稿""把论文做成 slides"等请求。涵盖 Beamer 与 RevealJS/Quarto 两种格式，提供从叙事结构、视觉设计到认知负荷优化的完整原则体系。
+description: 幻灯片设计与制作的方案。当需要做汇报、设计演示文稿、或将论文转成 slides 时使用。适用于"做个汇报""做 slides""做幻灯片""写个 deck""设计演示文稿""把论文做成 slides"。
 ---
 
 # Rhetoric of Decks

@@ -10,7 +10,7 @@
   "bootstrap": true,
   "upstream_enabled": true,
   "upstream_path": ".skills/upstream/btca-local",
-  "last_imported_at": "2026-04-12T14:39:12Z",
+  "last_imported_at": "2026-05-08T07:26:18Z",
   "upstream_revision": "864e5ba452566c318d60f75229882233b2a5c120",
   "managed_revision": "sha256:29f13272ade645c3201814e535beb55f9e427288f12af2a4ad2775417d28822a",
   "managed_dirty": false
