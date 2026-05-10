@@ -168,6 +168,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-05-08T07:26:34Z"
+    },
+    "interactive-html": {
+      "source_path": "interactive-html",
+      "target_path": "/Users/chenyl/.codex/skills/interactive-html",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-05-10T17:20:56Z"
     }
   }
 }

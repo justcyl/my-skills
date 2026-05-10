@@ -1851,6 +1851,40 @@
       "upstream_path": ".skills/upstream/image-gen",
       "managed_revision": "sha256:df3800ca134565b53b7c99f63e5019d5b6894ecb05d539f48be822da2be871a4",
       "last_updated_at": "2026-05-08T07:26:18Z"
+    },
+    "interactive-html": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/interactive-html",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-05-10T17:20:56Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/interactive-html",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-05-10T17:20:56Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/interactive-html",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-05-10T17:20:56Z"
+        }
+      },
+      "display_name": "interactive-html",
+      "description": "生成带数据嵌入、JS 交互的单文件离线 HTML 页面。当用户要求生成交互式网页、可视化数据浏览器、单文件 SPA、带侧边栏导航的展示页、Markdown 渲染器时触发。触发词：\"做一个网页\"、\"生成 HTML\"、\"交互式展示\"、\"可视化\"、\"数据浏览器\"。",
+      "status": "managed",
+      "risk_status": "warned",
+      "managed_dirty": false,
+      "upstream_enabled": false,
+      "report_path": ".skills/reports/interactive-html.md",
+      "source_path": ".skills/sources/interactive-html.json",
+      "skill_path": "interactive-html",
+      "upstream_path": ".skills/upstream/interactive-html",
+      "managed_revision": "sha256:52609e7a2b0bed1d627cfb8ffe918d5b49b8a7314045cc9ac0ade2c639b2da04",
+      "last_updated_at": "2026-05-10T17:20:56Z"
     }
   }
 }
