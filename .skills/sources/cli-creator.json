@@ -10,7 +10,7 @@
   "bootstrap": true,
   "upstream_enabled": true,
   "upstream_path": ".skills/upstream/cli-creator",
-  "last_imported_at": "2026-05-12T18:20:08Z",
+  "last_imported_at": "2026-05-12T18:24:57Z",
   "upstream_revision": "cfad6df41aff1d4024b668ce8b775bb1d4f2ea2b",
   "managed_revision": "sha256:4ba29ef548856b70007f4432a3944c3c038a92fbb5cf9ee7d2dce6d719b4dad4",
   "managed_dirty": false

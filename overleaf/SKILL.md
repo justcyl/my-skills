@@ -11,10 +11,10 @@ description: LaTeX 文档与 Overleaf 项目的首选方案。当需要编写或
 
 ## Skill 目录结构
 
-脚本的**真实位置**（绝对路径，调用时必须使用此路径）：
+`scripts/` 与本 SKILL.md **同级**，位于 SKILL.md 所在目录下：
 
 ```
-/Users/chenyl/project/my-skills/overleaf/
+<skill-dir>/          ← 本 SKILL.md 所在目录
 ├── SKILL.md
 └── scripts/
     ├── ol.sh           # 入口：环境准备 + 转发给 ol.py
@@ -22,10 +22,16 @@ description: LaTeX 文档与 Overleaf 项目的首选方案。当需要编写或
     └── edge_cookies.py # 从 Edge 浏览器提取 Cookie
 ```
 
-> ⚠️ **始终使用绝对路径调用脚本**，不要用 `~/scripts/` 或相对路径：
-> ```bash
-> bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh <命令> [参数]
-> ```
+**使用前先确定 `SKILL_DIR`**（从 AGENTS.md 中本 skill 的 `<location>` 标签推导）：
+
+```bash
+# <location> 示例：/some/path/overleaf/SKILL.md
+# → SKILL_DIR=/some/path/overleaf
+SKILL_DIR="$(dirname "$(grep -A1 'name: overleaf' ~/.pi/agent/AGENTS.md | grep location | sed 's/.*<location>\(.*\)\/SKILL.md.*/\1/')")"
+# 或直接手动赋值为 <location> 去掉末尾 /SKILL.md 后的路径
+```
+
+> ⚠️ **始终用 `$SKILL_DIR/scripts/ol.sh` 调用**，不要使用 `~/scripts/` 或其他猜测路径。
 
 ## 环境准备
 
@@ -62,7 +68,7 @@ Git 凭据默认已配置在 osxkeychain 中，可直接使用 `git clone https:
 Review/获取项目对应 git 地址 的操作通过 wrapper 脚本：
 
 ```bash
-bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh <命令> [参数]
+bash "$SKILL_DIR/scripts/ol.sh" <命令> [参数]
 ```
 
 > Cookie 会自动从 Edge 浏览器获取，无需手动 source 或设置环境变量。
@@ -75,13 +81,13 @@ bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh <命令> [参数]
 
 ```bash
 # 创建空白项目
-bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh create "My New Paper"
+bash "$SKILL_DIR/scripts/ol.sh" create "My New Paper"
 
 # 创建带 Overleaf 示例内容的项目
-bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh create "My New Paper" --template example
+bash "$SKILL_DIR/scripts/ol.sh" create "My New Paper" --template example
 
 # 紧凑 JSON 输出
-bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh create "My New Paper" --compact
+bash "$SKILL_DIR/scripts/ol.sh" create "My New Paper" --compact
 ```
 
 输出字段：`project_id`、`project_name`、`template`、`git_url`、`git_clone_url`、`web_url`。
@@ -90,13 +96,13 @@ bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh create "My New Paper
 
 ```bash
 # 列出所有项目及其 Git 地址（带缩进 JSON）
-bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh git urls
+bash "$SKILL_DIR/scripts/ol.sh" git urls
 
 # 紧凑 JSON（便于管道处理）
-bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh git urls --compact
+bash "$SKILL_DIR/scripts/ol.sh" git urls --compact
 
 # 覆盖默认 Git 地址前缀
-bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh git urls --base-url "https://git.example.com"
+bash "$SKILL_DIR/scripts/ol.sh" git urls --base-url "https://git.example.com"
 ```
 
 输出字段：`project_id`、`project_name`、`git_url`、`git_clone_url`。
@@ -105,33 +111,33 @@ bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh git urls --base-url 
 
 ```bash
 # 带缩进 JSON
-bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh review list "MyProject"
+bash "$SKILL_DIR/scripts/ol.sh" review list "MyProject"
 
 # 紧凑 JSON
-bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh review list "MyProject" --compact
+bash "$SKILL_DIR/scripts/ol.sh" review list "MyProject" --compact
 ```
 
 ### 解决 review 线程
 
 ```bash
 # 使用线程首条消息用户作为 resolve 用户
-bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh review resolve "MyProject" "69c2745dc0f84b044e000001"
+bash "$SKILL_DIR/scripts/ol.sh" review resolve "MyProject" "69c2745dc0f84b044e000001"
 
 # 显式指定 user_id
-bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh review resolve "MyProject" "69c2745dc0f84b044e000001" --user-id "69a65a7a8f69a4e6b57d0ddd"
+bash "$SKILL_DIR/scripts/ol.sh" review resolve "MyProject" "69c2745dc0f84b044e000001" --user-id "69a65a7a8f69a4e6b57d0ddd"
 ```
 
 ### 编译项目
 
 ```bash
 # 触发编译，输出带缩进 JSON（含状态、PDF 地址、所有输出文件）
-bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh compile "MyProject"
+bash "$SKILL_DIR/scripts/ol.sh" compile "MyProject"
 
 # 紧凑 JSON（便于管道处理）
-bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh compile "MyProject" --compact
+bash "$SKILL_DIR/scripts/ol.sh" compile "MyProject" --compact
 
 # 指定编译引擎（xelatex / pdflatex / lualatex）
-bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh compile "MyProject" --compiler xelatex
+bash "$SKILL_DIR/scripts/ol.sh" compile "MyProject" --compiler xelatex
 ```
 
 输出字段：`status`（`success` / `failure` / `error`）、`pdf_url`、`output_files`（含 `.pdf`、`.log`、`.bbl` 等）。
@@ -140,13 +146,13 @@ bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh compile "MyProject" 
 
 ```bash
 # 编译并下载 PDF，文件名默认为 <项目名>.pdf
-bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh pdf "MyProject"
+bash "$SKILL_DIR/scripts/ol.sh" pdf "MyProject"
 
 # 指定输出路径
-bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh pdf "MyProject" --output /tmp/paper.pdf
+bash "$SKILL_DIR/scripts/ol.sh" pdf "MyProject" --output /tmp/paper.pdf
 
 # 指定编译引擎
-bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh pdf "MyProject" --compiler xelatex
+bash "$SKILL_DIR/scripts/ol.sh" pdf "MyProject" --compiler xelatex
 ```
 
 ## 典型工作流
@@ -155,7 +161,7 @@ bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh pdf "MyProject" --co
 
 ```bash
 # 1. 创建新项目
-bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh create "My New Paper"
+bash "$SKILL_DIR/scripts/ol.sh" create "My New Paper"
 
 # 2. 从输出中获取 git_clone_url，克隆到本地
 git clone https://git@overleaf.mycompany.com/git/<project_id> /tmp/my-new-paper
@@ -174,7 +180,7 @@ git push
 
 ```bash
 # 1. 获取项目 Git 地址
-bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh git urls
+bash "$SKILL_DIR/scripts/ol.sh" git urls
 
 # 2. 克隆项目到本地
 git clone https://git@overleaf.mycompany.com/git/<project_id> /tmp/my-project
@@ -211,7 +217,7 @@ git push
 
 ```bash
 # 1. 查看所有 review
-bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh review list "MyProject"
+bash "$SKILL_DIR/scripts/ol.sh" review list "MyProject"
 
 # 2. 克隆项目到本地
 git clone https://git@overleaf.mycompany.com/git/<project_id> /tmp/my-project
@@ -225,7 +231,7 @@ git commit -m "address review comments"
 git push
 
 # 5. 解决已处理的 review
-bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh review resolve "MyProject" "<thread_id>"
+bash "$SKILL_DIR/scripts/ol.sh" review resolve "MyProject" "<thread_id>"
 ```
 
 ### 编译并获取 PDF
@@ -236,10 +242,10 @@ cd /tmp/my-project
 git add -A && git commit -m "final edits" && git push
 
 # 2. 编译并下载 PDF
-bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh pdf "MyProject"
+bash "$SKILL_DIR/scripts/ol.sh" pdf "MyProject"
 
 # 3. 或先确认编译状态，再手动下载
-bash /Users/chenyl/project/my-skills/overleaf/scripts/ol.sh compile "MyProject"
+bash "$SKILL_DIR/scripts/ol.sh" compile "MyProject"
 # 得到 pdf_url 后：
 curl -L -b "$OVERLEAF_COOKIE" "<pdf_url>" -o paper.pdf
 ```

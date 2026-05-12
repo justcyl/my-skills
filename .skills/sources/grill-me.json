@@ -10,7 +10,7 @@
   "bootstrap": true,
   "upstream_enabled": true,
   "upstream_path": ".skills/upstream/grill-me",
-  "last_imported_at": "2026-05-12T18:20:08Z",
+  "last_imported_at": "2026-05-12T18:24:57Z",
   "upstream_revision": "651eab033bdf8f7fd535c274f8cbe839075aba5e",
   "managed_revision": "sha256:1f24c36afed8962eac0eec2484a491a682f7961f67d5050cadb6c7f50753efad",
   "managed_dirty": false
