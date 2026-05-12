@@ -1200,19 +1200,19 @@
           "target_path": "/Users/chenyl/.codex/skills/academic-paper",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-05-08T07:26:34Z"
+          "last_synced_at": "2026-05-12T17:50:03Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/academic-paper",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-05-08T07:26:34Z"
+          "last_synced_at": "2026-05-12T17:50:03Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/academic-paper",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-05-08T07:26:34Z"
+          "last_synced_at": "2026-05-12T17:50:03Z"
         }
       },
       "display_name": "academic-paper",
@@ -1225,8 +1225,8 @@
       "source_path": ".skills/sources/academic-paper.json",
       "skill_path": "academic-paper",
       "upstream_path": ".skills/upstream/academic-paper",
-      "managed_revision": "sha256:f4ced92b54765d71a899dc4860b9b420219e2b7eb03c71d9ccaaf0a7c4a30f11",
-      "last_updated_at": "2026-05-08T07:26:18Z"
+      "managed_revision": "sha256:779febe152e286be651c98ba42eddf5d4099c57296ac282bb39491640aad7817",
+      "last_updated_at": "2026-05-12T17:50:03Z"
     },
     "bilibili-cli": {
       "distribution": {
