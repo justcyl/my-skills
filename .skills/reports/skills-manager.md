@@ -10,7 +10,7 @@
 
 ## Summary
 
-统一处理所有 skills 操作的总控 skill，包括搜索、导入、创建、重构、编辑、优化、上游跟踪、分发、归档与发布。
+统一处理所有 skills 操作的总控 skill，包括搜索、导入、创建、重构、编辑、优化、上游跟踪、分发、归档与发布。当涉及到 SKILL 的编辑修改新建时，请用 skill-manager 来管理！
 
 ## Risk Findings
 

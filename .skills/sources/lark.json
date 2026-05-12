@@ -10,7 +10,7 @@
   "bootstrap": true,
   "upstream_enabled": false,
   "upstream_path": ".skills/upstream/lark",
-  "last_imported_at": "2026-05-08T07:26:18Z",
+  "last_imported_at": "2026-05-12T18:20:08Z",
   "upstream_revision": "",
   "managed_revision": "sha256:3b717794d4ad0a2c6b77c0ebfb22509a798b23231d8398a34ef951ab4ea343d8",
   "managed_dirty": false

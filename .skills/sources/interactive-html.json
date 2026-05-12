@@ -10,7 +10,7 @@
   "bootstrap": true,
   "upstream_enabled": false,
   "upstream_path": ".skills/upstream/interactive-html",
-  "last_imported_at": "2026-05-10T17:20:56Z",
+  "last_imported_at": "2026-05-12T18:20:08Z",
   "upstream_revision": "",
   "managed_revision": "sha256:52609e7a2b0bed1d627cfb8ffe918d5b49b8a7314045cc9ac0ade2c639b2da04",
   "managed_dirty": false
