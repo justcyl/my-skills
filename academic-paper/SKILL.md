@@ -88,6 +88,12 @@ bash ~/.agents/skills/academic-paper/scripts/check_hard_rules.sh paper.pdf <conf
 
 ---
 
+## 避免 Vibe Paper 特征
+
+详见 [references/anti-vibe-checklist.md](references/anti-vibe-checklist.md)。
+
+---
+
 ## 配图生成
 
 详见 [references/figure-gen.md](references/figure-gen.md)。

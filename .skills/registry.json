@@ -1858,19 +1858,19 @@
           "target_path": "/Users/chenyl/.codex/skills/interactive-html",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-05-10T17:20:56Z"
+          "last_synced_at": "2026-05-10T17:21:07Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/interactive-html",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-05-10T17:20:56Z"
+          "last_synced_at": "2026-05-10T17:21:07Z"
         },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/interactive-html",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-05-10T17:20:56Z"
+          "last_synced_at": "2026-05-10T17:21:07Z"
         }
       },
       "display_name": "interactive-html",
