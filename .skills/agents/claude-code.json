@@ -175,6 +175,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-05-12T18:25:16Z"
+    },
+    "zhihu-cli": {
+      "source_path": "zhihu-cli",
+      "target_path": "/Users/chenyl/.claude/skills/zhihu-cli",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-05-28T06:35:56Z"
     }
   }
 }

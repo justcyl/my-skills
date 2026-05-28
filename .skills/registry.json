@@ -1885,6 +1885,40 @@
       "upstream_path": ".skills/upstream/interactive-html",
       "managed_revision": "sha256:52609e7a2b0bed1d627cfb8ffe918d5b49b8a7314045cc9ac0ade2c639b2da04",
       "last_updated_at": "2026-05-12T18:24:57Z"
+    },
+    "zhihu-cli": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/zhihu-cli",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-05-28T06:35:56Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/zhihu-cli",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-05-28T06:35:56Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/zhihu-cli",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-05-28T06:35:56Z"
+        }
+      },
+      "display_name": "zhihu-cli",
+      "description": "知乎 CLI (pyzhihu-cli)：搜索、热榜、问题/回答/评论、推荐 Feed、用户资料、发想法/提问/文章、删自己的内容、点赞关注、收藏与通知。Agent 代执行 zhihu 命令，Cookie 仅存本地。",
+      "status": "managed",
+      "risk_status": "warned",
+      "managed_dirty": false,
+      "upstream_enabled": true,
+      "report_path": ".skills/reports/zhihu-cli.md",
+      "source_path": ".skills/sources/zhihu-cli.json",
+      "skill_path": "zhihu-cli",
+      "upstream_path": ".skills/upstream/zhihu-cli",
+      "managed_revision": "sha256:afbe1786c873792bd6ad41947885afe1c28b12d7640933b6b344c0d68d60cd05",
+      "last_updated_at": "2026-05-28T06:35:56Z"
     }
   }
 }

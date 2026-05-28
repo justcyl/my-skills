@@ -1,0 +1,17 @@
+{
+  "skill_id": "zhihu-cli",
+  "display_name": "zhihu-cli",
+  "skill_path": "zhihu-cli",
+  "source_type": "github",
+  "source": "https://github.com/BAIGUANGMEI/zhihu-cli",
+  "source_url": "https://github.com/BAIGUANGMEI/zhihu-cli.git",
+  "ref": "",
+  "subpath": "skill",
+  "bootstrap": true,
+  "upstream_enabled": true,
+  "upstream_path": ".skills/upstream/zhihu-cli",
+  "last_imported_at": "2026-05-28T06:35:56Z",
+  "upstream_revision": "sha256:afbe1786c873792bd6ad41947885afe1c28b12d7640933b6b344c0d68d60cd05",
+  "managed_revision": "sha256:afbe1786c873792bd6ad41947885afe1c28b12d7640933b6b344c0d68d60cd05",
+  "managed_dirty": false
+}
