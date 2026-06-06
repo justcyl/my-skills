@@ -1919,6 +1919,40 @@
       "upstream_path": ".skills/upstream/zhihu-cli",
       "managed_revision": "sha256:afbe1786c873792bd6ad41947885afe1c28b12d7640933b6b344c0d68d60cd05",
       "last_updated_at": "2026-05-28T06:35:56Z"
+    },
+    "mole-release-notes": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/mole-release-notes",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-06-06T15:08:33Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/mole-release-notes",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-06-06T15:08:33Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/mole-release-notes",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-06-06T15:08:33Z"
+        }
+      },
+      "display_name": "mole-release-notes",
+      "description": "为 tw93/Mole 的 V<version> 标签撰写和发布双语 GitHub Release notes。仅在用户明确要求 Mole 发布说明、release notes、发版文案或发布到 GitHub Release 时使用。默认只起草, 只有用户明确说 publish/发布/提交后才允许调用 gh release edit 和追加 reactions。",
+      "status": "managed",
+      "risk_status": "warned",
+      "managed_dirty": false,
+      "upstream_enabled": true,
+      "report_path": ".skills/reports/mole-release-notes.md",
+      "source_path": ".skills/sources/mole-release-notes.json",
+      "skill_path": "mole-release-notes",
+      "upstream_path": ".skills/upstream/mole-release-notes",
+      "managed_revision": "sha256:1e17d4828a9aaf3b302792ee24734645da26172dfc591b18275d48ed98eef287",
+      "last_updated_at": "2026-06-06T15:08:33Z"
     }
   }
 }
