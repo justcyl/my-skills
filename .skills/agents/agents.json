@@ -189,6 +189,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-06-06T15:08:33Z"
+    },
+    "siyuan-cli": {
+      "source_path": "siyuan-cli",
+      "target_path": "/Users/chenyl/.agents/skills/siyuan-cli",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-06-08T17:49:19Z"
     }
   }
 }

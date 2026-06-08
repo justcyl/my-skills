@@ -1,0 +1,17 @@
+{
+  "skill_id": "siyuan-cli",
+  "display_name": "siyuan-cli",
+  "skill_path": "siyuan-cli",
+  "source_type": "github",
+  "source": "https://github.com/cicbyte/siyuan-cli.git",
+  "source_url": "https://github.com/cicbyte/siyuan-cli.git",
+  "ref": "master",
+  "subpath": "skills/siyuan-cli",
+  "bootstrap": true,
+  "upstream_enabled": true,
+  "upstream_path": ".skills/upstream/siyuan-cli",
+  "last_imported_at": "2026-06-08T17:49:19Z",
+  "upstream_revision": "sha256:b5bda2d0e417a7b387c087f1fd91127a5b73cff11cff8503f3918fc025914f9a",
+  "managed_revision": "sha256:197b0d23aa42505dd5b540c3acd4f1b10093387986bec5f31046ec2de826fb70",
+  "managed_dirty": false
+}

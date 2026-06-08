@@ -1953,6 +1953,40 @@
       "upstream_path": ".skills/upstream/mole-release-notes",
       "managed_revision": "sha256:1e17d4828a9aaf3b302792ee24734645da26172dfc591b18275d48ed98eef287",
       "last_updated_at": "2026-06-06T15:08:33Z"
+    },
+    "siyuan-cli": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/siyuan-cli",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-06-08T17:49:19Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/siyuan-cli",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-06-08T17:49:19Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/siyuan-cli",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-06-08T17:49:19Z"
+        }
+      },
+      "display_name": "siyuan-cli",
+      "description": "操作思源笔记的 CLI 工具。当用户要求管理思源笔记的笔记本、文档、块、标签、搜索、SQL 查询、导入导出、资源、同步，或配置 auth、AI chat、MCP Server 时使用此 skill。",
+      "status": "managed",
+      "risk_status": "warned",
+      "managed_dirty": false,
+      "upstream_enabled": true,
+      "report_path": ".skills/reports/siyuan-cli.md",
+      "source_path": ".skills/sources/siyuan-cli.json",
+      "skill_path": "siyuan-cli",
+      "upstream_path": ".skills/upstream/siyuan-cli",
+      "managed_revision": "sha256:197b0d23aa42505dd5b540c3acd4f1b10093387986bec5f31046ec2de826fb70",
+      "last_updated_at": "2026-06-08T17:49:19Z"
     }
   }
 }
