@@ -87,6 +87,30 @@ remove_agent_state() {
   mv "${temp_file}" "${state_path}"
 }
 
+remove_registry_distribution() {
+  local agent="$1"
+  local skill_id="$2"
+  local temp_file
+
+  temp_file="$(mktemp)"
+  jq \
+    --arg skill_id "${skill_id}" \
+    --arg agent "${agent}" \
+    '.skills[$skill_id].distribution |= del(.[$agent])' "${REGISTRY_PATH}" > "${temp_file}"
+  mv "${temp_file}" "${REGISTRY_PATH}"
+}
+
+is_distribution_disabled() {
+  local agent="$1"
+  local skill_id="$2"
+
+  jq -e \
+    --arg skill_id "${skill_id}" \
+    --arg agent "${agent}" \
+    '((.skills[$skill_id].distribution_disabled // []) | index($agent)) != null' \
+    "${REGISTRY_PATH}" >/dev/null
+}
+
 archive_registry_entry() {
   local skill_id="$1"
   local archive_path="$2"
@@ -122,6 +146,18 @@ sync_one() {
 
   target_base="$(resolve_agent_target_dir "${agent}")"
   target_path="${target_base}/${skill_id}"
+
+  if is_distribution_disabled "${agent}" "${skill_id}"; then
+    if [[ "${dry_run}" -eq 1 ]]; then
+      echo "agent=${agent} skill=${skill_id} target=${target_path} skipped=distribution_disabled"
+      return
+    fi
+
+    rm -rf "${target_path}"
+    remove_agent_state "${agent}" "${skill_id}"
+    remove_registry_distribution "${agent}" "${skill_id}"
+    return
+  fi
 
   if [[ "${dry_run}" -eq 1 ]]; then
     echo "agent=${agent} skill=${skill_id} source=${source_path} target=${target_path} mode=${mode}"

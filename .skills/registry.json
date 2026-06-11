@@ -305,40 +305,6 @@
       "managed_revision": "sha256:1a23f9ef7c5e8c186b035887267669a2a17640b3c04417a1520c38350887057c",
       "last_updated_at": "2026-03-06T08:52:31Z"
     },
-    "tech-blog-writer": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/tech-blog-writer",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-13T17:05:12Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/tech-blog-writer",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-13T17:05:12Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/tech-blog-writer",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-13T17:05:21Z"
-        }
-      },
-      "display_name": "tech-blog-writer",
-      "description": "产出中文技术博客，重点解释工具/库/框架/技术路线背后的设计动机与哲学，而不只是功能说明。适用于“写一篇关于 X 的技术博客”“介绍 X 的设计思想”“解释 X 为什么这样设计”等请求。",
-      "status": "managed",
-      "risk_status": "passed",
-      "managed_dirty": false,
-      "upstream_enabled": true,
-      "report_path": ".skills/reports/tech-blog-writer.md",
-      "source_path": ".skills/sources/tech-blog-writer.json",
-      "skill_path": "tech-blog-writer",
-      "upstream_path": ".skills/upstream/tech-blog-writer",
-      "managed_revision": "sha256:01b3ef4a18fc98432c3c4f9091fee051714c62a8c45154b83ecbff26af13ba16",
-      "last_updated_at": "2026-03-24T17:13:10Z"
-    },
     "mistake-notebook": {
       "distribution": {},
       "display_name": "mistake-notebook",
@@ -432,40 +398,6 @@
       "upstream_path": ".skills/upstream/ai-avoid",
       "managed_revision": "sha256:9531d6886bd1ea398b2d09d4ace4828d152d5b219fa68f864b117c3ba3104a40",
       "last_updated_at": "2026-04-26T14:00:48Z"
-    },
-    "ai-native-cli": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/ai-native-cli",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-13T17:05:12Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/ai-native-cli",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-13T17:05:12Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/ai-native-cli",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-13T17:05:21Z"
-        }
-      },
-      "display_name": "ai-native-cli",
-      "description": "从零到可用的 Agent-Native CLI：设计 agent-first 接口规范，从 API 文档/OpenAPI/curl 示例/SDK 构建可安装二进制，最后生成 companion skill。覆盖纯规范设计和完整实现两种场景。",
-      "status": "managed",
-      "risk_status": "warned",
-      "managed_dirty": false,
-      "upstream_enabled": false,
-      "report_path": ".skills/reports/ai-native-cli.md",
-      "source_path": ".skills/sources/ai-native-cli.json",
-      "skill_path": "ai-native-cli",
-      "upstream_path": ".skills/upstream/ai-native-cli",
-      "managed_revision": "sha256:2ad438fbf0dac6f10b67b3fd3a9393f53112d814ca3484f7fcc66c154d0890e0",
-      "last_updated_at": "2026-04-12T15:33:51Z"
     },
     "research-refine": {
       "distribution": {},
@@ -949,40 +881,6 @@
       "managed_revision": "sha256:d9c4d98e67a8ff8964570a479d69b3bc3faff6c3e1981ecf455a9a11e1c8258c",
       "last_updated_at": "2026-04-13T09:34:59Z"
     },
-    "research-essay-page": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/research-essay-page",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-14T18:53:15Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/research-essay-page",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-14T18:53:15Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/research-essay-page",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-14T18:53:15Z"
-        }
-      },
-      "display_name": "research-essay-page",
-      "description": "生成 metauto.ai/neuralcomputer 风格的学术研究随笔 HTML 页面。多文件架构（CSS/JS 静态不动，agent 只生成内容 HTML）。支持封面图、多章节、对比表格、代码卡片（syntax highlight）、KaTeX 公式（颜色标注）、多类型边注（术语/符号/译注）、内联引用、BibTeX 引用块、可折叠摘要、story-aside callout、图片 lightbox。适用于：把论文/博客/技术随笔生成为精美 HTML 发布页面。",
-      "status": "managed",
-      "risk_status": "warned",
-      "managed_dirty": false,
-      "upstream_enabled": false,
-      "report_path": ".skills/reports/research-essay-page.md",
-      "source_path": ".skills/sources/research-essay-page.json",
-      "skill_path": "research-essay-page",
-      "upstream_path": ".skills/upstream/research-essay-page",
-      "managed_revision": "sha256:cb11323bf142a78e84e1190178706a578de41698d9f1bc787e37c675c278a596",
-      "last_updated_at": "2026-04-14T18:53:15Z"
-    },
     "anyone-to-skill": {
       "distribution": {},
       "display_name": "anyone-to-skill",
@@ -1032,40 +930,6 @@
       "managed_revision": "sha256:efbe33792c913aee9ab209318c3a57ec0a29910eb7ccc23401271d7777ead837",
       "last_updated_at": "2026-05-12T18:24:57Z"
     },
-    "exp-logger": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/exp-logger",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-18T18:31:19Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/exp-logger",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-18T18:31:19Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/exp-logger",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-19T16:36:40Z"
-        }
-      },
-      "display_name": "exp-logger",
-      "description": "为 Python 训练程序提供可组合的实验日志与 TUI 监控组件库。\n当用户需要训练日志、实验可视化、TUI dashboard、TUI 指标回放、\nwandb 或 tensorboard 集成时使用。\n触发语境：「做个训练 logger」「给我写个实验日志系统」「加个 wandb 集成」\n「训练过程可视化」「dashboard 监控训练」「实验回放」「TUI 监控」。",
-      "status": "managed",
-      "risk_status": "passed",
-      "managed_dirty": false,
-      "upstream_enabled": false,
-      "report_path": ".skills/reports/exp-logger.md",
-      "source_path": ".skills/sources/exp-logger.json",
-      "skill_path": "exp-logger",
-      "upstream_path": ".skills/upstream/exp-logger",
-      "managed_revision": "sha256:ef35ba263fad639aae7c74d24c61328fdc235b19f7fb08947393fd1e4de3d36c",
-      "last_updated_at": "2026-04-18T18:31:18Z"
-    },
     "alan-pipeline": {
       "distribution": {
         "codex": {
@@ -1099,40 +963,6 @@
       "upstream_path": ".skills/upstream/alan-pipeline",
       "managed_revision": "sha256:053da803154c7fa08b3c9d89877fd465fd4c85d0f8f98cf47973cb44e33bd2e0",
       "last_updated_at": "2026-05-12T18:24:57Z"
-    },
-    "figure-checker": {
-      "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/figure-checker",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-19T06:42:49Z"
-        },
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/figure-checker",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-19T06:42:49Z"
-        },
-        "agents": {
-          "target_path": "/Users/chenyl/.agents/skills/figure-checker",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-04-19T06:42:49Z"
-        }
-      },
-      "display_name": "figure-checker",
-      "description": "Visual QA sub-agent for AI-generated images. Spawns a dedicated pi sub-agent via herdr to evaluate image quality, content fidelity, and scene-specific criteria (academic / slides / general). Returns structured pass/fail report with regeneration guidance. Use when you need programmatic visual QA on a generated figure, diagram, or slide.",
-      "status": "managed",
-      "risk_status": "passed",
-      "managed_dirty": false,
-      "upstream_enabled": false,
-      "report_path": ".skills/reports/figure-checker.md",
-      "source_path": ".skills/sources/figure-checker.json",
-      "skill_path": "figure-checker",
-      "upstream_path": ".skills/upstream/figure-checker",
-      "managed_revision": "sha256:9a9fcaa90625f9c39a553ad7ad369f02ddde0b258cb92b7bb7ad2c6ba166c4c2",
-      "last_updated_at": "2026-04-19T06:42:27Z"
     },
     "py-logger": {
       "distribution": {},
@@ -1737,12 +1567,6 @@
     },
     "pi-subagent": {
       "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/pi-subagent",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-05-12T18:25:16Z"
-        },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/pi-subagent",
           "mode": "symlink",
@@ -1767,7 +1591,10 @@
       "skill_path": "pi-subagent",
       "upstream_path": ".skills/upstream/pi-subagent",
       "managed_revision": "sha256:3302f29430822463759146ca598ad3cc35e2de99fadc51c3225b617f760e403a",
-      "last_updated_at": "2026-05-12T18:24:57Z"
+      "last_updated_at": "2026-05-12T18:24:57Z",
+      "distribution_disabled": [
+        "codex"
+      ]
     },
     "pdf": {
       "distribution": {},
@@ -1820,12 +1647,6 @@
     },
     "image-gen": {
       "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/image-gen",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-05-12T18:25:16Z"
-        },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/image-gen",
           "mode": "symlink",
@@ -1850,7 +1671,10 @@
       "skill_path": "image-gen",
       "upstream_path": ".skills/upstream/image-gen",
       "managed_revision": "sha256:df3800ca134565b53b7c99f63e5019d5b6894ecb05d539f48be822da2be871a4",
-      "last_updated_at": "2026-05-12T18:24:57Z"
+      "last_updated_at": "2026-05-12T18:24:57Z",
+      "distribution_disabled": [
+        "codex"
+      ]
     },
     "interactive-html": {
       "distribution": {

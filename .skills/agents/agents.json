@@ -1,13 +1,6 @@
 {
   "agent": "agents",
   "skills": {
-    "ai-native-cli": {
-      "source_path": "ai-native-cli",
-      "target_path": "/Users/chenyl/.agents/skills/ai-native-cli",
-      "mode": "symlink",
-      "sync_status": "synced",
-      "last_synced_at": "2026-04-13T17:05:21Z"
-    },
     "overleaf": {
       "source_path": "overleaf",
       "target_path": "/Users/chenyl/.agents/skills/overleaf",
@@ -21,13 +14,6 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-05-12T18:25:16Z"
-    },
-    "tech-blog-writer": {
-      "source_path": "tech-blog-writer",
-      "target_path": "/Users/chenyl/.agents/skills/tech-blog-writer",
-      "mode": "symlink",
-      "sync_status": "synced",
-      "last_synced_at": "2026-04-13T17:05:21Z"
     },
     "web-reader": {
       "source_path": "web-reader",
@@ -78,13 +64,6 @@
       "sync_status": "synced",
       "last_synced_at": "2026-05-12T18:25:16Z"
     },
-    "research-essay-page": {
-      "source_path": "research-essay-page",
-      "target_path": "/Users/chenyl/.agents/skills/research-essay-page",
-      "mode": "symlink",
-      "sync_status": "synced",
-      "last_synced_at": "2026-04-14T18:53:15Z"
-    },
     "officecli": {
       "source_path": "officecli",
       "target_path": "/Users/chenyl/.agents/skills/officecli",
@@ -92,26 +71,12 @@
       "sync_status": "synced",
       "last_synced_at": "2026-05-12T18:25:16Z"
     },
-    "exp-logger": {
-      "source_path": "exp-logger",
-      "target_path": "/Users/chenyl/.agents/skills/exp-logger",
-      "mode": "symlink",
-      "sync_status": "synced",
-      "last_synced_at": "2026-04-19T16:36:40Z"
-    },
     "alan-pipeline": {
       "source_path": "alan-pipeline",
       "target_path": "/Users/chenyl/.agents/skills/alan-pipeline",
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-05-12T18:25:16Z"
-    },
-    "figure-checker": {
-      "source_path": "figure-checker",
-      "target_path": "/Users/chenyl/.agents/skills/figure-checker",
-      "mode": "symlink",
-      "sync_status": "synced",
-      "last_synced_at": "2026-04-19T06:42:49Z"
     },
     "cli-creator": {
       "source_path": "cli-creator",
