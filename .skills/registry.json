@@ -1987,6 +1987,40 @@
       "upstream_path": ".skills/upstream/siyuan-cli",
       "managed_revision": "sha256:197b0d23aa42505dd5b540c3acd4f1b10093387986bec5f31046ec2de826fb70",
       "last_updated_at": "2026-06-08T17:49:19Z"
+    },
+    "codex-ppt": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/codex-ppt",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-06-11T07:39:19Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/codex-ppt",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-06-11T07:39:19Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/codex-ppt",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-06-11T07:39:19Z"
+        }
+      },
+      "display_name": "codex-ppt",
+      "description": "从文章、报告、论文、笔记或大纲生成视觉统一的全页图片式 PPT/PPTX 演示文稿；适合需要强视觉风格、统一版式和可直接汇报的 slides。",
+      "status": "managed",
+      "risk_status": "warned",
+      "managed_dirty": false,
+      "upstream_enabled": true,
+      "report_path": ".skills/reports/codex-ppt.md",
+      "source_path": ".skills/sources/codex-ppt.json",
+      "skill_path": "codex-ppt",
+      "upstream_path": ".skills/upstream/codex-ppt",
+      "managed_revision": "sha256:507e03b28b37d1a603ce7ce5edf5f8aca258e861d7784e8e4ef75d54f1743b1d",
+      "last_updated_at": "2026-06-11T07:39:18Z"
     }
   }
 }

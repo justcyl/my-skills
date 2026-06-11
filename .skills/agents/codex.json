@@ -196,6 +196,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-06-08T17:49:19Z"
+    },
+    "codex-ppt": {
+      "source_path": "codex-ppt",
+      "target_path": "/Users/chenyl/.codex/skills/codex-ppt",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-06-11T07:39:19Z"
     }
   }
 }
