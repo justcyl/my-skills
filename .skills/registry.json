@@ -1567,12 +1567,6 @@
     },
     "pi-subagent": {
       "distribution": {
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/pi-subagent",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-05-12T18:25:16Z"
-        },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/pi-subagent",
           "mode": "symlink",
@@ -1593,6 +1587,7 @@
       "managed_revision": "sha256:3302f29430822463759146ca598ad3cc35e2de99fadc51c3225b617f760e403a",
       "last_updated_at": "2026-05-12T18:24:57Z",
       "distribution_disabled": [
+        "claude-code",
         "codex"
       ]
     },
@@ -1647,12 +1642,6 @@
     },
     "image-gen": {
       "distribution": {
-        "claude-code": {
-          "target_path": "/Users/chenyl/.claude/skills/image-gen",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-05-12T18:25:16Z"
-        },
         "agents": {
           "target_path": "/Users/chenyl/.agents/skills/image-gen",
           "mode": "symlink",
@@ -1673,6 +1662,7 @@
       "managed_revision": "sha256:df3800ca134565b53b7c99f63e5019d5b6894ecb05d539f48be822da2be871a4",
       "last_updated_at": "2026-05-12T18:24:57Z",
       "distribution_disabled": [
+        "claude-code",
         "codex"
       ]
     },
