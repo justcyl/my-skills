@@ -154,6 +154,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-06-11T07:39:19Z"
+    },
+    "amap": {
+      "source_path": "amap",
+      "target_path": "/Users/chenyl/.claude/skills/amap",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-06-11T09:03:29Z"
     }
   }
 }

@@ -1835,6 +1835,40 @@
       "upstream_path": ".skills/upstream/codex-ppt",
       "managed_revision": "sha256:507e03b28b37d1a603ce7ce5edf5f8aca258e861d7784e8e4ef75d54f1743b1d",
       "last_updated_at": "2026-06-11T07:39:18Z"
+    },
+    "amap": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/amap",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-06-11T09:03:29Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/amap",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-06-11T09:03:29Z"
+        },
+        "agents": {
+          "target_path": "/Users/chenyl/.agents/skills/amap",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-06-11T09:03:29Z"
+        }
+      },
+      "display_name": "amap",
+      "description": "通过脚本直连高德 Web Service API 完成地理编码、逆地理编码、IP 定位、天气、路径规划、距离测量和 POI 查询。用户要求“高德/AMap 查询”“路线规划”“地理编码”“POI 搜索”或需要用命令行脚本调用高德 API 时使用。",
+      "status": "managed",
+      "risk_status": "warned",
+      "managed_dirty": false,
+      "upstream_enabled": true,
+      "report_path": ".skills/reports/amap.md",
+      "source_path": ".skills/sources/amap.json",
+      "skill_path": "amap",
+      "upstream_path": ".skills/upstream/amap",
+      "managed_revision": "sha256:51a3244c61171e1f25b9f771a36bb18eea7e983319999e81595500cb8e942524",
+      "last_updated_at": "2026-06-11T09:03:29Z"
     }
   }
 }
