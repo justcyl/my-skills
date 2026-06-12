@@ -161,6 +161,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-06-11T09:03:29Z"
+    },
+    "anti-fable": {
+      "source_path": "anti-fable",
+      "target_path": "/Users/chenyl/.claude/skills/anti-fable",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-06-12T15:06:58Z"
     }
   }
 }

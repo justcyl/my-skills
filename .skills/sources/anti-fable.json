@@ -1,0 +1,17 @@
+{
+  "skill_id": "anti-fable",
+  "display_name": "anti-fable",
+  "skill_path": "anti-fable",
+  "source_type": "github",
+  "source": "https://github.com/HughYau/anti-fable",
+  "source_url": "https://github.com/HughYau/anti-fable.git",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": true,
+  "upstream_path": ".skills/upstream/anti-fable",
+  "last_imported_at": "2026-06-12T15:06:57Z",
+  "upstream_revision": "sha256:d7b190758369061db31cc4b29083082e0151e1ad93e5317fd070387d989d9725",
+  "managed_revision": "sha256:2ca474bb18ea9b4625ef2713ca89baa18b8fa7cb959695355ef5e8d087388be2",
+  "managed_dirty": false
+}
