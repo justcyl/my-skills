@@ -1608,12 +1608,6 @@
     },
     "lark-paper-reader": {
       "distribution": {
-        "codex": {
-          "target_path": "/Users/chenyl/.codex/skills/lark-paper-reader",
-          "mode": "symlink",
-          "sync_status": "synced",
-          "last_synced_at": "2026-05-12T18:25:16Z"
-        },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/lark-paper-reader",
           "mode": "symlink",
@@ -1638,7 +1632,10 @@
       "skill_path": "lark-paper-reader",
       "upstream_path": ".skills/upstream/lark-paper-reader",
       "managed_revision": "sha256:47fad1028b5cc5a412e79b99ffe9f2b4a6b9546888a83ed19b785e078bf56e97",
-      "last_updated_at": "2026-05-12T18:24:57Z"
+      "last_updated_at": "2026-06-14T15:58:08Z",
+      "distribution_disabled": [
+        "codex"
+      ]
     },
     "image-gen": {
       "distribution": {
