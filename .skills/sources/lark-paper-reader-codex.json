@@ -1,0 +1,17 @@
+{
+  "skill_id": "lark-paper-reader-codex",
+  "display_name": "lark-paper-reader-codex",
+  "skill_path": "lark-paper-reader-codex",
+  "source_type": "local-created",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/lark-paper-reader-codex",
+  "last_imported_at": "2026-06-14T15:48:49Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:2fd8813431c5fce516a6ae1e57c93ee2f6f75b28595d7492a172309aab89a454",
+  "managed_dirty": false
+}

@@ -168,6 +168,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-06-12T15:06:58Z"
+    },
+    "lark-paper-reader-codex": {
+      "source_path": "lark-paper-reader-codex",
+      "target_path": "/Users/chenyl/.codex/skills/lark-paper-reader-codex",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-06-14T15:48:50Z"
     }
   }
 }
