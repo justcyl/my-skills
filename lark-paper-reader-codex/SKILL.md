@@ -1,6 +1,6 @@
 ---
 name: lark-paper-reader-codex
-description: Codex 专用：将学术论文整理为飞书注释文档。触发语境：帮我读/翻译这篇论文、上传到飞书、arxiv://xxx 注释、给 paper 做 Codex 版飞书笔记。
+description: Codex 专用：将学术论文整理为飞书原文翻译或注释文档。触发语境：帮我原文翻译/逐段翻译这篇论文、上传到飞书、arxiv://xxx 注释、给 paper 做 Codex 版飞书笔记。
 metadata:
   requires:
     bins: ["lark-cli"]
@@ -9,7 +9,7 @@ metadata:
 
 # lark-paper-reader-codex
 
-把一篇论文整理成可直接阅读的飞书注释文档：中文正文、原图、公式、术语解释、导读 callout、关键参考文献和必要的代码映射。这个版本面向 Codex 执行，不使用 Pi、Herdr pane 或固定模型子代理。
+把一篇论文整理成可直接阅读的飞书原文翻译或注释文档。默认优先输出逐段忠实翻译：中文正文、原图、公式、术语表，严格保留章节层级与论证顺序；导读 callout、关键参考文献和代码映射只在用户明确要求时补充。这个版本面向 Codex 执行，不使用 Pi、Herdr pane 或固定模型子代理。
 
 ## When To Use
 
@@ -22,6 +22,14 @@ metadata:
 - 不调用 `pi --print`、Herdr pane、`wait_agent` 或 Pi 专用模型。长段落摘要、视觉检查和代码阅读由 Codex 自己分批完成；可并行的本地读取用 Codex 工具并行。
 - 每一步都留下可恢复的 checkpoint：`metadata.json`、`glossary.md`、`translated.md`、`figures.json`、`annotations.json`、`qc-report.md`。
 - 若发现已有同一论文的飞书文档，先向用户展示已有链接并暂停，除非用户明确要求重新创建。
+
+## Translation Contract
+
+- 用户只要说“翻译 / 原文翻译 / 逐段翻译 / 忠实翻译”，默认进入 **Strict Translation Mode**。
+- Strict Translation Mode 下，`translated.md` 必须以原文结构为准：按章节、段落、列表、图注、表注、附录原序翻译，不主动改写、不主动总结、不主动补背景。
+- 严禁默认加入导读 callout、阅读路线、问题清单、长篇解释、实现映射或额外评论。
+- 术语可以统一译名，但不要把术语表内容扩写进正文；正文只负责翻译原文，不负责讲解原文。
+- 只有当用户明确要求“注释 / 导读 / 背景 / 代码映射 / 阅读提示”时，才在翻译之外追加阅读层。
 
 ## Input Normalization
 
@@ -60,7 +68,8 @@ metadata:
    - 建立 `glossary.md`：A 类使用中文共识译名，B 类首次出现写“中文（英文全称，缩写）”，C 类保留英文。
 
 5. **Translate**
-   - 写 `translated.md`，保留章节层级、公式 LaTeX、表格、图表占位和附录。
+   - 写 `translated.md`，默认执行逐段忠实翻译：保留章节层级、段落顺序、公式 LaTeX、表格、图表占位和附录。
+   - 不要主动改写成总结、导读、解读或评论。
    - 独立公式保留 `$$...$$`，行内公式保留 `$...$`；不要转成 Unicode 数学符号。
    - 在图所在位置写稳定占位符，如 `[图1位置: <image-file>]`，后续插图后删除。
    - 长文分批写入文件，但不要依赖某个特定 agent 的 `write` 工具说明。
@@ -69,6 +78,7 @@ metadata:
    - 用 `lark-cli docs +create --api-version v2 --doc-format markdown --content @translated.md --parent-position my_library --as user` 创建文档。
    - 创建后用 `drive files patch` 修复内部标题和 Drive 文件名。
    - 在标题后插入论文元信息 callout：标题、作者、年份、arXiv/DOI、PDF 链接、创建时间。
+   - 如果是 Strict Translation Mode，元信息之外不要自动加导读 callout。
    - Fetch XML 验证公式实际状态；如果公式仍是字面 `$...$` 或 `$$...$$`，按 `references/lark-doc-rules.md` 修复。
 
 7. **Insert Figures**
@@ -78,6 +88,7 @@ metadata:
    - 插入完成后 fetch XML 删除所有 `[图X位置...]` 占位符块。
 
 8. **Add Reading Layer**
+   - 仅在用户明确要求注释版或导读版时执行。
    - 插入导读 callout：核心问题、作者答案、阅读路线、预备知识。
    - 在方法和实验部分添加 callout：
      - 公式后加直觉解释。
@@ -110,6 +121,7 @@ metadata:
 最终回复包含：
 
 - 飞书文档标题和链接。
+- 是否为 Strict Translation Mode 以及是否额外添加注释层。
 - 是否发现重复文档，以及用户是否要求重建。
 - 图片数量、评论数量、callout 覆盖简报。
 - QC 结果和是否完成 PDF/PNG 视觉检查。

@@ -10,7 +10,7 @@
 
 ## Summary
 
-Codex 专用：将学术论文整理为飞书注释文档。触发语境：帮我读/翻译这篇论文、上传到飞书、arxiv://xxx 注释、给 paper 做 Codex 版飞书笔记。
+Codex 专用：将学术论文整理为飞书原文翻译或注释文档。触发语境：帮我原文翻译/逐段翻译这篇论文、上传到飞书、arxiv://xxx 注释、给 paper 做 Codex 版飞书笔记。
 
 ## Risk Findings
 

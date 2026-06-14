@@ -1907,11 +1907,11 @@
           "target_path": "/Users/chenyl/.codex/skills/lark-paper-reader-codex",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-06-14T15:48:50Z"
+          "last_synced_at": "2026-06-14T16:30:26Z"
         }
       },
       "display_name": "lark-paper-reader-codex",
-      "description": "Codex 专用：将学术论文整理为飞书注释文档。触发语境：帮我读/翻译这篇论文、上传到飞书、arxiv://xxx 注释、给 paper 做 Codex 版飞书笔记。",
+      "description": "Codex 专用：将学术论文整理为飞书原文翻译或注释文档。触发语境：帮我原文翻译/逐段翻译这篇论文、上传到飞书、arxiv://xxx 注释、给 paper 做 Codex 版飞书笔记。",
       "status": "managed",
       "risk_status": "warned",
       "managed_dirty": false,
@@ -1920,8 +1920,8 @@
       "source_path": ".skills/sources/lark-paper-reader-codex.json",
       "skill_path": "lark-paper-reader-codex",
       "upstream_path": ".skills/upstream/lark-paper-reader-codex",
-      "managed_revision": "sha256:2fd8813431c5fce516a6ae1e57c93ee2f6f75b28595d7492a172309aab89a454",
-      "last_updated_at": "2026-06-14T15:48:49Z",
+      "managed_revision": "sha256:52798244f71a2651d6f3e7a2efdeeafcd0e6856a19cc00825dfa7c19ae898b44",
+      "last_updated_at": "2026-06-14T16:30:26Z",
       "distribution_disabled": [
         "claude-code",
         "agents"
