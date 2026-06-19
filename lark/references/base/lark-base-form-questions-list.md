@@ -1,6 +1,6 @@
 # base +form-questions-list
 
-> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
+> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../SKILL.md) 了解认证、全局参数和安全规则。
 
 列出多维表格表单/问卷中的所有问题。只读操作，不修改任何数据。
 
@@ -80,5 +80,5 @@ lark-cli base +form-questions-list \
 
 ## 参考
 
-- [lark-base](../SKILL.md) — 多维表格全部命令
-- [lark-shared](../../lark-shared/SKILL.md) — 认证和全局参数
+- [lark-base](../../SKILL.md) — 多维表格全部命令
+- [lark-shared](../../SKILL.md) — 认证和全局参数

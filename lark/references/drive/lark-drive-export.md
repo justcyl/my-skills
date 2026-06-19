@@ -1,7 +1,7 @@
 
 # drive +export
 
-> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
+> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../SKILL.md) 了解认证、全局参数和安全规则。
 
 把 `doc` / `docx` / `sheet` / `bitable` 导出到本地文件。这个 shortcut 内置有限轮询：
 
@@ -104,5 +104,5 @@ lark-cli drive +export-download \
 
 ## 参考
 
-- [lark-drive](../SKILL.md) -- 云空间全部命令
-- [lark-shared](../../lark-shared/SKILL.md) -- 认证和全局参数
+- [lark-drive](../../SKILL.md) -- 云空间全部命令
+- [lark-shared](../../SKILL.md) -- 认证和全局参数

@@ -1,7 +1,7 @@
 
 # sheets +write（写入单元格 / 覆盖写入）
 
-> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
+> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../SKILL.md) 了解认证、全局参数和安全规则。
 
 本 skill 对应 shortcut：`lark-cli sheets +write`。
 
@@ -57,4 +57,4 @@ JSON，包含：
 ## 参考
 
 - [lark-sheets-read](lark-sheets-read.md) — 写入前可先 read 验证范围
-- [lark-shared](../../lark-shared/SKILL.md) — 认证和全局参数
+- [lark-shared](../../SKILL.md) — 认证和全局参数

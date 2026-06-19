@@ -1,8 +1,8 @@
 
 # sheets +find（查找单元格）
 
-> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
-> **边界说明：** `sheets +find` 不是云空间搜索，只在一个已知 spreadsheet 内查找单元格内容。如果还不知道目标 spreadsheet 是哪一个，先用 [`lark-doc`](../../lark-doc/SKILL.md) 的 `docs +search` 定位文件；`docs +search` 的结果里会直接返回 `SHEET` 类型，再回到 `sheets +info` / `sheets +find`。
+> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../SKILL.md) 了解认证、全局参数和安全规则。
+> **边界说明：** `sheets +find` 不是云空间搜索，只在一个已知 spreadsheet 内查找单元格内容。如果还不知道目标 spreadsheet 是哪一个，先用 [`lark-doc`](../../SKILL.md) 的 `docs +search` 定位文件；`docs +search` 的结果里会直接返回 `SHEET` 类型，再回到 `sheets +info` / `sheets +find`。
 
 本 skill 对应 shortcut：`lark-cli sheets +find`。
 
@@ -59,4 +59,4 @@ JSON，包含：
 ## 参考
 
 - [lark-sheets-info](lark-sheets-info.md)
-- [lark-shared](../../lark-shared/SKILL.md)
+- [lark-shared](../../SKILL.md)

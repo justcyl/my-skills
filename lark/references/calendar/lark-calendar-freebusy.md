@@ -1,7 +1,7 @@
 
 # calendar +freebusy
 
-> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md)。
+> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../SKILL.md)。
 
 查询用户主日历的忙闲信息，返回指定时间范围内的忙碌时段列表和rsvp的状态。
 
@@ -121,4 +121,4 @@ lark-cli calendar +freebusy --start 2026-03-12 --user-id ou_member_b
 - [lark-calendar-agenda](lark-calendar-agenda.md) — 查看日程安排
 - [lark-calendar-create](lark-calendar-create.md) — 创建日程
 - [lark-calendar-suggestion](lark-calendar-suggestion.md) — 根据非明确时间或一段时间范围，推荐多个可用时间块方案
-- [lark-calendar](../SKILL.md) — 日历完整 API
+- [lark-calendar](../../SKILL.md) — 日历完整 API

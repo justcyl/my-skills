@@ -336,6 +336,7 @@ DSL 的语法是严格白名单，不能写原生 CSS 属性（不支持 `alignS
 先出骨架图导出坐标，再基于坐标补充连线和注解：
 
 ```bash
+# 仅在用户明确同意使用外部 npm helper 后运行
 npx -y @larksuite/whiteboard-cli@^0.2.10 -i skeleton.json -o step1.png -l coords.json
 ```
 

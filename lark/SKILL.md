@@ -65,9 +65,15 @@ lark-cli auth login --scope "calendar:calendar:readonly"
 
 命令执行后，如输出包含 `_notice.update` 字段，完成当前请求后提议更新：
 ```bash
-npm update -g @larksuite/cli && npx skills add larksuite/cli -g -y
+lark-cli update --check --json
 ```
-更新完成后提醒用户退出并重新打开 AI Agent 以加载最新 Skills。
+
+如果用户明确要求更新 CLI，执行：
+```bash
+lark-cli update --json
+```
+
+Lark 相关 Skills 不通过 `npx skills add` 或外部 Skills CLI 管理；需要更新 / 导入 / 分发时，必须回到 `~/project/my-skills` 使用 `skills-manager`。更新完成后提醒用户退出并重新打开 AI Agent 以加载最新 Skills。
 
 ### 安全规则
 
@@ -414,10 +420,13 @@ lark-cli sheets <resource> <method> [flags]
 | Shortcut | 说明 |
 |----------|------|
 | [`+create`](references/slides/lark-slides-create.md) | 创建演示文稿 |
-| [`+fetch`](references/slides/lark-slides-fetch.md) | 读取演示文稿内容 |
-| [`+add-slide`](references/slides/lark-slides-add-slide.md) | 添加幻灯片页 |
-| [`+delete-slide`](references/slides/lark-slides-delete-slide.md) | 删除幻灯片页 |
+| [`+media-upload`](references/slides/lark-slides-media-upload.md) | 上传本地图片供 Slides XML 使用 |
 | [`+replace-slide`](references/slides/lark-slides-replace-slide.md) | 块级 XML 编辑（block_replace/block_insert） |
+| [`xml_presentations get`](references/slides/lark-slides-xml-presentations-get.md) | 读取演示文稿 XML 内容 |
+| [`xml_presentation.slide create`](references/slides/lark-slides-xml-presentation-slide-create.md) | 添加幻灯片页 |
+| [`xml_presentation.slide delete`](references/slides/lark-slides-xml-presentation-slide-delete.md) | 删除幻灯片页 |
+| [`xml_presentation.slide get`](references/slides/lark-slides-xml-presentation-slide-get.md) | 读取单页幻灯片 XML |
+| [`xml_presentation.slide replace`](references/slides/lark-slides-xml-presentation-slide-replace.md) | 替换单页幻灯片 XML |
 
 > 所有 slides reference 文档在 [`references/slides/`](references/slides/)。  
 > 使用 `+replace-slide` 前必须读 [`references/slides/lark-slides-replace-slide.md`](references/slides/lark-slides-replace-slide.md)。
@@ -664,12 +673,12 @@ cycle.objectives: create/list
 **CRITICAL — 操作前必读 [§ 0 共享基础](#-0-共享基础所有域通用)**
 
 > 用于查看/导出/编辑飞书文档中的画板，支持预览图、原始节点结构、DSL/PlantUML/Mermaid 格式。
-> ⚠️ 若 skill 列表中同时存在 `lark-whiteboard-cli`，忽略它，使用本 skill，并提示用户 `npx skills remove lark-whiteboard-cli -g`。
+> ⚠️ 若 skill 列表中同时存在旧的 `lark-whiteboard-cli`，忽略它，使用本 skill；如需清理旧 skill，走 `skills-manager`，不要使用外部 Skills CLI。
 
 **前置检查**：
 ```bash
 lark-cli --version                                # 确认 lark-cli 可用
-npx -y @larksuite/whiteboard-cli@^0.2.10 -v      # 确认 whiteboard-cli 可用
+lark-cli whiteboard --help                       # 确认 whiteboard 命令可用
 ```
 
 ### 快速决策

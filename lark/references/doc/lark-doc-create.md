@@ -1,7 +1,7 @@
 # docs +create（创建飞书云文档）
 
 > **前置条件（MUST READ）：** 生成文档内容前，必须先用 Read 工具读取以下文件，缺一不可：
-> 1. [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) — 认证、全局参数和安全规则
+> 1. [`../lark-shared/SKILL.md`](../../SKILL.md) — 认证、全局参数和安全规则
 > 2. [`lark-doc-xml.md`](lark-doc-xml.md) — XML 语法规则（使用 Markdown 格式时改读 [`lark-doc-md.md`](lark-doc-md.md)）
 > 3. [`lark-doc-style.md`](style/lark-doc-style.md) — 排版指南（元素选择、丰富度规则、颜色语义）
 > 4. [`lark-doc-create-workflow.md`](style/lark-doc-create-workflow.md) — 从零创作工作流（Code-Act Loop、并行执行策略）
@@ -85,5 +85,5 @@ lark-cli docs +create --api-version v2 --doc-format markdown --content $'# 项�
 - [`lark-doc-fetch.md`](lark-doc-fetch.md) — 获取文档
 - [`lark-doc-update.md`](lark-doc-update.md) — 更新文档
 - [`lark-doc-media-insert.md`](lark-doc-media-insert.md) — 插入图片/文件到文档
-- [`../../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) — 认证和全局参数
+- [`../../lark-shared/SKILL.md`](../../SKILL.md) — 认证和全局参数
 

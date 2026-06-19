@@ -1,6 +1,6 @@
 # whiteboard +update（更新画板）
 
-> **前置条件：** 先阅读 [`../../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
+> **前置条件：** 先阅读 [`../../SKILL.md`](../../SKILL.md) 的 § 0 共享基础，了解认证、全局参数和安全规则。
 
 更新画板内容，支持三种输入格式：
 
@@ -26,7 +26,7 @@
 
 思维导图，时序图，类图，饼图，流程图等图表推荐使用 Mermaid/PlantUML 语法绘制。
 
-而当需要绘制架构图，组织架构图，泳道图，对比图，鱼骨图，柱状图，折线图，树状图，漏斗图，金字塔图，循环/飞轮图，里程碑或其他较为复杂的图表时，推荐参考 [§ 渲染 & 写入画板](../SKILL.md#渲染--写入画板) 使用 whiteboard-cli 工具创作。
+当需要绘制架构图、组织架构图、泳道图、对比图、鱼骨图、柱状图、折线图、树状图、漏斗图、金字塔图、循环/飞轮图、里程碑或其他较为复杂的图表时，先判断 Mermaid/PlantUML 能否表达。若确需使用外部 whiteboard-cli helper 生成 OpenAPI raw 数据，必须先向用户说明这是外部 npm helper，不属于 Skills 管理入口，并取得明确同意。
 
 ## 示例
 
@@ -45,7 +45,7 @@ EOF
 cat diagram.puml | lark-cli whiteboard +update \
   --whiteboard-token <画板Token> \
   --input_format plantuml --source -\
-  --overwrite --yes --as user
+  --overwrite --as user
 ```
 
 ### 示例 2：使用 Mermaid 代码更新画板（从文件读取）
@@ -65,26 +65,26 @@ lark-cli whiteboard +update \
   --whiteboard-token <画板Token> \
   --input_format mermaid \
   --source @./diagram.mmd \
-  --overwrite --yes --as user
+  --overwrite --as user
 ```
 
-### 示例 3：使用 whiteboard-cli 生成 OpenAPI 格式并写入画板
+### 示例 3：用户明确同意后，使用外部 helper 生成 OpenAPI 格式并写入画板
 
-whiteboard-cli 工具的具体用法请参考 [§ 渲染 & 写入画板](../SKILL.md#渲染--写入画板)
+默认不要走这条路径。只有在 Mermaid/PlantUML 不足以表达需求，且用户明确同意使用外部 npm helper 时，才可运行。
 
 ```bash
-# 使用 whiteboard-cli 生成 OpenAPI 格式并通过管道传递
+# 使用外部 helper 生成 OpenAPI 格式并通过管道传递
 npx -y @larksuite/whiteboard-cli@^0.2.10 -i <产物文件> --to openapi --format json \
   | lark-cli whiteboard +update \
     --whiteboard-token <画板Token> \
     --source - --input_format raw \
     --idempotent-token <10+字符唯一串> \
-    --yes --as user
+    --as user
 ```
 
-### 示例 4：先生成产物文件，再从文件读取更新
+### 示例 4：用户明确同意后，先生成产物文件，再从文件读取更新
 
-whiteboard-cli 工具的具体用法请参考 [§ 渲染 & 写入画板](../SKILL.md#渲染--写入画板)
+默认不要走这条路径。只有在 Mermaid/PlantUML 不足以表达需求，且用户明确同意使用外部 npm helper 时，才可运行。
 
 ```bash
 # 生成 OpenAPI 格式到文件
@@ -96,5 +96,5 @@ lark-cli whiteboard +update \
   --idempotent-token <10+字符唯一串> \
   --input_format raw \
   --source @./temp.json \
-  --overwrite --yes --as user
+  --overwrite --as user
 ```

@@ -1,7 +1,7 @@
 
 # minutes +download
 
-> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
+> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../SKILL.md) 了解认证、全局参数和安全规则。
 
 下载妙记的音视频媒体文件到本地，或获取有效期 1 天的下载链接。只读操作。
 
@@ -128,10 +128,10 @@ API 限流 5 次/秒，批量下载时需注意控制频率。
 - 默认落点 `./minutes/{minute_token}/` 与 `vc +notes` 的逐字稿共享同一目录，方便 Agent 聚合同一会议的所有产物。
 - 单 token 模式下 `--output` 若传入已存在目录（如 `--output ./existing-dir`），等价于 `--output-dir`，文件落入该目录（cp 语义）。
 - 批量模式下 `--output` 不接受已存在的文件路径（会报错），应改用 `--output-dir`。
-- 如需获取妙记的纪要内容（逐字稿、AI 总结等），请使用 [vc +notes](../../lark-vc/references/lark-vc-notes.md)。
+- 如需获取妙记的纪要内容（逐字稿、AI 总结等），请使用 [vc +notes](../vc/lark-vc-notes.md)。
 
 ## 参考
 
-- [lark-minutes](../SKILL.md) — 妙记全部命令
-- [lark-vc-notes](../../lark-vc/references/lark-vc-notes.md) — 会议纪要查询
-- [lark-shared](../../lark-shared/SKILL.md) — 认证和全局参数
+- [lark-minutes](../../SKILL.md) — 妙记全部命令
+- [lark-vc-notes](../vc/lark-vc-notes.md) — 会议纪要查询
+- [lark-shared](../../SKILL.md) — 认证和全局参数

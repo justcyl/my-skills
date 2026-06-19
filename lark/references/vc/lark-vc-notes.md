@@ -1,7 +1,7 @@
 
 # vc +notes
 
-> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
+> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../SKILL.md) 了解认证、全局参数和安全规则。
 
 查询会议纪要，支持通过会议 ID、妙记 Token 或日程事件 ID 获取纪要文档、逐字稿、AI 总结、待办和章节。只读操作。
 
@@ -121,6 +121,6 @@ lark-cli vc +notes --meeting-ids 69xxxxxxxxxxxxx28 --dry-run
 
 ## 参考
 
-- [lark-vc](../SKILL.md) — 视频会议全部命令
+- [lark-vc](../../SKILL.md) — 视频会议全部命令
 - [lark-vc-search](lark-vc-search.md) — 搜索历史会议（获取 meeting_id）
-- [lark-shared](../../lark-shared/SKILL.md) — 认证和全局参数
+- [lark-shared](../../SKILL.md) — 认证和全局参数

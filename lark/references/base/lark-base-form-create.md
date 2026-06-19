@@ -1,6 +1,6 @@
 # base +form-create
 
-> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
+> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../SKILL.md) 了解认证、全局参数和安全规则。
 
 在多维表格数据表中创建新表单。
 
@@ -83,5 +83,5 @@ lark-cli base +form-create \
 
 ## 参考
 
-- [lark-base](../SKILL.md) — 多维表格全部命令
-- [lark-shared](../../lark-shared/SKILL.md) — 认证和全局参数
+- [lark-base](../../SKILL.md) — 多维表格全部命令
+- [lark-shared](../../SKILL.md) — 认证和全局参数

@@ -190,5 +190,5 @@ lark-cli calendar +create \
 - [lark-calendar-freebusy.md](./lark-calendar-freebusy.md)
 - [lark-calendar-suggestion.md](./lark-calendar-suggestion.md)
 - [lark-calendar-create.md](./lark-calendar-create.md)
-- [lark-shared](../../lark-shared/SKILL.md)
-- [lark-calendar](../SKILL.md)
+- [lark-shared](../../SKILL.md)
+- [lark-calendar](../../SKILL.md)

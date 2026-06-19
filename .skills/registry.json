@@ -1503,19 +1503,19 @@
           "target_path": "/Users/chenyl/.codex/skills/lark",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-06-19T11:57:17Z"
+          "last_synced_at": "2026-06-19T13:24:26Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/lark",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-06-19T11:57:17Z"
+          "last_synced_at": "2026-06-19T13:24:26Z"
         },
         "pi": {
           "target_path": "/Users/chenyl/.pi/agent/skills/lark",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-06-19T11:57:17Z"
+          "last_synced_at": "2026-06-19T13:24:26Z"
         }
       },
       "display_name": "lark",
@@ -1528,8 +1528,8 @@
       "source_path": ".skills/sources/lark.json",
       "skill_path": "lark",
       "upstream_path": ".skills/upstream/lark",
-      "managed_revision": "sha256:3b717794d4ad0a2c6b77c0ebfb22509a798b23231d8398a34ef951ab4ea343d8",
-      "last_updated_at": "2026-06-19T11:57:03Z"
+      "managed_revision": "sha256:faf7e051d479b3ebc71bc3d758ad777e153c53319e8177e5d60ac4ea14ae7a28",
+      "last_updated_at": "2026-06-19T13:24:21Z"
     },
     "axonhub": {
       "distribution": {

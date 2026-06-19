@@ -2,7 +2,7 @@
 # docs +update（更新飞书云文档）
 
 > **前置条件（MUST READ）：** 生成文档内容前，必须先用 Read 工具读取以下文件，缺一不可：
-> 1. [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) — 认证、全局参数和安全规则
+> 1. [`../lark-shared/SKILL.md`](../../SKILL.md) — 认证、全局参数和安全规则
 > 2. [`lark-doc-xml.md`](lark-doc-xml.md) — XML 语法规则（使用 Markdown 格式时改读 [`lark-doc-md.md`](lark-doc-md.md)）
 > 3. [`lark-doc-style.md`](style/lark-doc-style.md) — 排版指南（元素选择、丰富度规则、颜色语义）
 > 4. [`lark-doc-update-workflow.md`](style/lark-doc-update-workflow.md) — 改写增强工作流（Code-Act Loop、并行执行策略）
@@ -221,7 +221,7 @@ lark-cli docs +update --api-version v2 --doc "<doc_id>" --command str_replace \
 
 ## 画板处理
 
-> **`docs +update` 不能直接编辑已有画板的内容。** 本命令只能**新增**画板块；要修改已有画板，先用 `docs +fetch` 取到 `<whiteboard token="...">`，再切到 [`lark-whiteboard`](../../lark-whiteboard/SKILL.md) 用 `whiteboard +update` 写入。
+> **`docs +update` 不能直接编辑已有画板的内容。** 本命令只能**新增**画板块；要修改已有画板，先用 `docs +fetch` 取到 `<whiteboard token="...">`，再切到 [`lark-whiteboard`](../../SKILL.md) 用 `whiteboard +update` 写入。
 
 画板的语法选型与插入示例见 [`lark-doc-style.md`](style/lark-doc-style.md) 的「画板语法与插入」章节。
 
@@ -249,4 +249,4 @@ lark-cli docs +update --api-version v2 --doc "<doc_id>" --command str_replace \
 - [`lark-doc-fetch.md`](lark-doc-fetch.md) — 获取文档
 - [`lark-doc-create.md`](lark-doc-create.md) — 创建文档
 - [`lark-doc-media-insert.md`](lark-doc-media-insert.md) — 插入图片/文件到文档
-- [`../../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) — 认证和全局参数
+- [`../../lark-shared/SKILL.md`](../../SKILL.md) — 认证和全局参数

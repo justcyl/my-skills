@@ -1,7 +1,7 @@
 
 # vc +search
 
-> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
+> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../SKILL.md) 了解认证、全局参数和安全规则。
 
 搜索已结束的历史会议记录，支持关键词、时间范围、组织者、参与者以及会议室等多条件过滤。只读操作，不修改任何会议数据。
 
@@ -78,7 +78,7 @@ lark-cli vc +search --query "周会" --format json
 
 ### 2. 仅搜索历史会议
 
-`vc +search` 只能搜索已结束的历史会议记录，不用于查询未来日程。查询未来会议安排请使用 [lark-calendar](../../lark-calendar/SKILL.md)。
+`vc +search` 只能搜索已结束的历史会议记录，不用于查询未来日程。查询未来会议安排请使用 [lark-calendar](../../SKILL.md)。
 
 ### 3. 仅支持 user 身份
 
@@ -143,7 +143,7 @@ lark-cli vc +notes --meeting-ids <MEETING_ID>
 |---------|---------|---------|
 | 命令直接报错，要求提供过滤条件 | 没有传入 `--query`、时间范围或任何过滤 ID | 至少补充一个过滤条件后重试 |
 | 时间参数校验失败 | `--start` 或 `--end` 格式不合法 | 改用 ISO 8601 或 `YYYY-MM-DD` |
-| 搜不到未来会议 | `vc +search` 只查历史会议 | 改用 [lark-calendar](../../lark-calendar/SKILL.md) 查询未来日程 |
+| 搜不到未来会议 | `vc +search` 只查历史会议 | 改用 [lark-calendar](../../SKILL.md) 查询未来日程 |
 | 权限不足 | 未授权 `vc:meeting.search:read` | 使用 `auth login` 完成授权 |
 
 ## 提示
@@ -154,6 +154,6 @@ lark-cli vc +notes --meeting-ids <MEETING_ID>
 
 ## 参考
 
-- [lark-vc](../SKILL.md) -- 视频会议全部命令
+- [lark-vc](../../SKILL.md) -- 视频会议全部命令
 - [lark-vc-notes](lark-vc-notes.md) -- 获取会议纪要
-- [lark-shared](../../lark-shared/SKILL.md) -- 认证和全局参数
+- [lark-shared](../../SKILL.md) -- 认证和全局参数

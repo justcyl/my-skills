@@ -1,7 +1,7 @@
 
 # sheets +batch-set-style（批量设置单元格样式）
 
-> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
+> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../SKILL.md) 了解认证、全局参数和安全规则。
 
 本 skill 对应 shortcut：`lark-cli sheets +batch-set-style`。
 
@@ -50,4 +50,4 @@ JSON，包含：
 ## 参考
 
 - [lark-sheets-set-style](lark-sheets-set-style.md) — 单范围设置样式
-- [lark-shared](../../lark-shared/SKILL.md) — 认证和全局参数
+- [lark-shared](../../SKILL.md) — 认证和全局参数

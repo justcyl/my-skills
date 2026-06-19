@@ -1,6 +1,6 @@
 # im reactions
 
-> **Prerequisite:** Read [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) first to understand authentication, global parameters, and safety rules.
+> **Prerequisite:** Read [`../lark-shared/SKILL.md`](../../SKILL.md) first to understand authentication, global parameters, and safety rules.
 
 This reference is the shared annotation target for the IM reaction APIs:
 
@@ -292,6 +292,6 @@ GoGoGo, ThanksFace, SaluteFace, Shrug, ClownFace, HappyDragon
 
 ## References
 
-- [lark-im](../SKILL.md) - all IM commands
-- [lark-shared](../../lark-shared/SKILL.md) - authentication and global parameters
+- [lark-im](../../SKILL.md) - all IM commands
+- [lark-shared](../../SKILL.md) - authentication and global parameters
 - Official emoji doc: `https://open.feishu.cn/document/uAjLw4CM/ukTMukTMukTM/reference/im-v1/message-reaction/emojis-introduce`

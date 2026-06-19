@@ -1,7 +1,7 @@
 
 # docs +fetch（获取飞书云文档）
 
-> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
+> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../SKILL.md) 了解认证、全局参数和安全规则。
 
 ## 命令
 
@@ -130,7 +130,7 @@ lark-cli docs +fetch --api-version v2 --doc Z1Fj...tnAc \
 
 ## 嵌入电子表格 / 多维表格
 
-返回中可能含 `<sheet>`、`<bitable>`、`<cite file-type="sheets|bitable">`。内部数据无法通过 `docs +fetch` 获取，提取 `token` 等属性后切到 [`lark-sheets`](../../lark-sheets/SKILL.md) / [`lark-base`](../../lark-base/SKILL.md) 下钻，详见 [SKILL.md 快速决策](../SKILL.md) 路由表。
+返回中可能含 `<sheet>`、`<bitable>`、`<cite file-type="sheets|bitable">`。内部数据无法通过 `docs +fetch` 获取，提取 `token` 等属性后切到 [`lark-sheets`](../../SKILL.md) / [`lark-base`](../../SKILL.md) 下钻，详见 [SKILL.md 快速决策](../../SKILL.md) 路由表。
 
 ## 参考
 
@@ -138,4 +138,4 @@ lark-cli docs +fetch --api-version v2 --doc Z1Fj...tnAc \
 - [lark-doc-update](lark-doc-update.md) — 更新文档
 - [lark-doc-media-preview](lark-doc-media-preview.md) — 预览素材
 - [lark-doc-media-download](lark-doc-media-download.md) — 下载素材/画板缩略图
-- [lark-shared](../../lark-shared/SKILL.md) — 认证和全局参数
+- [lark-shared](../../SKILL.md) — 认证和全局参数

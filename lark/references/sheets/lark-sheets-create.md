@@ -1,7 +1,7 @@
 
 # sheets +create（创建表格）
 
-> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
+> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../SKILL.md) 了解认证、全局参数和安全规则。
 
 本 skill 对应 shortcut：`lark-cli sheets +create`。
 
@@ -66,4 +66,4 @@ JSON，包含：
 
 - [lark-sheets-write](lark-sheets-write.md) — 后续覆盖写入
 - [lark-sheets-append](lark-sheets-append.md) — 后续追加写入
-- [lark-shared](../../lark-shared/SKILL.md)
+- [lark-shared](../../SKILL.md)

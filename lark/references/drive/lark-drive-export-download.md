@@ -1,7 +1,7 @@
 
 # drive +export-download
 
-> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
+> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../SKILL.md) 了解认证、全局参数和安全规则。
 
 根据导出任务产物的 `file_token` 下载本地文件。通常与 `drive +task_result --scenario export` 配合使用。
 
@@ -46,5 +46,5 @@ lark-cli drive +export-download \
 
 ## 参考
 
-- [lark-drive](../SKILL.md) -- 云空间全部命令
-- [lark-shared](../../lark-shared/SKILL.md) -- 认证和全局参数
+- [lark-drive](../../SKILL.md) -- 云空间全部命令
+- [lark-shared](../../SKILL.md) -- 认证和全局参数

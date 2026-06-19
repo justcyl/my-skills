@@ -1,7 +1,7 @@
 
 # drive +upload
 
-> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
+> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../SKILL.md) 了解认证、全局参数和安全规则。
 
 上传本地文件到飞书云空间。目标位置可以是 Drive 文件夹，也可以是 wiki 节点。
 
@@ -80,5 +80,5 @@ Shortcut 参数：
 
 ## 参考
 
-- [lark-drive](../SKILL.md) -- 云空间全部命令
-- [lark-shared](../../lark-shared/SKILL.md) -- 认证和全局参数
+- [lark-drive](../../SKILL.md) -- 云空间全部命令
+- [lark-shared](../../SKILL.md) -- 认证和全局参数

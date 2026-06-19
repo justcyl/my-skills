@@ -1,7 +1,7 @@
 
 # contact +search-user（搜索员工）
 
-> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
+> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../SKILL.md) 了解认证、全局参数和安全规则。
 
 通过关键词搜索员工（姓名/邮箱/手机号等），结果通常按亲密度排序。
 
@@ -36,4 +36,4 @@ lark-cli contact +search-user --query "张三" --format pretty
 
 ## 参考
 
-- [lark-shared](../../lark-shared/SKILL.md) — 认证和全局参数
+- [lark-shared](../../SKILL.md) — 认证和全局参数

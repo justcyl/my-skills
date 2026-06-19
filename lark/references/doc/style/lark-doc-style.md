@@ -50,7 +50,7 @@
 
 ### 画板语法与插入
 
-> **提醒：** `docs +update` 不能编辑已有画板内容；下面的语法都是**新增**画板块。修改已有画板需切到 [`lark-whiteboard`](../../../lark-whiteboard/SKILL.md)。
+> **提醒：** `docs +update` 不能编辑已有画板内容；下面的语法都是**新增**画板块。修改已有画板需切到 [`lark-whiteboard`](../../../SKILL.md)。
 
 #### 内嵌 Mermaid / PlantUML（首选）
 简单图直接用 `<whiteboard type="mermaid|plantuml">语法</whiteboard>`，作为 block 嵌入文档。
@@ -59,7 +59,7 @@
 需要架构图、对比图、组织架构等复杂结构时：
 1. 用 `<whiteboard type="blank"></whiteboard>` 通过 `docs +create` / `docs +update` 插入空白画板
 2. 从响应 `data.document.new_blocks` 中提取画板 `block_token`
-3. 切到 [`lark-whiteboard`](../../../lark-whiteboard/SKILL.md) skill 设计并上传 DSL
+3. 切到 [`lark-whiteboard`](../../../SKILL.md) skill 设计并上传 DSL
 
 更完整的协同流程见 [`lark-doc-whiteboard.md`](../lark-doc-whiteboard.md)。
 

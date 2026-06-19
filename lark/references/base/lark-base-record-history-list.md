@@ -1,6 +1,6 @@
 # base +record-history-list
 
-> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
+> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../SKILL.md) 了解认证、全局参数和安全规则。
 
 查询指定记录的变更历史。当前可执行命令为 `+record-history-list`，无 `+history-list` 别名。
 

@@ -1,6 +1,6 @@
 # base +record-search
 
-> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
+> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../SKILL.md) 了解认证、全局参数和安全规则。
 
 按关键词检索记录；CLI 侧通过 `--json` 透传请求体。
 

@@ -1,6 +1,6 @@
 # lark-doc 画板处理指南
 
-> **前置条件：** 先阅读 [`../../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
+> **前置条件：** 先阅读 [`../../lark-shared/SKILL.md`](../../SKILL.md) 了解认证、全局参数和安全规则。
 
 ## 两个 Skill 的职责边界
 
@@ -28,7 +28,7 @@
 
 ### 步骤 3：生成并写入画板内容
 
-读取 [`../../lark-whiteboard/SKILL.md`](../../lark-whiteboard/SKILL.md)，跳至"渲染 & 写入画板"章节，按其完整流程为每个 board_token 生成并写入图表内容。
+读取 [`../../lark-whiteboard/SKILL.md`](../../SKILL.md)，跳至"渲染 & 写入画板"章节，按其完整流程为每个 board_token 生成并写入图表内容。
 
 多个画板时依次处理，每个画板完成后再处理下一个。
 
@@ -63,4 +63,4 @@
 
 ## 关联参考
 
-- 画板查询/创作/修改/渲染写入：[`../../lark-whiteboard/SKILL.md`](../../lark-whiteboard/SKILL.md)
+- 画板查询/创作/修改/渲染写入：[`../../lark-whiteboard/SKILL.md`](../../SKILL.md)

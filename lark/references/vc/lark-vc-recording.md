@@ -1,7 +1,7 @@
 
 # vc +recording
 
-> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
+> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../SKILL.md) 了解认证、全局参数和安全规则。
 
 通过 meeting_id 或 calendar_event_id 查询对应的 minute_token。这是 VC 域和 Minutes 域之间的桥梁命令。只读操作。
 
@@ -135,7 +135,7 @@ lark-cli minutes +download --minute-token <minute_token>
 
 ## 参考
 
-- [lark-vc](../SKILL.md) — 视频会议全部命令
+- [lark-vc](../../SKILL.md) — 视频会议全部命令
 - [lark-vc-search](lark-vc-search.md) — 搜索历史会议（获取 meeting_id）
 - [lark-vc-notes](lark-vc-notes.md) — 获取会议纪要
-- [lark-shared](../../lark-shared/SKILL.md) — 认证和全局参数
+- [lark-shared](../../SKILL.md) — 认证和全局参数

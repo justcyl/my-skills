@@ -1,6 +1,6 @@
 # 飞书多维表格角色权限配置详解
 
-> **返回**: [SKILL.md](../SKILL.md) | **相关**: [role-create](lark-base-role-create.md) · [role-update](lark-base-role-update.md) · [role-get](lark-base-role-get.md)
+> **返回**: [SKILL.md](../../SKILL.md) | **相关**: [role-create](lark-base-role-create.md) · [role-update](lark-base-role-update.md) · [role-get](lark-base-role-get.md)
 
 本文档详细说明角色权限（AdvPermBaseRoleConfig）的完整 JSON 结构，供 `+role-create` 和 `+role-update` 构造 `--json` 参数时参考。
 

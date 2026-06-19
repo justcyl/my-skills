@@ -1,6 +1,6 @@
 # base +form-update
 
-> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
+> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../SKILL.md) 了解认证、全局参数和安全规则。
 
 更新多维表格数据表中指定表单的名称或描述。
 
@@ -78,5 +78,5 @@ lark-cli base +form-update \
 
 ## 参考
 
-- [lark-base](../SKILL.md) — 多维表格全部命令
-- [lark-shared](../../lark-shared/SKILL.md) — 认证和全局参数
+- [lark-base](../../SKILL.md) — 多维表格全部命令
+- [lark-shared](../../SKILL.md) — 认证和全局参数

@@ -1,7 +1,7 @@
 
 # base +data-query
 
-> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
+> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../SKILL.md) 了解认证、全局参数和安全规则。
 
 对多维表格数据进行聚合查询（分组、过滤、排序、聚合计算），基于以下语法的 JSON DSL：
 
@@ -369,7 +369,7 @@ value 使用预定义关键字机制，第一个元素为字符串常量名称�
 
 ## 参考
 
-- [lark-base](../SKILL.md) — 多维表格全部命令
-- [lark-shared](../../lark-shared/SKILL.md) — 认证和全局参数
+- [lark-base](../../SKILL.md) — 多维表格全部命令
+- [lark-shared](../../SKILL.md) — 认证和全局参数
 - [lark-base-cell-value.md](lark-base-cell-value.md) — CellValue 格式规范
 - [lark-base-shortcut-field-properties.md](lark-base-shortcut-field-properties.md) — shortcut 字段类型与 JSON 结构

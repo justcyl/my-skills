@@ -1,7 +1,7 @@
 
 # sheets +add-dimension（增加行列）
 
-> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
+> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../SKILL.md) 了解认证、全局参数和安全规则。
 
 本 skill 对应 shortcut：`lark-cli sheets +add-dimension`。
 
@@ -48,4 +48,4 @@ JSON，包含：
 
 - [lark-sheets-info](lark-sheets-info.md) — 查看当前行列数
 - [lark-sheets-delete-dimension](lark-sheets-delete-dimension.md) — 删除行列
-- [lark-shared](../../lark-shared/SKILL.md) — 认证和全局参数
+- [lark-shared](../../SKILL.md) — 认证和全局参数

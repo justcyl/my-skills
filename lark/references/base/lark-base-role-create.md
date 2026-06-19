@@ -1,6 +1,6 @@
 # base +role-create
 
-> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
+> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../SKILL.md) 了解认证、全局参数和安全规则。
 > 
 > **前置条件：** 需要base开启了高级权限，如果调用这个接口返回没有开启高级权限，可以参考 [`lark-base-advperm-enable.md`](lark-base-advperm-enable.md) 了解高级权限启用规则。
 
@@ -85,5 +85,5 @@ POST /open-apis/base/v3/bases/:base_token/roles
 
 ## 参考
 
-- [lark-base](../SKILL.md) — 多维表格全部命令
-- [lark-shared](../../lark-shared/SKILL.md) — 认证和全局参数
+- [lark-base](../../SKILL.md) — 多维表格全部命令
+- [lark-shared](../../SKILL.md) — 认证和全局参数

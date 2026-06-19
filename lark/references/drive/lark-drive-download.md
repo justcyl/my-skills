@@ -1,7 +1,7 @@
 
 # drive +download
 
-> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
+> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../SKILL.md) 了解认证、全局参数和安全规则。
 
 从飞书云空间下载文件到本地。
 
@@ -27,5 +27,5 @@ https://xxx.feishu.cn/drive/file/boxbc_xxx
 
 ## 参考
 
-- [lark-drive](../SKILL.md) -- 云空间全部命令
-- [lark-shared](../../lark-shared/SKILL.md) -- 认证和全局参数
+- [lark-drive](../../SKILL.md) -- 云空间全部命令
+- [lark-shared](../../SKILL.md) -- 认证和全局参数

@@ -1,6 +1,6 @@
 # base +workflow-disable
 
-> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
+> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../SKILL.md) 了解认证、全局参数和安全规则。
 
 禁用 Base 中的一个自动化工作流。
 
@@ -88,7 +88,7 @@ PATCH /open-apis/base/v3/bases/:base_token/workflows/:workflow_id/disable
 
 ## 参考
 
-- [lark-base](../SKILL.md) — 多维表格全部命令
+- [lark-base](../../SKILL.md) — 多维表格全部命令
 - [lark-base-workflow-enable](lark-base-workflow-enable.md) — 启用工作流
 - [lark-base-workflow-list](lark-base-workflow-list.md) — 列出全部工作流
-- [lark-shared](../../lark-shared/SKILL.md) — 认证和全局参数
+- [lark-shared](../../SKILL.md) — 认证和全局参数

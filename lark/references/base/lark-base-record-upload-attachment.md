@@ -1,6 +1,6 @@
 # base +record-upload-attachment
 
-> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
+> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../SKILL.md) 了解认证、全局参数和安全规则。
 
 上传本地文件到当前 Base，并把附件值写入指定记录的附件字段。
 
