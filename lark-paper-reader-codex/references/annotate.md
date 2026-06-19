@@ -1,10 +1,10 @@
 # Annotated Reader Layer For Codex
 
-本文件只在 Annotated Reader Mode 或用户明确要求“注释/导读/背景/代码映射”时读取。目标是把解释层放到飞书文档的正确结构里：额外解释是 XML callout；边注是 Lark comment。不要把它们写成普通正文或 Markdown blockquote。
+本文件在每次生成飞书加法精读翻译文档时读取。目标是把解释层放到飞书文档的正确结构里：额外解释是 XML callout；边注是 Lark comment。不要把它们写成普通正文或 Markdown blockquote。
 
 ## 0. 子代理 / 并行要求
 
-- Annotated Reader Mode 必须直接使用 Codex 当前可用的子代理/多代理工具生成候选：段落摘要、术语边注、公式直觉、图表读法、作者思考路径、视觉 QC。用户已授权本 skill 对这些 Codex 工具直接使用，不需要逐次询问。
+- 执行本 skill 时必须直接使用 Codex 当前可用的子代理/多代理工具生成候选：段落摘要、术语边注、公式直觉、图表读法、作者思考路径、视觉质量检查。用户已授权本 skill 对这些 Codex 工具直接使用，不需要逐次询问。
 - 若当前环境确无可调用子代理工具，或更高优先级工具规则阻止调用，使用 Codex 本体分批处理，并在 `annotations.json` 与 `qc-report.md` 写明未启用子代理的具体原因。
 - 子代理候选必须由主 agent 复核后再写入飞书；不要直接把候选原样灌入文档。
 
@@ -142,7 +142,7 @@ subprocess.run([
 
 - 核心术语首次出现都要有 comment；论文专有术语、方法名、缩写、关键数学概念优先。
 - 高语义载荷段落要有段落摘要 comment：包含设计决策、因果解释、量化发现、对比分析的段落都算。
-- 常规 Annotated Reader 少于 8 条 comment 时需要解释原因；中长论文通常应有 12-25 条。
+- 常规中长论文少于 8 条 comment 时需要解释原因；中长论文通常应有 12-25 条。
 - 正式方法章节前必须有 1 个 `🧭` 作者思考路径 callout；若论文太短或没有方法章节，必须在 `qc-report.md` 说明原因。
 - 核心图表必须有 `📊` 图表读法 callout；中长论文至少覆盖 teaser/方法图/主结果表或图/关键消融图。若图表很少或只是不承载论点的示意图，必须在 `qc-report.md` 说明取舍。
 - 方法章节关键公式少于 2 个 `💡` callout 时需要解释原因。

@@ -1,6 +1,6 @@
-# QC Gate For Lark Paper Reader Codex
+# Quality Check (QC) Gate For Lark Paper Reader Codex
 
-交付前必须做结构检查；有问题就修复并重跑。视觉检查尽力完成，不能完成时要在最终回复说明。
+QC 指 Quality Check / 质量检查。交付前必须做结构检查；有问题就修复并重跑。视觉检查尽力完成，不能完成时要在最终回复说明。
 
 ## Required Checks
 
@@ -11,10 +11,10 @@
 5. 没有明显未渲染公式：正文或 callout 中残留 `$...$`、`$$...$$`。
 6. 导读、作者思考路径、图表读法、公式解释、具象化、疑问、引用背景至少按论文内容合理覆盖。
 7. 摘要、引言、方法、实验、结论和附录没有被意外丢失；若原论文没有对应章节，记录原因。
-8. Annotated Reader Mode 中，额外解释必须是 XML callout，不得以 Markdown `>` blockquote 残留在正文。
-9. Annotated Reader Mode 中，comment 必须是局部边注；若使用全文评论，必须记录定位失败原因。常规中长论文少于 8 条 comment 视为风险。
+8. 加法阅读层中的额外解释必须是 XML callout，不得以 Markdown `>` blockquote 残留在正文。
+9. comment 必须是局部边注；若使用全文评论，必须记录定位失败原因。常规中长论文少于 8 条 comment 视为风险。
 10. 正式文档不得包含执行过程、工具限制、权限判断、代理使用状态或 checkpoint/QC 说明；这些信息只能存在于内部文件和最终交付说明。
-11. Annotated Reader Mode 中，正式方法章节前必须有作者思考路径 callout；核心图表后必须有图表读法 callout。若缺失，必须在 `qc-report.md` 写明论文结构原因或定位失败原因。
+11. 正式方法章节前必须有作者思考路径 callout；核心图表后必须有图表读法 callout。若缺失，必须在 `qc-report.md` 写明论文结构原因或定位失败原因。
 
 ## XML Fetch
 
@@ -35,8 +35,8 @@ lark-cli docs +fetch --doc "$DOC" --detail full --doc-format xml --as user > "$W
 
 正式文档卫生检查还必须搜索下列元说明；若命中不是论文原文、题名、引用或代码仓库内容，必须删除后重新 fetch/export：
 
-- `本文档采用 Annotated Reader Mode`
-- `本文档采用 Strict Translation Mode`
+- `本文档采用`
+- `Mode`
 - `未启用子代理`
 - `未启用多代理`
 - `Codex 本体`
@@ -64,7 +64,7 @@ lark-cli drive file.comments patch \
   --as user
 ```
 
-如果 `is_whole=false` 返回 0 条，再查 `is_whole=true`。Annotated Reader Mode 下全文评论不计入“边注覆盖率”，只能作为降级记录。
+如果 `is_whole=false` 返回 0 条，再查 `is_whole=true`。全文评论不计入“边注覆盖率”，只能作为降级记录。
 
 ## Export And Visual Check
 
