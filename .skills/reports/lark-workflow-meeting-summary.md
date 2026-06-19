@@ -4,7 +4,7 @@
 - status: `managed`
 - skill_path: `lark-workflow-meeting-summary`
 - source_type: `github`
-- source: `https://github.com/larksuite/cli`
+- source: `larksuite/cli`
 - upstream_enabled: `true`
 - risk_status: `warned`
 

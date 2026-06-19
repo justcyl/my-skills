@@ -4,17 +4,17 @@
 - status: `managed`
 - skill_path: `lark-shared`
 - source_type: `github`
-- source: `https://github.com/larksuite/cli`
+- source: `larksuite/cli`
 - upstream_enabled: `true`
-- risk_status: `passed`
+- risk_status: `warned`
 
 ## Summary
 
-飞书/Lark CLI 共享基础：应用配置初始化、认证登录（auth login）、身份切换（--as user/bot）、权限与 scope 管理、Permission denied 错误处理、安全规则。当用户需要第一次配置(`lark-cli config init`)、使用登录授权(`lark-cli auth login`)、遇到权限不足、切换 user/bot 身份、配置 scope、或首次使用 lark-cli 时触发。
+飞书/Lark CLI 共享规则：首次配置 lark-cli、登录授权、切换 user/bot 身份、处理权限不足或 _notice 更新提示时使用。CLI 更新可走 lark-cli update；Lark Skills 更新必须走 skills-manager 纳管、同步和分发。
 
 ## Risk Findings
 
-- No heuristic findings.
+- mentions secrets, tokens, or private keys
 
 ## Boundaries
 

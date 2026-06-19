@@ -1,19 +1,17 @@
 {
   "skill_id": "lark-minutes",
   "display_name": "lark-minutes",
-  "skill_path": ".skills/archived-skills/lark-minutes",
+  "skill_path": "lark-minutes",
   "source_type": "github",
-  "source": "https://github.com/larksuite/cli",
+  "source": "larksuite/cli",
   "source_url": "https://github.com/larksuite/cli.git",
   "ref": "",
   "subpath": "skills/lark-minutes",
   "bootstrap": true,
   "upstream_enabled": true,
   "upstream_path": ".skills/upstream/lark-minutes",
-  "last_imported_at": "2026-04-26T07:59:58Z",
-  "upstream_revision": "sha256:97ed27b9273495ed48bbfecef44d1d927949fc0f1ff844cd38910bf606137b3b",
-  "managed_revision": "sha256:97ed27b9273495ed48bbfecef44d1d927949fc0f1ff844cd38910bf606137b3b",
-  "managed_dirty": false,
-  "archived": true,
-  "archived_at": "2026-04-26T08:17:07Z"
+  "last_imported_at": "2026-06-19T13:11:00Z",
+  "upstream_revision": "sha256:e4f5736e2dc9495e7dddc8e1b6365a52e2a8ae38ff45c6a002f9c643ae5ce06c",
+  "managed_revision": "sha256:e4f5736e2dc9495e7dddc8e1b6365a52e2a8ae38ff45c6a002f9c643ae5ce06c",
+  "managed_dirty": false
 }

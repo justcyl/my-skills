@@ -1,19 +1,17 @@
 {
   "skill_id": "lark-event",
   "display_name": "lark-event",
-  "skill_path": ".skills/archived-skills/lark-event",
+  "skill_path": "lark-event",
   "source_type": "github",
-  "source": "https://github.com/larksuite/cli",
+  "source": "larksuite/cli",
   "source_url": "https://github.com/larksuite/cli.git",
   "ref": "",
   "subpath": "skills/lark-event",
   "bootstrap": true,
   "upstream_enabled": true,
   "upstream_path": ".skills/upstream/lark-event",
-  "last_imported_at": "2026-04-26T07:59:54Z",
-  "upstream_revision": "sha256:3afe2961814ba595f1cb9ecaa171e1fbcb3ce384ec228d9b30c63918ca6e094d",
-  "managed_revision": "sha256:3afe2961814ba595f1cb9ecaa171e1fbcb3ce384ec228d9b30c63918ca6e094d",
-  "managed_dirty": false,
-  "archived": true,
-  "archived_at": "2026-04-26T08:17:06Z"
+  "last_imported_at": "2026-06-19T13:10:58Z",
+  "upstream_revision": "sha256:2d80758ead3467d5b96bb04b1f9e7a6b11a4cca9d7873a658af5bff2541735bb",
+  "managed_revision": "sha256:77501f03134b1cbf78d511e967aa8bb1fe5ccfc5067b0b3323d266ff2a32c376",
+  "managed_dirty": false
 }

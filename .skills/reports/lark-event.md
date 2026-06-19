@@ -4,13 +4,13 @@
 - status: `managed`
 - skill_path: `lark-event`
 - source_type: `github`
-- source: `https://github.com/larksuite/cli`
+- source: `larksuite/cli`
 - upstream_enabled: `true`
 - risk_status: `warned`
 
 ## Summary
 
-飞书事件订阅：通过 WebSocket 长连接实时监听飞书事件（消息、通讯录变更、日历变更等），输出 NDJSON 到 stdout，支持 compact Agent 友好格式、正则路由、文件输出。当用户需要实时监听飞书事件、构建事件驱动管道时使用。
+飞书/Lark 实时事件监听、订阅和消费：通过 `lark-cli event consume <EventKey>` 输出 NDJSON 事件流，覆盖 IM 消息/表情/群变更、视频会议结束、妙记生成、画板更新等。适用于机器人实时消息处理、长时间订阅、webhook/push handler；支持 `--max-events`、`--timeout` 有界运行和 stderr ready-marker，方便 AI Agent 作为子进程编排。
 
 ## Risk Findings
 

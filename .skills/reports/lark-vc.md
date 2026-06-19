@@ -4,13 +4,13 @@
 - status: `managed`
 - skill_path: `lark-vc`
 - source_type: `github`
-- source: `https://github.com/larksuite/cli`
+- source: `larksuite/cli`
 - upstream_enabled: `true`
 - risk_status: `warned`
 
 ## Summary
 
-飞书视频会议：查询会议记录、获取会议纪要产物（总结、待办、章节、逐字稿）。1. 查询已经结束的会议数量或详情时使用本技能(如历史日期｜ 昨天 | 上周 | 今天已经开过的会议等场景)，查询未开始的会议日程使用 lark-calendar 技能。2. 支持通过关键词、时间范围、组织者、参与者、会议室等筛选条件搜索会议记录。3. 获取或整理会议纪要时使用本技能。
+飞书视频会议：搜索历史会议记录、查询会议纪要（总结/待办/章节/逐字稿）、查询参会人快照。当用户查询已结束的会议、获取会议产物（纪要/妙记）、查看参会人时使用；查询未来日程走 lark-calendar。不负责：Agent 真实入会/离会、会中实时事件（走 lark-vc-agent）。
 
 ## Risk Findings
 
