@@ -9,7 +9,7 @@ metadata:
 
 # lark-paper-reader-codex
 
-把一篇论文整理成可直接阅读的飞书原文翻译或注释文档。默认优先输出逐段忠实翻译：中文正文、原图、公式、术语表，严格保留章节层级与论证顺序；导读 callout、关键参考文献和代码映射只在用户明确要求时补充。这个版本面向 Codex 执行，不使用 Pi、Herdr pane 或固定模型子代理；但在 Annotated Reader Mode 下，必须先检查 Codex 当前是否有可用的子代理/并行工作者能力。若工具可用且工具规则要求用户显式授权，必须先向用户请求授权；只有在用户未授权、拒绝授权或当前环境确无可调用子代理工具时，才降级为 Codex 本体分批处理，并且降级记录只写入内部 checkpoint/QC，不写入正式文档。
+把一篇论文整理成可直接阅读的飞书原文翻译或注释文档。默认优先输出逐段忠实翻译：中文正文、原图、公式、术语表，严格保留章节层级与论证顺序；导读 callout、关键参考文献和代码映射只在用户明确要求时补充。这个版本面向 Codex 执行，不使用 Pi、Herdr pane 或固定模型子代理；但在 Annotated Reader Mode 下，用户已授权本 skill 直接使用 Codex 当前可用的子代理/并行工作者能力，不需要逐次询问。若当前环境确无可调用子代理工具，才降级为 Codex 本体分批处理，并且降级记录只写入内部 checkpoint/QC，不写入正式文档。
 
 ## When To Use
 
@@ -19,8 +19,8 @@ metadata:
 
 - 使用当前工作区下的 `work/lark-paper-reader/<paper-id>/` 保存中间文件；只把最终可交付产物放入 `outputs/`。
 - 需要读取配套细节时再打开 references：飞书 XML 与公式规则见 `references/lark-doc-rules.md`，注释层规则见 `references/annotate.md`，质量检查见 `references/qc.md`。
-- 不调用 `pi --print`、Herdr pane 或 Pi 专用模型。Annotated Reader Mode 下必须优先发现 Codex 当前可用的子代理/多代理工具来生成段落摘要、术语边注候选和视觉审查；若发现到的工具规则要求用户显式授权且用户尚未授权，必须暂停论文生成并用一句话请求授权。不得把“用户未授权”当作既成事实静默降级。
-- 若用户拒绝授权、未在本轮授权，或当前环境确无可调用子代理工具，必须在 `annotations.json` 与 `qc-report.md` 说明“未启用子代理，已由 Codex 本体分批完成”及具体原因；不得把该说明写入正式 Markdown、飞书正文、callout、边注或导出的 PDF。
+- 不调用 `pi --print`、Herdr pane 或 Pi 专用模型。Annotated Reader Mode 下必须直接使用 Codex 当前可用的子代理/多代理工具来生成段落摘要、术语边注候选、图表注释候选、作者思考路径候选和视觉审查候选；本 skill 已获得用户对这些 Codex 工具的直接使用授权，不再逐次询问。
+- 若当前环境确无可调用子代理工具，或更高优先级工具规则阻止调用，必须在 `annotations.json` 与 `qc-report.md` 说明“未启用子代理，已由 Codex 本体分批完成”及具体原因；不得把该说明写入正式 Markdown、飞书正文、callout、边注或导出的 PDF。
 - 每一步都留下可恢复的 checkpoint：`metadata.json`、`glossary.md`、`translated.md`、`figures.json`、`annotations.json`、`qc-report.md`。
 - 若发现已有同一论文的飞书文档，先向用户展示已有链接并暂停，除非用户明确要求重新创建。
 
@@ -42,6 +42,16 @@ metadata:
 - 严禁默认加入导读 callout、阅读路线、问题清单、长篇解释、实现映射或额外评论。
 - 术语可以统一译名，但不要把术语表内容扩写进正文；正文只负责翻译原文，不负责讲解原文。
 - 只有当用户明确要求“注释 / 导读 / 背景 / 代码映射 / 阅读提示”时，才在翻译之外追加阅读层。
+
+## Additive Reading Contract
+
+注释版的目标不是压缩论文，而是在保留原文意思和论证顺序的前提下做加法。所有阅读层必须锚定到具体段落、公式、图、表、算法或引用，帮助读者回到原文继续读；不得用摘要替代原文、删减关键限定、把辅助推断写成作者结论。
+
+新增解释必须区分三类来源：
+
+- **原文明确说的**：可直接作为正文转述或图注/表注补充。
+- **由原文和已有背景推出的阅读辅助**：必须写成 callout/comment，并使用“可以理解为”“可能的直觉是”等限定语。
+- **工具执行或工作流信息**：只能写入内部 checkpoint/QC，不进入正式文档。
 
 ## Mode Resolution
 
@@ -70,8 +80,10 @@ metadata:
 - 导读 callout：核心问题、本文答案、预备知识速查、阅读路径建议。
 - 正文中文翻译或忠实转述，保留原论文章节顺序。
 - 图、表、公式、算法原位插入，并补充中文图注/表注。
+- 图表读法 callout：核心图表后必须解释图表元素、读图顺序、它支撑的论点、不能过度解读的边界，以及读完图表后应回到哪一节继续读。目标是让用户即使先看图表，也能被引导回论文正文。
 - 公式直觉 callout：解释关键公式为什么这样设计、解决什么问题。
 - 方法具象化 callout：把抽象机制映射到一个可理解例子。
+- 作者思考路径 callout：在正式方法章节前，基于论文之前已有背景、失败模式、经验观察和相关工作，重建作者可能如何想到这个 idea。不得把论文自己的贡献、方法名、实验结果作为前提；必须标注为阅读辅助推断，而不是作者真实心理记录。
 - 关键引用背景：展开 3 到 5 篇对理解论文最重要的一跳引用。
 - 若有代码仓库，做代码映射：仓库结构、关键文件、论文模块到实现位置、必要代码片段。
 - 实验读法：主结果、消融、扩展实验、局限和失败案例。
@@ -114,7 +126,7 @@ metadata:
    - 写 `metadata.json`、`figures.json` 和 `translation-plan.md`。
    - 在 `translation-plan.md` 首行写明 `Mode: Strict Translation` 或 `Mode: Annotated Reader`，并列出包含/排除项。
    - 建立 `glossary.md`：A 类使用中文共识译名，B 类首次出现写“中文（英文全称，缩写）”，C 类保留英文。
-   - Annotated Reader Mode 还必须写 `annotation-plan.json`：列出待加 callout 的公式/方法步骤/引用/疑问，以及待加 comment 的术语和高语义载荷段落。该清单处理完一个标记一个，不得凭感觉少量添加。
+   - Annotated Reader Mode 还必须写 `annotation-plan.json`：列出待加 callout 的作者思考路径、图表读法、公式/方法步骤/引用/疑问，以及待加 comment 的术语和高语义载荷段落。该清单处理完一个标记一个，不得凭感觉少量添加。
 
 5. **Translate**
    - 写 `translated.md`，默认执行逐段忠实翻译：保留章节层级、段落顺序、公式 LaTeX、表格、图表占位和附录。
@@ -140,7 +152,8 @@ metadata:
 8. **Add Reading Layer**
    - 仅在 Annotated Reader Mode，或用户明确要求注释版/导读版时执行。
    - 必须先读取 `references/annotate.md` 并执行其中的 5-PRE 扫描：fetch 文档 XML/with-ids，列出公式、方法步骤、重要引用、长段落、术语首次出现，写入 `annotation-plan.json`。
-   - 额外解释（导读、公式直觉、具象化、引用背景、实现要点、读者疑问）必须作为飞书原生 XML `<callout>` 块插入到对应 block 后，不能写成正文 Markdown blockquote，也不能把解释混入翻译正文。
+   - 额外解释（导读、作者思考路径、图表读法、公式直觉、具象化、引用背景、实现要点、读者疑问）必须作为飞书原生 XML `<callout>` 块插入到对应 block 后，不能写成正文 Markdown blockquote，也不能把解释混入翻译正文。
+   - 图表读法必须插在对应图片/表格及其中文图注/表注之后；作者思考路径必须插在正式方法章节之前，通常位于引言/相关工作之后。
    - 边注必须用飞书 comment，锚定到具体术语或具体段落；优先 `--selection-with-ellipsis` 唯一定位，歧义时 fetch with-ids 后用 `--block-id`，不得用全文评论冒充边注。
    - Annotated Reader Mode 必须有足量边注：至少覆盖所有核心术语首次出现，并覆盖语义载荷高的关键段落；少于 8 条 comment 时必须在 `qc-report.md` 说明论文很短或定位失败原因。
    - 若论文有 GitHub 仓库，浅克隆到工作目录，先写架构地图，再把关键实现片段以内嵌代码块加入 `🔧` callout。
@@ -152,7 +165,7 @@ metadata:
 10. **QC And Visual Gate**
     - 按 `references/qc.md` 跑结构检查：重复图片、重复评论、占位符残留、裸 XML、公式字面残留、关键章节缺失。
     - Strict Translation Mode 额外检查：导读/常见疑问/实现要点/阅读路径等注释层词汇不得出现在正文；表格、算法、附录覆盖状态必须记录。
-    - Annotated Reader Mode 额外检查：是否包含导读、公式直觉、引用背景、实验读法、局限、代码映射（若有仓库）和附录覆盖。
+    - Annotated Reader Mode 额外检查：是否包含导读、作者思考路径、图表读法、公式直觉、引用背景、实验读法、局限、代码映射（若有仓库）和附录覆盖。
     - 正式文档卫生检查：fetch/export 后搜索“本文档采用 Annotated Reader Mode”“未启用子代理”“未启用多代理”“Codex 本体”“工具规则”“用户显式授权”“translation-plan.md”“annotations.json”“qc-report.md”“lark-cli”等元说明；若命中不是论文内容，必须删除后重新导出检查。
     - 导出 PDF 并转 PNG。若当前 Codex 环境有视觉查看能力，抽样或逐页检查公式、图片、callout 和排版；否则保留 PNG/PDF 路径并说明未做视觉模型审查。
     - 修复问题后重新跑 QC，最终给用户飞书链接、PDF/PNG 检查结果和残余风险。
@@ -172,6 +185,6 @@ metadata:
 - 飞书文档标题和链接。
 - 是否为 Strict Translation Mode 以及是否额外添加注释层。
 - 是否发现重复文档，以及用户是否要求重建。
-- 图片数量、评论数量、callout 覆盖简报。
+- 图片数量、评论数量、callout 覆盖简报，特别说明作者思考路径与图表读法是否覆盖。
 - QC 结果和是否完成 PDF/PNG 视觉检查。
 - 如果某一步因权限、导出或工具缺失失败，明确说明失败点和可恢复的本地 checkpoint。

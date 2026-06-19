@@ -10,8 +10,8 @@
   "bootstrap": true,
   "upstream_enabled": false,
   "upstream_path": ".skills/upstream/lark-paper-reader-codex",
-  "last_imported_at": "2026-06-19T12:06:02Z",
+  "last_imported_at": "2026-06-19T12:15:59Z",
   "upstream_revision": "",
-  "managed_revision": "sha256:f26d7ff3037748f78513ecebd0015f4c46c915d3f4952c3920329537c255eed9",
+  "managed_revision": "sha256:cb040f7fd16450d7170d9fd0b0ad09fb93d6a33871e4e5305e8799591ec2f4e1",
   "managed_dirty": false
 }
