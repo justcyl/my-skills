@@ -9,7 +9,7 @@ metadata:
 
 # lark-paper-reader-codex
 
-把一篇论文整理成可直接阅读的飞书原文翻译或注释文档。默认优先输出逐段忠实翻译：中文正文、原图、公式、术语表，严格保留章节层级与论证顺序；导读 callout、关键参考文献和代码映射只在用户明确要求时补充。这个版本面向 Codex 执行，不使用 Pi、Herdr pane 或固定模型子代理。
+把一篇论文整理成可直接阅读的飞书原文翻译或注释文档。默认优先输出逐段忠实翻译：中文正文、原图、公式、术语表，严格保留章节层级与论证顺序；导读 callout、关键参考文献和代码映射只在用户明确要求时补充。这个版本面向 Codex 执行，不使用 Pi、Herdr pane 或固定模型子代理；但在 Annotated Reader Mode 下，必须使用 Codex 当前可用的子代理/并行工作者能力生成段落摘要和注释候选，若当前环境没有可调用子代理工具，则记录降级为 Codex 本体分批处理。
 
 ## When To Use
 
@@ -18,8 +18,8 @@ metadata:
 ## Codex Principles
 
 - 使用当前工作区下的 `work/lark-paper-reader/<paper-id>/` 保存中间文件；只把最终可交付产物放入 `outputs/`。
-- 需要读取配套细节时再打开 references：飞书 XML 与公式规则见 `references/lark-doc-rules.md`，质量检查见 `references/qc.md`。
-- 不调用 `pi --print`、Herdr pane、`wait_agent` 或 Pi 专用模型。长段落摘要、视觉检查和代码阅读由 Codex 自己分批完成；可并行的本地读取用 Codex 工具并行。
+- 需要读取配套细节时再打开 references：飞书 XML 与公式规则见 `references/lark-doc-rules.md`，注释层规则见 `references/annotate.md`，质量检查见 `references/qc.md`。
+- 不调用 `pi --print`、Herdr pane、`wait_agent` 或 Pi 专用模型。Annotated Reader Mode 下必须优先调用 Codex 当前可用的子代理/多代理工具来生成段落摘要、术语边注候选和视觉审查；若没有可用工具，必须在 `annotations.json` 与 `qc-report.md` 说明“未启用子代理，已由 Codex 本体分批完成”。
 - 每一步都留下可恢复的 checkpoint：`metadata.json`、`glossary.md`、`translated.md`、`figures.json`、`annotations.json`、`qc-report.md`。
 - 若发现已有同一论文的飞书文档，先向用户展示已有链接并暂停，除非用户明确要求重新创建。
 
@@ -89,18 +89,20 @@ metadata:
    - 搜索结果在 `data.results` 中，不是 `items`。
    - 若标题或摘要命中同一 ID，向用户展示文档标题和 URL，并停止等待确认。
 
-3. **Fetch Paper**
-   - `ph import --input <paper-uri>`。
-   - `ph fetch --paper-id <paper-uri> --force` 触发 MinerU。
-   - 轮询到 `fetch_state=done` 后用 `--include-content` 获取 `full_text_path`。
-   - 从 `full_text_path` 推导 `PAPER_DIR`，不要手拼 ph 缓存路径。
-   - 检查 `PAPER_DIR/full.md` 和 `PAPER_DIR/images/`；若图片目录为空，重新 `ph fetch --force`。
+3. **Fetch Paper Source**
+   - `ph import --input <paper-uri>` 只用于入库和元信息补全。
+   - 对 arXiv 论文，默认下载 arXiv PDF 与 e-print LaTeX source：`https://arxiv.org/pdf/<id>` 与 `https://arxiv.org/e-print/<id>`。
+   - 解包 source，优先从 `.tex`、`.bbl/.bib`、`figures/`、`00README.json` 构建正文、图片、公式、表格和引用清单；原始 PDF 只用于核对分页/文本和视觉导出。
+   - 只有当 arXiv source 不可用、不是 LaTeX、缺关键图片/表格，或用户提供的是非 arXiv PDF/DOI 时，才 fallback 到 MinerU：`ph fetch --paper-id <paper-uri> --force --include-content`。
+   - fallback 到 MinerU 时，从返回的 `full_text_path` 推导 `PAPER_DIR`，不要手拼 ph 缓存路径；并在 `metadata.json`、`translation-plan.md`、`qc-report.md` 记录触发原因。
 
 4. **Plan The Document**
-   - 从 `full.md` 提取标题、作者、年份、摘要、章节、图片引用、公式、参考文献和 GitHub URL。
+   - arXiv source 路径：从主 `.tex` 提取标题、作者、年份、摘要、章节、图片引用、公式、表格、算法、参考文献和 GitHub URL；从 PDF 文本抽取核对章节顺序。
+   - MinerU fallback 路径：从 `full.md` 提取标题、作者、年份、摘要、章节、图片引用、公式、参考文献和 GitHub URL。
    - 写 `metadata.json`、`figures.json` 和 `translation-plan.md`。
    - 在 `translation-plan.md` 首行写明 `Mode: Strict Translation` 或 `Mode: Annotated Reader`，并列出包含/排除项。
    - 建立 `glossary.md`：A 类使用中文共识译名，B 类首次出现写“中文（英文全称，缩写）”，C 类保留英文。
+   - Annotated Reader Mode 还必须写 `annotation-plan.json`：列出待加 callout 的公式/方法步骤/引用/疑问，以及待加 comment 的术语和高语义载荷段落。该清单处理完一个标记一个，不得凭感觉少量添加。
 
 5. **Translate**
    - 写 `translated.md`，默认执行逐段忠实翻译：保留章节层级、段落顺序、公式 LaTeX、表格、图表占位和附录。
@@ -117,22 +119,19 @@ metadata:
    - Fetch XML 验证公式实际状态；如果公式仍是字面 `$...$` 或 `$$...$$`，按 `references/lark-doc-rules.md` 修复。
 
 7. **Insert Figures**
-   - 只插入 `full.md` 实际引用的图片，不插 MinerU 产生但正文未引用的裁切图。
-   - `lark-cli docs +media-insert --file` 要求从 `PAPER_DIR/images` 执行，传相对文件名。
+   - 只插入正文实际引用的图片；arXiv source 路径以 `.tex` 的 `\includegraphics` 顺序为准，MinerU fallback 路径以 `full.md` 引用顺序为准。
+   - 对 PDF/EPS/SVG 图先本地转换为 PNG，写入工作区 `images/`，再插入飞书。
+   - `lark-cli docs +media-insert --file` 要求从图片目录执行，传相对文件名。
    - 用图片前后唯一中文文本定位；若歧义，改用更长的 `start...end` anchor。
    - 插入完成后 fetch XML 删除所有 `[图X位置...]` 占位符块。
 
 8. **Add Reading Layer**
    - 仅在 Annotated Reader Mode，或用户明确要求注释版/导读版时执行。
-   - 插入导读 callout：核心问题、作者答案、阅读路线、预备知识。
-   - 在方法和实验部分添加 callout：
-     - 公式后加直觉解释。
-     - 抽象方法步骤后加具象化示例。
-     - baseline 或理论根基首次出现时加引用背景。
-     - 算法或开源代码对应处加实现要点。
-     - 高密度段落后加读者常见疑问。
-   - 添加边注 comment：术语首次出现和特别长的高信息密度段落。
-   - 若论文有 GitHub 仓库，浅克隆到工作目录，先写架构地图，再把关键实现片段以内嵌代码块加入 callout。
+   - 必须先读取 `references/annotate.md` 并执行其中的 5-PRE 扫描：fetch 文档 XML/with-ids，列出公式、方法步骤、重要引用、长段落、术语首次出现，写入 `annotation-plan.json`。
+   - 额外解释（导读、公式直觉、具象化、引用背景、实现要点、读者疑问）必须作为飞书原生 XML `<callout>` 块插入到对应 block 后，不能写成正文 Markdown blockquote，也不能把解释混入翻译正文。
+   - 边注必须用飞书 comment，锚定到具体术语或具体段落；优先 `--selection-with-ellipsis` 唯一定位，歧义时 fetch with-ids 后用 `--block-id`，不得用全文评论冒充边注。
+   - Annotated Reader Mode 必须有足量边注：至少覆盖所有核心术语首次出现，并覆盖语义载荷高的关键段落；少于 8 条 comment 时必须在 `qc-report.md` 说明论文很短或定位失败原因。
+   - 若论文有 GitHub 仓库，浅克隆到工作目录，先写架构地图，再把关键实现片段以内嵌代码块加入 `🔧` callout。
 
 9. **References**
    - 只展开 3 到 5 篇高价值 1-hop 引用：理论基础、主要 baseline、被反复比较的工作。

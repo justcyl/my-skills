@@ -11,6 +11,8 @@
 5. 没有明显未渲染公式：正文或 callout 中残留 `$...$`、`$$...$$`。
 6. 导读、公式解释、具象化、疑问、引用背景至少按论文内容合理覆盖。
 7. 摘要、引言、方法、实验、结论和附录没有被意外丢失；若原论文没有对应章节，记录原因。
+8. Annotated Reader Mode 中，额外解释必须是 XML callout，不得以 Markdown `>` blockquote 残留在正文。
+9. Annotated Reader Mode 中，comment 必须是局部边注；若使用全文评论，必须记录定位失败原因。常规中长论文少于 8 条 comment 视为风险。
 
 ## XML Fetch
 
@@ -43,6 +45,8 @@ lark-cli drive file.comments patch \
   --data '{"is_solved":true}' \
   --as user
 ```
+
+如果 `is_whole=false` 返回 0 条，再查 `is_whole=true`。Annotated Reader Mode 下全文评论不计入“边注覆盖率”，只能作为降级记录。
 
 ## Export And Visual Check
 
@@ -86,6 +90,7 @@ pdftoppm -r 150 -png "$WORK_DIR/output.pdf" "$WORK_DIR/pages/page"
 - Formula issues: <none/list>
 - Bare XML: <none/list>
 - Callouts: 📍 <n>, 💡 <n>, 🌉 <n>, ❓ <n>, 📖 <n>, 🔧 <n>
+- Local comments: <count>, full comments: <count>, duplicates: <none/list>
 - PDF export: <done/failed>
 - Visual check: <done/partial/not available>
 - Remaining risks: <none/list>
