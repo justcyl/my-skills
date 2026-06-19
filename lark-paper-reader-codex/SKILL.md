@@ -9,7 +9,7 @@ metadata:
 
 # lark-paper-reader-codex
 
-把一篇论文整理成可直接阅读的飞书原文翻译或注释文档。默认优先输出逐段忠实翻译：中文正文、原图、公式、术语表，严格保留章节层级与论证顺序；导读 callout、关键参考文献和代码映射只在用户明确要求时补充。这个版本面向 Codex 执行，不使用 Pi、Herdr pane 或固定模型子代理；但在 Annotated Reader Mode 下，必须使用 Codex 当前可用的子代理/并行工作者能力生成段落摘要和注释候选，若当前环境没有可调用子代理工具，则记录降级为 Codex 本体分批处理。
+把一篇论文整理成可直接阅读的飞书原文翻译或注释文档。默认优先输出逐段忠实翻译：中文正文、原图、公式、术语表，严格保留章节层级与论证顺序；导读 callout、关键参考文献和代码映射只在用户明确要求时补充。这个版本面向 Codex 执行，不使用 Pi、Herdr pane 或固定模型子代理；但在 Annotated Reader Mode 下，必须先检查 Codex 当前是否有可用的子代理/并行工作者能力。若工具可用且工具规则要求用户显式授权，必须先向用户请求授权；只有在用户未授权、拒绝授权或当前环境确无可调用子代理工具时，才降级为 Codex 本体分批处理，并且降级记录只写入内部 checkpoint/QC，不写入正式文档。
 
 ## When To Use
 
@@ -19,9 +19,21 @@ metadata:
 
 - 使用当前工作区下的 `work/lark-paper-reader/<paper-id>/` 保存中间文件；只把最终可交付产物放入 `outputs/`。
 - 需要读取配套细节时再打开 references：飞书 XML 与公式规则见 `references/lark-doc-rules.md`，注释层规则见 `references/annotate.md`，质量检查见 `references/qc.md`。
-- 不调用 `pi --print`、Herdr pane、`wait_agent` 或 Pi 专用模型。Annotated Reader Mode 下必须优先调用 Codex 当前可用的子代理/多代理工具来生成段落摘要、术语边注候选和视觉审查；若没有可用工具，必须在 `annotations.json` 与 `qc-report.md` 说明“未启用子代理，已由 Codex 本体分批完成”。
+- 不调用 `pi --print`、Herdr pane 或 Pi 专用模型。Annotated Reader Mode 下必须优先发现 Codex 当前可用的子代理/多代理工具来生成段落摘要、术语边注候选和视觉审查；若发现到的工具规则要求用户显式授权且用户尚未授权，必须暂停论文生成并用一句话请求授权。不得把“用户未授权”当作既成事实静默降级。
+- 若用户拒绝授权、未在本轮授权，或当前环境确无可调用子代理工具，必须在 `annotations.json` 与 `qc-report.md` 说明“未启用子代理，已由 Codex 本体分批完成”及具体原因；不得把该说明写入正式 Markdown、飞书正文、callout、边注或导出的 PDF。
 - 每一步都留下可恢复的 checkpoint：`metadata.json`、`glossary.md`、`translated.md`、`figures.json`、`annotations.json`、`qc-report.md`。
 - 若发现已有同一论文的飞书文档，先向用户展示已有链接并暂停，除非用户明确要求重新创建。
+
+## Public Document Hygiene
+
+正式读者文档只承载论文内容和面向读者的注释层。`translated.md`、传给飞书的 Markdown/XML、飞书正文、callout、comment 和导出的 PDF/Markdown 中，严禁出现执行过程、工具限制、权限判断、代理使用状态或 checkpoint/QC 说明，例如：
+
+- “本文档采用 Annotated Reader Mode / Strict Translation Mode”
+- “未启用子代理 / 未启用多代理 / Codex 本体分批完成”
+- “当前工具规则要求用户显式授权”
+- `translation-plan.md`、`annotations.json`、`qc-report.md`、`lark-cli` 等内部产物或命令说明
+
+这些信息只能出现在内部 checkpoint/QC 文件和最终给用户的交付说明中。若某个禁用词本身是论文原文、题名、引用或代码仓库内容，允许保留，但必须在 `qc-report.md` 标注为论文内容命中。
 
 ## Translation Contract
 
@@ -141,6 +153,7 @@ metadata:
     - 按 `references/qc.md` 跑结构检查：重复图片、重复评论、占位符残留、裸 XML、公式字面残留、关键章节缺失。
     - Strict Translation Mode 额外检查：导读/常见疑问/实现要点/阅读路径等注释层词汇不得出现在正文；表格、算法、附录覆盖状态必须记录。
     - Annotated Reader Mode 额外检查：是否包含导读、公式直觉、引用背景、实验读法、局限、代码映射（若有仓库）和附录覆盖。
+    - 正式文档卫生检查：fetch/export 后搜索“本文档采用 Annotated Reader Mode”“未启用子代理”“未启用多代理”“Codex 本体”“工具规则”“用户显式授权”“translation-plan.md”“annotations.json”“qc-report.md”“lark-cli”等元说明；若命中不是论文内容，必须删除后重新导出检查。
     - 导出 PDF 并转 PNG。若当前 Codex 环境有视觉查看能力，抽样或逐页检查公式、图片、callout 和排版；否则保留 PNG/PDF 路径并说明未做视觉模型审查。
     - 修复问题后重新跑 QC，最终给用户飞书链接、PDF/PNG 检查结果和残余风险。
 

@@ -13,6 +13,7 @@
 7. 摘要、引言、方法、实验、结论和附录没有被意外丢失；若原论文没有对应章节，记录原因。
 8. Annotated Reader Mode 中，额外解释必须是 XML callout，不得以 Markdown `>` blockquote 残留在正文。
 9. Annotated Reader Mode 中，comment 必须是局部边注；若使用全文评论，必须记录定位失败原因。常规中长论文少于 8 条 comment 视为风险。
+10. 正式文档不得包含执行过程、工具限制、权限判断、代理使用状态或 checkpoint/QC 说明；这些信息只能存在于内部文件和最终交付说明。
 
 ## XML Fetch
 
@@ -28,6 +29,20 @@ lark-cli docs +fetch --doc "$DOC" --detail full --doc-format xml --as user > "$W
 - `'$' in content`
 - `'&lt;text' in content` 或 `'&lt;equation' in content`
 - `emoji="..."` 统计 callout 覆盖
+
+正式文档卫生检查还必须搜索下列元说明；若命中不是论文原文、题名、引用或代码仓库内容，必须删除后重新 fetch/export：
+
+- `本文档采用 Annotated Reader Mode`
+- `本文档采用 Strict Translation Mode`
+- `未启用子代理`
+- `未启用多代理`
+- `Codex 本体`
+- `工具规则`
+- `用户显式授权`
+- `translation-plan.md`
+- `annotations.json`
+- `qc-report.md`
+- `lark-cli`
 
 ## Comments
 
@@ -89,6 +104,7 @@ pdftoppm -r 150 -png "$WORK_DIR/output.pdf" "$WORK_DIR/pages/page"
 - Placeholders: <none/list>
 - Formula issues: <none/list>
 - Bare XML: <none/list>
+- Public document hygiene: <pass/issues>
 - Callouts: 📍 <n>, 💡 <n>, 🌉 <n>, ❓ <n>, 📖 <n>, 🔧 <n>
 - Local comments: <count>, full comments: <count>, duplicates: <none/list>
 - PDF export: <done/failed>

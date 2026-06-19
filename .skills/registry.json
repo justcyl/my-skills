@@ -1907,7 +1907,7 @@
           "target_path": "/Users/chenyl/.codex/skills/lark-paper-reader-codex",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-06-19T11:57:17Z"
+          "last_synced_at": "2026-06-19T12:06:02Z"
         }
       },
       "display_name": "lark-paper-reader-codex",
@@ -1920,8 +1920,8 @@
       "source_path": ".skills/sources/lark-paper-reader-codex.json",
       "skill_path": "lark-paper-reader-codex",
       "upstream_path": ".skills/upstream/lark-paper-reader-codex",
-      "managed_revision": "sha256:be8e1f2ea031d1182c9f35202cb5e00f05fbe76aefd0572cee40d91f1a098863",
-      "last_updated_at": "2026-06-19T11:57:03Z",
+      "managed_revision": "sha256:f26d7ff3037748f78513ecebd0015f4c46c915d3f4952c3920329537c255eed9",
+      "last_updated_at": "2026-06-19T12:06:02Z",
       "distribution_disabled": [
         "claude-code",
         "pi"
