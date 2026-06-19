@@ -7,7 +7,7 @@
 这个场景负责：
 
 1. 手动编辑后的状态刷新与审计
-2. 分发到 Codex / Claude Code / Agents
+2. 分发到 Codex / Claude Code / Pi
 3. 查看分发状态
 4. 归档 skill
 5. 在需要时提交并推送
@@ -64,7 +64,7 @@ bash skills-manager/scripts/distribute_skills.sh sync
 
 常见参数：
 
-1. `--agent codex|claude-code|agents|all`
+1. `--agent codex|claude-code|pi|all`
 2. `--skill-id <id>`
 3. `--mode auto|symlink|copy`
 4. `--dry-run`
@@ -102,3 +102,13 @@ bash skills-manager/scripts/distribute_skills.sh archive --skill-id <id>
 3. 如果用户明确指定 `copy`，不要回退成 `symlink`
 4. 如果审计结果为 `warned` 或 `blocked`，要人工复核是否继续分发
 5. 场景开始前与结束后都必须保持 `git -C ~/project/my-skills status --short` 为空；不为空时由 agent 直接执行 git 命令提交（不得通过脚本代提）
+
+## Target Paths
+
+当前分发目标：
+
+1. `codex` → `${CODEX_SKILLS_DIR:-$HOME/.codex/skills}`
+2. `claude-code` → `${CLAUDE_SKILLS_DIR:-$HOME/.claude/skills}`
+3. `pi` → `${PI_SKILLS_DIR:-$HOME/.pi/agent/skills}`
+
+不要再把 Pi-only skill 分发到 `$HOME/.agents/skills`。该目录会被 Codex 作为 user skills 扫描，不适合作为 Pi-only 路径。

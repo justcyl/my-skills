@@ -6,168 +6,168 @@
       "target_path": "/Users/chenyl/.claude/skills/skills-manager",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-12T18:25:16Z"
+      "last_synced_at": "2026-06-19T11:57:17Z"
     },
     "web-reader": {
       "source_path": "web-reader",
       "target_path": "/Users/chenyl/.claude/skills/web-reader",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-12T18:25:16Z"
+      "last_synced_at": "2026-06-19T11:57:17Z"
     },
     "overleaf": {
       "source_path": "overleaf",
       "target_path": "/Users/chenyl/.claude/skills/overleaf",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-12T18:25:16Z"
+      "last_synced_at": "2026-06-19T11:57:17Z"
     },
     "ph-paper-helper": {
       "source_path": "ph-paper-helper",
       "target_path": "/Users/chenyl/.claude/skills/ph-paper-helper",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-12T18:25:16Z"
+      "last_synced_at": "2026-06-19T11:57:17Z"
     },
     "grill-me": {
       "source_path": "grill-me",
       "target_path": "/Users/chenyl/.claude/skills/grill-me",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-12T18:25:16Z"
+      "last_synced_at": "2026-06-19T11:57:17Z"
     },
     "rhetoric-of-decks": {
       "source_path": "rhetoric-of-decks",
       "target_path": "/Users/chenyl/.claude/skills/rhetoric-of-decks",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-12T18:25:16Z"
+      "last_synced_at": "2026-06-19T11:57:17Z"
     },
     "research-idea-validator": {
       "source_path": "research-idea-validator",
       "target_path": "/Users/chenyl/.claude/skills/research-idea-validator",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-12T18:25:16Z"
+      "last_synced_at": "2026-06-19T11:57:17Z"
     },
     "btca-local": {
       "source_path": "btca-local",
       "target_path": "/Users/chenyl/.claude/skills/btca-local",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-12T18:25:16Z"
+      "last_synced_at": "2026-06-19T11:57:17Z"
     },
     "pi-threads": {
       "source_path": "pi-threads",
       "target_path": "/Users/chenyl/.claude/skills/pi-threads",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-12T18:25:16Z"
+      "last_synced_at": "2026-06-19T11:57:17Z"
     },
     "officecli": {
       "source_path": "officecli",
       "target_path": "/Users/chenyl/.claude/skills/officecli",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-12T18:25:16Z"
+      "last_synced_at": "2026-06-19T11:57:17Z"
     },
     "alan-pipeline": {
       "source_path": "alan-pipeline",
       "target_path": "/Users/chenyl/.claude/skills/alan-pipeline",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-12T18:25:16Z"
+      "last_synced_at": "2026-06-19T11:57:17Z"
     },
     "cli-creator": {
       "source_path": "cli-creator",
       "target_path": "/Users/chenyl/.claude/skills/cli-creator",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-12T18:25:16Z"
+      "last_synced_at": "2026-06-19T11:57:17Z"
     },
     "academic-paper": {
       "source_path": "academic-paper",
       "target_path": "/Users/chenyl/.claude/skills/academic-paper",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-12T18:25:16Z"
+      "last_synced_at": "2026-06-19T11:57:17Z"
     },
     "bilibili-cli": {
       "source_path": "bilibili-cli",
       "target_path": "/Users/chenyl/.claude/skills/bilibili-cli",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-12T18:25:16Z"
+      "last_synced_at": "2026-06-19T11:57:17Z"
     },
     "lark": {
       "source_path": "lark",
       "target_path": "/Users/chenyl/.claude/skills/lark",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-12T18:25:16Z"
+      "last_synced_at": "2026-06-19T11:57:17Z"
     },
     "axonhub": {
       "source_path": "axonhub",
       "target_path": "/Users/chenyl/.claude/skills/axonhub",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-12T18:25:16Z"
+      "last_synced_at": "2026-06-19T11:57:17Z"
     },
     "lark-paper-reader": {
       "source_path": "lark-paper-reader",
       "target_path": "/Users/chenyl/.claude/skills/lark-paper-reader",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-12T18:25:16Z"
+      "last_synced_at": "2026-06-19T11:57:17Z"
     },
     "interactive-html": {
       "source_path": "interactive-html",
       "target_path": "/Users/chenyl/.claude/skills/interactive-html",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-12T18:25:16Z"
+      "last_synced_at": "2026-06-19T11:57:17Z"
     },
     "zhihu-cli": {
       "source_path": "zhihu-cli",
       "target_path": "/Users/chenyl/.claude/skills/zhihu-cli",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-05-28T06:35:56Z"
+      "last_synced_at": "2026-06-19T11:57:17Z"
     },
     "mole-release-notes": {
       "source_path": "mole-release-notes",
       "target_path": "/Users/chenyl/.claude/skills/mole-release-notes",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-06-06T15:08:33Z"
+      "last_synced_at": "2026-06-19T11:57:17Z"
     },
     "siyuan-cli": {
       "source_path": "siyuan-cli",
       "target_path": "/Users/chenyl/.claude/skills/siyuan-cli",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-06-08T17:49:19Z"
+      "last_synced_at": "2026-06-19T11:57:17Z"
     },
     "codex-ppt": {
       "source_path": "codex-ppt",
       "target_path": "/Users/chenyl/.claude/skills/codex-ppt",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-06-11T07:39:19Z"
+      "last_synced_at": "2026-06-19T11:57:17Z"
     },
     "amap": {
       "source_path": "amap",
       "target_path": "/Users/chenyl/.claude/skills/amap",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-06-11T09:03:29Z"
+      "last_synced_at": "2026-06-19T11:57:17Z"
     },
     "anti-fable": {
       "source_path": "anti-fable",
       "target_path": "/Users/chenyl/.claude/skills/anti-fable",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-06-12T15:06:58Z"
+      "last_synced_at": "2026-06-19T11:57:17Z"
     }
   }
 }

@@ -10,7 +10,7 @@
   "bootstrap": true,
   "upstream_enabled": true,
   "upstream_path": ".skills/upstream/mole-release-notes",
-  "last_imported_at": "2026-06-06T15:08:33Z",
+  "last_imported_at": "2026-06-19T11:57:03Z",
   "upstream_revision": "sha256:5c78d864a079f3dd3dcfd8ad011b0772e3e3438038e7a4354822b1190fd80638",
   "managed_revision": "sha256:1e17d4828a9aaf3b302792ee24734645da26172dfc591b18275d48ed98eef287",
   "managed_dirty": false

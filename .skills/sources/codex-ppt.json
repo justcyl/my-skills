@@ -10,8 +10,8 @@
   "bootstrap": true,
   "upstream_enabled": true,
   "upstream_path": ".skills/upstream/codex-ppt",
-  "last_imported_at": "2026-06-11T07:39:18Z",
+  "last_imported_at": "2026-06-19T11:57:03Z",
   "upstream_revision": "sha256:6feefb2247259e11cb0eb7d475ddec173baeee71dc1e47591f85bc6bef59be95",
-  "managed_revision": "sha256:507e03b28b37d1a603ce7ce5edf5f8aca258e861d7784e8e4ef75d54f1743b1d",
+  "managed_revision": "sha256:2f8caa5d6f4d8ce48afbb6a8e729492f1c49a7f6708d833f2685ea0c6843c624",
   "managed_dirty": false
 }

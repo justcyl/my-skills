@@ -16,7 +16,7 @@ description: 统一处理所有 skills 操作的总控 skill，包括搜索、�
 
 操作前后执行 `git -C ~/project/my-skills status --short`，工作区不干净时先提交再继续，结束时确保已推送。
 
-任何变更操作完成后须依次执行：状态同步 → 分发 → 提交 → 推送。
+任何变更操作完成后须依次执行：状态同步 → 分发 → 提交 → 推送。分发目标为 `codex`、`claude-code`、`pi`；不要使用 `$HOME/.agents/skills` 作为 Pi-only 目录，因为 Codex 也会扫描该路径。
 
 外部 skill 搜索统一使用脚本入口，禁止用外部 Skills CLI 直接管理本仓库。导入后需语义审计（恶意 prompt / 越权 / 危险工作流）并完成中文优化。
 

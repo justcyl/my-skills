@@ -10,7 +10,7 @@
   "bootstrap": true,
   "upstream_enabled": true,
   "upstream_path": ".skills/upstream/amap",
-  "last_imported_at": "2026-06-11T09:03:29Z",
+  "last_imported_at": "2026-06-19T11:57:03Z",
   "upstream_revision": "sha256:38d1dc9263d2efd92427e97ed03e5ef31f3cb01e0c813b35030cd6f139bb680e",
   "managed_revision": "sha256:51a3244c61171e1f25b9f771a36bb18eea7e983319999e81595500cb8e942524",
   "managed_dirty": false
