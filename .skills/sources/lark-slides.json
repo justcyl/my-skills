@@ -1,17 +1,19 @@
 {
   "skill_id": "lark-slides",
   "display_name": "lark-slides",
-  "skill_path": "lark-slides",
+  "skill_path": ".skills/archived-skills/lark-slides",
   "source_type": "github",
-  "source": "larksuite/cli",
+  "source": "https://github.com/larksuite/cli",
   "source_url": "https://github.com/larksuite/cli.git",
   "ref": "",
   "subpath": "skills/lark-slides",
   "bootstrap": true,
   "upstream_enabled": true,
   "upstream_path": ".skills/upstream/lark-slides",
-  "last_imported_at": "2026-06-19T13:11:03Z",
-  "upstream_revision": "sha256:afd83dcef1689bb866bbdf43268ec131f7eedaa5922d123568496ed35e39213c",
-  "managed_revision": "sha256:afd83dcef1689bb866bbdf43268ec131f7eedaa5922d123568496ed35e39213c",
-  "managed_dirty": false
+  "last_imported_at": "2026-04-26T07:59:53Z",
+  "upstream_revision": "sha256:072c8f050e55df3b76b0b100f73cbdff908eb1df6afd9baeca7a67b9c6406de8",
+  "managed_revision": "sha256:072c8f050e55df3b76b0b100f73cbdff908eb1df6afd9baeca7a67b9c6406de8",
+  "managed_dirty": false,
+  "archived": true,
+  "archived_at": "2026-04-26T08:17:05Z"
 }

@@ -4,7 +4,7 @@
 - status: `managed`
 - skill_path: `lark-skill-maker`
 - source_type: `github`
-- source: `larksuite/cli`
+- source: `https://github.com/larksuite/cli`
 - upstream_enabled: `true`
 - risk_status: `passed`
 

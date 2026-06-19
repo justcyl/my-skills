@@ -4,13 +4,13 @@
 - status: `managed`
 - skill_path: `lark-approval`
 - source_type: `github`
-- source: `larksuite/cli`
+- source: `https://github.com/larksuite/cli`
 - upstream_enabled: `true`
 - risk_status: `passed`
 
 ## Summary
 
-飞书审批：当前用户审批的查询与全部处理操作，覆盖待本人审批的任务与本人发起的实例。审批待办不是飞书任务（任务类待办走 lark-task）；不负责创建审批定义和发起新审批。
+飞书审批 API：审批实例、审批任务管理。
 
 ## Risk Findings
 

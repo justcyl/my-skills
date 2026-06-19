@@ -1,17 +1,19 @@
 {
   "skill_id": "lark-attendance",
   "display_name": "lark-attendance",
-  "skill_path": "lark-attendance",
+  "skill_path": ".skills/archived-skills/lark-attendance",
   "source_type": "github",
-  "source": "larksuite/cli",
+  "source": "https://github.com/larksuite/cli",
   "source_url": "https://github.com/larksuite/cli.git",
   "ref": "",
   "subpath": "skills/lark-attendance",
   "bootstrap": true,
   "upstream_enabled": true,
   "upstream_path": ".skills/upstream/lark-attendance",
-  "last_imported_at": "2026-06-19T13:10:54Z",
+  "last_imported_at": "2026-04-26T08:00:00Z",
   "upstream_revision": "sha256:9415142e7269b4dd218064b08e7e30821d624ba94207874741ab3876e1f4c4cc",
   "managed_revision": "sha256:9415142e7269b4dd218064b08e7e30821d624ba94207874741ab3876e1f4c4cc",
-  "managed_dirty": false
+  "managed_dirty": false,
+  "archived": true,
+  "archived_at": "2026-04-26T08:17:07Z"
 }

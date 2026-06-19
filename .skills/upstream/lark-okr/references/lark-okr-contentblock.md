@@ -168,10 +168,7 @@ OKR 的 Objective、KeyResult 中的 content/notes 字段使用 `ContentBlock` �
 
 ### ContentGallery
 
-图片块。目前仅有进展记录中的富文本支持展示图片。
-
-由于 OKR 应用中进展页面的布局排版限制，一个 ContentGallery 元素中**仅可放置一个图片元素**，需要插入多张图片时需使用多个 ContentGallery 元素
-(同一个 ContentGallery 中添加多个 image 会导致这些图片在狭窄的横向排版空间中互相挤占，效果很差)
+图库。
 
 | 字段       | 类型                   | 说明    |
 |----------|----------------------|-------|
@@ -187,8 +184,6 @@ OKR 的 Objective、KeyResult 中的 content/notes 字段使用 `ContentBlock` �
 | `src`        | `string`  | 图片 URL   |
 | `width`      | `float64` | 宽度       |
 | `height`     | `float64` | 高度       |
-
-> **如何获取 `file_token`？** 使用 [`+upload-image`](lark-okr-image-upload.md) 命令上传本地图片，返回的 `file_token` 可用于构建 `ContentGallery` 图片块。
 
 ### ContentDocsLink
 
@@ -309,47 +304,6 @@ OKR 的 Objective、KeyResult 中的 content/notes 字段使用 `ContentBlock` �
             "text_run": {
               "text": "进行用户测试"
             }
-          }
-        ]
-      }
-    }
-  ]
-}
-```
-
-### 示例 4：带用户提及和图片（仅进展记录支持）的段落
-
-```json
-{
-  "blocks": [
-    {
-      "block_element_type": "paragraph",
-      "paragraph": {
-        "elements": [
-          {
-            "paragraph_element_type": "mention",
-            "mention": {
-              "user_id": "ou_example_user"
-            }
-          },
-          {
-            "paragraph_element_type": "textRun",
-            "text_run": {
-              "text": " 请关注此进度并查看以下图片"
-            }
-          }
-        ]
-      }
-    },
-    {
-      "block_element_type": "gallery",
-      "gallery": {
-        "images": [
-          {
-            "file_token": "img_example_token",
-            "src": "https://example.com/image.png",
-            "width": 800,
-            "height": 600
           }
         ]
       }

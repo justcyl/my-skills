@@ -1,6 +1,8 @@
 
 # docs +fetch（获取飞书云文档）
 
+> **前置条件：** 先阅读 [`../lark-shared/SKILL.md`](../../lark-shared/SKILL.md) 了解认证、全局参数和安全规则。
+
 ## 命令
 
 ```bash
@@ -34,8 +36,9 @@ lark-cli docs +fetch --api-version v2 --doc Z1Fj...tnAc \
 | 意图 | `--detail` | 说明 |
 |------|-----------|------|
 | **只读**：浏览或总结文档内容 | `simple`（默认） | 简洁 XML/Markdown，不含 block ID、样式属性、引用元数据 |
-| **定位**：需要 block ID 与其他业务交互 | `with-ids` | 包含 block ID（如 `<p id="blkcnXXXX">`），可用于 `+update` 的 `--block-id`，也可用于拼接 `文档URL#block_id` 形式的直达链接 |
+| **定位**：需要 block ID 与其他业务交互 | `with-ids` | 包含 block ID（如 `<p id="blkcnXXXX">`），可用于 `+update` 的 `--block-id` |
 | **编辑**：任何修改文档内容的需求 | `full` | 包含 block ID + 样式属性 + 引用元数据，提供完整文档结构信息 |
+
 
 ## 选 `--scope`（读取范围）
 
@@ -46,21 +49,21 @@ lark-cli docs +fetch --api-version v2 --doc Z1Fj...tnAc \
 | `outline` | 不知道结构，先看目录 | `--max-depth`（标题层级上限） | 扁平列出所有标题，**包括嵌在容器里的内嵌标题**（如 callout 里的 h3）；这些 id 可直接作后续 `section` / `range` 端点 |
 | `section` | 读某个标题对应的整节 | `--start-block-id`（必填） | 顶层标题 → 展开到下一同级/更高级标题前；容器内节点（含内嵌标题） → 按"最小包容单元"返回容器/表格切片，不做 heading 扩展；顶层非标题块 → 仅该块 |
 | `range` | 已知精确起止 | `--start-block-id` / `--end-block-id` 至少一个；`-1` = 读到末尾 | 两端同顶层 → 顶层序列切片；两端同一容器 → 容器整体；两端同一表格 → 瘦身切片；**跨顶层 → 端点所在顶层块整块输出，不做瘦身** |
-| `keyword` | 只有模糊关键词 | `--keyword`（**多级自动 fallback**：子串 → 归一化 → 分词形变 → RE2 正则；`\|` 分隔多分支 OR） | 每处命中按"最小包容单元"输出；**自动去重**（同容器多命中 → 单个容器，同表格多行命中 → 合并切片） |
-
-> 💡 **多关键词用 `\|` 拼接（OR 语义，任一命中即返回）**：例 `"部署\|发布\|上线"`，三词任一命中都进结果，适合**同义词/别名/多业务术语**一次召回（如 `bug\|缺陷\|故障`）。
+| `keyword` | 只有模糊关键词 | `--keyword`（不区分大小写、子串，`\|` 分隔多词 OR） | 每处命中按"最小包容单元"输出；**自动去重**（同容器多命中 → 单个容器，同表格多行命中 → 合并切片） |
 
 **设置 `--scope` 时共用** `--context-before` / `--context-after` / `--max-depth`。
 
 - `--max-depth`：`outline` = 标题层级上限（3 = h1~h3）；其它模式 = 被选块的子树遍历深度（`-1` 不限，`0` 仅块自身）。
 - `--context-before/--context-after`：**只对整块顶层单元生效**；命中落在容器/表格内（返回容器或切片）时 before/after 被忽略，需要更大范围改用 `section` / `range` 显式指定。
 
-**决策顺序**（核心原则：**局部获取优于全量获取**，根据需求形态选起点，必要时多步组合收敛范围）：
-1. 需求**直接给出待查的具体术语/错误码/标识** → 直接走 `keyword` 粗匹配（多级 fallback 自动覆盖形变），需要更大上下文时用返回的 `top-block-id` 走 `section` / `range`
-2. 需求**指向某个章节/标题**（"修改 XX 章"、"总结第 3 节"、"关于 xx 的内容"）→ 先 `outline --max-depth 3` 拿目录 → `section --start-block-id <标题id>` 精读
-3. 已知**精确起止 / 跨节连续区间** → `range`
-4. **结构未知且无明确关键词/章节线索** → `outline` 探测，再回到 2/3
-5. **兜底**：仅在确需整篇时才省略 `--scope`；不要为省事直接读整篇
+**决策顺序**（核心原则：**局部获取优于全量获取**，能精确到节/区间就绝不全量拉取；**任何文档的第一次读取都应从 `outline` 开始**）：
+1. **第一次接触文档 / 不知道结构** → 先 `outline` 探测目录（**强制首步，无论文档是"目标"还是"引用源"**），再回到 2/3 精读
+2. 改/读某个**标题对应的整节** → `section`（最省心，**首选精读方式**）
+3. 精确自定义起止 / 跨节连续区间 → `range`
+4. 只有模糊关键词 → `keyword`
+5. **兜底**：确实需要整篇文档时才不传 `--scope`（默认整篇）；**不要为了省事就读整篇**，局部模式上下文更省、响应更快
+
+**推荐双步流程**：`outline --max-depth 3` 拿目录 → `section --start-block-id <标题id> --detail with-ids` 精读该节。
 
 ## 局部读取的输出结构：`<fragment>` 与 `<excerpt>`
 
@@ -105,7 +108,7 @@ lark-cli docs +fetch --api-version v2 --doc Z1Fj...tnAc \
 | `--scope` | 否 | `outline` \| `range` \| `keyword` \| `section`（省略 = 读整篇） |
 | `--start-block-id` | 否 | `range`/`section` 起始/锚点 id（`section` 必填） |
 | `--end-block-id` | 否 | `range` 结束 id；`-1` 表示读到末尾 |
-| `--keyword` | 否 | `keyword` 模式关键词，**4 层自动 fallback**（子串 → 归一化 → 分词形变 → RE2 正则）；`\|` 分隔多分支 OR |
+| `--keyword` | 否 | `keyword` 模式关键词；`\|` 分隔多词 OR |
 | `--context-before` | 否 | 命中前拉几个兄弟块（仅对顶层单元生效，默认 `0`） |
 | `--context-after` | 否 | 命中后拉几个兄弟块（仅对顶层单元生效，默认 `0`） |
 | `--max-depth` | 否 | `outline` = 标题层级上限；其它 = 子树深度（`-1` 不限，默认） |
@@ -124,11 +127,10 @@ lark-cli docs +fetch --api-version v2 --doc Z1Fj...tnAc \
 - `<img>` / `<source>` 带 `url` 时，直接用该 URL 下载即可（普通 HTTP GET），无需走 shortcut。
 - 没有 `url`、或只想预览 → `docs +media-preview --token <token> --output ./preview_media`
 - 明确下载，或目标是 `<whiteboard>`（画板只能走 shortcut） → `docs +media-download --token <token> --output ./downloaded_media`
-- 文档封面图不是正文素材；下载/更新/删除封面图 → `docs resource-download/resource-update/resource-delete --type cover`
 
 ## 嵌入电子表格 / 多维表格
 
-返回中可能含 `<sheet>`、`<bitable>`、`<cite file-type="sheets|bitable">`。内部数据无法通过 `docs +fetch --api-version v2` 获取，提取 `token` 等属性后切到 [`lark-sheets`](../../lark-sheets/SKILL.md) / [`lark-base`](../../lark-base/SKILL.md) 下钻，详见 [SKILL.md 快速决策](../SKILL.md) 路由表。
+返回中可能含 `<sheet>`、`<bitable>`、`<cite file-type="sheets|bitable">`。内部数据无法通过 `docs +fetch` 获取，提取 `token` 等属性后切到 [`lark-sheets`](../../lark-sheets/SKILL.md) / [`lark-base`](../../lark-base/SKILL.md) 下钻，详见 [SKILL.md 快速决策](../SKILL.md) 路由表。
 
 ## 参考
 
@@ -136,4 +138,4 @@ lark-cli docs +fetch --api-version v2 --doc Z1Fj...tnAc \
 - [lark-doc-update](lark-doc-update.md) — 更新文档
 - [lark-doc-media-preview](lark-doc-media-preview.md) — 预览素材
 - [lark-doc-media-download](lark-doc-media-download.md) — 下载素材/画板缩略图
-- [lark-doc-resource-cover](lark-doc-resource-cover.md) — 读取、更新、删除文档封面图
+- [lark-shared](../../lark-shared/SKILL.md) — 认证和全局参数

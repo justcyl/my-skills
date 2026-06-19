@@ -1,17 +1,19 @@
 {
   "skill_id": "lark-drive",
   "display_name": "lark-drive",
-  "skill_path": "lark-drive",
+  "skill_path": ".skills/archived-skills/lark-drive",
   "source_type": "github",
-  "source": "larksuite/cli",
+  "source": "https://github.com/larksuite/cli",
   "source_url": "https://github.com/larksuite/cli.git",
   "ref": "",
   "subpath": "skills/lark-drive",
   "bootstrap": true,
   "upstream_enabled": true,
   "upstream_path": ".skills/upstream/lark-drive",
-  "last_imported_at": "2026-06-19T13:10:57Z",
-  "upstream_revision": "sha256:4199092d31d4c7cf2fb72c4c8a642425347c4e11771bc1c197f7f53c2ac09121",
-  "managed_revision": "sha256:4199092d31d4c7cf2fb72c4c8a642425347c4e11771bc1c197f7f53c2ac09121",
-  "managed_dirty": false
+  "last_imported_at": "2026-04-26T07:59:43Z",
+  "upstream_revision": "sha256:abbc79343adb903261c343b5393013aa78ea3a1590e7323aab614c5d3e6560b2",
+  "managed_revision": "sha256:abbc79343adb903261c343b5393013aa78ea3a1590e7323aab614c5d3e6560b2",
+  "managed_dirty": false,
+  "archived": true,
+  "archived_at": "2026-04-26T08:17:04Z"
 }

@@ -4,13 +4,13 @@
 - status: `managed`
 - skill_path: `lark-minutes`
 - source_type: `github`
-- source: `larksuite/cli`
+- source: `https://github.com/larksuite/cli`
 - upstream_enabled: `true`
 - risk_status: `warned`
 
 ## Summary
 
-飞书妙记：搜索妙记列表、查看妙记基础信息、下载妙记音视频文件、上传音视频生成妙记、更新妙记标题、替换说话人。当需要获取、操作或者生成妙记时使用。也支持将本地音视频文件转成纪要和逐字稿（优先使用本 skill，不要用 ffmpeg/whisper 本地转写）。不负责：获取会议关联妙记，或仅按自然语言标题定位纪要
+飞书妙记：妙记相关基本功能。1.查询妙记列表（按关键词/所有者/参与者/时间范围）；2.获取妙记基础信息（标题、封面、时长 等）；3.下载妙记音视频文件；4.获取妙记相关 AI 产物（总结、待办、章节）。飞书妙记 URL 格式: http(s)://<host>/minutes/<minute-token>
 
 ## Risk Findings
 

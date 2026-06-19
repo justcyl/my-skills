@@ -45,7 +45,7 @@ EOF
 cat diagram.puml | lark-cli whiteboard +update \
   --whiteboard-token <画板Token> \
   --input_format plantuml --source -\
-  --overwrite --as user
+  --overwrite --yes --as user
 ```
 
 ### 示例 2：使用 Mermaid 代码更新画板（从文件读取）
@@ -54,10 +54,10 @@ cat diagram.puml | lark-cli whiteboard +update \
 # 编写 Mermaid 代码
 cat > diagram.mmd << 'EOF'
 graph TD
-    A[开始] --> B{判断}
-    B -->|是| C[处理]
-    B -->|否| D[结束]
-    C --> D
+    A[开始] --&gt; B{判断}
+    B --&gt;|是| C[处理]
+    B --&gt;|否| D[结束]
+    C --&gt; D
 EOF
 
 # 从文件读取并更新
@@ -65,7 +65,7 @@ lark-cli whiteboard +update \
   --whiteboard-token <画板Token> \
   --input_format mermaid \
   --source @./diagram.mmd \
-  --overwrite --as user
+  --overwrite --yes --as user
 ```
 
 ### 示例 3：使用 whiteboard-cli 生成 OpenAPI 格式并写入画板
@@ -74,12 +74,12 @@ whiteboard-cli 工具的具体用法请参考 [§ 渲染 & 写入画板](../SKIL
 
 ```bash
 # 使用 whiteboard-cli 生成 OpenAPI 格式并通过管道传递
-npx -y @larksuite/whiteboard-cli@^0.2.11 -i <产物文件> --to openapi --format json \
+npx -y @larksuite/whiteboard-cli@^0.2.10 -i <产物文件> --to openapi --format json \
   | lark-cli whiteboard +update \
     --whiteboard-token <画板Token> \
     --source - --input_format raw \
     --idempotent-token <10+字符唯一串> \
-    --as user
+    --yes --as user
 ```
 
 ### 示例 4：先生成产物文件，再从文件读取更新
@@ -88,7 +88,7 @@ whiteboard-cli 工具的具体用法请参考 [§ 渲染 & 写入画板](../SKIL
 
 ```bash
 # 生成 OpenAPI 格式到文件
-npx -y @larksuite/whiteboard-cli@^0.2.11 -i <DSL 文件> --to openapi --format json -o ./temp.json
+npx -y @larksuite/whiteboard-cli@^0.2.10 -i <DSL 文件> --to openapi --format json -o ./temp.json
 
 # 从文件读取并更新
 lark-cli whiteboard +update \
@@ -96,5 +96,5 @@ lark-cli whiteboard +update \
   --idempotent-token <10+字符唯一串> \
   --input_format raw \
   --source @./temp.json \
-  --overwrite --as user
+  --overwrite --yes --as user
 ```
