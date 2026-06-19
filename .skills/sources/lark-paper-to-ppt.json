@@ -1,0 +1,17 @@
+{
+  "skill_id": "lark-paper-to-ppt",
+  "display_name": "lark-paper-to-ppt",
+  "skill_path": "lark-paper-to-ppt",
+  "source_type": "local-created",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/lark-paper-to-ppt",
+  "last_imported_at": "2026-06-19T12:46:09Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:10d34f28d143fab0d5ec56e62bc66c289ca2c1df88d8e09f91fd2e424a0d5e17",
+  "managed_dirty": false
+}

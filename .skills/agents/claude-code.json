@@ -168,6 +168,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-06-19T11:57:17Z"
+    },
+    "lark-paper-to-ppt": {
+      "source_path": "lark-paper-to-ppt",
+      "target_path": "/Users/chenyl/.claude/skills/lark-paper-to-ppt",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-06-19T12:46:14Z"
     }
   }
 }

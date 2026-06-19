@@ -1926,6 +1926,40 @@
         "claude-code",
         "pi"
       ]
+    },
+    "lark-paper-to-ppt": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/lark-paper-to-ppt",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-06-19T12:46:14Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/lark-paper-to-ppt",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-06-19T12:46:14Z"
+        },
+        "pi": {
+          "target_path": "/Users/chenyl/.pi/agent/skills/lark-paper-to-ppt",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-06-19T12:46:14Z"
+        }
+      },
+      "display_name": "lark-paper-to-ppt",
+      "description": "将学术论文、论文 PDF、arXiv/DOI、或 lark-paper-reader-codex 生成的飞书论文读书文档整理成一份有用的飞书 Slides/PPT。用于把一篇或几篇论文变成可讲述、可复习、可分享的演示文稿，重点是提炼主线、选择论文原图、讲清方法、实验结果、insight 和局限；触发语境包括：把论文做成 PPT、做一份 paper slides、把这些 reader 文档整理成演示文稿、做文献汇报 slides、把同主题论文用 PPT 呈现。",
+      "status": "managed",
+      "risk_status": "warned",
+      "managed_dirty": false,
+      "upstream_enabled": false,
+      "report_path": ".skills/reports/lark-paper-to-ppt.md",
+      "source_path": ".skills/sources/lark-paper-to-ppt.json",
+      "skill_path": "lark-paper-to-ppt",
+      "upstream_path": ".skills/upstream/lark-paper-to-ppt",
+      "managed_revision": "sha256:10d34f28d143fab0d5ec56e62bc66c289ca2c1df88d8e09f91fd2e424a0d5e17",
+      "last_updated_at": "2026-06-19T12:46:09Z"
     }
   }
 }
