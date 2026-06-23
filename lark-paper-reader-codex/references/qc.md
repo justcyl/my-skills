@@ -16,6 +16,7 @@ QC 指 Quality Check / 质量检查。交付前必须做结构检查；有问题
 10. comment 必须是局部边注；若使用全文评论，必须记录定位失败原因。常规中长论文少于 8 条 comment 视为风险。
 11. 正式文档不得包含执行过程、工具限制、权限判断、代理使用状态或 checkpoint/QC 说明；这些信息只能存在于内部文件和最终交付说明。
 12. 正式方法章节前必须有作者思考路径 callout；核心图表后必须有图表读法 callout。若缺失，必须在 `qc-report.md` 写明论文结构原因或定位失败原因。
+13. 风格必须对齐 `references/style-standard.md`，尤其是 outline、导读、图表读法、公式直觉、术语表和最终汇报口径。
 
 ## XML Fetch
 
@@ -34,6 +35,7 @@ lark-cli docs +fetch --doc "$DOC" --detail full --doc-format xml --as user > "$W
 - 作者思考路径可用 `作者可能的思考路径`、`阅读辅助推断` 或 `🧭` 检查。
 - 图表读法可用 `图表读法`、`这张图在论文里负责什么` 或 `📊` 检查。
 - 抽样检查每个主章节前 2-3 个正文段落，确认它们对应原文段落翻译，而不是“本节主要说明...”式总结或讲义。
+- 对照 `references/style-standard.md` 检查 outline、callout 类型和术语表结构。
 
 正式文档卫生检查还必须搜索下列元说明；若命中不是论文原文、题名、引用或代码仓库内容，必须删除后重新 fetch/export：
 
@@ -111,6 +113,7 @@ pdftoppm -r 150 -png "$WORK_DIR/output.pdf" "$WORK_DIR/pages/page"
 - Bare XML: <none/list>
 - Translation body: <pass/issues>
 - Public document hygiene: <pass/issues>
+- Style standard: <pass/issues>
 - Callouts: 📍 <n>, 🧭 <n>, 📊 <n>, 💡 <n>, 🌉 <n>, ❓ <n>, 📖 <n>, 🔧 <n>
 - Local comments: <count>, full comments: <count>, duplicates: <none/list>
 - PDF export: <done/failed>

@@ -14,7 +14,7 @@ metadata:
 ## Codex Principles
 
 - 使用当前工作区下的 `work/lark-paper-reader/<paper-id>/` 保存中间文件；只把最终可交付产物放入 `outputs/`。
-- 需要读取配套细节时再打开 references：飞书 XML 与公式规则见 `references/lark-doc-rules.md`，注释层规则见 `references/annotate.md`，质量检查见 `references/qc.md`。
+- 需要读取配套细节时再打开 references：风格标准见 `references/style-standard.md`，飞书 XML 与公式规则见 `references/lark-doc-rules.md`，注释层规则见 `references/annotate.md`，质量检查见 `references/qc.md`。
 - 执行本 skill 时必须默认使用 Codex 当前可用的子代理/多代理工具；不要把“是否启用多智能体”作为需要用户确认的步骤。
 - 若当前环境确无可调用子代理工具，或更高优先级工具规则阻止调用，必须在 `annotations.json` 与 `qc-report.md` 说明“未启用子代理，已由 Codex 本体分批完成”及具体原因；不得把该说明写入正式 Markdown、飞书正文、callout、边注或导出的 PDF。
 - 每一步都留下可恢复的 checkpoint：`metadata.json`、`glossary.md`、`translated.md`、`figures.json`、`annotations.json`、`qc-report.md`。
@@ -124,6 +124,7 @@ metadata:
    - MinerU fallback 路径：从 `full.md` 提取标题、作者、年份、摘要、章节、图片引用、公式、参考文献和 GitHub URL。
    - 写 `metadata.json`、`figures.json` 和 `translation-plan.md`。
    - 在 `translation-plan.md` 首行写明 `Deliverable: 论文翻译飞书文档`，并列出正文翻译覆盖项与注释覆盖项。
+   - 必须先读取 `references/style-standard.md`，并在 `translation-plan.md` 写入 `Style baseline: 面向大语言模型的离策略基于价值强化学习`。后续正文、callout、图表读法、公式直觉、术语表和 QC 都按该风格标准执行。
    - 建立 `glossary.md`：A 类使用中文共识译名，B 类首次出现写“中文（英文全称，缩写）”，C 类保留英文。
    - 必须写 `annotation-plan.json`：列出待加 callout 的作者思考路径、图表读法、公式/方法步骤/引用/疑问，以及待加 comment 的术语和高语义载荷段落。该清单处理完一个标记一个，不得凭感觉少量添加。
 
@@ -165,6 +166,7 @@ metadata:
     - 按 `references/qc.md` 跑结构检查：重复图片、重复评论、占位符残留、裸 XML、公式字面残留、关键章节缺失。
     - 翻译主体检查：正文是否仍是按原论文结构逐段翻译，是否有用总结、导读、解读或讲义替代原文翻译的段落；发现后必须恢复为翻译正文。
     - 注释覆盖检查：是否包含导读、作者思考路径、图表读法、公式直觉、引用背景、实验读法、局限、代码映射（若有仓库）和附录覆盖；同时检查这些注释没有混入正文翻译段落。
+    - 风格一致性检查：按 `references/style-standard.md` 对照标题层级、段落长度、callout 类型、图表/公式解读格式、术语表和最终汇报口径；若明显偏离，修复后重跑 QC。
     - 正式文档卫生检查：fetch/export 后搜索“本文档采用”“Mode”“未启用子代理”“未启用多代理”“Codex 本体”“工具规则”“权限判断”“translation-plan.md”“annotations.json”“qc-report.md”“lark-cli”等元说明；若命中不是论文内容，必须删除后重新导出检查。
     - 导出 PDF 并转 PNG。若当前 Codex 环境有视觉查看能力，抽样或逐页检查公式、图片、callout 和排版；否则保留 PNG/PDF 路径并说明未做视觉模型审查。
     - 修复问题后重新跑 QC，最终给用户飞书链接、PDF/PNG 检查结果和残余风险。

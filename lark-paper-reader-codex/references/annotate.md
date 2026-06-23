@@ -1,6 +1,6 @@
 # Annotated Reader Layer For Codex
 
-本文件在每次生成论文翻译飞书文档时读取。正式文档以原文逐段中文翻译为主体；本文件只负责把补充说明放到飞书文档的正确结构里：额外解释是 XML callout；边注是 Lark comment。不要把它们写成普通正文、翻译段落或 Markdown blockquote。
+本文件在每次生成论文翻译飞书文档时读取。正式文档以原文逐段中文翻译为主体；本文件只负责把补充说明放到飞书文档的正确结构里：额外解释是 XML callout；边注是 Lark comment。不要把它们写成普通正文、翻译段落或 Markdown blockquote。具体风格以 `references/style-standard.md` 为准。
 
 ## 0. 子代理 / 并行要求
 
@@ -23,6 +23,7 @@
 - `paragraph_comments`: 语义载荷高的段落，含段首定位文本与一句摘要。
 
 处理时给每项维护 `status`: `pending | inserted | skipped`。`skipped` 必须写原因。
+所有 callout 的标题、位置、信息密度和颜色系统必须对齐 `references/style-standard.md`；不确定时以《面向大语言模型的离策略基于价值强化学习》的对应 callout 为样例。
 
 ## 2. Callout 是原生 XML 块
 
