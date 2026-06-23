@@ -1,6 +1,6 @@
 # Annotated Reader Layer For Codex
 
-本文件在每次生成飞书加法精读翻译文档时读取。目标是把解释层放到飞书文档的正确结构里：额外解释是 XML callout；边注是 Lark comment。不要把它们写成普通正文或 Markdown blockquote。
+本文件在每次生成飞书论文翻译精读文档时读取。正式文档以原文逐段中文翻译为主体；本文件只负责把叠加解释层放到飞书文档的正确结构里：额外解释是 XML callout；边注是 Lark comment。不要把它们写成普通正文、翻译段落或 Markdown blockquote。
 
 ## 0. 子代理 / 并行要求
 
@@ -26,7 +26,7 @@
 
 ## 2. Callout 是原生 XML 块
 
-callout 必须用 `docs +update --command block_insert_after` 或 `block_replace` 插入到对应 block 后。不能写进 `translated.md` 作为 `>` 引用块；不能放在文档末尾集中堆叠；不能混入原文翻译段落。
+callout 必须用 `docs +update --command block_insert_after` 或 `block_replace` 插入到对应翻译 block 后。不能写进 `translated.md` 作为 `>` 引用块；不能放在文档末尾集中堆叠；不能混入或替代原文翻译段落。
 
 ### 导读
 

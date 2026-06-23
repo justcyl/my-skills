@@ -11,10 +11,11 @@ QC 指 Quality Check / 质量检查。交付前必须做结构检查；有问题
 5. 没有明显未渲染公式：正文或 callout 中残留 `$...$`、`$$...$$`。
 6. 导读、作者思考路径、图表读法、公式解释、具象化、疑问、引用背景至少按论文内容合理覆盖。
 7. 摘要、引言、方法、实验、结论和附录没有被意外丢失；若原论文没有对应章节，记录原因。
-8. 加法阅读层中的额外解释必须是 XML callout，不得以 Markdown `>` blockquote 残留在正文。
-9. comment 必须是局部边注；若使用全文评论，必须记录定位失败原因。常规中长论文少于 8 条 comment 视为风险。
-10. 正式文档不得包含执行过程、工具限制、权限判断、代理使用状态或 checkpoint/QC 说明；这些信息只能存在于内部文件和最终交付说明。
-11. 正式方法章节前必须有作者思考路径 callout；核心图表后必须有图表读法 callout。若缺失，必须在 `qc-report.md` 写明论文结构原因或定位失败原因。
+8. 正文仍是按原论文结构逐段翻译，不得用总结、导读、解读或精读讲义替代原文翻译。
+9. 加法阅读层中的额外解释必须是 XML callout，不得以 Markdown `>` blockquote 残留在正文。
+10. comment 必须是局部边注；若使用全文评论，必须记录定位失败原因。常规中长论文少于 8 条 comment 视为风险。
+11. 正式文档不得包含执行过程、工具限制、权限判断、代理使用状态或 checkpoint/QC 说明；这些信息只能存在于内部文件和最终交付说明。
+12. 正式方法章节前必须有作者思考路径 callout；核心图表后必须有图表读法 callout。若缺失，必须在 `qc-report.md` 写明论文结构原因或定位失败原因。
 
 ## XML Fetch
 
@@ -32,6 +33,7 @@ lark-cli docs +fetch --doc "$DOC" --detail full --doc-format xml --as user > "$W
 - `emoji="..."` 统计 callout 覆盖
 - 作者思考路径可用 `作者可能的思考路径`、`阅读辅助推断` 或 `🧭` 检查。
 - 图表读法可用 `图表读法`、`这张图在论文里负责什么` 或 `📊` 检查。
+- 抽样检查每个主章节前 2-3 个正文段落，确认它们对应原文段落翻译，而不是“本节主要说明...”式总结或精读讲义。
 
 正式文档卫生检查还必须搜索下列元说明；若命中不是论文原文、题名、引用或代码仓库内容，必须删除后重新 fetch/export：
 
@@ -107,6 +109,7 @@ pdftoppm -r 150 -png "$WORK_DIR/output.pdf" "$WORK_DIR/pages/page"
 - Placeholders: <none/list>
 - Formula issues: <none/list>
 - Bare XML: <none/list>
+- Translation body: <pass/issues>
 - Public document hygiene: <pass/issues>
 - Callouts: 📍 <n>, 🧭 <n>, 📊 <n>, 💡 <n>, 🌉 <n>, ❓ <n>, 📖 <n>, 🔧 <n>
 - Local comments: <count>, full comments: <count>, duplicates: <none/list>
