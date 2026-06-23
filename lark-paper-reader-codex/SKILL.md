@@ -1,6 +1,6 @@
 ---
 name: lark-paper-reader-codex
-description: Codex 专用：将学术论文整理为以原文逐段中文翻译为主体、并添加注释、评论和公式/图表解读的飞书文档。触发语境：arXiv/DOI/PDF 论文到飞书、帮我读这篇论文、给 paper 做 Codex 版飞书笔记。
+description: Codex 专用：将 arXiv/DOI/PDF 学术论文整理为论文翻译飞书文档，正文以原文逐段中文翻译为主体。
 metadata:
   requires:
     bins: ["lark-cli"]
@@ -9,17 +9,13 @@ metadata:
 
 # lark-paper-reader-codex
 
-把一篇论文整理成可直接阅读的飞书论文逐段翻译注释文档。唯一交付形态是：以原论文正文的中文逐段忠实翻译为主体，按原论文结构保留正文顺序，原位保留图、表、公式、算法和附录；然后在这个翻译正文上补充导读、作者思考路径、图表读法、公式直觉、术语边注、引用背景、代码映射等注释内容。补充内容只用于辅助理解，不得把论文改写成脱离原文顺序的讲义、总结文档或解读文档。这个版本面向 Codex 执行，不使用 Pi、Herdr pane 或固定模型子代理；默认直接使用 Codex 当前可用的子代理/多代理/并行工作者能力，不逐次询问。若当前环境确无可调用子代理工具，才降级为 Codex 本体分批处理，并且降级记录只写入内部 checkpoint/QC，不写入正式文档。
-
-## When To Use
-
-用户给出 arXiv ID、arXiv URL、DOI、论文 PDF 或让你“读论文并上传到飞书”时使用。若用户只想要本地总结、BibTeX、论文检索或不需要飞书文档，优先使用 `ph-paper-helper` 或普通回答。
+把一篇论文整理成可直接阅读的论文翻译飞书文档。唯一交付形态是：以原论文正文的中文逐段忠实翻译为主体，按原论文结构保留正文顺序，原位保留图、表、公式、算法和附录；必要的导读、作者思考路径、图表读法、公式直觉、术语边注、引用背景、代码映射等内容只作为辅助说明，不能替代翻译正文。默认直接使用 Codex 当前可用的子代理/多代理/并行工作者能力，不逐次询问。若当前环境确无可调用子代理工具，才降级为 Codex 本体分批处理，并且降级记录只写入内部 checkpoint/QC，不写入正式文档。
 
 ## Codex Principles
 
 - 使用当前工作区下的 `work/lark-paper-reader/<paper-id>/` 保存中间文件；只把最终可交付产物放入 `outputs/`。
 - 需要读取配套细节时再打开 references：飞书 XML 与公式规则见 `references/lark-doc-rules.md`，注释层规则见 `references/annotate.md`，质量检查见 `references/qc.md`。
-- 不调用 `pi --print`、Herdr pane 或 Pi 专用模型。执行本 skill 时必须默认使用 Codex 当前可用的子代理/多代理工具；不要把“是否启用多智能体”作为需要用户确认的步骤。
+- 执行本 skill 时必须默认使用 Codex 当前可用的子代理/多代理工具；不要把“是否启用多智能体”作为需要用户确认的步骤。
 - 若当前环境确无可调用子代理工具，或更高优先级工具规则阻止调用，必须在 `annotations.json` 与 `qc-report.md` 说明“未启用子代理，已由 Codex 本体分批完成”及具体原因；不得把该说明写入正式 Markdown、飞书正文、callout、边注或导出的 PDF。
 - 每一步都留下可恢复的 checkpoint：`metadata.json`、`glossary.md`、`translated.md`、`figures.json`、`annotations.json`、`qc-report.md`。
 - 若发现已有同一论文的飞书文档，先向用户展示已有链接并暂停，除非用户明确要求重新创建。
@@ -72,7 +68,7 @@ metadata:
 
 ## Single Deliverable
 
-用户给出 arXiv ID、DOI、论文 PDF 或论文 URL 时，只产出一种文档：飞书论文逐段翻译注释文档。不存在“只翻译不注释”的分支；但注释必须放在完整翻译旁边，不能把正文改造成纯解读稿。如果用户明确要求不要上传飞书或只要本地短答，再退出本 skill，改用普通回答或 `ph-paper-helper`。
+用户给出 arXiv ID、DOI、论文 PDF 或论文 URL 时，只产出一种文档：论文翻译飞书文档。不存在“只翻译不注释”的分支；但注释必须放在完整翻译旁边，不能把正文改造成纯解读稿。如果用户明确要求不要上传飞书或只要本地短答，再退出本 skill，改用普通回答或 `ph-paper-helper`。
 
 ## Quality Bars
 
@@ -127,7 +123,7 @@ metadata:
    - arXiv source 路径：从主 `.tex` 提取标题、作者、年份、摘要、章节、图片引用、公式、表格、算法、参考文献和 GitHub URL；从 PDF 文本抽取核对章节顺序。
    - MinerU fallback 路径：从 `full.md` 提取标题、作者、年份、摘要、章节、图片引用、公式、参考文献和 GitHub URL。
    - 写 `metadata.json`、`figures.json` 和 `translation-plan.md`。
-   - 在 `translation-plan.md` 首行写明 `Deliverable: 飞书论文逐段翻译注释文档（原文翻译为主体，注释内容为补充说明）`，并列出正文翻译覆盖项与注释覆盖项。
+   - 在 `translation-plan.md` 首行写明 `Deliverable: 论文翻译飞书文档`，并列出正文翻译覆盖项与注释覆盖项。
    - 建立 `glossary.md`：A 类使用中文共识译名，B 类首次出现写“中文（英文全称，缩写）”，C 类保留英文。
    - 必须写 `annotation-plan.json`：列出待加 callout 的作者思考路径、图表读法、公式/方法步骤/引用/疑问，以及待加 comment 的术语和高语义载荷段落。该清单处理完一个标记一个，不得凭感觉少量添加。
 
@@ -186,7 +182,7 @@ metadata:
 最终回复包含：
 
 - 飞书文档标题和链接。
-- 确认为飞书论文逐段翻译注释文档：原文翻译为主体，注释内容为补充说明。
+- 确认为论文翻译飞书文档。
 - 是否发现重复文档，以及用户是否要求重建。
 - 图片数量、评论数量、callout 覆盖简报，特别说明作者思考路径与图表读法是否覆盖。
 - 质量检查（QC）结果和是否完成 PDF/PNG 视觉检查。

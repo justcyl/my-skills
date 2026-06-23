@@ -10,7 +10,7 @@
 
 ## Summary
 
-Codex 专用：将学术论文整理为以原文逐段中文翻译为主体、并添加注释、评论和公式/图表解读的飞书文档。触发语境：arXiv/DOI/PDF 论文到飞书、帮我读这篇论文、给 paper 做 Codex 版飞书笔记。
+Codex 专用：将 arXiv/DOI/PDF 学术论文整理为论文翻译飞书文档，正文以原文逐段中文翻译为主体。
 
 ## Risk Findings
 
