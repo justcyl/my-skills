@@ -41,7 +41,7 @@ lark-cli docs +fetch --doc "$DOC" --detail full --doc-format xml --as user > "$W
 - `未启用多代理`
 - `Codex 本体`
 - `工具规则`
-- `用户显式授权`
+- `权限判断`
 - `translation-plan.md`
 - `annotations.json`
 - `qc-report.md`
