@@ -1,0 +1,17 @@
+{
+  "skill_id": "html-slides",
+  "display_name": "html-slides",
+  "skill_path": "html-slides",
+  "source_type": "local-created",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/html-slides",
+  "last_imported_at": "2026-07-04T09:09:51Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:9d548ea8a0f4054b7e77a8cca8a247daccebeb04520e2c443c01facad508be50",
+  "managed_dirty": false
+}

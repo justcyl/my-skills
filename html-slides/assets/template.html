@@ -1,0 +1,303 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Deck Title · Your Name</title>
+<style>
+/* ============ 1. 设计 token（换成你的品牌色即可换肤） ============ */
+:root{
+  --bg:#FCFCFD;           /* 画布近白 */
+  --ink:#1C1E23;          /* 主墨色 */
+  --accent:#0B64DD;       /* 主品牌色：结构/主角 */
+  --foil:#F04E98;         /* 反派色：失败/对照组 */
+  --foil-ink:#C2186A;     /* 小字号用的加深反派色 */
+  --teal:#00BFB3;         /* 次要正面色 */
+  --teal-ink:#0A7B74;
+  --accent-soft:#E7EEFC;  /* 主色淡底，用于高亮行 */
+  --hair:rgba(28,30,35,.18);
+  --hair2:rgba(28,30,35,.30);
+  --r-card:8px; --r-box:5px;
+  --sans:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Inter",system-ui,Arial,sans-serif;
+  --mono:"SF Mono",ui-monospace,"JetBrains Mono",Menlo,"Roboto Mono",monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%;background:#0b0a08;}
+body{font-family:var(--sans);color:var(--ink);overflow:hidden;}
+
+/* ============ 2. 固定舞台 1280×720，JS 等比缩放 ============ */
+#stage{position:fixed;left:50%;top:50%;width:1280px;height:720px;
+  transform:translate(-50%,-50%);transform-origin:center center;
+  background:var(--bg);overflow:hidden;}
+.slide{position:absolute;inset:0;display:none;flex-direction:column;
+  padding:62px 76px 58px;background:var(--bg);}
+.slide.active{display:flex}
+
+/* ============ 3. 字体系统 ============ */
+.kicker{font-family:var(--mono);font-size:13px;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;display:flex;align-items:center;gap:11px;margin-bottom:26px}
+.kicker::before{content:"";width:26px;height:3px;background:var(--accent);border-radius:2px}
+h1{font-size:60px;line-height:1.04;font-weight:800;letter-spacing:-.022em;max-width:18ch}
+.h-slide{font-size:35px;line-height:1.12;font-weight:750;letter-spacing:-.018em;
+  max-width:32ch;margin-bottom:36px}
+.sub{font-size:21px;line-height:1.42;font-weight:430;max-width:60ch}
+.cap{font-size:18px;line-height:1.45;font-weight:440;max-width:88ch}
+.mono{font-family:var(--mono)}
+.accent{color:var(--accent)}
+strong,b{font-weight:700}
+/* 居中金句：每张 slide 至多一句 */
+.takeaway{font-size:21px;line-height:1.4;font-weight:600;text-align:center;
+  text-wrap:balance;max-width:64ch;margin-left:auto;margin-right:auto}
+
+/* ============ 4. 页脚 chrome（首尾页自动隐藏） ============ */
+#chrome{position:absolute;left:76px;right:76px;bottom:22px;display:flex;
+  justify-content:space-between;align-items:center;font-family:var(--mono);
+  font-size:13.5px;letter-spacing:.03em;border-top:1px solid var(--hair);padding-top:11px}
+#chrome.hidden{display:none}
+
+/* ============ 5. 语义组件库（按需增删） ============ */
+.body{flex:1;display:flex;flex-direction:column;min-height:0;justify-content:center}
+.row{display:flex;gap:34px;align-items:stretch}
+.fill{flex:1;min-height:0}
+
+/* 标题页 */
+.title{justify-content:center}
+.title h1{margin:18px 0 0;max-width:26ch}
+.title .sub{margin-top:26px}
+.title .auth{margin-top:40px}
+.title .auth .nm{font-size:23px;font-weight:700}
+.title .auth .rl{font-size:18px;font-weight:450;margin-top:2px}
+.title .meta{font-family:var(--mono);font-size:14px;margin-top:18px;letter-spacing:.03em}
+
+/* 编号要点（overview / takeaways） */
+.nlist{display:flex;flex-direction:column;gap:18px}
+.nitem{display:flex;gap:20px;align-items:flex-start}
+.nitem .n{font-family:var(--mono);font-size:22px;font-weight:700;color:var(--accent);
+  min-width:42px;line-height:1.15}
+.nitem .t{font-size:20px;font-weight:600;line-height:1.3}
+.nitem .t span{display:block;font-size:16.5px;font-weight:440;margin-top:4px}
+
+/* 引用块 */
+.pull{font-size:23px;line-height:1.34;font-weight:600;border-left:4px solid var(--accent);
+  padding-left:24px}
+.pull strong{font-weight:800;color:var(--accent)}
+.pull cite{display:block;margin-top:18px;font-family:var(--mono);font-size:14px;
+  font-weight:600;font-style:normal;color:var(--accent)}
+
+/* 对比卡片（hero 卡加主色描边） */
+.cards{display:flex;gap:26px}
+.card{flex:1;border:1.2px solid var(--hair2);border-radius:var(--r-card);
+  padding:26px 26px 24px;background:#fff;display:flex;flex-direction:column}
+.card .ttl{font-family:var(--mono);font-size:14px;font-weight:700;letter-spacing:.07em;
+  text-transform:uppercase;margin-bottom:14px}
+.card.hero{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.card.hero .ttl{color:var(--accent)}
+.card .desc{font-size:18px;line-height:1.42;font-weight:450}
+.card .foot{margin-top:auto;font-size:16px;font-weight:600;padding-top:14px}
+
+/* 流程图 */
+.flow{display:flex;align-items:center;justify-content:space-between}
+.fbox{border:1.2px solid var(--ink);border-radius:var(--r-box);background:#fff;
+  padding:14px 12px;text-align:center;flex:1;display:flex;flex-direction:column;gap:3px;
+  min-height:84px;justify-content:center}
+.fbox .fn{font-size:15.5px;font-weight:700;line-height:1.12}
+.fbox .fd{font-family:var(--mono);font-size:13px;font-weight:500;line-height:1.25}
+.fbox.dark{background:var(--ink);color:var(--bg)}
+.farr{color:var(--accent);font-size:22px;font-weight:700;padding:0 10px;flex:0 0 auto}
+
+/* 大数字统计 */
+.stats{display:flex;gap:30px}
+.stat .v{font-family:var(--mono);font-size:46px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.stat .v.o{color:var(--accent)}
+.stat .v.foil{color:var(--foil)}
+.stat .l{font-size:14px;font-weight:480;line-height:1.3;margin-top:9px;max-width:24ch}
+
+/* 三线表 */
+table.bt{border-collapse:collapse;width:100%;font-size:16px}
+table.bt th,table.bt td{padding:9px 12px;text-align:right;font-variant-numeric:tabular-nums}
+table.bt th:first-child,table.bt td:first-child{text-align:left}
+table.bt thead th{font-family:var(--mono);font-size:12.5px;font-weight:700;
+  letter-spacing:.04em;text-transform:uppercase;border-bottom:2px solid var(--ink)}
+table.bt tbody td{border-bottom:1px solid var(--hair)}
+table.bt tbody tr:last-child td{border-bottom:2px solid var(--ink)}
+table.bt tr.hero td{background:var(--accent-soft)}
+table.bt tr.hero td:first-child{color:var(--accent);font-weight:700}
+
+/* 手绘 SVG 图表容器 */
+.chart{width:100%;height:100%}
+.chart svg{display:block;width:100%;height:100%}
+@media print{*{animation:none!important}}
+</style>
+</head>
+<body>
+<div id="stage">
+
+  <!-- ============ slide 1: 标题页 ============ -->
+  <section class="slide title">
+    <div class="kicker">Conference · Track</div>
+    <h1>论断式的主标题，说清你要证明什么</h1>
+    <p class="sub">一句副标题：为什么现在、为什么是你、观众带走什么。</p>
+    <div class="auth">
+      <div class="nm">你的名字</div>
+      <div class="rl">头衔 · 机构</div>
+    </div>
+    <div class="meta">2026-07 · your-site.io/deck-slug</div>
+  </section>
+
+  <!-- ============ slide 2: 编号要点（overview） ============ -->
+  <section class="slide">
+    <div class="kicker">Overview</div>
+    <div class="h-slide">今天讲三件事</div>
+    <div class="body">
+      <div class="nlist">
+        <div class="nitem"><div class="n">01</div>
+          <div class="t">第一个论断<span>一句支撑性说明，交代范围与证据来源。</span></div></div>
+        <div class="nitem"><div class="n">02</div>
+          <div class="t">第二个论断<span>说明它与第一点的逻辑关系。</span></div></div>
+        <div class="nitem"><div class="n">03</div>
+          <div class="t">第三个论断<span>观众离场时应该记住的那句话。</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ slide 3: 对比卡片 ============ -->
+  <section class="slide">
+    <div class="kicker">The Contrast</div>
+    <div class="h-slide">两条路线：一条是主角，一条是反派</div>
+    <div class="body">
+      <div class="cards">
+        <div class="card">
+          <div class="ttl">路线 A（对照）</div>
+          <div class="desc">描述这条路线的做法与代价。</div>
+          <div class="foot" style="color:var(--foil-ink)">✗ 为什么它不够好</div>
+        </div>
+        <div class="card hero">
+          <div class="ttl">路线 B（本文）</div>
+          <div class="desc">描述你的方案，突出差异点。</div>
+          <div class="foot" style="color:var(--accent)">✓ 关键优势一句话</div>
+        </div>
+      </div>
+      <p class="takeaway" style="margin-top:36px">对比之后的那句结论，<strong class="accent">全场只有这里加粗</strong>。</p>
+    </div>
+  </section>
+
+  <!-- ============ slide 4: 流程图 + 大数字 ============ -->
+  <section class="slide">
+    <div class="kicker">Method</div>
+    <div class="h-slide">方法鸟瞰：四个阶段</div>
+    <div class="body">
+      <div class="flow">
+        <div class="fbox"><div class="fn">采集</div><div class="fd">input</div></div>
+        <div class="farr">→</div>
+        <div class="fbox"><div class="fn">处理</div><div class="fd">transform</div></div>
+        <div class="farr">→</div>
+        <div class="fbox dark"><div class="fn">核心步骤</div><div class="fd">the trick</div></div>
+        <div class="farr">→</div>
+        <div class="fbox"><div class="fn">评估</div><div class="fd">metric</div></div>
+      </div>
+      <div class="stats" style="margin-top:52px">
+        <div class="stat"><div class="v o">+61%</div><div class="l">主指标提升（相对基线）</div></div>
+        <div class="stat"><div class="v">1.0×</div><div class="l">额外成本</div></div>
+        <div class="stat"><div class="v foil">−0.003</div><div class="l">对照路线在留出集上的表现</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ slide 5: 手绘 SVG 图表 ============ -->
+  <section class="slide">
+    <div class="kicker">Evidence</div>
+    <div class="h-slide">一张图讲一个结论</div>
+    <div class="body"><div class="fill chart" id="c-demo"></div></div>
+  </section>
+
+  <!-- ============ slide 6: 结尾 ============ -->
+  <section class="slide title">
+    <div class="kicker">Takeaway</div>
+    <h1 style="font-size:48px">观众该记住的一句话。</h1>
+    <div class="pull" style="margin-top:44px">
+      也可以放一句金句或行动呼吁。<strong>关键词高亮。</strong>
+      <cite>— your-site.io · @you</cite>
+    </div>
+  </section>
+
+</div>
+
+<!-- 页脚 chrome -->
+<div id="chrome">
+  <span>Deck Title · 2026</span>
+  <span id="pg">1 / 6</span>
+</div>
+
+<script>
+/* ============ 导航 + 等比缩放（与原 deck 同构） ============ */
+const stage=document.getElementById('stage');
+const slides=[...document.querySelectorAll('.slide')];
+const footEl=document.getElementById('chrome');
+const pg=document.getElementById('pg');
+let i=0;
+function show(n){
+  i=Math.max(0,Math.min(slides.length-1,n));
+  slides.forEach((s,k)=>s.classList.toggle('active',k===i));
+  pg.textContent=(i+1)+' / '+slides.length;
+  footEl.classList.toggle('hidden', i===0 || i===slides.length-1);
+  if(location.hash!=='#'+(i+1)) history.replaceState(null,'','#'+(i+1));
+}
+function fit(){
+  const vv=window.visualViewport;
+  const w=(vv&&vv.width)||innerWidth||1280, h=(vv&&vv.height)||innerHeight||720;
+  let s=Math.min(w/1280,h/720); if(!(s>0))s=1;
+  stage.style.transform=`translate(-50%,-50%) scale(${s})`;
+}
+['resize','orientationchange','load','pageshow'].forEach(ev=>addEventListener(ev,fit));
+if(window.visualViewport)visualViewport.addEventListener('resize',fit);
+addEventListener('keydown',e=>{
+  if(['ArrowRight','ArrowDown',' ','PageDown'].includes(e.key)){show(i+1);e.preventDefault();}
+  else if(['ArrowLeft','ArrowUp','PageUp'].includes(e.key)){show(i-1);e.preventDefault();}
+  else if(e.key==='Home'){show(0);}
+  else if(e.key==='End'){show(slides.length-1);}
+  else if(e.key==='f'){document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen();}
+});
+stage.addEventListener('click',e=>{ e.clientX<innerWidth*0.32 ? show(i-1) : show(i+1); });
+
+/* ============ SVG 图表工具箱（无图表库） ============ */
+const SVGNS='http://www.w3.org/2000/svg';
+const INK='#1C1E23',ACC='#0B64DD',FOIL='#F04E98';
+const F_MONO='"SF Mono",ui-monospace,Menlo,monospace';
+function el(t,a){const e=document.createElementNS(SVGNS,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
+function txt(x,y,s,o={}){const t=el('text',{x,y,'font-family':o.mono?F_MONO:'inherit',
+  'font-size':o.fs||13,'font-weight':o.fw||500,fill:o.fill||INK,'text-anchor':o.anchor||'start'});
+  t.textContent=s;return t;}
+function mount(id,w,h){const c=document.getElementById(id);if(!c)return null;c.innerHTML='';
+  const svg=el('svg',{viewBox:`0 0 ${w} ${h}`,preserveAspectRatio:'xMidYMid meet'});
+  c.appendChild(svg);return svg;}
+
+/* 示例：一条主角折线 vs 一条反派折线 */
+function drawDemo(){
+  const W=1000,H=470,L=80,R=40,T=30,B=60;
+  const svg=mount('c-demo',W,H);if(!svg)return;
+  const hero=[[0,.02],[1,.05],[2,.11],[3,.18],[4,.22]];
+  const foil=[[0,.02],[1,.03],[2,.03],[3,.02],[4,.01]];
+  const X=v=>L+v/4*(W-L-R), Y=v=>H-B-(v/0.25)*(H-T-B);
+  svg.appendChild(el('line',{x1:L,y1:H-B,x2:W-R,y2:H-B,stroke:INK,'stroke-width':1.6}));
+  svg.appendChild(el('line',{x1:L,y1:T,x2:L,y2:H-B,stroke:INK,'stroke-width':1.6}));
+  [0,.1,.2].forEach(v=>{svg.appendChild(el('line',{x1:L-6,y1:Y(v),x2:L,y2:Y(v),stroke:INK,'stroke-width':1.4}));
+    svg.appendChild(txt(L-10,Y(v)+5,'+'+v.toFixed(1),{fs:15,mono:1,anchor:'end'}));});
+  const path=(d,c)=>{let s='';d.forEach((p,k)=>s+=(k?'L':'M')+X(p[0])+' '+Y(p[1])+' ');
+    svg.appendChild(el('path',{d:s,fill:'none',stroke:c,'stroke-width':2.6,'stroke-linejoin':'round'}));
+    d.forEach(p=>svg.appendChild(el('circle',{cx:X(p[0]),cy:Y(p[1]),r:5,fill:c,stroke:'#fff','stroke-width':1.4})));};
+  path(foil,FOIL); path(hero,ACC);
+  svg.appendChild(txt(X(4)-8,Y(.22)-14,'我们的方案 +0.22',{fs:16,fw:700,fill:ACC,anchor:'end'}));
+  svg.appendChild(txt(X(4)-8,Y(.01)+26,'对照路线回落到基线',{fs:14,mono:1,fill:FOIL,anchor:'end'}));
+  svg.appendChild(txt((L+W-R)/2,H-12,'iteration',{fs:16,fw:700,anchor:'middle'}));
+}
+
+function init(){
+  fit(); requestAnimationFrame(fit);
+  [60,160,320,650].forEach(t=>setTimeout(fit,t));
+  show((parseInt((location.hash||'#1').slice(1))||1)-1);
+  drawDemo();
+}
+init();
+</script>
+</body>
+</html>

@@ -175,6 +175,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-06-19T12:46:14Z"
+    },
+    "html-slides": {
+      "source_path": "html-slides",
+      "target_path": "/Users/chenyl/.codex/skills/html-slides",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-07-04T09:09:52Z"
     }
   }
 }
