@@ -37,19 +37,25 @@ description: 单文件 HTML 幻灯片（Han Xiao 式固定舞台 deck）的制�
 ## Workflow
 
 1. **大纲先行**：每张 slide 写一句论断式标题（不是"结果"而是"X 提升了
-   61%"），排出三幕结构，与用户确认后再动手。
+   61%"），排出三幕结构，**并按 `references/design-catalog.md` 的
+   内容→组件决策表为每页标注版式**——纯文字版式（编号要点/定义列表/
+   金句/引用）连续不超过 2 页，全 deck 至少 1/3 页面含图形组件。
+   大纲连同版式标注一起与用户确认后再动手。
 2. **起步模板**：复制 `assets/template.html` 到工作目录，重命名为
    `index.html`。模板内置 6 种版式（标题页/编号要点/对比卡片/流程图+
    大数字/SVG 折线图/金句结尾）。
-3. **定设计 token**：按用户品牌或会议主题改 `:root` 的颜色变量。
-   保持三色语义：`--accent` 主角、`--foil` 反派/对照、`--teal` 次要正面。
-   不要引入灰色文字——层级靠字号和字重区分。
+3. **定设计 token**：优先从 `references/design-catalog.md` 的主题预设
+   起步（默认 warm-cream 暖米+橙；另有 elastic-blue），或按用户品牌改
+   `:root` 变量。保持三色语义：`--accent` 主角、`--foil` 反派/对照、
+   `--teal` 次要正面。不要引入灰色文字——层级靠字号和字重区分。
 4. **逐张生成 slide**：每张一个 `<section class="slide">`，只用语义组件
    拼装。缺组件时先看 `references/anatomy.md` 的组件清单，再考虑新写
    （新组件的样式也进 `<style>` 统一管理，不写内联）。
-5. **图表**：数据写进 `data.js`（`const DATA = {...}`），每图一个
-   `drawXxx()` 函数挂到对应容器 id。坐标轴刻度、单位、图内 legend、
-   结论性标注（直接写在数据点旁）都要有。
+5. **图表**：先在 `references/design-catalog.md` 的配方库里选图型
+   （折线/分组柱状/堆叠条/坡度图/热力图/散点/时间轴/盒线图）。数据写进
+   `data.js`（`const DATA = {...}`），每图一个 `drawXxx()` 函数挂到对应
+   容器 id。坐标轴刻度、单位、图内 legend、结论性标注（直接写在数据点旁）
+   都要有；legend 放数据空白区，截图确认不与数据重叠。
 6. **验证**：用 `scripts/screenshot.sh <file> <页码...>` 无头截图逐张检查
    溢出与对齐（内容超出 720px 高度是最常见问题）。有 figure-checker
    可用时交给它做视觉 QA。
@@ -64,3 +70,6 @@ description: 单文件 HTML 幻灯片（Han Xiao 式固定舞台 deck）的制�
 - 每张 slide 内容超出 720px 不会滚动，只会被裁掉——宁可拆页
 - `@media print` 里必须关闭所有动画，否则 PDF 导出会截到中间帧
 - MathJax 只在确有公式时引入（本地 vendor 文件，不走 CDN）
+- `.kicker`/`.tag` 等 mono 标签常带 `text-transform:uppercase`，会把
+  希腊字母 τ/π 转成大写破坏数学记号——含公式符号的标签要加
+  `text-transform:none`

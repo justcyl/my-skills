@@ -54,6 +54,9 @@ function show(n){
 
 ## 3. 设计 token 与三色体系
 
+主题预设（warm-cream / elastic-blue）与换肤检查单见
+`design-catalog.md` §1；下面是范本原版 token 示例：
+
 ```css
 :root{
   --bg:#FCFCFD; --ink:#1C1E23;      /* 近白画布 + 近黑墨色 */
@@ -73,7 +76,8 @@ function show(n){
 
 ## 4. 语义组件清单
 
-每种"修辞成分"一个 class，slide 内只拼组件不写内联样式：
+每种"修辞成分"一个 class，slide 内只拼组件不写内联样式。
+"哪种内容该用哪个组件/图型"的决策表见 `design-catalog.md` §2–3：
 
 | 组件 | class | 用途 |
 |------|-------|------|

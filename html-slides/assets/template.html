@@ -6,17 +6,19 @@
 <title>Deck Title · Your Name</title>
 <style>
 /* ============ 1. 设计 token（换成你的品牌色即可换肤） ============ */
+/* 默认 warm-cream 主题；更多预设见 references/design-catalog.md */
 :root{
-  --bg:#FCFCFD;           /* 画布近白 */
-  --ink:#1C1E23;          /* 主墨色 */
-  --accent:#0B64DD;       /* 主品牌色：结构/主角 */
-  --foil:#F04E98;         /* 反派色：失败/对照组 */
-  --foil-ink:#C2186A;     /* 小字号用的加深反派色 */
-  --teal:#00BFB3;         /* 次要正面色 */
-  --teal-ink:#0A7B74;
-  --accent-soft:#E7EEFC;  /* 主色淡底，用于高亮行 */
-  --hair:rgba(28,30,35,.18);
-  --hair2:rgba(28,30,35,.30);
+  --bg:#FDFBF7;           /* 暖米色画布 */
+  --ink:#221E1A;          /* 暖近黑墨色 */
+  --accent:#D9480F;       /* 主角橙：结构/主角/我方方案 */
+  --accent-ink:#BC3E0C;   /* 小字号用的加深主色 */
+  --foil:#2563EB;         /* 反派色：失败/对照组 */
+  --foil-ink:#1D4ED8;     /* 小字号用的加深反派色 */
+  --teal:#0F766E;         /* 次要正面色 */
+  --teal-ink:#0F766E;
+  --accent-soft:#FBEADF;  /* 主色淡底，用于高亮行 */
+  --hair:rgba(34,30,26,.18);
+  --hair2:rgba(34,30,26,.30);
   --r-card:8px; --r-box:5px;
   --sans:-apple-system,BlinkMacSystemFont,"Helvetica Neue","Inter",system-ui,Arial,sans-serif;
   --mono:"SF Mono",ui-monospace,"JetBrains Mono",Menlo,"Roboto Mono",monospace;
@@ -261,7 +263,9 @@ stage.addEventListener('click',e=>{ e.clientX<innerWidth*0.32 ? show(i-1) : show
 
 /* ============ SVG 图表工具箱（无图表库） ============ */
 const SVGNS='http://www.w3.org/2000/svg';
-const INK='#1C1E23',ACC='#0B64DD',FOIL='#F04E98';
+/* 图表颜色从 :root token 读取，换肤时无需改绘图代码 */
+const CSSV=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+const INK=CSSV('--ink'),ACC=CSSV('--accent'),FOIL=CSSV('--foil');
 const F_MONO='"SF Mono",ui-monospace,Menlo,monospace';
 function el(t,a){const e=document.createElementNS(SVGNS,t);for(const k in a)e.setAttribute(k,a[k]);return e;}
 function txt(x,y,s,o={}){const t=el('text',{x,y,'font-family':o.mono?F_MONO:'inherit',
