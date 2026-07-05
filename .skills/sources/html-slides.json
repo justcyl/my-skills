@@ -10,8 +10,8 @@
   "bootstrap": true,
   "upstream_enabled": false,
   "upstream_path": ".skills/upstream/html-slides",
-  "last_imported_at": "2026-07-05T08:00:51Z",
+  "last_imported_at": "2026-07-05T08:17:34Z",
   "upstream_revision": "",
-  "managed_revision": "sha256:a11052bc23f3d4c3a4ad52a44cdb8029d01ae4f08a57077789548471d2cefb23",
+  "managed_revision": "sha256:68c26896ffff0d82c506a2e73bd82a68a74de5e2838e071c3c70a558aaa5c52e",
   "managed_dirty": false
 }

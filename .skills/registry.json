@@ -1967,19 +1967,19 @@
           "target_path": "/Users/chenyl/.codex/skills/html-slides",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-07-05T08:00:51Z"
+          "last_synced_at": "2026-07-05T08:17:34Z"
         },
         "claude-code": {
           "target_path": "/Users/chenyl/.claude/skills/html-slides",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-07-05T08:00:51Z"
+          "last_synced_at": "2026-07-05T08:17:34Z"
         },
         "pi": {
           "target_path": "/Users/chenyl/.pi/agent/skills/html-slides",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-07-05T08:00:51Z"
+          "last_synced_at": "2026-07-05T08:17:34Z"
         }
       },
       "display_name": "html-slides",
@@ -1992,8 +1992,8 @@
       "source_path": ".skills/sources/html-slides.json",
       "skill_path": "html-slides",
       "upstream_path": ".skills/upstream/html-slides",
-      "managed_revision": "sha256:a11052bc23f3d4c3a4ad52a44cdb8029d01ae4f08a57077789548471d2cefb23",
-      "last_updated_at": "2026-07-05T08:00:51Z"
+      "managed_revision": "sha256:68c26896ffff0d82c506a2e73bd82a68a74de5e2838e071c3c70a558aaa5c52e",
+      "last_updated_at": "2026-07-05T08:17:34Z"
     }
   }
 }
