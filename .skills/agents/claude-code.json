@@ -113,13 +113,6 @@
       "sync_status": "synced",
       "last_synced_at": "2026-07-04T09:10:01Z"
     },
-    "lark-paper-reader": {
-      "source_path": "lark-paper-reader",
-      "target_path": "/Users/chenyl/.claude/skills/lark-paper-reader",
-      "mode": "symlink",
-      "sync_status": "synced",
-      "last_synced_at": "2026-07-04T09:10:01Z"
-    },
     "interactive-html": {
       "source_path": "interactive-html",
       "target_path": "/Users/chenyl/.claude/skills/interactive-html",
