@@ -1994,6 +1994,32 @@
       "upstream_path": ".skills/upstream/html-slides",
       "managed_revision": "sha256:68c26896ffff0d82c506a2e73bd82a68a74de5e2838e071c3c70a558aaa5c52e",
       "last_updated_at": "2026-07-05T08:17:34Z"
+    },
+    "lark-paper-reader-claude": {
+      "distribution": {
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/lark-paper-reader-claude",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-07-14T13:13:49Z"
+        }
+      },
+      "display_name": "lark-paper-reader-claude",
+      "description": "Claude Code 专用：将 arXiv/DOI/PDF 学术论文整理为论文翻译飞书文档，正文以原文逐段中文翻译为主体。",
+      "status": "managed",
+      "risk_status": "warned",
+      "managed_dirty": false,
+      "upstream_enabled": false,
+      "report_path": ".skills/reports/lark-paper-reader-claude.md",
+      "source_path": ".skills/sources/lark-paper-reader-claude.json",
+      "skill_path": "lark-paper-reader-claude",
+      "upstream_path": ".skills/upstream/lark-paper-reader-claude",
+      "managed_revision": "sha256:789184e30487d2c44699c1f324dc846818499b491c0bb65aff2def4c48f79dc8",
+      "last_updated_at": "2026-07-14T13:12:34Z",
+      "distribution_disabled": [
+        "codex",
+        "pi"
+      ]
     }
   }
 }

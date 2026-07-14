@@ -1,0 +1,17 @@
+{
+  "skill_id": "lark-paper-reader-claude",
+  "display_name": "lark-paper-reader-claude",
+  "skill_path": "lark-paper-reader-claude",
+  "source_type": "local-created",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/lark-paper-reader-claude",
+  "last_imported_at": "2026-07-14T13:12:34Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:789184e30487d2c44699c1f324dc846818499b491c0bb65aff2def4c48f79dc8",
+  "managed_dirty": false
+}

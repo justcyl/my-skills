@@ -182,6 +182,13 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-07-05T08:17:34Z"
+    },
+    "lark-paper-reader-claude": {
+      "source_path": "lark-paper-reader-claude",
+      "target_path": "/Users/chenyl/.claude/skills/lark-paper-reader-claude",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-07-14T13:13:49Z"
     }
   }
 }
