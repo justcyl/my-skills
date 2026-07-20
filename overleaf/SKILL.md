@@ -63,6 +63,18 @@ Git 凭据默认已配置在 osxkeychain 中，可直接使用 `git clone https:
 
 若失败，提示用户配置相关 token。
 
+### WSL/自托管实例的账号登录
+
+如果 Overleaf 服务部署在 WSL，且实例使用本地邮箱/密码认证（`EXTERNAL_AUTH=none`），可以直接使用已有 Overleaf 账号自动获取会话 Cookie，不需要读取 Windows Edge Cookie：
+
+```bash
+export OVERLEAF_HOST="overleaf.example.com"
+export OVERLEAF_EMAIL="your-existing-account@example.com"
+export OVERLEAF_PASSWORD_FILE="$HOME/.config/overleaf/password"
+```
+
+密码文件必须设置为 `600`。也可以使用 `OVERLEAF_PASSWORD_COMMAND` 从 `pass` 等凭据管理器读取密码。`ol.sh` 会自动登录、缓存短期会话，并在会话过期后重新登录。
+
 ## 调用方式
 
 Review/获取项目对应 git 地址 的操作通过 wrapper 脚本：
