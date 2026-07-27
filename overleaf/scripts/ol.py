@@ -24,6 +24,8 @@ from urllib.parse import urlparse, urlunparse
 from typing import Any
 import click
 
+from git_utils import default_git_base_url
+
 try:
     from pyoverleaf import Api
 except ImportError:
@@ -395,7 +397,7 @@ def cmd_git():
 @click.option("--compact", is_flag=True, help="使用紧凑 JSON 输出（默认为带缩进）。")
 @click.option(
     "--base-url",
-    help="可选。指定 Git 地址基础前缀（默认: https://<OVERLEAF_HOST>/git）。",
+    help="可选。指定 Git 地址基础前缀（官方默认 git.overleaf.com；自托管默认 <OVERLEAF_HOST>/git）。",
 )
 @click.option(
     "--clone-user",
@@ -407,7 +409,7 @@ def cmd_git_urls(compact: bool, base_url: str | None, clone_user: str):
     """获取当前账号每个项目的 Git 地址。"""
     api = _build_api()
     projects = _list_projects(api)
-    default_base_url = f"https://{api._host}/git"
+    default_base_url = default_git_base_url(api._host)
     resolved_base_url = (base_url or default_base_url).rstrip("/")
 
     rows: list[dict[str, Any]] = []
@@ -653,7 +655,7 @@ def cmd_create(project_name: str, template: str, compact: bool):
     if not project_id:
         raise click.ClickException(f"创建成功但未返回 project_id。响应: {json.dumps(data)}")
 
-    git_url = f"https://{api._host}/git/{project_id}"
+    git_url = f"{default_git_base_url(api._host)}/{project_id}"
     clone_url = _build_clone_url(git_url, "git")
 
     result = {

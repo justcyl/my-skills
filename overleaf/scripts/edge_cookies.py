@@ -4,7 +4,7 @@
 
 用法：
     python edge_cookies.py <domain>
-    python edge_cookies.py overleaf.cyl.qzz.io
+    python edge_cookies.py www.overleaf.com
 
 输出 Cookie 头部字符串（可直接赋值给 OVERLEAF_COOKIE）。
 
@@ -142,15 +142,17 @@ def extract_cookies(domain: str) -> str:
         conn = sqlite3.connect(tmp_db)
         cursor = conn.cursor()
 
-        # 匹配域名：host_key 可能是 .example.com 或 example.com
+        # 按浏览器规则同时匹配目标主机和父域 Cookie。例如访问
+        # www.overleaf.com 时，也需要发送 .overleaf.com 的会话 Cookie。
         cursor.execute(
             """
             SELECT name, value, encrypted_value
             FROM cookies
-            WHERE host_key = ? OR host_key = ?
+            WHERE lower(?) = lower(ltrim(host_key, '.'))
+               OR lower(?) LIKE '%.' || lower(ltrim(host_key, '.'))
             ORDER BY name
             """,
-            (domain, f".{domain}"),
+            (domain, domain),
         )
 
         cookies = []

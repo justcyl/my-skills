@@ -39,10 +39,15 @@ SKILL_DIR="$(dirname "$(grep -A1 'name: overleaf' ~/.pi/agent/AGENTS.md | grep l
 
 Cookie 支持自动获取：当 `OVERLEAF_COOKIE` 环境变量未设置时，`ol.sh` 会自动从 macOS Edge 浏览器提取对应域名的 Cookie（需要 Edge 已登录 Overleaf）。
 
-因此**通常只需设置 `OVERLEAF_HOST`**，Cookie 会自动处理：
+因此**通常只需设置 `OVERLEAF_HOST`**，Cookie 会自动处理。推荐在
+`~/.config/overleaf/config.env` 中保留域名选择；`ol.sh` 会自动加载该文件：
 
 ```bash
-export OVERLEAF_HOST="overleaf.mycompany.com"
+# 官方 Overleaf（当前选择）
+OVERLEAF_HOST="www.overleaf.com"
+
+# 自托管实例（需要时与上一行互换注释）
+# OVERLEAF_HOST="overleaf.cyl.qzz.io"
 ```
 
 | 变量名 | 说明 | 是否必须 |
@@ -50,7 +55,9 @@ export OVERLEAF_HOST="overleaf.mycompany.com"
 | `OVERLEAF_HOST` | Overleaf 实例域名（不含 `https://`） | 是（默认 `www.overleaf.com`） |
 | `OVERLEAF_COOKIE` | 浏览器 Cookie 头部字符串 | 否（未设置时自动从 Edge 获取） |
 
-自动获取依赖 macOS Keychain 授权（首次会弹窗确认）。若自动获取失败，可手动设置：
+自动获取会按浏览器规则读取目标主机及其父域 Cookie（例如
+`www.overleaf.com` 会同时读取 `.overleaf.com` 的会话 Cookie），并依赖 macOS
+Keychain 授权（首次会弹窗确认）。若自动获取失败，可手动设置：
 获取 Cookie：浏览器打开 Overleaf → F12 → Network → 任意请求 → Request Headers → Cookie。
 
 ```bash
@@ -59,9 +66,13 @@ export OVERLEAF_COOKIE="overleaf_session2=s%3Axxx; gke-route=yyy"
 
 ### Git 认证信息
 
-Git 凭据默认已配置在 osxkeychain 中，可直接使用 `git clone https://...`。
+Git 认证与网页/API Cookie 是两套独立凭据。Git 使用系统配置的
+`osxkeychain` credential helper；每个域名仍需单独保存 Git token，不能从 Edge
+网页 Cookie 推导或复用。官方站点使用 `git.overleaf.com`，自托管实例通常使用
+`<OVERLEAF_HOST>/git`。
 
-若失败，提示用户配置相关 token。
+若 `git clone` 提示认证失败，需要先为对应 Git 域名配置 token。网页 Cookie
+自动读取成功不代表 Git token 已配置。
 
 ### WSL/自托管实例的账号登录
 
@@ -113,7 +124,7 @@ bash "$SKILL_DIR/scripts/ol.sh" git urls
 # 紧凑 JSON（便于管道处理）
 bash "$SKILL_DIR/scripts/ol.sh" git urls --compact
 
-# 覆盖默认 Git 地址前缀
+# 覆盖默认 Git 地址前缀（官方默认 https://git.overleaf.com）
 bash "$SKILL_DIR/scripts/ol.sh" git urls --base-url "https://git.example.com"
 ```
 
