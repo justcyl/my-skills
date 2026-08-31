@@ -1,0 +1,17 @@
+{
+  "skill_id": "hjfy-pdf-to-lark",
+  "display_name": "hjfy-pdf-to-lark",
+  "skill_path": "hjfy-pdf-to-lark",
+  "source_type": "local-created",
+  "source": "",
+  "source_url": "",
+  "ref": "",
+  "subpath": "",
+  "bootstrap": true,
+  "upstream_enabled": false,
+  "upstream_path": ".skills/upstream/hjfy-pdf-to-lark",
+  "last_imported_at": "2026-08-31T10:21:14Z",
+  "upstream_revision": "",
+  "managed_revision": "sha256:e5a5cefe5698e143539a2acc7819dd677835e794079c9be9a09a95d74676b27b",
+  "managed_dirty": false
+}
