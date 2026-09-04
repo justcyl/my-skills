@@ -195,7 +195,21 @@
       "target_path": "/Users/chenyl/.claude/skills/research-drawio-skill",
       "mode": "symlink",
       "sync_status": "synced",
-      "last_synced_at": "2026-09-04T03:57:32Z"
+      "last_synced_at": "2026-09-04T08:07:32Z"
+    },
+    "research-draw": {
+      "source_path": "research-draw",
+      "target_path": "/Users/chenyl/.claude/skills/research-draw",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-09-04T08:07:32Z"
+    },
+    "add-svg": {
+      "source_path": "add-svg",
+      "target_path": "/Users/chenyl/.claude/skills/add-svg",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-09-04T08:07:32Z"
     }
   }
 }

@@ -2056,7 +2056,7 @@
           "target_path": "/Users/chenyl/.claude/skills/research-drawio-skill",
           "mode": "symlink",
           "sync_status": "synced",
-          "last_synced_at": "2026-09-04T03:57:32Z"
+          "last_synced_at": "2026-09-04T08:07:32Z"
         },
         "codex": {
           "target_path": "/Users/chenyl/.codex/skills/research-drawio-skill",
@@ -2085,6 +2085,12 @@
           "mode": "symlink",
           "sync_status": "synced",
           "last_synced_at": "2026-09-04T07:01:26Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/research-draw",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-09-04T08:07:32Z"
         }
       },
       "display_name": "research-draw",
@@ -2107,6 +2113,12 @@
           "mode": "symlink",
           "sync_status": "synced",
           "last_synced_at": "2026-09-04T07:01:26Z"
+        },
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/add-svg",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-09-04T08:07:32Z"
         }
       },
       "display_name": "add-svg",
