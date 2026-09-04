@@ -2057,6 +2057,12 @@
           "mode": "symlink",
           "sync_status": "synced",
           "last_synced_at": "2026-09-04T03:57:32Z"
+        },
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/research-drawio-skill",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-09-04T07:01:26Z"
         }
       },
       "display_name": "research-drawio-skill",
@@ -2070,7 +2076,51 @@
       "skill_path": "research-drawio-skill",
       "upstream_path": ".skills/upstream/research-drawio-skill",
       "managed_revision": "sha256:427b572beaa6598786e6dbcfbfef5afabc1007edd34bc6954e305f87cf4809b9",
-      "last_updated_at": "2026-09-04T03:57:23Z"
+      "last_updated_at": "2026-09-04T07:03:14Z"
+    },
+    "research-draw": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/research-draw",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-09-04T07:01:26Z"
+        }
+      },
+      "display_name": "research-draw",
+      "description": "Two-stage workflow for publication-style scientific schematics: generate or\nuse a raster reference with imagegen/PNG/JPG/WebP, then trace it into an\neditable diagrams.net/draw.io file using research-drawio-skill. Use for\nNature-style scientific illustrations, graphical abstracts, model or mechanism\nschematics, biomedical workflows, AI architecture figures, and paper-style\nvisual drafts that should become editable .drawio source. For complex\nrecognizable elements, author or select dedicated SVG glyphs and compare\nrendered SVGs against reference crops before inserting them, instead of\nassembling those elements from draw.io primitives. Enforces a minimum\nthree-round strict pixel-level export/compare/fix loop for close\nraster-to-draw.io tracing tasks. Use with imagegen, draw.io, diagrams.net,\nscientific illustration, graphical abstract, paper schematic, figure tracing,\nSVG glyph tracing, and drawio redraw requests.",
+      "status": "managed",
+      "risk_status": "passed",
+      "managed_dirty": false,
+      "upstream_enabled": true,
+      "report_path": ".skills/reports/research-draw.md",
+      "source_path": ".skills/sources/research-draw.json",
+      "skill_path": "research-draw",
+      "upstream_path": ".skills/upstream/research-draw",
+      "managed_revision": "sha256:ce78bf1b380c2fb700269ce2a48e0f27363b7bbfe5b26f5538eb34f76de761a7",
+      "last_updated_at": "2026-09-04T07:03:15Z"
+    },
+    "add-svg": {
+      "distribution": {
+        "codex": {
+          "target_path": "/Users/chenyl/.codex/skills/add-svg",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-09-04T07:01:26Z"
+        }
+      },
+      "display_name": "add-svg",
+      "description": "Add, collect, design, audit, and integrate SVG elements into editable\ndiagrams.net/draw.io scientific figures. Use when the user asks to supplement\na draw.io diagram with SVG icons, mechanisms, biological objects, model\ncomponents, pathway symbols, instruments, graphical abstract elements, or\npublication-style vector assets. Every execution must first ask the user to\nchoose the SVG source mode: network search or self-designed SVG. For network\nmode, search for multiple relevant SVG candidates for later user selection,\nrecord sources and license notes, and fall back to self-designed SVG for\nconcepts with no suitable result. For self-design mode, create restrained,\neditable, Nature-style SVGs from simple vector primitives. Use with .drawio,\nSVG, diagrams.net, 科研流程图, 论文示意图, SVG补图, 图标补充, and draw.io配图.",
+      "status": "managed",
+      "risk_status": "passed",
+      "managed_dirty": false,
+      "upstream_enabled": true,
+      "report_path": ".skills/reports/add-svg.md",
+      "source_path": ".skills/sources/add-svg.json",
+      "skill_path": "add-svg",
+      "upstream_path": ".skills/upstream/add-svg",
+      "managed_revision": "sha256:40a7f104d00b4cc73612d056334e68a6e3479809ee76eea60bce2ea3002ae9a1",
+      "last_updated_at": "2026-09-04T07:03:15Z"
     }
   }
 }

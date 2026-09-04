@@ -1,0 +1,17 @@
+{
+  "skill_id": "add-svg",
+  "display_name": "add-svg",
+  "skill_path": "add-svg",
+  "source_type": "local",
+  "source": "/Users/chenyl/Documents/Codex/2026-07-28/https-github-com-qianjinydx-research-drawio/work/research-drawio-skill-source",
+  "source_url": "/Users/chenyl/Documents/Codex/2026-07-28/https-github-com-qianjinydx-research-drawio/work/research-drawio-skill-source",
+  "ref": "",
+  "subpath": "skills/add-svg",
+  "bootstrap": true,
+  "upstream_enabled": true,
+  "upstream_path": ".skills/upstream/add-svg",
+  "last_imported_at": "2026-09-04T07:03:15Z",
+  "upstream_revision": "sha256:0134d80cdb30349d338fcb46dc3b4c68ee6946fad8c1bcd1679b531d2b26264e",
+  "managed_revision": "sha256:40a7f104d00b4cc73612d056334e68a6e3479809ee76eea60bce2ea3002ae9a1",
+  "managed_dirty": false
+}

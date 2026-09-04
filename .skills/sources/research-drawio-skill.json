@@ -10,7 +10,7 @@
   "bootstrap": true,
   "upstream_enabled": true,
   "upstream_path": ".skills/upstream/research-drawio-skill",
-  "last_imported_at": "2026-09-04T03:57:23Z",
+  "last_imported_at": "2026-09-04T07:03:14Z",
   "upstream_revision": "sha256:e2fd1c2cb9e680ad89d145ab04671eb86d865b3662584b38beed6910880212c1",
   "managed_revision": "sha256:427b572beaa6598786e6dbcfbfef5afabc1007edd34bc6954e305f87cf4809b9",
   "managed_dirty": false

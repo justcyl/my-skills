@@ -189,6 +189,27 @@
       "mode": "symlink",
       "sync_status": "synced",
       "last_synced_at": "2026-08-31T10:21:14Z"
+    },
+    "research-drawio-skill": {
+      "source_path": "research-drawio-skill",
+      "target_path": "/Users/chenyl/.codex/skills/research-drawio-skill",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-09-04T07:01:26Z"
+    },
+    "research-draw": {
+      "source_path": "research-draw",
+      "target_path": "/Users/chenyl/.codex/skills/research-draw",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-09-04T07:01:26Z"
+    },
+    "add-svg": {
+      "source_path": "add-svg",
+      "target_path": "/Users/chenyl/.codex/skills/add-svg",
+      "mode": "symlink",
+      "sync_status": "synced",
+      "last_synced_at": "2026-09-04T07:01:26Z"
     }
   }
 }

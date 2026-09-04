@@ -1,0 +1,17 @@
+{
+  "skill_id": "research-draw",
+  "display_name": "research-draw",
+  "skill_path": "research-draw",
+  "source_type": "local",
+  "source": "/Users/chenyl/Documents/Codex/2026-07-28/https-github-com-qianjinydx-research-drawio/work/research-drawio-skill-source",
+  "source_url": "/Users/chenyl/Documents/Codex/2026-07-28/https-github-com-qianjinydx-research-drawio/work/research-drawio-skill-source",
+  "ref": "",
+  "subpath": "skills/research-draw",
+  "bootstrap": true,
+  "upstream_enabled": true,
+  "upstream_path": ".skills/upstream/research-draw",
+  "last_imported_at": "2026-09-04T07:03:15Z",
+  "upstream_revision": "sha256:81aed7a01c0bcbe8f972b47dae03fa1cc5683e35f2f1df85ea7436aeee16da52",
+  "managed_revision": "sha256:ce78bf1b380c2fb700269ce2a48e0f27363b7bbfe5b26f5538eb34f76de761a7",
+  "managed_dirty": false
+}
