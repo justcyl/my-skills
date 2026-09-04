@@ -2049,6 +2049,28 @@
       "upstream_path": ".skills/upstream/hjfy-pdf-to-lark",
       "managed_revision": "sha256:e5a5cefe5698e143539a2acc7819dd677835e794079c9be9a09a95d74676b27b",
       "last_updated_at": "2026-08-31T10:21:14Z"
+    },
+    "research-drawio-skill": {
+      "distribution": {
+        "claude-code": {
+          "target_path": "/Users/chenyl/.claude/skills/research-drawio-skill",
+          "mode": "symlink",
+          "sync_status": "synced",
+          "last_synced_at": "2026-09-04T03:57:32Z"
+        }
+      },
+      "display_name": "research-drawio-skill",
+      "description": "Create, revise, audit, and export publication-style scientific flowcharts and\nschematic workflows in diagrams.net/draw.io. Use for research-paper\nflowcharts, Nature-style workflows, graphical abstracts, method pipelines,\nexperimental design, cohort/study flow, mechanism schematics, model\narchitecture, editable .drawio files, and SVG/PDF-ready scientific diagrams,\nincluding 科研流程图, 论文流程图, draw.io作图, 方法流程图, 实验设计图, 技术路线图,\n机制示意图, and 图形摘要. Start from a scientific message, topology, grid\nlayout, semantic composite-element plan, collision-free routing, math-label\ncontract, export contract, and reviewer-risk check. Build editable glyphs\nfrom draw.io primitives, such as bar miniatures, DNA helices, matrices,\nneural networks, cells, samples, and model blocks. Enforce alignment,\nnon-overlap, readable labels, and MathJax formulas. Not for dashboards,\ngeneric business diagrams, or illustration-first artwork.",
+      "status": "managed",
+      "risk_status": "warned",
+      "managed_dirty": false,
+      "upstream_enabled": true,
+      "report_path": ".skills/reports/research-drawio-skill.md",
+      "source_path": ".skills/sources/research-drawio-skill.json",
+      "skill_path": "research-drawio-skill",
+      "upstream_path": ".skills/upstream/research-drawio-skill",
+      "managed_revision": "sha256:427b572beaa6598786e6dbcfbfef5afabc1007edd34bc6954e305f87cf4809b9",
+      "last_updated_at": "2026-09-04T03:57:23Z"
     }
   }
 }
